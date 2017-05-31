@@ -272,14 +272,14 @@ public class World {
 			
 		} else if(newType == TileType.Floor) {
 			
-			newTile = (Tile) new Tile(
+			newTile = new Tile(
 					old.GetWorldPosition(),
 					SpriteType.FloorTile01,
 					TileType.Floor, 
 					old.GetTilePosition());
 			
 		} else {
-			System.out.println("WORLD.REPLACETILE: TILETYPE NOT YET IMPLEMENTED!!");
+			System.out.println("WORLD.REPLACETILE: TILETYPE NOT YET IMPLEMENTED!");
 		}
 		
 		// add new tile to our list of tiles.

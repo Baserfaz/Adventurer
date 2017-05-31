@@ -40,8 +40,7 @@ public class Bomb extends Actor {
 				// 3. actors
 				if(tile instanceof DestructibleTile) {
 					
-					DestructibleTile dt = (DestructibleTile) tile;
-					dt.getTileHealth().TakeDamage(this.damage);
+					((DestructibleTile)tile).getTileHealth().TakeDamage(this.damage);
 				
 				} else if(tile instanceof Door) {
 					
@@ -57,8 +56,7 @@ public class Bomb extends Actor {
 						
 					} else {
 						GameObject actorGo = tile.GetActor();
-						Actor actor = (Actor) actorGo;
-						actor.GetHealth().TakeDamage(this.damage);
+						((Actor)actorGo).GetHealth().TakeDamage(this.damage);
 						
 						// creates blood 
 						VanityItemCreator.CreateSmallBlood(tile);

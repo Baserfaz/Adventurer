@@ -15,6 +15,8 @@ public class Actor extends GameObject {
 	protected Direction lookDir;
 	protected Direction lastLookDir;
 	
+	protected boolean canMove = true;
+	
 	protected Health myHP;
 	
 	protected int damage = 100;
@@ -76,6 +78,35 @@ public class Actor extends GameObject {
 		// effects etc.
 		EffectCreator.CreateHitEffect(tile);
 		VanityItemCreator.CreateSmallBlood(tile); // TODO: skeleton blood
+	}
+	
+	protected void UpdatePosition() {
+		int x = worldPosition.getX();
+		int y = worldPosition.getY();
+		
+		// smooth movement
+		if(x < targetx - movementSpeed || x > targetx + movementSpeed) {
+			
+			if(targetx < x) worldPosition.decreaseX(movementSpeed);
+			else if(targetx > x) worldPosition.addX(movementSpeed);
+			
+			canMove = false;
+			
+		} else if(y < targety - movementSpeed || y > targety + movementSpeed) {
+			
+			if(targety < y) worldPosition.decreaseY(movementSpeed);
+			else if(targety > y) worldPosition.addY(movementSpeed);
+			
+			canMove = false;
+			
+		} else {
+			
+			// force move the actor to the exact tile's position.
+			worldPosition.setX(targetx);
+			worldPosition.setY(targety);
+			
+			canMove = true;
+		}
 	}
 	
 	public Direction GetLookDirection() {

@@ -79,28 +79,8 @@ public class Projectile extends GameObject {
 
 	private void MoveForward() {
 			
-		Tile tile = null;
+		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), direction);
 		World world = Game.instance.GetWorld();
-		
-		int tilex = this.tilePosition.getX();
-		int tiley = this.tilePosition.getY();
-		
-		switch(direction) {
-		case North:
-			tile = world.GetTileAtPosition(tilex, tiley - 1);
-			break;
-		case South:
-			tile = world.GetTileAtPosition(tilex, tiley + 1);
-			break;
-		case East:
-			tile = world.GetTileAtPosition(tilex + 1, tiley);
-			break;
-		case West:
-			tile = world.GetTileAtPosition(tilex - 1, tiley);
-			break;
-		default:
-			break;
-		}
 		
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null) {
 			

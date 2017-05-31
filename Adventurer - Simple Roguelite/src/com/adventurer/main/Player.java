@@ -6,8 +6,6 @@ import java.awt.Graphics2D;
 
 public class Player extends Actor {
 	
-	protected boolean canMove = true;
-	
 	private LoSManager losmanager;
 	
 	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int damage) {
@@ -20,32 +18,7 @@ public class Player extends Actor {
 		
 		if(myHP.isDead() == false) {
 		
-			int x = worldPosition.getX();
-			int y = worldPosition.getY();
-			
-			// smooth movement
-			if(x < targetx - movementSpeed || x > targetx + movementSpeed) {
-				
-				if(targetx < x) worldPosition.decreaseX(movementSpeed);
-				else if(targetx > x) worldPosition.addX(movementSpeed);
-				
-				canMove = false;
-				
-			} else if(y < targety - movementSpeed || y > targety + movementSpeed) {
-				
-				if(targety < y) worldPosition.decreaseY(movementSpeed);
-				else if(targety > y) worldPosition.addY(movementSpeed);
-				
-				canMove = false;
-				
-			} else {
-				
-				// force move the actor to the exact tile's position.
-				worldPosition.setX(targetx);
-				worldPosition.setY(targety);
-				
-				canMove = true;
-			}
+			UpdatePosition();
 			
 			// update LOS
 			losmanager.CalculateLos(tilePosition);
@@ -80,31 +53,11 @@ public class Player extends Actor {
 		
 		if(canMove == false) return;
 		
-		Tile tile = null;
+		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), dir);
 		World world = Game.instance.GetWorld();
 		
-		int tilex = this.tilePosition.getX();
-		int tiley = this.tilePosition.getY();
-		
-		switch(dir) {
-		case North:
-			tile = world.GetTileAtPosition(tilex, tiley - 1);
-			break;
-		case South:
-			tile = world.GetTileAtPosition(tilex, tiley + 1);
-			break;
-		case East:
-			tile = world.GetTileAtPosition(tilex + 1, tiley);
-			break;
-		case West:
-			tile = world.GetTileAtPosition(tilex - 1, tiley);
-			break;
-		default:
-			break;
-		}
-		
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null) {
-			
+						
 			// tile is our new tile
 			world.GetTileAtPosition(this.tilePosition).SetActor(null);
 			
