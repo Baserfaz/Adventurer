@@ -132,45 +132,52 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 	
-	// Taken from Ryan van Zeben - Java Game Engine Development video series.
-	// https://www.youtube.com/watch?v=VE7ezYCTPe4&list=PL8CAB66181A502179
 	public void run() {
-		
+		GameLoop();
+	}
+	
+	private void GameLoop() {
 		long lastTime = System.nanoTime();
-		double amountOfTicks = 60.0;
-		double ns = 1000000000 / amountOfTicks;
-		double delta = 0;
-		long timer = System.currentTimeMillis();
+		double unprocessedTime = 0;
+		
 		int frames = 0;
+		long frameCounter = 0;
+		
+		final double frameTime = 1 / 60.0;
+		final long SECOND = 1000000000L;
 		
 		while(isRunning) {
 			
-			// calculate delta time between last time and the current time.
+			boolean render = false;
+			
 			long now = System.nanoTime();
-			delta += (now - lastTime) / ns;
+			long passedTime = now - lastTime;
 			lastTime = now;
 			
-			// tick the whole system.
-			while(delta >= 1) {
+			unprocessedTime += passedTime / (double) SECOND;
+			frameCounter += passedTime;
+			
+			while(unprocessedTime > frameTime) {
+				
+				render = true;
+				unprocessedTime -= frameTime;
+				
 				tick();
-				delta--;
+				
+				if(frameCounter >= SECOND) {
+					//window.SetCustomTitle("FPS: " + frames);
+					frames = 0;
+					frameCounter = 0;
+				}
 			}
 			
 			// render the scene
-			if(isRunning) {
+			if(isRunning && render) {
 				render();
-			}
-			
-			// increment frame
-			frames++;
-			
-			// print frame count
-			if(System.currentTimeMillis() - timer > 1000) {
-				timer += 1000;
-				System.out.println("FPS: " + frames);
-				frames = 0;
+				frames++;
 			}
 		}
+		
 		Stop();
 	}
 	
