@@ -36,8 +36,8 @@ public class Tile extends GameObject {
 		// check if the tile is in the camera's view
 		Rectangle camera = Game.instance.camera;
 		
-		int x = worldPosition.getX();
-		int y = worldPosition.getY();
+		int x = this.GetWorldPosition().getX();
+		int y = this.GetWorldPosition().getY();
 		
 		if(camera != null) {
 			if(camera.contains(x + World.tileSize / 2, y + World.tileSize / 2)) {
@@ -52,15 +52,15 @@ public class Tile extends GameObject {
 		
 		// move the tile
 		if(y < targety + fallingSpeed) {
-			if(y < targety) worldPosition.addY(fallingSpeed);
+			if(y < targety) this.GetWorldPosition().addY(fallingSpeed);
 		}
 		
 	}
 	
 	public void render(Graphics g) {
 		
-		int x = worldPosition.getX();
-		int y = worldPosition.getY();
+		int x = this.GetWorldPosition().getX();
+		int y = this.GetWorldPosition().getY();
 		
 		if(hidden == false) {
 			
@@ -69,7 +69,12 @@ public class Tile extends GameObject {
 			
 			// render vanity items
 			for(GameObject vi : vanityItems) {
-				g.drawImage(vi.GetSprite(), vi.GetWorldPosition().getX(), vi.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
+				g.drawImage(vi.GetSprite(),
+						vi.GetWorldPosition().getX(),
+						vi.GetWorldPosition().getY(),
+						Game.SPRITESIZE,
+						Game.SPRITESIZE,
+						null);
 			}
 			
 		} else if(inView == false) {
@@ -94,7 +99,12 @@ public class Tile extends GameObject {
 					vi.SetTintedSprite(Util.tint(vi.GetSprite()));
 				}
 				
-				g.drawImage(vi.GetTintedSprite(), vi.GetWorldPosition().getX(), vi.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
+				g.drawImage(vi.GetTintedSprite(),
+						vi.GetWorldPosition().getX(),
+						vi.GetWorldPosition().getY(),
+						Game.SPRITESIZE,
+						Game.SPRITESIZE,
+						null);
 			}
 			
 		}
@@ -115,19 +125,22 @@ public class Tile extends GameObject {
 		// when first time discovering
 		// this tile -> set the target positions.
 		if(discovered == false) {
-			this.targety = worldPosition.getY();
-			worldPosition.decreaseY(fallingYOffset);
+			this.targety = this.GetWorldPosition().getY();
+			this.GetWorldPosition().decreaseY(fallingYOffset);
 			this.discovered = true;
 		} 
 		
-		// always discover the 
-		// actors and items.
+		// discover actors and items.
 		if(this.GetActor() != null) {
-			
 			GameObject actor = this.GetActor();
-			
 			actor.Discover();
 		}
+		
+		if(this.GetItem() != null) {
+			GameObject item = this.GetItem();
+			item.Discover();
+		}
+		
 	}
 	
 	@Override
@@ -142,7 +155,7 @@ public class Tile extends GameObject {
 	}
 	
 	public Rectangle GetBounds() {
-		return new Rectangle(worldPosition.getX(), worldPosition.getY(), Game.SPRITESIZE, Game.SPRITESIZE);
+		return new Rectangle(this.GetWorldPosition().getX(), this.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE);
 	}
 	
 	public TileType GetTileType() {

@@ -1,4 +1,4 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -7,12 +7,16 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.adventurer.gameobjects.Tile;
+import com.adventurer.main.Coordinate;
+import com.adventurer.main.Handler;
+import com.adventurer.main.SpriteCreator;
+import com.adventurer.main.SpriteType;
+import com.adventurer.main.World;
 
 public abstract class GameObject {
 
-	protected Coordinate worldPosition; // this is WORLD position, in pixels.
-	protected Coordinate tilePosition; // this is TILE position in the grid.
+	private Coordinate worldPosition; // this is WORLD position, in pixels.
+	private Coordinate tilePosition; // this is TILE position in the grid.
 	
 	protected boolean hidden = true;
 	protected boolean discovered = false;
@@ -58,6 +62,11 @@ public abstract class GameObject {
 		
 		// hide 
 		Hide();
+	}
+	
+	public String GetInfo() {
+		return "GameObject: " + this.toString() + ", tilePos: (" + this.GetTilePosition().getX() + ", " + this.GetTilePosition().getY() +"), "
+				+ "worldPos: (" + this.GetWorldPosition().getX() + ", " + this.GetWorldPosition().getY() + ")";
 	}
 	
 	public void Discover() { 

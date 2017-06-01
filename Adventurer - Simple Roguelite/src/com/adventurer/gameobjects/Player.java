@@ -21,19 +21,19 @@ public class Player extends Actor {
 			UpdatePosition();
 			
 			// update LOS
-			if(losmanager != null) losmanager.CalculateLos(tilePosition);
+			if(losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
 			
 		} else {
 			
-			OnDeath(World.instance.GetTileAtPosition(tilePosition));
+			OnDeath(World.instance.GetTileAtPosition(this.GetTilePosition()));
 			
 		}
 	}
 	
 	public void render(Graphics g) {
 		
-		int x = worldPosition.getX();
-		int y = worldPosition.getY();
+		int x = this.GetWorldPosition().getX();
+		int y = this.GetWorldPosition().getY();
 		
 		if(lookDir == Direction.East) {
 			
@@ -42,10 +42,16 @@ public class Player extends Actor {
 			}
 			
 			g.drawImage(flippedSpriteHor, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			
 		} else if(lookDir == Direction.West) {
+			
 			g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			
 		} else {
+			
+			// TODO: up & down
 			g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			
 		}
 	}
 	
@@ -58,25 +64,27 @@ public class Player extends Actor {
 		
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null) {
 						
-			// tile is our new tile
-			world.GetTileAtPosition(this.tilePosition).SetActor(null);
+			// we are no longer on the last tile
+			Tile lastTile = world.GetTileAtPosition(this.GetTilePosition());
+			lastTile.SetActor(null);
 			
 			// update our tile position
-			tilePosition.setX(tile.GetTilePosition().getX());
-			tilePosition.setY(tile.GetTilePosition().getY());
+			this.GetTilePosition().setX(tile.GetTilePosition().getX());
+			this.GetTilePosition().setY(tile.GetTilePosition().getY());
 			
 			// update our world position
-			targetx = tile.GetWorldPosition().getX();
-			targety = tile.GetWorldPosition().getY();
+			this.targetx = tile.GetWorldPosition().getX();
+			this.targety = tile.GetWorldPosition().getY();
 			
 			// set the tile's actor to be this.
 			tile.SetActor(this);
 			
 			// set off trap
 			if(tile instanceof Trap) {
-				Trap trap = (Trap) tile;
-				trap.Activate();
+				((Trap)tile).Activate();
 			}
+			
+			System.out.println(lastTile.GetInfo() + "\n" + tile.GetInfo() + "\n");
 			
 		} else if(tile.GetTileType() == TileType.Door) {
 			
@@ -89,9 +97,6 @@ public class Player extends Actor {
 			
 		} else if(tile.GetTileType() == TileType.DestructibleObject) {
 			
-			// TODO: Something with the desctructible objects.
-			//new Effect(tile.GetX(), tile.GetY(), tile.GetPosition()[0], tile.GetPosition()[1], SpriteType.Hit01, 100);
-			//tile.GetTileHealth().TakeDamage(100);
 			
 		}
 	}

@@ -51,8 +51,7 @@ public class LoSManager {
 				break;
 			}
 			
-			// add to found tiles.
-			retTiles.add(tile);
+			if(tile != null) retTiles.add(tile);
 			
 			offset ++;
 			
@@ -81,9 +80,9 @@ public class LoSManager {
 		foundTiles.addAll(CalculateLosToDirection(position, ActorManager.GetPlayerInstance().GetLookDirection()));
 		
 		// surrounding tiles
-		for(Tile tile : world.GetSurroundingTiles(position)) {
+		/*for(Tile tile : world.GetSurroundingTiles(position)) {
 			foundTiles.add(tile);
-		}
+		}*/
 		
 		// ------------------------
 		// 3. show tiles

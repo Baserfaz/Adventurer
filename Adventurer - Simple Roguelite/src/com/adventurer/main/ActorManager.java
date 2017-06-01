@@ -4,8 +4,8 @@ import com.adventurer.gameobjects.*;
 
 public class ActorManager {
 
-	private static Player playerInstance;
-	private static Enemy[] enemyInstances;
+	private static Player playerInstance = null;
+	private static Enemy[] enemyInstances = null;
 	
 	public static Player CreatePlayerInstance(int maxHP, int damage) {
 		

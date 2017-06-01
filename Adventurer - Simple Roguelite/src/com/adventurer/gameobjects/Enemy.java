@@ -32,8 +32,8 @@ public class Enemy extends Actor {
 
 	public void render(Graphics g) {
 		
-		int x = worldPosition.getX();
-		int y = worldPosition.getY();
+		int x = this.GetWorldPosition().getX();
+		int y = this.GetWorldPosition().getY();
 		
 		if(hidden == false) {
 			
@@ -91,7 +91,7 @@ public class Enemy extends Actor {
 			UpdatePosition();
 			
 		} else {
-			OnDeath(World.instance.GetTileAtPosition(tilePosition));
+			OnDeath(World.instance.GetTileAtPosition(this.GetTilePosition()));
 		}
 	}
 	
@@ -107,11 +107,11 @@ public class Enemy extends Actor {
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null) {
 			
 			// tile is our new tile
-			world.GetTileAtPosition(tilePosition).SetActor(null);
+			world.GetTileAtPosition(this.GetTilePosition()).SetActor(null);
 			
 			// update our tile position
-			tilePosition.setX(tile.GetTilePosition().getX());
-			tilePosition.setY(tile.GetTilePosition().getY());
+			this.GetTilePosition().setX(tile.GetTilePosition().getX());
+			this.GetTilePosition().setY(tile.GetTilePosition().getY());
 			
 			// update our world position
 			targetx = tile.GetWorldPosition().getX();
@@ -124,6 +124,12 @@ public class Enemy extends Actor {
 			if(tile.isHidden()) {
 				this.Hide();
 			}
+			
+			// set off trap
+			if(tile instanceof Trap) {
+				((Trap)tile).Activate();
+			}
+			
 			
 		} else if(tile.GetTileType() == TileType.Door) {
 			

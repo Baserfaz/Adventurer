@@ -7,7 +7,7 @@ import com.adventurer.main.*;
 
 public class Actor extends GameObject {
 	
-	protected int targetx = worldPosition.getX(), targety = worldPosition.getY(); 
+	protected int targetx = this.GetWorldPosition().getX(), targety = this.GetWorldPosition().getY(); 
 	protected int movementSpeed = 2;
 	
 	protected BufferedImage flippedSpriteHor = null;
@@ -28,7 +28,7 @@ public class Actor extends GameObject {
 		this.myHP = new Health(maxHP, this);
 		
 		// register to tile
-		World.instance.GetTileAtPosition(tilePosition).SetActor(this);
+		World.instance.GetTileAtPosition(tilePos).SetActor(this);
 		
 	}
 	
@@ -80,29 +80,29 @@ public class Actor extends GameObject {
 	}
 	
 	protected void UpdatePosition() {
-		int x = worldPosition.getX();
-		int y = worldPosition.getY();
+		int x = this.GetWorldPosition().getX();
+		int y = this.GetWorldPosition().getY();
 		
 		// smooth movement
 		if(x < targetx - movementSpeed || x > targetx + movementSpeed) {
 			
-			if(targetx < x) worldPosition.decreaseX(movementSpeed);
-			else if(targetx > x) worldPosition.addX(movementSpeed);
+			if(targetx < x) this.GetWorldPosition().decreaseX(movementSpeed);
+			else if(targetx > x) this.GetWorldPosition().addX(movementSpeed);
 			
 			canMove = false;
 			
 		} else if(y < targety - movementSpeed || y > targety + movementSpeed) {
 			
-			if(targety < y) worldPosition.decreaseY(movementSpeed);
-			else if(targety > y) worldPosition.addY(movementSpeed);
+			if(targety < y) this.GetWorldPosition().decreaseY(movementSpeed);
+			else if(targety > y) this.GetWorldPosition().addY(movementSpeed);
 			
 			canMove = false;
 			
 		} else {
 			
 			// force move the actor to the exact tile's position.
-			worldPosition.setX(targetx);
-			worldPosition.setY(targety);
+			this.GetWorldPosition().setX(targetx);
+			this.GetWorldPosition().setY(targety);
 			
 			canMove = true;
 		}
@@ -137,6 +137,6 @@ public class Actor extends GameObject {
 	}
 	
 	public Rectangle GetBounds() {
-		return new Rectangle(worldPosition.getX(), worldPosition.getY(), Game.SPRITESIZE, Game.SPRITESIZE);
+		return new Rectangle(this.GetWorldPosition().getX(), this.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE);
 	}
 }

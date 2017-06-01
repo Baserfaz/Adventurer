@@ -13,8 +13,8 @@ public class Projectile extends GameObject {
 	
 	private int movementSpeed = 3;
 	
-	private int targetx = worldPosition.getX();
-	private int targety = worldPosition.getY();
+	private int targetx = this.GetWorldPosition().getX();
+	private int targety = this.GetWorldPosition().getY();
 	
 	private boolean canMove = false;
 	
@@ -27,29 +27,29 @@ public class Projectile extends GameObject {
 
 	public void tick() {
 		
-		int x = worldPosition.getX();
-		int y = worldPosition.getY();
+		int x = this.GetWorldPosition().getX();
+		int y = this.GetWorldPosition().getY();
 		
 		// smooth movement
 		if(x < targetx - movementSpeed || x > targetx + movementSpeed) {
 			
-			if(targetx < x) worldPosition.decreaseX(movementSpeed);
-			else if(targetx > x) worldPosition.addX(movementSpeed);
+			if(targetx < x) this.GetWorldPosition().decreaseX(movementSpeed);
+			else if(targetx > x) this.GetWorldPosition().addX(movementSpeed);
 			
 			canMove = false;
 			
 		} else if(y < targety - movementSpeed || y > targety + movementSpeed) {
 			
-			if(targety < y) worldPosition.decreaseY(movementSpeed);
-			else if(targety > y) worldPosition.addY(movementSpeed);
+			if(targety < y) this.GetWorldPosition().decreaseY(movementSpeed);
+			else if(targety > y) this.GetWorldPosition().addY(movementSpeed);
 			
 			canMove = false;
 			
 		} else {
 			
 			// force move the actor to the exact tile's position.
-			worldPosition.setX(targetx);
-			worldPosition.setY(targety);
+			this.GetWorldPosition().setX(targetx);
+			this.GetWorldPosition().setY(targety);
 			
 			canMove = true;
 		}
@@ -61,11 +61,11 @@ public class Projectile extends GameObject {
 
 	public void render(Graphics g) {
 		
-		int x = worldPosition.getX();
-		int y = worldPosition.getY();
+		int x = this.GetWorldPosition().getX();
+		int y = this.GetWorldPosition().getY();
 		
 		if(isAlive) {
-			if(World.instance.GetTileAtPosition(tilePosition.getX(), tilePosition.getY()).isHidden() == false) {
+			if(World.instance.GetTileAtPosition(this.GetTilePosition()).isHidden() == false) {
 				g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
 			}
 		}
@@ -83,11 +83,11 @@ public class Projectile extends GameObject {
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null) {
 			
 			// tile is our new tile
-			world.GetTileAtPosition(tilePosition.getX(), tilePosition.getY()).SetActor(null);
+			world.GetTileAtPosition(this.GetTilePosition()).SetActor(null);
 			
 			// update our tile position
-			tilePosition.setX(tile.GetTilePosition().getX());
-			tilePosition.setY(tile.GetTilePosition().getY());
+			this.GetTilePosition().setX(tile.GetTilePosition().getX());
+			this.GetTilePosition().setY(tile.GetTilePosition().getY());
 			
 			// update our world position
 			targetx = world.ConvertTilePositionToWorld(tile.GetTilePosition().getX());

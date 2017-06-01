@@ -3,6 +3,8 @@ package com.adventurer.main;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import com.adventurer.gameobjects.GameObject;
+
 public class Effect extends GameObject {
 	
 	private long liveTimer = 0;
@@ -42,7 +44,7 @@ public class Effect extends GameObject {
 	
 	public void render(Graphics g) {
 		if(isAlive)
-			g.drawImage(sprite, worldPosition.getX(), worldPosition.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
+			g.drawImage(sprite, this.GetWorldPosition().getX(), this.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
 	}
 
 	public Rectangle GetBounds() {

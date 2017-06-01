@@ -25,7 +25,7 @@ public class Bomb extends Actor {
 			alive = false;
 			
 			// do damage to items near this position
-			List<Tile> tiles = World.instance.GetTilesInCardinalDirection(tilePosition.getX(), tilePosition.getY());
+			List<Tile> tiles = World.instance.GetTilesInCardinalDirection(this.GetTilePosition());
 			
 			// add the current tile to the tiles list
 			tiles.add(World.instance.GetTileAtPosition(this.GetTilePosition()));
@@ -72,9 +72,12 @@ public class Bomb extends Actor {
 	
 	public void render(Graphics g) {
 	
+		int x = this.GetWorldPosition().getX();
+		int y = this.GetWorldPosition().getY();
+		
 		if(alive && hidden == false) {
 			
-			g.drawImage(sprite, worldPosition.getX(), worldPosition.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
+			g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
 			
 		} else if(alive && discovered == true && hidden == true) {
 			
@@ -82,7 +85,7 @@ public class Bomb extends Actor {
 				tintedSprite = Util.tint(sprite);
 			}
 			
-			g.drawImage(tintedSprite, worldPosition.getX(), worldPosition.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
+			g.drawImage(tintedSprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
 			
 		}
 	}

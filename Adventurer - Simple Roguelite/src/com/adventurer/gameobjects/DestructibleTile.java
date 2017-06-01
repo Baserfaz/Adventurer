@@ -29,7 +29,7 @@ public class DestructibleTile extends Tile {
 			Rectangle camera = Game.instance.camera;
 			
 			if(camera != null) {
-				if(camera.contains(worldPosition.getX() + World.tileSize / 2, worldPosition.getY() + World.tileSize / 2)) {
+				if(camera.contains(this.GetWorldPosition().getX() + World.tileSize / 2, this.GetWorldPosition().getY() + World.tileSize / 2)) {
 					inView = true;
 					Show();
 				} else {
@@ -40,8 +40,8 @@ public class DestructibleTile extends Tile {
 			}
 			
 			// move the tile
-			if(worldPosition.getY() < targety + fallingSpeed) {
-				if(worldPosition.getY() < targety) worldPosition.addY(fallingSpeed);
+			if(this.GetWorldPosition().getY() < targety + fallingSpeed) {
+				if(this.GetWorldPosition().getY() < targety) this.GetWorldPosition().addY(fallingSpeed);
 			}
 		}
 	}

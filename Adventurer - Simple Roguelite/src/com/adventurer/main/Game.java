@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 
-import com.adventurer.gameobjects.Enemy;
 import com.adventurer.gameobjects.Player;
 
 public class Game extends Canvas implements Runnable {
@@ -26,11 +25,15 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private boolean isRunning = false;
 	
+	private Window window;
+	
 	public Rectangle camera = new Rectangle();
 	
 	// tiles
 	private final int worldHeight = 20;
 	private final int worldWidth = 30;
+	
+	private boolean gameReady = false;
 	
 	public Game() {
 		
@@ -39,10 +42,12 @@ public class Game extends Canvas implements Runnable {
 		instance = this;
 		
 		// create object handler
-		Handler handler = new Handler();
+		new Handler();
+		
+		KeyInput keyInput = new KeyInput();
 		
 		// create key listener for inputs.
-		this.addKeyListener(new KeyInput(handler));
+		this.addKeyListener(keyInput);
 		
 		// create mouse input object
 		MouseInput mouseInput = new MouseInput();
@@ -52,7 +57,7 @@ public class Game extends Canvas implements Runnable {
 		this.addMouseListener(mouseInput);
 		
 		// create window 
-		new Window(WIDTH, HEIGHT, "Adventurer", this);
+		window = new Window(WIDTH, HEIGHT, "Adventurer", this);
 		
 		// create sprite creator
 		new SpriteCreator(spritesheetname);
@@ -63,8 +68,13 @@ public class Game extends Canvas implements Runnable {
 		// create player
 		ActorManager.CreatePlayerInstance(300, 100);
 		
+		System.out.println("Player spawned:" + ActorManager.GetPlayerInstance().GetInfo());
+		
+		
 		// create enemies
-		ActorManager.CreateEnemies(10);
+		//ActorManager.CreateEnemies(10);
+		
+		gameReady = true;
 	}
 	
 	public synchronized void Start() {
@@ -87,7 +97,10 @@ public class Game extends Canvas implements Runnable {
 	// and originally taken from Notch's work.
 	// Also applied stuff from https://www.youtube.com/watch?v=rwjZDfcQ7Rc&list=PLEETnX-uPtBXP_B2yupUKlflXBznWIlL5&index=3
 	public void run() {
-		
+		GameLoop();
+	}
+	
+	private void GameLoop() {
 		long lastTime = System.nanoTime();
 		double unprocessedTime = 0;
 		
@@ -105,7 +118,7 @@ public class Game extends Canvas implements Runnable {
 			long passedTime = now - lastTime;
 			lastTime = now;
 			
-			unprocessedTime += passedTime / (double)SECOND;
+			unprocessedTime += passedTime / (double) SECOND;
 			frameCounter += passedTime;
 			
 			while(unprocessedTime > frameTime) {
@@ -113,10 +126,10 @@ public class Game extends Canvas implements Runnable {
 				render = true;
 				unprocessedTime -= frameTime;
 				
-				tick();
+				if(gameReady) tick();
 				
 				if(frameCounter >= SECOND) {
-					System.out.println("FPS: " + frames);
+					window.SetCustomTitle("FPS: " + frames);
 					frames = 0;
 					frameCounter = 0;
 				}
@@ -126,13 +139,12 @@ public class Game extends Canvas implements Runnable {
 			if(isRunning && render) {
 				render();
 				frames++;
-				
 			} else {
-				/*try {
+				try {
 					Thread.sleep(1);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				}*/
+				}
 			}
 		}
 		
@@ -174,7 +186,7 @@ public class Game extends Canvas implements Runnable {
 			camera.setBounds(-targetx - SPRITESIZE, -targety - SPRITESIZE, SPRITESIZE * 21, SPRITESIZE * 12);
 		}
 		
-		// render objects on top of it.
+		// render objects
 		Handler.instance.render(g);
 		
 		// render GUI

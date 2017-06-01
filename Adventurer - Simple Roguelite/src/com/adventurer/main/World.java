@@ -58,6 +58,10 @@ public class World {
 		return retTile;
 	}
 	
+	public List<Tile> GetTilesInCardinalDirection(Coordinate pos) {
+		return GetTilesInCardinalDirection(pos.getX(), pos.getY());
+	}
+	
 	public List<Tile> GetTilesInCardinalDirection(int posx, int posy) {
 		
 		List<Tile> foundTiles = new ArrayList<Tile>();
@@ -207,7 +211,7 @@ public class World {
 		}
 		
 		// get a random number
-		int random = ThreadLocalRandom.current().nextInt(0, possibleTiles.size());
+		int random = Util.GetRandomInteger(0, possibleTiles.size());
 		
 		// get a random tile from possible tiles.
 		Tile randomTile = possibleTiles.get(random);
