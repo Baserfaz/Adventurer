@@ -66,11 +66,8 @@ public class Game extends Canvas implements Runnable {
 		// create player
 		ActorManager.CreatePlayerInstance(300, 100);
 		
-		System.out.println("Player spawned:" + ActorManager.GetPlayerInstance().GetInfo());
-		
-		
 		// create enemies
-		//ActorManager.CreateEnemies(10);
+		ActorManager.CreateEnemies(10);
 	}
 	
 	public synchronized void Start() {

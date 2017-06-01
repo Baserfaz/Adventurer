@@ -195,7 +195,47 @@ public class World {
 		return tile;
 	}
 	
-	public Coordinate[] GetFreePosition() {
+	public int[] GetFreePosition() {
+		
+		List<Tile> possibleTiles = new ArrayList<Tile>();
+		int[] position = new int[4];
+		
+		// get all possible tiles
+		for(int i = 0; i < tiles.size(); i++) {
+			
+			Tile tile = tiles.get(i);
+			
+			if(tile.GetTileType() == TileType.Floor && tile.GetActor() == null) {
+				possibleTiles.add(tile);
+			}
+		}
+		
+		// get a random number
+		int random = Util.GetRandomInteger(0, possibleTiles.size());
+		
+		// get a random tile from possible tiles.
+		Tile randomTile = possibleTiles.get(random);
+		
+		// get the position of random tile.
+		Coordinate randTilePos = randomTile.GetTilePosition();
+		
+		// world-x
+		position[0] = randomTile.GetWorldPosition().getX();
+		
+		// world-y
+		position[1] = randomTile.GetWorldPosition().getY();
+		
+		// tile-x
+		position[2] = randTilePos.getX();
+		
+		// tile-y
+		position[3] = randTilePos.getY();
+		
+		return position;
+	}
+	
+	// THIS CAUSES PROBLEMS - NO IDEA WHY!!??
+	/*public Coordinate[] GetFreePosition() {
 		
 		List<Tile> possibleTiles = new ArrayList<Tile>();
 		Coordinate[] position = new Coordinate[2];
@@ -221,7 +261,7 @@ public class World {
 		position[1] = randomTile.GetTilePosition();
 		
 		return position;
-	}
+	}*/
 	
 	public int ConvertTilePositionToWorld(int pos) {
 		return (pos * tileSize + tileGap * pos);

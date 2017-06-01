@@ -17,11 +17,11 @@ public class ActorManager {
 		World world = World.instance.GetWorld();
 		
 		// get position
-		Coordinate[] pos = world.GetFreePosition();
+		int[] pos = world.GetFreePosition();
 		
 		// create coordinates
-		Coordinate playerWorldPos = pos[0];
-		Coordinate playerTilePos = pos[1];
+		Coordinate playerWorldPos = new Coordinate(pos[0], pos[1]);
+		Coordinate playerTilePos = new Coordinate(pos[2], pos[3]);
 		
 		// create player and add it to our handler.
 		playerInstance = new Player(playerWorldPos, playerTilePos, SpriteType.Player, maxHP, damage);
@@ -39,7 +39,7 @@ public class ActorManager {
 	public static Enemy CreateEnemy(int maxHP, int damage, EnemyType enemyType) {
 		
 		// get position
-		Coordinate[] pos = World.instance.GetFreePosition();
+		int[] pos = World.instance.GetFreePosition();
 		
 		SpriteType spriteType = null;
 		
@@ -58,8 +58,8 @@ public class ActorManager {
 			break;
 		}
 		
-		Coordinate enemyWorldPos = pos[0];
-		Coordinate enemyTilePos = pos[1];
+		Coordinate enemyWorldPos = new Coordinate(pos[0], pos[1]);
+		Coordinate enemyTilePos = new Coordinate(pos[2], pos[3]);
 		
 		// create enemy object
 		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, 300, 100);
