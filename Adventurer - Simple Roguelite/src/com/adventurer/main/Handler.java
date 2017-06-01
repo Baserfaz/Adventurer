@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adventurer.gameobjects.GameObject;
+
 public class Handler {
 
 	private List<GameObject> objects = new ArrayList<GameObject>();

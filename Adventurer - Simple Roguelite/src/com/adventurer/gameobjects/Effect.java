@@ -1,7 +1,9 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+
+import com.adventurer.main.*;
 
 public class Effect extends GameObject {
 	

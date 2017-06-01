@@ -1,5 +1,7 @@
 package com.adventurer.main;
 
+import com.adventurer.gameobjects.GameObject;
+
 public class Health {
 	
 	private GameObject owner;

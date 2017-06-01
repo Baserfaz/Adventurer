@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.adventurer.gameobjects.DestructibleTile;
+import com.adventurer.gameobjects.Door;
+import com.adventurer.gameobjects.Tile;
+import com.adventurer.gameobjects.Trap;
+
 public class World {
 
 	private int height;

@@ -1,7 +1,9 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import com.adventurer.main.*;
 
 public class Enemy extends Actor {
 

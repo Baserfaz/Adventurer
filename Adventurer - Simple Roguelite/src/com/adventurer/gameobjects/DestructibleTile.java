@@ -1,6 +1,8 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
 
 import java.awt.Rectangle;
+
+import com.adventurer.main.*;
 
 public class DestructibleTile extends Tile {
 

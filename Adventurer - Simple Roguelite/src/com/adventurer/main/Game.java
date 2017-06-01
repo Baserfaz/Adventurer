@@ -12,6 +12,9 @@ import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.adventurer.gameobjects.Enemy;
+import com.adventurer.gameobjects.Player;
+
 public class Game extends Canvas implements Runnable {
 	
 	private static final long serialVersionUID = -5226776943692411279L;
@@ -22,6 +25,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int SPRITESIZE = 16;
 	public static final int CAMERAZOOM = 4; 
 	public static final String spritesheetname = "spritesheet.png";
+	public static final double FRAME_CAP = 60.0;
 	
 	private Thread thread;
 	private boolean isRunning = false;
@@ -30,16 +34,13 @@ public class Game extends Canvas implements Runnable {
 	private SpriteCreator spritecreator;
 	private World world;
 	private Player player;
+	private Window window;
 	
 	public Rectangle camera = new Rectangle();
 	
 	// tiles
-	private final int worldHeight = 20;
-	private final int worldWidth = 30;
-	
-	// pixels
-	private int worldHeightPixels = 0;
-	private int worldWidthPixels = 0;
+	private final int worldHeight = 10;
+	private final int worldWidth = 10;
 	
 	public Game() {
 		
@@ -61,17 +62,13 @@ public class Game extends Canvas implements Runnable {
 		this.addMouseListener(mouseinput);
 		
 		// create window 
-		new Window(WIDTH, HEIGHT, "Adventurer", this);
+		window = new Window(WIDTH, HEIGHT, "Adventurer", this);
 		
 		// create sprite creator
 		spritecreator = new SpriteCreator(spritesheetname);
 		
 		// create world
 		world = new World(worldWidth, worldHeight);
-		
-		// calculate world bounds
-		worldWidthPixels = worldWidth * SPRITESIZE + worldWidth * World.tileGap;
-		worldHeightPixels = worldHeight * SPRITESIZE + worldHeight * World.tileGap;
 		
 		// get position
 		// return world positions 0, 1 
@@ -143,7 +140,7 @@ public class Game extends Canvas implements Runnable {
 		int frames = 0;
 		long frameCounter = 0;
 		
-		final double frameTime = 1 / 60.0;
+		final double frameTime = 1 / FRAME_CAP;
 		final long SECOND = 1000000000L;
 		
 		while(isRunning) {
@@ -165,7 +162,7 @@ public class Game extends Canvas implements Runnable {
 				tick();
 				
 				if(frameCounter >= SECOND) {
-					//window.SetCustomTitle("FPS: " + frames);
+					window.SetCustomTitle("FPS: " + frames);
 					frames = 0;
 					frameCounter = 0;
 				}

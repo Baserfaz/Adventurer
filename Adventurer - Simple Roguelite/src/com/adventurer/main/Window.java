@@ -9,10 +9,15 @@ public class Window extends Canvas {
 	
 	private static final long serialVersionUID = 351245801233048538L;
 	
+	private JFrame frame;
+	private String title;
+	
 	public Window(int width, int height, String title, Game game) {
 		
+		this.title = title;
+		
 		// create a new frame
-		JFrame frame = new JFrame(title);
+		frame = new JFrame(title);
 		
 		// set the dimensions of the frame
 		frame.setPreferredSize(new Dimension(width, height));
@@ -40,4 +45,9 @@ public class Window extends Canvas {
 		// start the game
 		game.Start();
 	}
+	
+	public void SetCustomTitle(String text) {
+		frame.setTitle(title + ", " + text);
+	}
+	
 }

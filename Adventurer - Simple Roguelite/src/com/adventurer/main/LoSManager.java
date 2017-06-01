@@ -3,6 +3,9 @@ package com.adventurer.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adventurer.gameobjects.Player;
+import com.adventurer.gameobjects.Tile;
+
 public class LoSManager {
 	
 	private List<Tile> foundTiles = new ArrayList<Tile>();

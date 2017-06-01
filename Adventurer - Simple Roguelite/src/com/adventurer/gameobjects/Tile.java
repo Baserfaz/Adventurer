@@ -1,13 +1,13 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
 
-import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.adventurer.main.*;
 
 public class Tile extends GameObject {
 
