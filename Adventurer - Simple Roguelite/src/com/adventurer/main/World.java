@@ -329,6 +329,10 @@ public class World {
 		
 	}
 	
+	public void CreateIndestructibleWalls() {
+		// TODO
+	}
+	
 	public void CreateDoors() {
 		
 		for(int y = 0; y < height; y++) {
@@ -454,18 +458,7 @@ public class World {
 					} else {
 						
 						// create wall
-						if(Util.GetRandomInteger() > 90) {
-							
-							// destructible wall
-							tile = (DestructibleTile) new DestructibleTile(worldPos, 
-									SpriteType.DestructibleWall, TileType.DestructibleObject, tilePos, 300);
-							
-						} else {
-							
-							// indestructible wall
-							tile = new Tile(worldPos, SpriteType.Wall01, TileType.Wall, tilePos);
-							
-						}
+						tile = new Tile(worldPos, SpriteType.Wall01, TileType.Wall, tilePos);
 					}
 				}
 				
@@ -481,6 +474,7 @@ public class World {
 		
 		CreateDoors();
 		CreateTraps();
+		CreateIndestructibleWalls();
 		CreateVanityItems();
 	}
 	

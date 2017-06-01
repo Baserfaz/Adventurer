@@ -21,7 +21,7 @@ public class Player extends Actor {
 			UpdatePosition();
 			
 			// update LOS
-			if(losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
+			//if(losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
 			
 		} else {
 			
@@ -62,8 +62,10 @@ public class Player extends Actor {
 		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), dir);
 		World world = World.instance.GetWorld();
 		
+		System.out.println("NEW: " + tile.GetInfo() + ", tile actor: " + tile.GetActor());
+		
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null) {
-						
+			
 			// we are no longer on the last tile
 			Tile lastTile = world.GetTileAtPosition(this.GetTilePosition());
 			lastTile.SetActor(null);
@@ -84,7 +86,7 @@ public class Player extends Actor {
 				((Trap)tile).Activate();
 			}
 			
-			System.out.println(lastTile.GetInfo() + "\n" + tile.GetInfo() + "\n");
+			System.out.println("OLD: " + lastTile.GetInfo() + ", tile actor: " + lastTile.GetActor() + "\n");
 			
 		} else if(tile.GetTileType() == TileType.Door) {
 			
@@ -97,7 +99,7 @@ public class Player extends Actor {
 			
 		} else if(tile.GetTileType() == TileType.DestructibleObject) {
 			
-			
+			System.out.println("DESTRUCTIBLE TILE TODO");
 		}
 	}
 }

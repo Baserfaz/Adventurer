@@ -30,10 +30,8 @@ public class Game extends Canvas implements Runnable {
 	public Rectangle camera = new Rectangle();
 	
 	// tiles
-	private final int worldHeight = 20;
-	private final int worldWidth = 30;
-	
-	private boolean gameReady = false;
+	private final int worldHeight = 10;
+	private final int worldWidth = 10;
 	
 	public Game() {
 		
@@ -73,8 +71,6 @@ public class Game extends Canvas implements Runnable {
 		
 		// create enemies
 		//ActorManager.CreateEnemies(10);
-		
-		gameReady = true;
 	}
 	
 	public synchronized void Start() {
@@ -126,7 +122,7 @@ public class Game extends Canvas implements Runnable {
 				render = true;
 				unprocessedTime -= frameTime;
 				
-				if(gameReady) tick();
+				tick();
 				
 				if(frameCounter >= SECOND) {
 					window.SetCustomTitle("FPS: " + frames);
@@ -139,12 +135,6 @@ public class Game extends Canvas implements Runnable {
 			if(isRunning && render) {
 				render();
 				frames++;
-			} else {
-				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 		}
 		
