@@ -1,5 +1,6 @@
 package com.adventurer.main;
 
+import com.adventurer.gameobjects.Effect;
 import com.adventurer.gameobjects.Tile;
 
 public class EffectCreator {
