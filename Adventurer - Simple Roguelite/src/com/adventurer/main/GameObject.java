@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.adventurer.gameobjects.Tile;
+
 public abstract class GameObject {
 
 	protected Coordinate worldPosition; // this is WORLD position, in pixels.
@@ -34,7 +36,7 @@ public abstract class GameObject {
 		this.sprite = SpriteCreator.instance.CreateSprite(spritetype);
 		
 		// add to handler
-		Game.instance.GetHandler().AddObject(this);
+		Handler.instance.AddObject(this);
 	}
 	
 	public abstract void tick();
@@ -52,7 +54,7 @@ public abstract class GameObject {
 		
 		// remove this object from handler
 		// -> no longer ticks
-		Game.instance.GetHandler().RemoveObject(this);
+		Handler.instance.RemoveObject(this);
 		
 		// hide 
 		Hide();

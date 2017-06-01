@@ -3,22 +3,25 @@ package com.adventurer.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adventurer.gameobjects.*;
+
 public class LoSManager {
 	
-	private List<Tile> foundTiles = new ArrayList<Tile>();
+	public LoSManager() {}
 	
-	private Player player;
-	
-	public LoSManager(Player player) {
-		this.player = player;
-	}
-	
-	private void CalculateLosToDirection(World world, int x, int y, Direction dir) {
+	private List<Tile> CalculateLosToDirection(Coordinate pos, Direction dir) {
+		
+		List<Tile> retTiles = new ArrayList<Tile>();
+		
+		int x = pos.getX();
+		int y = pos.getY();
+		World world = World.instance.GetWorld();
+		
 		Tile tile = null;
 		int offset = 1;
 		
 		// add the tile that we are currently standing on.
-		foundTiles.add(world.GetTileAtPosition(x, y));
+		retTiles.add(world.GetTileAtPosition(pos));
 		
 		do {	
 			switch(dir) {
@@ -49,19 +52,21 @@ public class LoSManager {
 			}
 			
 			// add to found tiles.
-			foundTiles.add(tile);
+			retTiles.add(tile);
 			
 			offset ++;
 			
 		} while ((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null);
+		
+		return retTiles;
 	}
 	
 	public void CalculateLos(Coordinate position) {
 		
-		int x = position.getX();
-		int y = position.getY();
+		// list of tiles that are visible
+		List<Tile> foundTiles = new ArrayList<Tile>();
 		
-		World world = Game.instance.GetWorld();
+		World world = World.instance.GetWorld();
 		
 		// 1. hide everything
 		List<Tile> allTiles = world.GetTiles();
@@ -69,21 +74,22 @@ public class LoSManager {
 			allTiles.get(i).Hide();
 		}
 		
-		// 2. calculate fov
-		CalculateLosToDirection(world, x, y, player.GetLookDirection());
+		// 2. calculate FOV
+		// ------------------------
 		
-		// add surrounding tiles to view too.
-		for(Tile tile : World.instance.GetSurroundingTiles(position)) {
+		// straight line
+		foundTiles.addAll(CalculateLosToDirection(position, ActorManager.GetPlayerInstance().GetLookDirection()));
+		
+		// surrounding tiles
+		for(Tile tile : world.GetSurroundingTiles(position)) {
 			foundTiles.add(tile);
 		}
 		
+		// ------------------------
 		// 3. show tiles
 		for(Tile tile : foundTiles) {
 			tile.Discover();
 			tile.Show();
 		}
-		
-		// clear the array
-		foundTiles.clear();
 	}
 }

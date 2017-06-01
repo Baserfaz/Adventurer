@@ -5,12 +5,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
-import java.util.concurrent.ThreadLocalRandom;
+
+import com.adventurer.gameobjects.Enemy;
+import com.adventurer.gameobjects.Player;
 
 public class Game extends Canvas implements Runnable {
 	
@@ -21,25 +19,18 @@ public class Game extends Canvas implements Runnable {
 	public static final int WIDTH = 1280, HEIGHT = 720;
 	public static final int SPRITESIZE = 16;
 	public static final int CAMERAZOOM = 4; 
+	public static final double FRAME_CAP = 60.0;
+	
 	public static final String spritesheetname = "spritesheet.png";
 	
 	private Thread thread;
 	private boolean isRunning = false;
-	
-	private Handler handler;
-	private SpriteCreator spritecreator;
-	private World world;
-	private Player player;
 	
 	public Rectangle camera = new Rectangle();
 	
 	// tiles
 	private final int worldHeight = 20;
 	private final int worldWidth = 30;
-	
-	// pixels
-	private int worldHeightPixels = 0;
-	private int worldWidthPixels = 0;
 	
 	public Game() {
 		
@@ -48,73 +39,32 @@ public class Game extends Canvas implements Runnable {
 		instance = this;
 		
 		// create object handler
-		handler = new Handler();
+		Handler handler = new Handler();
 		
 		// create key listener for inputs.
 		this.addKeyListener(new KeyInput(handler));
 		
 		// create mouse input object
-		MouseInput mouseinput = new MouseInput();
+		MouseInput mouseInput = new MouseInput();
 		
 		// create mouse listener
-		this.addMouseMotionListener(mouseinput);
-		this.addMouseListener(mouseinput);
+		this.addMouseMotionListener(mouseInput);
+		this.addMouseListener(mouseInput);
 		
 		// create window 
 		new Window(WIDTH, HEIGHT, "Adventurer", this);
 		
 		// create sprite creator
-		spritecreator = new SpriteCreator(spritesheetname);
+		new SpriteCreator(spritesheetname);
 		
 		// create world
-		world = new World(worldWidth, worldHeight);
+		new World(worldWidth, worldHeight);
 		
-		// calculate world bounds
-		worldWidthPixels = worldWidth * SPRITESIZE + worldWidth * World.tileGap;
-		worldHeightPixels = worldHeight * SPRITESIZE + worldHeight * World.tileGap;
-		
-		// get position
-		// return world positions 0, 1 
-		// and tile positions 2, 3
-		int[] pos = world.GetFreePosition();
-		
-		Coordinate playerWorldPos = new Coordinate(pos[0], pos[1]);
-		Coordinate playerTilePos = new Coordinate(pos[2], pos[3]);
-		
-		// create player and add it to our handler.
-		player = new Player(playerWorldPos, playerTilePos, SpriteType.Player, 300, 100);
+		// create player
+		ActorManager.CreatePlayerInstance(300, 100);
 		
 		// create enemies
-		for(int i = 0; i < 10; i++) {
-			
-			// get position
-			int[] epos = world.GetFreePosition();
-			
-			// creates a list of enemy sprites
-			EnemyType randomType = EnemyType.values()[Util.GetRandomInteger(0, EnemyType.values().length)];
-			SpriteType spriteType = null;
-			
-			switch(randomType) {
-			case Skeleton:
-				spriteType = SpriteType.Skeleton01;
-				break;
-			case Zombie:
-				spriteType = SpriteType.Zombie01;
-				break;
-			case Maggot:
-				spriteType = SpriteType.Maggot01;
-				break;
-			default:
-				System.out.println("SPRITETYPE NOT FOUND FOR ENEMYTYPE: " + randomType);
-				break;
-			}
-			
-			Coordinate enemyWorldPos = new Coordinate(epos[0], epos[1]);
-			Coordinate enemyTilePos = new Coordinate(epos[2], epos[3]);
-			
-			// create enemy object
-			new Enemy(enemyWorldPos, enemyTilePos, 300, randomType, spriteType, 100);
-		}
+		ActorManager.CreateEnemies(10);
 	}
 	
 	public synchronized void Start() {
@@ -134,48 +84,59 @@ public class Game extends Canvas implements Runnable {
 	
 	// Taken from Ryan van Zeben - Java Game Engine Development video series.
 	// https://www.youtube.com/watch?v=VE7ezYCTPe4&list=PL8CAB66181A502179
+	// and originally taken from Notch's work.
+	// Also applied stuff from https://www.youtube.com/watch?v=rwjZDfcQ7Rc&list=PLEETnX-uPtBXP_B2yupUKlflXBznWIlL5&index=3
 	public void run() {
 		
 		long lastTime = System.nanoTime();
-		double amountOfTicks = 60.0;
-		double ns = 1000000000 / amountOfTicks;
-		double delta = 0;
-		long timer = System.currentTimeMillis();
+		double unprocessedTime = 0;
+		
 		int frames = 0;
+		long frameCounter = 0;
+		
+		final double frameTime = 1 / FRAME_CAP;
+		final long SECOND = 1000000000L;
 		
 		while(isRunning) {
 			
-			// calculate delta time between last time and the current time.
+			boolean render = false;
+			
 			long now = System.nanoTime();
-			delta += (now - lastTime) / ns;
+			long passedTime = now - lastTime;
 			lastTime = now;
 			
-			// tick the whole system.
-			while(delta >= 1) {
+			unprocessedTime += passedTime / (double)SECOND;
+			frameCounter += passedTime;
+			
+			while(unprocessedTime > frameTime) {
+				
+				render = true;
+				unprocessedTime -= frameTime;
+				
 				tick();
-				delta--;
+				
+				if(frameCounter >= SECOND) {
+					System.out.println("FPS: " + frames);
+					frames = 0;
+					frameCounter = 0;
+				}
 			}
 			
 			// render the scene
-			if(isRunning) {
+			if(isRunning && render) {
 				render();
-			}
-			
-			// increment frame
-			frames++;
-			
-			// print frame count
-			if(System.currentTimeMillis() - timer > 1000) {
-				timer += 1000;
-				System.out.println("FPS: " + frames);
-				frames = 0;
+				frames++;
+				
+			} else {
+				/*try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}*/
 			}
 		}
+		
 		Stop();
-	}
-	
-	public SpriteCreator GetSpriteCreator() {
-		return this.spritecreator;
 	}
 	
 	private void render() {
@@ -190,6 +151,8 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		Graphics2D g2d = (Graphics2D) g;
 		
+		//-------------------------------------------
+		
 		// set background
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
@@ -197,8 +160,8 @@ public class Game extends Canvas implements Runnable {
 		// zoom
 		g2d.scale(CAMERAZOOM, CAMERAZOOM);
 		
-		// player is the origin of the graphics
-		// --> camera follow effect
+		// camera follow
+		Player player = ActorManager.GetPlayerInstance();
 		if(player != null) {
 			
 			int targety = (-player.GetWorldPosition().getY() * CAMERAZOOM - (SPRITESIZE - HEIGHT / 2)) / CAMERAZOOM;
@@ -212,29 +175,23 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		// render objects on top of it.
-		handler.render(g);
+		Handler.instance.render(g);
 		
 		// render GUI
 		// after everything else.
-		// TODO
+		// TODO: GUI
+		
+		//-------------------------------------------
 		
 		g.dispose();
 		bs.show();
 	}
 
 	private void tick() {
-		handler.tick();
+		Handler.instance.tick();
 	}
 
 	public static void main(String args[]) {
 		new Game();
-	}
-	
-	public Handler GetHandler() {
-		return this.handler;
-	}
-	
-	public World GetWorld() {
-		return this.world;
 	}
 }

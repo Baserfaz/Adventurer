@@ -1,8 +1,9 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
+
+import com.adventurer.main.*;
 
 public class VanityItem extends GameObject {
 	
@@ -27,7 +28,7 @@ public class VanityItem extends GameObject {
 		
 		// remove this object from handler
 		// -> no longer ticks
-		Game.instance.GetHandler().RemoveObject(this);
+		Handler.instance.RemoveObject(this);
 		
 		// hide 
 		Hide();

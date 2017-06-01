@@ -1,5 +1,7 @@
 package com.adventurer.main;
 
+import com.adventurer.gameobjects.Tile;
+
 public class EffectCreator {
 
 	public static void CreateHitEffect(Tile tile) {

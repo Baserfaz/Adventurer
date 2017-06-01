@@ -1,9 +1,10 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
+
+import com.adventurer.main.*;
 
 public class Bomb extends Actor {
 

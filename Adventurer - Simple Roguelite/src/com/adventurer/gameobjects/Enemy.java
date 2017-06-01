@@ -1,7 +1,9 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import com.adventurer.main.*;
 
 public class Enemy extends Actor {
 
@@ -19,7 +21,7 @@ public class Enemy extends Actor {
 	private int lastXpos = 0;
 	private int lastYpos = 0;
 	
-	public Enemy(Coordinate worldPos, Coordinate tilePos, int maxHP, EnemyType type, SpriteType spritetype, int damage) {
+	public Enemy(Coordinate worldPos, Coordinate tilePos, EnemyType type, SpriteType spritetype, int maxHP, int damage) {
 		super(worldPos, tilePos, spritetype, maxHP, damage);
 		
 		this.setEnemyType(type);
@@ -100,7 +102,7 @@ public class Enemy extends Actor {
 	public void Move(Direction dir) {
 		
 		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), dir);
-		World world = Game.instance.GetWorld();
+		World world = World.instance.GetWorld();
 		
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null) {
 			

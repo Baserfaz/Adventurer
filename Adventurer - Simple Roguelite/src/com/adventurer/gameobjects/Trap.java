@@ -1,6 +1,6 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
 
-import java.util.Random;
+import com.adventurer.main.*;
 
 public class Trap extends Tile {
 

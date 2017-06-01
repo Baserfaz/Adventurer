@@ -1,4 +1,6 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
+
+import com.adventurer.main.*;
 
 public class Door extends Tile {
 

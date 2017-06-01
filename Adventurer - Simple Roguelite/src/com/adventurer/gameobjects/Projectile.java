@@ -1,11 +1,9 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
+
+import com.adventurer.main.*;
 
 public class Projectile extends GameObject {
 
@@ -80,7 +78,7 @@ public class Projectile extends GameObject {
 	private void MoveForward() {
 			
 		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), direction);
-		World world = Game.instance.GetWorld();
+		World world = World.instance.GetWorld();
 		
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null) {
 			
@@ -92,8 +90,8 @@ public class Projectile extends GameObject {
 			tilePosition.setY(tile.GetTilePosition().getY());
 			
 			// update our world position
-			targetx = world.ConvertTilePositionToWorld(tile.tilePosition.getX());
-			targety = world.ConvertTilePositionToWorld(tile.tilePosition.getY());
+			targetx = world.ConvertTilePositionToWorld(tile.GetTilePosition().getX());
+			targety = world.ConvertTilePositionToWorld(tile.GetTilePosition().getY());
 			
 			// set the tile's actor to be this.
 			tile.SetActor(this);

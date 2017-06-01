@@ -1,8 +1,8 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
+
+import com.adventurer.main.*;
 
 public class Player extends Actor {
 	
@@ -11,7 +11,7 @@ public class Player extends Actor {
 	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int damage) {
 		super(worldPos, tilePos, spritetype, maxHP, damage);
 		
-		this.losmanager = new LoSManager(this);
+		this.losmanager = new LoSManager();
 	}
 	
 	public void tick() {
@@ -21,7 +21,7 @@ public class Player extends Actor {
 			UpdatePosition();
 			
 			// update LOS
-			losmanager.CalculateLos(tilePosition);
+			if(losmanager != null) losmanager.CalculateLos(tilePosition);
 			
 		} else {
 			
@@ -54,7 +54,7 @@ public class Player extends Actor {
 		if(canMove == false) return;
 		
 		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), dir);
-		World world = Game.instance.GetWorld();
+		World world = World.instance.GetWorld();
 		
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null) {
 						

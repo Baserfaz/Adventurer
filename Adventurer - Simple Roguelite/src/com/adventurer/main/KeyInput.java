@@ -3,6 +3,10 @@ package com.adventurer.main;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import com.adventurer.gameobjects.Bomb;
+import com.adventurer.gameobjects.Player;
+import com.adventurer.gameobjects.Tile;
+
 public class KeyInput extends KeyAdapter {
 
 	private Handler handler;

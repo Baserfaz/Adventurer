@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.adventurer.gameobjects.DestructibleTile;
+import com.adventurer.gameobjects.Door;
+import com.adventurer.gameobjects.Tile;
+import com.adventurer.gameobjects.Trap;
+
 public class World {
 
 	private int height;
@@ -33,22 +38,7 @@ public class World {
 	}
 	
 	public Tile GetTileAtPosition(Coordinate pos) {
-		
-		Tile retTile = null;
-		
-		int x = pos.getX();
-		int y = pos.getY();
-		
-		for(int i = 0; i < tiles.size(); i++) {
-			Tile tile = tiles.get(i);
-			Coordinate position = tile.GetTilePosition();
-			
-			if(position.getX() == x && position.getY() == y) {
-				retTile = tile;
-				break;
-			}
-		}
-		return retTile;
+		return GetTileAtPosition(pos.getX(), pos.getY());
 	}
 	
 	
@@ -201,10 +191,10 @@ public class World {
 		return tile;
 	}
 	
-	public int[] GetFreePosition() {
+	public Coordinate[] GetFreePosition() {
 		
 		List<Tile> possibleTiles = new ArrayList<Tile>();
-		int[] position = new int[4];
+		Coordinate[] position = new Coordinate[2];
 		
 		// get all possible tiles
 		for(int i = 0; i < tiles.size(); i++) {
@@ -222,23 +212,9 @@ public class World {
 		// get a random tile from possible tiles.
 		Tile randomTile = possibleTiles.get(random);
 		
-		// get the position of random tile.
-		Coordinate randTilePos = randomTile.GetTilePosition();
-		
-		// we have to change the tile position to 
-		// world position.
-		
-		// world-x
-		position[0] = randomTile.GetWorldPosition().getX();
-		
-		// world-y
-		position[1] = randomTile.GetWorldPosition().getY();
-		
-		// tile-x
-		position[2] = randTilePos.getX();
-		
-		// tile-y
-		position[3] = randTilePos.getY();
+		// assign positions
+		position[0] = randomTile.GetWorldPosition();
+		position[1] = randomTile.GetTilePosition();
 		
 		return position;
 	}
@@ -502,6 +478,10 @@ public class World {
 		CreateDoors();
 		CreateTraps();
 		CreateVanityItems();
+	}
+	
+	public World GetWorld() {
+		return this;
 	}
 	
 	public int GetHeight() {

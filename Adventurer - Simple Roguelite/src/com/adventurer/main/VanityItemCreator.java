@@ -1,5 +1,8 @@
 package com.adventurer.main;
 
+import com.adventurer.gameobjects.Tile;
+import com.adventurer.gameobjects.VanityItem;
+
 public class VanityItemCreator {
 
 	private static Coordinate GetOffsets(int max, int min) {

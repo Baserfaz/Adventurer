@@ -34,7 +34,7 @@ public class Effect extends GameObject {
 		
 		// remove this object from handler
 		// -> no longer ticks
-		Game.instance.GetHandler().RemoveObject(this);
+		Handler.instance.RemoveObject(this);
 		
 		// hide 
 		Hide();

@@ -1,13 +1,12 @@
-package com.adventurer.main;
+package com.adventurer.gameobjects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.adventurer.main.*;
 
 public class Tile extends GameObject {
 
@@ -70,7 +69,7 @@ public class Tile extends GameObject {
 			
 			// render vanity items
 			for(GameObject vi : vanityItems) {
-				g.drawImage(vi.sprite, vi.GetWorldPosition().getX(), vi.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
+				g.drawImage(vi.GetSprite(), vi.GetWorldPosition().getX(), vi.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
 			}
 			
 		} else if(inView == false) {
@@ -92,7 +91,7 @@ public class Tile extends GameObject {
 				VanityItem vi = (VanityItem) go;
 				
 				if(vi.GetTintedSprite() == null) {
-					vi.SetTintedSprite(Util.tint(vi.sprite));
+					vi.SetTintedSprite(Util.tint(vi.GetSprite()));
 				}
 				
 				g.drawImage(vi.GetTintedSprite(), vi.GetWorldPosition().getX(), vi.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
@@ -134,7 +133,7 @@ public class Tile extends GameObject {
 	@Override
 	public void Remove() {
 		World.instance.RemoveTiles(this);
-		Game.instance.GetHandler().RemoveObject(this);
+		Handler.instance.RemoveObject(this);
 		Hide();
 	}
 	
