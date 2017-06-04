@@ -94,8 +94,7 @@ public class Actor extends GameObject {
 		} else if(projStartTile.GetActor() != null) {
 			
 			// TODO: projectile damage
-			
-			projStartTile.GetActor().GetHealth().TakeDamage(100);
+			ActorManager.ActorTakeDamage(projStartTile, 100);
 		}
 		
 	}
@@ -106,11 +105,7 @@ public class Actor extends GameObject {
 		if(object == null) return;
 		
 		// take damage
-		((Actor)object).GetHealth().TakeDamage(damage);
-		
-		// effects etc.
-		EffectCreator.CreateHitEffect(tile);
-		VanityItemCreator.CreateSmallBlood(tile); // TODO: skeleton blood
+		ActorManager.ActorTakeDamage(tile, 100);
 	}
 	
 	protected void UpdatePosition() {

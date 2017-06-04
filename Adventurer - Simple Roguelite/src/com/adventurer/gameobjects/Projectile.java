@@ -114,9 +114,7 @@ public class Projectile extends Item {
 			
 			if(go instanceof Actor) {
 				
-				EffectCreator.CreateHitEffect(tile);
-				Actor actor = (Actor) go;
-				actor.GetHealth().TakeDamage(damage);
+				ActorManager.ActorTakeDamage(tile, damage);
 			}
 			
 			isAlive = false;

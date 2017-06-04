@@ -7,6 +7,21 @@ public class ActorManager {
 	private static Player playerInstance = null;
 	private static Enemy[] enemyInstances = null;
 	
+	public static void ActorTakeDamage(Tile tile, int damage) {
+		
+		// TODO: check for null actor here?
+		
+		// damage
+		tile.GetActor().GetHealth().TakeDamage(damage);
+		
+		// effects
+		EffectCreator.CreateHitEffect(tile);
+		
+		// creates blood 
+		// TODO: enemy types 
+		VanityItemCreator.CreateSmallBlood(tile);
+	}
+	
 	public static Player CreatePlayerInstance(int maxHP, int damage) {
 		
 		if(playerInstance != null) {

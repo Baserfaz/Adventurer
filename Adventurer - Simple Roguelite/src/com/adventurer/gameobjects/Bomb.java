@@ -59,11 +59,8 @@ public class Bomb extends Item {
 						// TODO: explode the other bomb too!
 						
 					} else {
-						GameObject actorGo = tile.GetActor();
-						((Actor)actorGo).GetHealth().TakeDamage(this.damage);
 						
-						// creates blood 
-						VanityItemCreator.CreateSmallBlood(tile);
+						ActorManager.ActorTakeDamage(tile, damage);
 					}
 				}
 			}

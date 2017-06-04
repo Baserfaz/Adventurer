@@ -50,11 +50,14 @@ public class Tile extends GameObject {
 			}
 		}
 		
+		UpdatePosition(x, y);
+	}
+	
+	private void UpdatePosition(int x, int y) {
 		// move the tile
 		if(y < targety + fallingSpeed) {
 			if(y < targety) this.GetWorldPosition().addY(fallingSpeed);
 		}
-		
 	}
 	
 	public void render(Graphics g) {
