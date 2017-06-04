@@ -5,13 +5,14 @@ import java.awt.Rectangle;
 
 import com.adventurer.main.*;
 
-public class Projectile extends GameObject {
-
-	private int damage = 0;
+public class Projectile extends Item {
+	
 	private Direction direction;
 	private boolean isAlive = true;
 	
-	private int movementSpeed = 3;
+	private int damage = 0;
+	
+	private int movementSpeed = 1;
 	
 	private int targetx = this.GetWorldPosition().getX();
 	private int targety = this.GetWorldPosition().getY();
@@ -20,13 +21,39 @@ public class Projectile extends GameObject {
 	
 	public Projectile(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int damage, Direction dir) {
 		super(worldPos, tilePos, spritetype);
-		
-		this.damage = damage;
 		this.direction = dir;
+		this.damage = damage;
+		
+		// register to tile
+		World.instance.GetTileAtPosition(tilePos).SetItem(this);
 	}
 
 	public void tick() {
 		
+		// "animate"
+		UpdatePosition();
+		
+		// calculate next step 
+		if(canMove) MoveForward();
+	}
+
+	public void render(Graphics g) {
+		
+		int x = this.GetWorldPosition().getX();
+		int y = this.GetWorldPosition().getY();
+		
+		if(isAlive) {
+			if(World.instance.GetTileAtPosition(this.GetTilePosition()).isHidden() == false) {
+				g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			}
+		}
+	}
+	
+	public Rectangle GetBounds() {
+		return null;
+	}
+
+	private void UpdatePosition() {
 		int x = this.GetWorldPosition().getX();
 		int y = this.GetWorldPosition().getY();
 		
@@ -53,54 +80,33 @@ public class Projectile extends GameObject {
 			
 			canMove = true;
 		}
-		
-		// calculate next step 
-		if(canMove)
-			MoveForward();
-	}
-
-	public void render(Graphics g) {
-		
-		int x = this.GetWorldPosition().getX();
-		int y = this.GetWorldPosition().getY();
-		
-		if(isAlive) {
-			if(World.instance.GetTileAtPosition(this.GetTilePosition()).isHidden() == false) {
-				g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
-			}
-		}
 	}
 	
-	public Rectangle GetBounds() {
-		return null;
-	}
-
 	private void MoveForward() {
 			
-		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), direction);
+		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), this.direction);
 		World world = World.instance.GetWorld();
 		
-		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null) {
+		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null && tile.GetItem() == null) {
 			
-			// tile is our new tile
-			world.GetTileAtPosition(this.GetTilePosition()).SetActor(null);
+			// null current tile item
+			world.GetTileAtPosition(this.GetTilePosition()).SetItem(null);
 			
 			// update our tile position
 			this.GetTilePosition().setX(tile.GetTilePosition().getX());
 			this.GetTilePosition().setY(tile.GetTilePosition().getY());
 			
 			// update our world position
-			targetx = world.ConvertTilePositionToWorld(tile.GetTilePosition().getX());
-			targety = world.ConvertTilePositionToWorld(tile.GetTilePosition().getY());
+			this.targetx = tile.GetWorldPosition().getX();
+			this.targety = tile.GetWorldPosition().getY();
 			
-			// set the tile's actor to be this.
-			tile.SetActor(this);
+			// set to the next tile
+			tile.SetItem(this);
 			
 			// hide ourselves if we are on a hidden tile.
-			if(tile.isHidden()) {
+			/*if(tile.isHidden()) {
 				this.Hide();
-			}
-			
+			}*/
 			
 		} else if(tile.GetActor() != null) {
 			

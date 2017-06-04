@@ -14,11 +14,11 @@ public class Tile extends GameObject {
 	protected boolean discovered = false;
 	protected boolean inView = false;
 	
-	protected GameObject item = null;
-	protected GameObject actor = null;
+	protected Item item = null;
+	protected Actor actor = null;
 	protected List<GameObject> vanityItems = new ArrayList<GameObject>();
 	
-	protected BufferedImage discoveredSprite = null; // used for caching darker image.
+	protected BufferedImage discoveredSprite = null;
 	
 	// tile falling effect
 	protected int targety = 0;
@@ -34,7 +34,7 @@ public class Tile extends GameObject {
 	public void tick() {
 		
 		// check if the tile is in the camera's view
-		Rectangle camera = Game.instance.camera;
+		Rectangle camera = Camera.instance.getCameraBounds();
 		
 		int x = this.GetWorldPosition().getX();
 		int y = this.GetWorldPosition().getY();
@@ -113,11 +113,13 @@ public class Tile extends GameObject {
 	public void Show() {
 		this.hidden = false;
 		if(this.actor != null) this.actor.Show();
+		if(this.item != null) this.item.Show();
 	}
 	
 	public void Hide() {
 		this.hidden = true;
 		if(this.actor != null) this.actor.Hide();
+		if(this.item != null) this.item.Hide();
 	}
 	
 	public void Discover() {
@@ -125,6 +127,13 @@ public class Tile extends GameObject {
 		// when first time discovering
 		// this tile -> set the target positions.
 		if(discovered == false) {
+			
+			// 1. targety: is the real world position of the tile. 
+			// 	           We save that real w.pos. in targety.
+			// 2.1 we decrease w.pos. (means we move the tile upwards by some amount).
+			// 2.2 we "lerp" from w.pos. to targety in tick-method.
+			// 3. set discovered
+			
 			this.targety = this.GetWorldPosition().getY();
 			this.GetWorldPosition().decreaseY(fallingYOffset);
 			this.discovered = true;
@@ -132,18 +141,14 @@ public class Tile extends GameObject {
 		
 		// discover actors and items.
 		if(this.GetActor() != null) {
-			GameObject actor = this.GetActor();
-			actor.Discover();
+			this.GetActor().Discover();
 		}
 		
 		if(this.GetItem() != null) {
-			GameObject item = this.GetItem();
-			item.Discover();
+			this.GetItem().Discover();
 		}
-		
 	}
-	
-	@Override
+
 	public void Remove() {
 		World.instance.RemoveTiles(this);
 		Handler.instance.RemoveObject(this);
@@ -182,15 +187,15 @@ public class Tile extends GameObject {
 		return this.vanityItems;
 	}
 	
-	public void SetItem(GameObject item) {
+	public void SetItem(Item item) {
 		this.item = item;
 	}
 
-	public GameObject GetActor() {
+	public Actor GetActor() {
 		return this.actor;
 	}
 
-	public void SetActor(GameObject actor) {
+	public void SetActor(Actor actor) {
 		this.actor = actor;
 	}
 }

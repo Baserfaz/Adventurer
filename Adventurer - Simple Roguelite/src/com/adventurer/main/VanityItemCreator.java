@@ -20,9 +20,6 @@ public class VanityItemCreator {
 				tile.GetWorldPosition().getY() + offsets.getY()),
 				tile.GetTilePosition(), spriteType);
 		
-		// register created vanity item to the tile given.
-		tile.AddVanityItem(vanityItem);
-		
 		return vanityItem;
 	}
 	

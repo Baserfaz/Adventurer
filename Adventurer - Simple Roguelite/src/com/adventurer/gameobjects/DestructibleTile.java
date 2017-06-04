@@ -26,7 +26,7 @@ public class DestructibleTile extends Tile {
 		} else {
 			
 			// check if the tile is in the camera's view
-			Rectangle camera = Game.instance.camera;
+			Rectangle camera = Camera.instance.getCameraBounds();
 			
 			if(camera != null) {
 				if(camera.contains(this.GetWorldPosition().getX() + World.tileSize / 2, this.GetWorldPosition().getY() + World.tileSize / 2)) {

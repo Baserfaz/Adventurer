@@ -20,10 +20,7 @@ public class LoSManager {
 		Tile tile = null;
 		int offset = 1;
 		
-		// add the tile that we are currently standing on.
-		retTiles.add(world.GetTileAtPosition(pos));
-		
-		do {	
+		do {
 			switch(dir) {
 			case North:
 				tile = world.GetTileAtPosition(x, y - offset);
@@ -51,11 +48,15 @@ public class LoSManager {
 				break;
 			}
 			
-			if(tile != null) retTiles.add(tile);
-			
+			if(tile == null) {
+				System.out.println("NULL TILE");
+				return null;
+			}
+				
+			retTiles.add(tile);
 			offset ++;
 			
-		} while ((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null);
+		} while ((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null && tile.GetItem() == null);
 		
 		return retTiles;
 	}
@@ -77,7 +78,7 @@ public class LoSManager {
 		// ------------------------
 		
 		// straight line
-		foundTiles.addAll(CalculateLosToDirection(position, ActorManager.GetPlayerInstance().GetLookDirection()));
+		//foundTiles.addAll(CalculateLosToDirection(position, ActorManager.GetPlayerInstance().GetLookDirection()));
 		
 		// surrounding tiles
 		for(Tile tile : world.GetSurroundingTiles(position)) {

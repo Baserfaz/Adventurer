@@ -16,12 +16,14 @@ public class Player extends Actor {
 	
 	public void tick() {
 		
+		if(myHP == null) return;
+		
 		if(myHP.isDead() == false) {
 		
 			UpdatePosition();
 			
 			// update LOS
-			if(losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
+			//if(losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
 			
 		} else {
 			
@@ -62,7 +64,7 @@ public class Player extends Actor {
 		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), dir);
 		World world = World.instance.GetWorld();
 		
-		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null) {
+		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null && tile.GetItem() == null) {
 			
 			// we are no longer on the last tile
 			Tile lastTile = world.GetTileAtPosition(this.GetTilePosition());

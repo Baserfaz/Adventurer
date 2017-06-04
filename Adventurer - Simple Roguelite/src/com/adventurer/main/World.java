@@ -2,7 +2,6 @@ package com.adventurer.main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 import com.adventurer.gameobjects.DestructibleTile;
 import com.adventurer.gameobjects.Door;
@@ -95,51 +94,22 @@ public class World {
 		return foundTiles;
 	}
 	
-	public Tile[] GetSurroundingTiles(Coordinate pos) {
+	public List<Tile> GetSurroundingTiles(Coordinate pos) {
 		return GetSurroundingTiles(pos.getX(), pos.getY());
 	}
 	
-	public Tile[] GetSurroundingTiles(int posx, int posy) {
-		
-		Tile[] foundTiles = new Tile[9];
-		
-		int tileCounter = 0;
-		
+	public List<Tile> GetSurroundingTiles(int posx, int posy) {
+		List<Tile> foundTiles = new ArrayList<Tile>();
 		for(int y = -1; y < 2; y++) {
 			for(int x = -1; x < 2; x++) {
-				foundTiles[tileCounter] = GetTileAtPosition(posx + x, posy + y);
-				tileCounter++;
+				foundTiles.add(GetTileAtPosition(posx + x, posy + y));
 			}
 		}
 		return foundTiles;
 	}
 	
 	public Tile GetTileFromDirection(Coordinate pos, Direction dir) {
-		
-		Tile tile = null;
-		
-		int x = pos.getX();
-		int y = pos.getY();
-		
-		switch(dir) {
-		case North:
-			tile = GetTileAtPosition(x, y - 1);
-			break;
-		case South:
-			tile = GetTileAtPosition(x, y + 1);
-			break;
-		case West:
-			tile = GetTileAtPosition(x - 1, y);
-			break;
-		case East:
-			tile = GetTileAtPosition(x + 1, y);
-			break;
-		default:
-			System.out.println("GetTileFromDirection: NOT A CARDINAL DIRECTION!");
-			break;
-		}
-		
-		return tile;
+		return GetTileFromDirection(pos.getX(), pos.getY(), dir);
 	}
 	
 	public Tile GetTileFromDirection(int x, int y, Direction dir) {

@@ -6,15 +6,18 @@ import java.util.List;
 
 import com.adventurer.main.*;
 
-public class Bomb extends Actor {
+public class Bomb extends Item {
 
+	private int damage = 0;
+	
 	private long liveTimer = 0;
 	private boolean alive = false;
 	
 	public Bomb(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int liveTime, int damage) {
-		super(worldPos, tilePos, spritetype, 100, damage);
+		super(worldPos, tilePos, spritetype);
 		this.alive = true;
-		liveTimer = System.currentTimeMillis() + liveTime;
+		this.damage = damage;
+		this.liveTimer = System.currentTimeMillis() + liveTime;
 	}
 	
 	public void tick() {
@@ -48,10 +51,10 @@ public class Bomb extends Actor {
 					// open door
 					((Door) tile).Open();
 					
-				} else if(tile.GetActor() != null && tile.GetActor() != this) {
+				} else if(tile.GetActor() != null && tile.GetItem() != this && tile.GetItem() == null) {
 					
 					// if there is another bomb in the radius
-					if(tile.GetActor() instanceof Bomb) {
+					if(tile.GetItem() instanceof Bomb) {
 						
 						// TODO: explode the other bomb too!
 						

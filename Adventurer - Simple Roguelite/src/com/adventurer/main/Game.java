@@ -4,7 +4,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 
 import com.adventurer.gameobjects.Player;
@@ -19,15 +18,12 @@ public class Game extends Canvas implements Runnable {
 	public static final int SPRITESIZE = 16;
 	public static final int CAMERAZOOM = 4; 
 	public static final double FRAME_CAP = 60.0;
-	
 	public static final String spritesheetname = "spritesheet.png";
 	
 	private Thread thread;
 	private boolean isRunning = false;
 	
 	private Window window;
-	
-	public Rectangle camera = new Rectangle();
 	
 	// tiles
 	private final int worldHeight = 10;
@@ -37,7 +33,7 @@ public class Game extends Canvas implements Runnable {
 		
 		if(instance != null) return;
 		
-		instance = this;
+		Game.instance = this;
 		
 		// create object handler
 		new Handler();
@@ -59,6 +55,9 @@ public class Game extends Canvas implements Runnable {
 		
 		// create sprite creator
 		new SpriteCreator(spritesheetname);
+		
+		// create camera
+		new Camera();
 		
 		// create world
 		new World(worldWidth, worldHeight);
@@ -170,7 +169,7 @@ public class Game extends Canvas implements Runnable {
 			g.translate(targetx, targety);
 			
 			// update 'camera' position
-			camera.setBounds(-targetx - SPRITESIZE, -targety - SPRITESIZE, SPRITESIZE * 21, SPRITESIZE * 12);
+			Camera.instance.Update(new Coordinate(-targetx - SPRITESIZE, -targety - SPRITESIZE), SPRITESIZE * 21, SPRITESIZE * 12);
 		}
 		
 		// render objects

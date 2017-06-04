@@ -66,6 +66,40 @@ public class Actor extends GameObject {
 		
 	}
 	
+	public void Remove() {
+		
+		// get tile
+		Tile tile = World.instance.GetTileAtPosition(this.GetTilePosition());
+		
+		// set tile's actor to null
+		// -> others can walk on the tile
+		tile.SetActor(null);
+		
+		// remove this object from handler
+		// -> no longer ticks
+		Handler.instance.RemoveObject(this);
+		
+		// hide 
+		Hide();
+	}
+	
+	public void Shoot(Coordinate originTilePos, Direction direction) {
+		
+		Tile projStartTile = World.instance.GetTileFromDirection(originTilePos, direction);
+		
+		if((projStartTile.GetTileType() == TileType.Floor || projStartTile.GetTileType() == TileType.TrapTile ) && projStartTile.GetActor() == null && projStartTile.GetItem() == null) {
+			
+			new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), SpriteType.Projectile01, 100, direction);
+			
+		} else if(projStartTile.GetActor() != null) {
+			
+			// TODO: projectile damage
+			
+			projStartTile.GetActor().GetHealth().TakeDamage(100);
+		}
+		
+	}
+	
 	public void Attack(Tile tile) {
 		
 		GameObject object = tile.GetActor();

@@ -34,8 +34,7 @@ public class Effect extends GameObject {
 			}
 		}
 	}
-
-	@Override
+	
 	public void Remove() {
 		
 		// remove this object from handler

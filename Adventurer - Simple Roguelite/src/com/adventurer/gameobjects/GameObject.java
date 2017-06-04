@@ -3,15 +3,8 @@ package com.adventurer.gameobjects;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
-import com.adventurer.main.Coordinate;
-import com.adventurer.main.Handler;
-import com.adventurer.main.SpriteCreator;
-import com.adventurer.main.SpriteType;
-import com.adventurer.main.World;
+import com.adventurer.main.*;
 
 public abstract class GameObject {
 
@@ -46,23 +39,6 @@ public abstract class GameObject {
 	public abstract void tick();
 	public abstract void render(Graphics g);
 	public abstract Rectangle GetBounds();
-	
-	public void Remove() {
-		
-		// get tile
-		Tile tile = World.instance.GetTileAtPosition(this.tilePosition);
-		
-		// set tile's actor to null
-		// -> others can walk on the tile
-		tile.SetActor(null);
-		
-		// remove this object from handler
-		// -> no longer ticks
-		Handler.instance.RemoveObject(this);
-		
-		// hide 
-		Hide();
-	}
 	
 	public String GetInfo() {
 		return "GameObject: " + this.toString() + ", tilePos: (" + this.GetTilePosition().getX() + ", " + this.GetTilePosition().getY() +"), "

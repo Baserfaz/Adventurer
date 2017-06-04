@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 import com.adventurer.gameobjects.Bomb;
 import com.adventurer.gameobjects.Player;
+import com.adventurer.gameobjects.Projectile;
 import com.adventurer.gameobjects.Tile;
 
 public class KeyInput extends KeyAdapter {
@@ -20,6 +21,7 @@ public class KeyInput extends KeyAdapter {
 		
 		if(player.GetHealth().isDead()) return;
 		
+		// movement
 		if(key == KeyEvent.VK_W) {
 			
 			if(player.GetLookDirection() == Direction.North)
@@ -49,35 +51,27 @@ public class KeyInput extends KeyAdapter {
 				player.SetLookDirection(Direction.East);
 		} 
 		
+		// bomb
 		if(key == KeyEvent.VK_SPACE) {
 			
 			Tile t = World.instance.GetTileFromDirection(player.GetTilePosition(), player.GetLookDirection());
 			
-			if(t.GetTileType() == TileType.Floor || t.GetTileType() == TileType.TrapTile && t.GetActor() == null) {
+			if((t.GetTileType() == TileType.Floor || t.GetTileType() == TileType.TrapTile) && t.GetActor() == null && t.GetItem() == null) {
 				
-				Bomb bomb = new Bomb(t.GetWorldPosition(), t.GetTilePosition(), SpriteType.Bomb01, 1500, 300);
-				t.SetActor(bomb);
+				new Bomb(t.GetWorldPosition(), t.GetTilePosition(), SpriteType.Bomb01, 1500, 300);
 			}
 		}
 		
 		// shooting debugging
-		/*else if(key == KeyEvent.VK_UP) {
-			new Projectile(player.GetX(), player.GetY(),
-					player.GetPosition()[0], player.GetPosition()[1],
-					SpriteType.Projectile01, 100, Direction.North);
+		if(key == KeyEvent.VK_UP) {
+			player.Shoot(player.GetTilePosition(), Direction.North);
 		} else if(key == KeyEvent.VK_DOWN) {
-			new Projectile(player.GetX(), player.GetY(),
-					player.GetPosition()[0], player.GetPosition()[1],
-					SpriteType.Projectile01, 100, Direction.South);
+			player.Shoot(player.GetTilePosition(), Direction.South);
 		} else if(key == KeyEvent.VK_LEFT) {
-			new Projectile(player.GetX(), player.GetY(),
-					player.GetPosition()[0], player.GetPosition()[1],
-					SpriteType.Projectile01, 100, Direction.West);
+			player.Shoot(player.GetTilePosition(), Direction.West);
 		} else if(key == KeyEvent.VK_RIGHT) {
-			new Projectile(player.GetX(), player.GetY(),
-					player.GetPosition()[0], player.GetPosition()[1],
-					SpriteType.Projectile01, 100, Direction.East);
-		}*/
+			player.Shoot(player.GetTilePosition(), Direction.East);
+		}
 	}
 	
 	public void keyReleased(KeyEvent e) {}
