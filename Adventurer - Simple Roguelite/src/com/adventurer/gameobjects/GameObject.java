@@ -77,6 +77,22 @@ public abstract class GameObject {
 		return this.sprite;
 	}
 	
+	public void SetWorldPosition(int x, int y) {
+		this.worldPosition = new Coordinate(x, y);
+	}
+	
+	public void SetTilePosition(int x, int y) {
+		this.tilePosition = new Coordinate(x, y);
+	}
+	
+	public void SetWorldPosition(Coordinate pos) {
+		this.worldPosition = pos;
+	}
+	
+	public void SetTilePosition(Coordinate pos) {
+		this.tilePosition = pos;
+	}
+	
 	public Coordinate GetWorldPosition() {
 		return this.worldPosition;
 	}

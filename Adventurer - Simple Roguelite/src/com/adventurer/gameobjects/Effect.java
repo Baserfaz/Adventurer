@@ -28,9 +28,11 @@ public class Effect extends GameObject {
 			Remove();
 		} else {
 			
+			int x = this.GetWorldPosition().getX();
+			int y = this.GetWorldPosition().getY();
+			
 			if(allowMovement) {
-				if(Util.GetRandomInteger() > 90)
-					this.GetWorldPosition().decreaseY(1);
+				if(Util.GetRandomInteger() > 90) this.SetWorldPosition(x, y - 1);
 			}
 		}
 	}

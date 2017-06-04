@@ -109,9 +109,11 @@ public class Enemy extends Actor {
 			// tile is our new tile
 			world.GetTileAtPosition(this.GetTilePosition()).SetActor(null);
 			
+			int x = tile.GetTilePosition().getX();
+			int y = tile.GetTilePosition().getY();
+			
 			// update our tile position
-			this.GetTilePosition().setX(tile.GetTilePosition().getX());
-			this.GetTilePosition().setY(tile.GetTilePosition().getY());
+			this.SetTilePosition(x, y);
 			
 			// update our world position
 			targetx = tile.GetWorldPosition().getX();

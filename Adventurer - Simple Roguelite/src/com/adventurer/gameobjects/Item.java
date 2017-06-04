@@ -14,7 +14,7 @@ public class Item extends GameObject {
 		super(worldPos, tilePos, spritetype);
 		
 		// register to tile
-		World.instance.GetTileAtPosition(this.GetTilePosition()).SetItem(this);
+		World.instance.GetTileAtPosition(tilePos).SetItem(this);
 	}
 	
 	public void tick() {}

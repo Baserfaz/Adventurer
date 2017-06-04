@@ -87,14 +87,19 @@ public class Actor extends GameObject {
 		
 		Tile projStartTile = World.instance.GetTileFromDirection(originTilePos, direction);
 		
-		if((projStartTile.GetTileType() == TileType.Floor || projStartTile.GetTileType() == TileType.TrapTile ) && projStartTile.GetActor() == null && projStartTile.GetItem() == null) {
+		if((projStartTile.GetTileType() == TileType.Floor || projStartTile.GetTileType() == TileType.TrapTile ) &&
+				projStartTile.GetActor() == null && projStartTile.GetItem() == null) {
 			
-			new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), SpriteType.Projectile01, 100, direction);
+			new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), SpriteType.Projectile01, damage, direction);
 			
 		} else if(projStartTile.GetActor() != null) {
 			
-			// TODO: projectile damage
-			ActorManager.ActorTakeDamage(projStartTile, 100);
+			ActorManager.ActorTakeDamage(projStartTile, damage);
+			
+		} else {
+			
+			EffectCreator.CreateHitEffect(projStartTile);
+			
 		}
 		
 	}
@@ -115,23 +120,22 @@ public class Actor extends GameObject {
 		// smooth movement
 		if(x < targetx - movementSpeed || x > targetx + movementSpeed) {
 			
-			if(targetx < x) this.GetWorldPosition().decreaseX(movementSpeed);
-			else if(targetx > x) this.GetWorldPosition().addX(movementSpeed);
+			if(targetx < x) this.SetWorldPosition(x - movementSpeed, y);
+			else if(targetx > x) this.SetWorldPosition(x + movementSpeed, y);
 			
 			canMove = false;
 			
 		} else if(y < targety - movementSpeed || y > targety + movementSpeed) {
 			
-			if(targety < y) this.GetWorldPosition().decreaseY(movementSpeed);
-			else if(targety > y) this.GetWorldPosition().addY(movementSpeed);
+			if(targety < y) this.SetWorldPosition(x, y - movementSpeed);
+			else if(targety > y) this.SetWorldPosition(x, y + movementSpeed);
 			
 			canMove = false;
 			
 		} else {
 			
 			// force move the actor to the exact tile's position.
-			this.GetWorldPosition().setX(targetx);
-			this.GetWorldPosition().setY(targety);
+			this.SetWorldPosition(targetx, targety);
 			
 			canMove = true;
 		}

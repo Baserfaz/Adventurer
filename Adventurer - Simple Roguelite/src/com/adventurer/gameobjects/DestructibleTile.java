@@ -28,6 +28,9 @@ public class DestructibleTile extends Tile {
 			// check if the tile is in the camera's view
 			Rectangle camera = Camera.instance.getCameraBounds();
 			
+			int x = this.GetWorldPosition().getX();
+			int y = this.GetWorldPosition().getY();
+			
 			if(camera != null) {
 				if(camera.contains(this.GetWorldPosition().getX() + World.tileSize / 2, this.GetWorldPosition().getY() + World.tileSize / 2)) {
 					inView = true;
@@ -39,10 +42,7 @@ public class DestructibleTile extends Tile {
 				}
 			}
 			
-			// move the tile
-			if(this.GetWorldPosition().getY() < targety + fallingSpeed) {
-				if(this.GetWorldPosition().getY() < targety) this.GetWorldPosition().addY(fallingSpeed);
-			}
+			UpdatePosition(x, y);
 		}
 	}
 	

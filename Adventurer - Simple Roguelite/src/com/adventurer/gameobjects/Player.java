@@ -23,7 +23,7 @@ public class Player extends Actor {
 			UpdatePosition();
 			
 			// update LOS
-			//if(losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
+			if(losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
 			
 		} else {
 			
@@ -62,17 +62,23 @@ public class Player extends Actor {
 		if(canMove == false) return;
 		
 		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), dir);
-		World world = World.instance.GetWorld();
+		
+		if(tile == null) {
+			System.out.println("TILE IS NULL!");
+			return;
+		}
 		
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null && tile.GetItem() == null) {
 			
 			// we are no longer on the last tile
-			Tile lastTile = world.GetTileAtPosition(this.GetTilePosition());
+			Tile lastTile = World.instance.GetTileAtPosition(this.GetTilePosition());
 			lastTile.SetActor(null);
 			
+			int x = tile.GetTilePosition().getX();
+			int y = tile.GetTilePosition().getY();
+			
 			// update our tile position
-			this.GetTilePosition().setX(tile.GetTilePosition().getX());
-			this.GetTilePosition().setY(tile.GetTilePosition().getY());
+			this.SetTilePosition(x, y);
 			
 			// update our world position
 			this.targetx = tile.GetWorldPosition().getX();

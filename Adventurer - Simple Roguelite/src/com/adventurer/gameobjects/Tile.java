@@ -53,10 +53,10 @@ public class Tile extends GameObject {
 		UpdatePosition(x, y);
 	}
 	
-	private void UpdatePosition(int x, int y) {
+	protected void UpdatePosition(int x, int y) {
 		// move the tile
 		if(y < targety + fallingSpeed) {
-			if(y < targety) this.GetWorldPosition().addY(fallingSpeed);
+			if(y < targety) this.SetWorldPosition(x, y + fallingSpeed);
 		}
 	}
 	
@@ -137,8 +137,11 @@ public class Tile extends GameObject {
 			// 2.2 we "lerp" from w.pos. to targety in tick-method.
 			// 3. set discovered
 			
+			int x = this.GetWorldPosition().getX();
+			int y = this.GetWorldPosition().getY();
+			
 			this.targety = this.GetWorldPosition().getY();
-			this.GetWorldPosition().decreaseY(fallingYOffset);
+			this.SetWorldPosition(x, y - fallingYOffset);
 			this.discovered = true;
 		} 
 		

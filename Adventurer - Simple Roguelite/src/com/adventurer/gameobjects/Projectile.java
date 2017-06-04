@@ -8,7 +8,7 @@ import com.adventurer.main.*;
 public class Projectile extends Item {
 	
 	private Direction direction;
-	private boolean isAlive = true;
+	private boolean alive = true;
 	
 	private int damage = 0;
 	
@@ -23,11 +23,8 @@ public class Projectile extends Item {
 		super(worldPos, tilePos, spritetype);
 		this.direction = dir;
 		this.damage = damage;
-		
-		// register to tile
-		World.instance.GetTileAtPosition(tilePos).SetItem(this);
 	}
-
+	
 	public void tick() {
 		
 		// "animate"
@@ -36,23 +33,31 @@ public class Projectile extends Item {
 		// calculate next step 
 		if(canMove) MoveForward();
 	}
-
+	
 	public void render(Graphics g) {
 		
 		int x = this.GetWorldPosition().getX();
 		int y = this.GetWorldPosition().getY();
 		
-		if(isAlive) {
-			if(World.instance.GetTileAtPosition(this.GetTilePosition()).isHidden() == false) {
-				g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+		if(alive && hidden == false) {
+			
+			g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			
+		} else if(alive && discovered == true && hidden == true) {
+			
+			if(tintedSprite == null) {
+				tintedSprite = Util.tint(sprite);
 			}
+			
+			g.drawImage(tintedSprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			
 		}
 	}
 	
 	public Rectangle GetBounds() {
 		return null;
 	}
-
+	
 	private void UpdatePosition() {
 		int x = this.GetWorldPosition().getX();
 		int y = this.GetWorldPosition().getY();
@@ -60,23 +65,22 @@ public class Projectile extends Item {
 		// smooth movement
 		if(x < targetx - movementSpeed || x > targetx + movementSpeed) {
 			
-			if(targetx < x) this.GetWorldPosition().decreaseX(movementSpeed);
-			else if(targetx > x) this.GetWorldPosition().addX(movementSpeed);
+			if(targetx < x) this.SetWorldPosition(x - movementSpeed, y);
+			else if(targetx > x) this.SetWorldPosition(x + movementSpeed, y);
 			
 			canMove = false;
 			
 		} else if(y < targety - movementSpeed || y > targety + movementSpeed) {
 			
-			if(targety < y) this.GetWorldPosition().decreaseY(movementSpeed);
-			else if(targety > y) this.GetWorldPosition().addY(movementSpeed);
+			if(targety < y) this.SetWorldPosition(x, y - movementSpeed);
+			else if(targety > y) this.SetWorldPosition(x, y + movementSpeed);
 			
 			canMove = false;
 			
 		} else {
 			
 			// force move the actor to the exact tile's position.
-			this.GetWorldPosition().setX(targetx);
-			this.GetWorldPosition().setY(targety);
+			this.SetWorldPosition(targetx, targety);
 			
 			canMove = true;
 		}
@@ -85,28 +89,25 @@ public class Projectile extends Item {
 	private void MoveForward() {
 			
 		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), this.direction);
-		World world = World.instance.GetWorld();
 		
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null && tile.GetItem() == null) {
 			
-			// null current tile item
-			world.GetTileAtPosition(this.GetTilePosition()).SetItem(null);
+			// we are no longer on the last tile
+			Tile lastTile = World.instance.GetTileAtPosition(this.GetTilePosition());
+			lastTile.SetItem(null);
+			
+			int x = tile.GetTilePosition().getX();
+			int y = tile.GetTilePosition().getY();
 			
 			// update our tile position
-			this.GetTilePosition().setX(tile.GetTilePosition().getX());
-			this.GetTilePosition().setY(tile.GetTilePosition().getY());
+			this.SetTilePosition(x, y);
 			
 			// update our world position
 			this.targetx = tile.GetWorldPosition().getX();
 			this.targety = tile.GetWorldPosition().getY();
 			
-			// set to the next tile
+			// set the tile's actor to be this.
 			tile.SetItem(this);
-			
-			// hide ourselves if we are on a hidden tile.
-			/*if(tile.isHidden()) {
-				this.Hide();
-			}*/
 			
 		} else if(tile.GetActor() != null) {
 			
@@ -117,11 +118,11 @@ public class Projectile extends Item {
 				ActorManager.ActorTakeDamage(tile, damage);
 			}
 			
-			isAlive = false;
+			alive = false;
 			Remove();
 			
 		} else {
-			isAlive = false;
+			alive = false;
 			Remove();
 		}
 	}
