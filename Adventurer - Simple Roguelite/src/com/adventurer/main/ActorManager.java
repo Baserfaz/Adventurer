@@ -7,6 +7,10 @@ public class ActorManager {
 	private static Player playerInstance = null;
 	private static Enemy[] enemyInstances = null;
 	
+	public static void ActorTakeDamage(Actor actor, int damage) {
+		ActorTakeDamage(World.instance.GetTileAtPosition(actor.GetTilePosition()), damage);
+	}
+	
 	public static void ActorTakeDamage(Tile tile, int damage) {
 		
 		// TODO: check for null actor here?
@@ -15,7 +19,7 @@ public class ActorManager {
 		tile.GetActor().GetHealth().TakeDamage(damage);
 		
 		// effects
-		EffectCreator.CreateHitEffect(tile);
+		if(tile.GetDiscovered() && tile.isHidden() == false) EffectCreator.CreateHitEffect(tile);
 		
 		// creates blood 
 		// TODO: enemy types 

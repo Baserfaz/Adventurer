@@ -9,6 +9,7 @@ public class Projectile extends Item {
 	
 	private Direction direction;
 	private boolean alive = true;
+	private boolean tileDiscovered = true;
 	
 	private int damage = 0;
 	
@@ -17,7 +18,7 @@ public class Projectile extends Item {
 	private int targetx = this.GetWorldPosition().getX();
 	private int targety = this.GetWorldPosition().getY();
 	
-	private boolean canMove = false;
+	private boolean canMove = true;
 	
 	public Projectile(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int damage, Direction dir) {
 		super(worldPos, tilePos, spritetype);
@@ -32,6 +33,11 @@ public class Projectile extends Item {
 		
 		// calculate next step 
 		if(canMove) MoveForward();
+		
+		// if the tile is not yet discovered
+		// hide this projectile.
+		boolean f = World.instance.GetTileAtPosition(this.GetTilePosition()).discovered;
+		if(f == false) this.tileDiscovered = false;
 	}
 	
 	public void render(Graphics g) {
@@ -43,7 +49,11 @@ public class Projectile extends Item {
 			
 			g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
 			
-		} else if(alive && discovered == true && hidden == true) {
+		} else if(tileDiscovered == false) { 
+		
+			// dont render 
+			
+		} else if(alive && discovered && hidden) {
 			
 			if(tintedSprite == null) {
 				tintedSprite = Util.tint(sprite);
@@ -111,17 +121,16 @@ public class Projectile extends Item {
 			
 		} else if(tile.GetActor() != null) {
 			
-			GameObject go = tile.GetActor();
-			
-			if(go instanceof Actor) {
-				
-				ActorManager.ActorTakeDamage(tile, damage);
-			}
+			ActorManager.ActorTakeDamage(tile, damage);
 			
 			alive = false;
 			Remove();
 			
 		} else {
+			
+			// create effect
+			if(tile.GetDiscovered() && tile.isHidden() == false) EffectCreator.CreateHitEffect(tile);
+			
 			alive = false;
 			Remove();
 		}

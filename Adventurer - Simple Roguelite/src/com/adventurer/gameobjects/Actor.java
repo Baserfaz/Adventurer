@@ -84,24 +84,8 @@ public class Actor extends GameObject {
 	}
 	
 	public void Shoot(Coordinate originTilePos, Direction direction) {
-		
-		Tile projStartTile = World.instance.GetTileFromDirection(originTilePos, direction);
-		
-		if((projStartTile.GetTileType() == TileType.Floor || projStartTile.GetTileType() == TileType.TrapTile ) &&
-				projStartTile.GetActor() == null && projStartTile.GetItem() == null) {
-			
-			new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), SpriteType.Projectile01, damage, direction);
-			
-		} else if(projStartTile.GetActor() != null) {
-			
-			ActorManager.ActorTakeDamage(projStartTile, damage);
-			
-		} else {
-			
-			EffectCreator.CreateHitEffect(projStartTile);
-			
-		}
-		
+		Tile projStartTile = World.instance.GetTileAtPosition(originTilePos);
+		new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), SpriteType.Projectile01, damage, direction);
 	}
 	
 	public void Attack(Tile tile) {

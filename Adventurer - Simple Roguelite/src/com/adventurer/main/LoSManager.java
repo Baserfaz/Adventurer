@@ -78,7 +78,7 @@ public class LoSManager {
 		// ------------------------
 		
 		// straight line
-		//foundTiles.addAll(CalculateLosToDirection(position, ActorManager.GetPlayerInstance().GetLookDirection()));
+		foundTiles.addAll(CalculateLosToDirection(position, ActorManager.GetPlayerInstance().GetLookDirection()));
 		
 		// surrounding tiles
 		for(Tile tile : world.GetSurroundingTiles(position)) {
