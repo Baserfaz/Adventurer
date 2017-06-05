@@ -23,7 +23,7 @@ public class Player extends Actor {
 			UpdatePosition();
 			
 			// update LOS
-			//if(losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
+			if(losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
 			
 		} else {
 			
@@ -34,25 +34,22 @@ public class Player extends Actor {
 	
 	public void render(Graphics g) {
 		
-		int x = this.GetWorldPosition().getX();
-		int y = this.GetWorldPosition().getY();
-		
 		if(lookDir == Direction.East) {
 			
 			if(flippedSpriteHor == null) {
 				flippedSpriteHor = SpriteCreator.instance.FlipSpriteHorizontally(sprite);
 			}
 			
-			g.drawImage(flippedSpriteHor, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			RenderSprite(flippedSpriteHor, this.GetWorldPosition(), g);
 			
 		} else if(lookDir == Direction.West) {
 			
-			g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 		} else {
 			
 			// TODO: up & down
-			g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 		}
 	}

@@ -71,13 +71,10 @@ public class Bomb extends Item {
 	}
 	
 	public void render(Graphics g) {
-	
-		int x = this.GetWorldPosition().getX();
-		int y = this.GetWorldPosition().getY();
 		
 		if(alive && hidden == false) {
 			
-			g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 		} else if(alive && discovered == true && hidden == true) {
 			
@@ -85,7 +82,7 @@ public class Bomb extends Item {
 				tintedSprite = Util.tint(sprite);
 			}
 			
-			g.drawImage(tintedSprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			RenderSprite(tintedSprite, this.GetWorldPosition(), g);
 			
 		}
 	}

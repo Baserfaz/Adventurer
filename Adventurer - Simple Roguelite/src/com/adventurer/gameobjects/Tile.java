@@ -62,22 +62,15 @@ public class Tile extends GameObject {
 	
 	public void render(Graphics g) {
 		
-		int x = this.GetWorldPosition().getX();
-		int y = this.GetWorldPosition().getY();
-		
 		if(hidden == false) {
 			
 			// render tile
-			g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 			// render vanity items
 			for(GameObject vi : vanityItems) {
-				g.drawImage(vi.GetSprite(),
-						vi.GetWorldPosition().getX(),
-						vi.GetWorldPosition().getY(),
-						Game.SPRITESIZE,
-						Game.SPRITESIZE,
-						null);
+				
+				RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
 			}
 			
 		} else if(inView == false) {
@@ -90,7 +83,7 @@ public class Tile extends GameObject {
 			if(discoveredSprite == null) {
 				discoveredSprite = Util.tint(sprite);
 			} else {
-				g.drawImage(discoveredSprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+				RenderSprite(discoveredSprite, this.GetWorldPosition(), g);
 			}
 			
 			// render vanity items
@@ -102,12 +95,7 @@ public class Tile extends GameObject {
 					vi.SetTintedSprite(Util.tint(vi.GetSprite()));
 				}
 				
-				g.drawImage(vi.GetTintedSprite(),
-						vi.GetWorldPosition().getX(),
-						vi.GetWorldPosition().getY(),
-						Game.SPRITESIZE,
-						Game.SPRITESIZE,
-						null);
+				RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
 			}
 			
 		}

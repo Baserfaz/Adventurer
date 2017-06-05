@@ -48,8 +48,7 @@ public class Effect extends GameObject {
 	}
 	
 	public void render(Graphics g) {
-		if(isAlive)
-			g.drawImage(sprite, this.GetWorldPosition().getX(), this.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
+		if(isAlive) RenderSprite(sprite, this.GetWorldPosition(), g);
 	}
 
 	public Rectangle GetBounds() {

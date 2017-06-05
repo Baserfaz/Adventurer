@@ -19,7 +19,7 @@ public class ActorManager {
 		tile.GetActor().GetHealth().TakeDamage(damage);
 		
 		// effects
-		if(tile.GetDiscovered() && tile.isHidden() == false) EffectCreator.CreateHitEffect(tile);
+		if(tile.GetActor().isDiscovered()) EffectCreator.CreateHitEffect(tile);
 		
 		// creates blood 
 		// TODO: enemy types 

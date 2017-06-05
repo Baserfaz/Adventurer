@@ -2,6 +2,7 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 import com.adventurer.main.*;
 
@@ -42,12 +43,9 @@ public class Projectile extends Item {
 	
 	public void render(Graphics g) {
 		
-		int x = this.GetWorldPosition().getX();
-		int y = this.GetWorldPosition().getY();
-		
 		if(alive && hidden == false) {
 			
-			g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+			RenderSprite(sprite, this.GetWorldPosition(), direction, g);
 			
 		} else if(tileDiscovered == false) { 
 		
@@ -59,8 +57,7 @@ public class Projectile extends Item {
 				tintedSprite = Util.tint(sprite);
 			}
 			
-			g.drawImage(tintedSprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
-			
+			RenderSprite(tintedSprite, this.GetWorldPosition(), direction, g);
 		}
 	}
 	
@@ -129,7 +126,7 @@ public class Projectile extends Item {
 		} else {
 			
 			// create effect
-			if(tile.GetDiscovered() && tile.isHidden() == false) EffectCreator.CreateHitEffect(tile);
+			if(tile.GetDiscovered()) EffectCreator.CreateHitEffect(tile);
 			
 			alive = false;
 			Remove();
