@@ -14,21 +14,23 @@ public class Game extends Canvas implements Runnable {
 
 	public static Game instance;
 	
-	public static final int WIDTH = 1280, HEIGHT = 720;
-	public static final int SPRITESIZE = 16;
-	public static final int CAMERAZOOM = 3;
-	public static final int CAMERAVIEWZOOM = 0;
-	public static final double FRAME_CAP = 60.0;
-	public static final String spritesheetname = "spritesheet.png";
+	public static final int WIDTH = 1280, HEIGHT = 720; 			// viewport size
+	public static final int SPRITESIZE = 16; 						// sprite size in pixels
+	public static final int CAMERAZOOM = 1; 						// level of zoom
+	public static final int CAMERAVIEWZOOM = 0; 					// shrinks the camera view so smaller amount of tiles are being rendered
+	public static final double FRAME_CAP = 60.0;					// cap the framerate to this
+	public static final String spritesheetname = "spritesheet.png";	// main spritesheet name
 	
 	//------------------------------
 	// DEBUGGING TOOLS
-	//------------------------------
+	
 	public static final boolean DRAW_CAMERA = true;
+	public static final boolean PRINT_WORLD_CREATION_PERCENTAGE_DONE = true;
+	public static final boolean PRINT_WORLD_CREATION_START_END = true;
+	public static final boolean PRINT_DOOR_CREATED = false;
+	public static final boolean CALCULATE_PLAYER_LOS = false;
 	
 	//------------------------------
-	
-	
 	
 	private Thread thread;
 	private boolean isRunning = false;
@@ -95,9 +97,7 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 	
-	// Taken from Ryan van Zeben - Java Game Engine Development video series.
-	// https://www.youtube.com/watch?v=VE7ezYCTPe4&list=PL8CAB66181A502179
-	// and originally taken from Notch's work.
+	// Originally taken from Notch's work.
 	// Also applied stuff from https://www.youtube.com/watch?v=rwjZDfcQ7Rc&list=PLEETnX-uPtBXP_B2yupUKlflXBznWIlL5&index=3
 	public void run() {
 		GameLoop();
@@ -161,6 +161,18 @@ public class Game extends Canvas implements Runnable {
 		Graphics2D g2d = (Graphics2D) g;
 		
 		//-------------------------------------------
+		// DRAW GRAPHICS HERE
+		// - gameobjects that are rendered first are bottom
+		// - gameobjects that are rendered last are top
+		
+		// TODO: draw order:
+		// 0. background
+		// 1. tiles 
+		// 2. vanity items (blood etc.)
+		// 3. items
+		// 4. actors
+		// 5. effects
+		// 6. GUI
 		
 		// set background
 		g.setColor(Color.black);
@@ -180,7 +192,6 @@ public class Game extends Canvas implements Runnable {
 			g.translate(targetx, targety);
 			
 			// update 'camera' position
-			// including some magic numbers, which I don't really understand.. but it works.
 			Camera.instance.Update(new Coordinate(-targetx + CAMERAVIEWZOOM, -targety + CAMERAVIEWZOOM),
 					(1273 - CAMERAVIEWZOOM * 5) / CAMERAZOOM,
 					(690 - CAMERAVIEWZOOM * 5) / CAMERAZOOM);
@@ -202,7 +213,6 @@ public class Game extends Canvas implements Runnable {
 		// TODO: GUI
 		
 		//-------------------------------------------
-		
 		g.dispose();
 		bs.show();
 	}

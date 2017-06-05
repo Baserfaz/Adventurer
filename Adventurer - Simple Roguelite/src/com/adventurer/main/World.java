@@ -19,9 +19,9 @@ public class World {
 	private List<Tile> tiles;
 	private List<Room> rooms;
 	
-	public static final int TILESIZE = 16;
-	public static final int TILEGAP = 2;
-	public static final int ROOMGAP = 1; // both rooms have a room gap, so the actual gap is 2 * ROOMGAP.
+	public static final int TILESIZE = 16;	// should be same as Game.SPRITESIZE
+	public static final int TILEGAP = 2;	// gap between each tile.
+	public static final int ROOMGAP = 0; 	// gap between rooms
 	
 	public static World instance;
 	
@@ -221,17 +221,11 @@ public class World {
 		
 		// create new tile
 		if(newType == TileType.TrapTile) {
-			
 			newTile = (Trap) new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.TrapTile, 100);
-			
 		} else if(newType == TileType.Door) {
-			
 			newTile = (Door) new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Door01, TileType.Door);
-			
 		} else if(newType == TileType.Floor) {
-			
 			newTile = new Tile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.FloorTile01, TileType.Floor);
-			
 		} else {
 			System.out.println("WORLD.REPLACETILE: TILETYPE NOT YET IMPLEMENTED!");
 		}
@@ -324,80 +318,73 @@ public class World {
 	}
 	
 	// creates doors randomly
-	public void CreateDoors() {
+	public void CreateDoors(List<Tile> roomTiles) {
 		
-		for(int y = 0; y < worldHeight; y++) {
-			for (int x = 0; x < worldWidth; x++) {
+		for(Tile current : roomTiles) {
+			
+			// limit the door count
+			//if(Util.GetRandomInteger() < 50) continue;
+			
+			// tile should be floor.
+			if(current.GetTileType() != TileType.Floor) continue;
+			
+			// get tile's cardinal direction tiles
+			List<Tile> cardinalTiles = GetTilesInCardinalDirection(current.GetTilePosition());
+			
+			// save the direction data
+			List<Direction> dirData = new ArrayList<Direction>();
+			
+			boolean valid = true;
+			
+			// get the direction data of wall tiles.
+			for(Tile t : cardinalTiles) {
 				
-				// limit the door count
-				if(Util.GetRandomInteger() < 50) continue;
-				
-				// get current tile
-				Tile current = GetTileAtPosition(x, y);
-				
-				// tile should be floor.
-				if(current.GetTileType() != TileType.Floor) continue;
-				
-				// get tile's cardinal direction tiles
-				List<Tile> cardinalTiles = GetTilesInCardinalDirection(x, y);
-				
-				// save the direction data
-				List<Direction> dirData = new ArrayList<Direction>();
-				
-				boolean valid = true;
-				
-				// get the direction data of wall tiles.
-				for(int i = 0; i < cardinalTiles.size(); i++) {
+				// Take these tile types in count.
+				// when looking for neighbours.
+				if(t.GetTileType() == TileType.Wall || t.GetTileType() == TileType.OuterWall) {
 					
-					Tile t = cardinalTiles.get(i);
+					// this is direction of t from current.
+					Direction dirToCurrent = GetDirectionOfTileFromPoint(current, t);
 					
-					// Take these tile types in count.
-					// when looking for neighbours.
-					if(t.GetTileType() == TileType.Wall || t.GetTileType() == TileType.OuterWall) {
-						
-						// this is direction of t from current.
-						Direction dirToCurrent = GetDirectionOfTileFromPoint(current, t);
-						
-						if(dirToCurrent == null) continue;
-						
-						// save data to array.
-						dirData.add(dirToCurrent);
-						
-					} else if(t.GetTileType() == TileType.DestructibleObject || t.GetTileType() == TileType.Door) {
-						
-						// this is not a valid spot for a door!
-						valid = false;
-						break;
-					}
-				}
-				
-				// this spot is not valid, because there
-				// are some tile(s) next to it that 
-				// are not legitimate!
-				// e.g. door or destructible object.
-				if(valid == false) continue;
-				
-				// at this point we should have only 
-				// two walls that we need to check.
-				if(dirData.size() != 2) continue;
-				Direction first_dir = dirData.get(0);
-				Direction second_dir = dirData.get(1);
-				
-				switch(first_dir) {
-				case North:
-					if(second_dir == Direction.South) ReplaceTile(current, TileType.Door, SpriteType.Door01);
-					break;
-				case East:
-					if(second_dir == Direction.West) ReplaceTile(current, TileType.Door, SpriteType.Door01);
-					break;
-				case South:
-					if(second_dir == Direction.North) ReplaceTile(current, TileType.Door, SpriteType.Door01);
-					break;
-				case West:
-					if(second_dir == Direction.East) ReplaceTile(current, TileType.Door, SpriteType.Door01);
+					if(dirToCurrent == null) continue;
+					
+					// save data to array.
+					dirData.add(dirToCurrent);
+					
+				} else if(t.GetTileType() == TileType.DestructibleObject || t.GetTileType() == TileType.Door) {
+					
+					// this is not a valid spot for a door!
+					valid = false;
 					break;
 				}
 			}
+			
+			if(valid == false) continue;
+			
+			// at this point we should have only 
+			// two walls that we need to check.
+			if(dirData.size() != 2) continue;
+			Direction first_dir = dirData.get(0);
+			Direction second_dir = dirData.get(1);
+			
+			Tile newDoorTile = null;
+			
+			switch(first_dir) {
+			case North:
+				if(second_dir == Direction.South) newDoorTile = ReplaceTile(current, TileType.Door, SpriteType.Door01);
+				break;
+			case East:
+				if(second_dir == Direction.West) newDoorTile = ReplaceTile(current, TileType.Door, SpriteType.Door01);
+				break;
+			case South:
+				if(second_dir == Direction.North) newDoorTile = ReplaceTile(current, TileType.Door, SpriteType.Door01);
+				break;
+			case West:
+				if(second_dir == Direction.East) newDoorTile = ReplaceTile(current, TileType.Door, SpriteType.Door01);
+				break;
+			}
+			
+			if(newDoorTile != null && Game.PRINT_DOOR_CREATED) System.out.println("Created door: " + newDoorTile.GetInfo());
 		}
 	}
 	
@@ -421,33 +408,36 @@ public class World {
 	
 	private void CreateWorld() {
 		
-		// creates rooms
-		
 		int roomOffsetY = 0;
 		int roomOffsetX = 0;
 		
 		int roomCount = 0;
+		int roomMaxCount = worldHeight * worldWidth;
+		
+		if(Game.PRINT_WORLD_CREATION_START_END) System.out.println("Begin world creation.");
 		
 		for(int y = 0; y < worldHeight; y++) {
 			for(int x = 0; x < worldWidth; x++) {
-				
-				//System.out.println("Creating room n. " + roomCount);
-				
 				Room currentRoom = CreateRoom(roomOffsetX, roomOffsetY, x, y);
-				tiles.addAll(currentRoom.getTiles());
 				rooms.add(currentRoom);
 				roomOffsetX += (roomWidth * TILESIZE + roomWidth * TILEGAP) + ROOMGAP;
 				
 				roomCount++;
+				
+				if(Game.PRINT_WORLD_CREATION_PERCENTAGE_DONE) {
+					double percentageDone = ((double) roomCount / roomMaxCount) * 100;
+					System.out.println("Creating world: " + percentageDone);
+				}
+				
 			}
 			roomOffsetX = 0;
 			roomOffsetY += (roomHeight * TILESIZE + roomHeight * TILEGAP) + ROOMGAP;
 		}
+		
+		if(Game.PRINT_WORLD_CREATION_START_END) System.out.println("End world creation.");
 	}
 	
 	private Room CreateRoom(int roomOffsetX, int roomOffsetY, int roomStartX, int roomStartY) {
-		
-		// creates tiles inside room
 		
 		List<Tile> roomTiles = new ArrayList<Tile>();
 		
@@ -483,6 +473,7 @@ public class World {
 				
 				// add to tiles list
 				roomTiles.add(tile);
+				tiles.add(tile);
 				
 				offsetX += TILEGAP;
 				
@@ -491,7 +482,7 @@ public class World {
 			offsetY += TILEGAP;
 		}
 		
-		//CreateDoors();
+		CreateDoors(roomTiles);
 		//CreateTraps();
 		//CreateIndestructibleWalls();
 		//CreateVanityItems();
