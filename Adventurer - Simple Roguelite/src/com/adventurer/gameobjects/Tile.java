@@ -11,7 +11,7 @@ import com.adventurer.main.*;
 public class Tile extends GameObject {
 
 	protected TileType type;
-	protected boolean discovered = false;
+	protected boolean discovered = false; 
 	protected boolean inView = false;
 	
 	protected Item item = null;

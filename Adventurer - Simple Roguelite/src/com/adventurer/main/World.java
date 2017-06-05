@@ -426,12 +426,19 @@ public class World {
 		int roomOffsetY = 0;
 		int roomOffsetX = 0;
 		
+		int roomCount = 0;
+		
 		for(int y = 0; y < worldHeight; y++) {
 			for(int x = 0; x < worldWidth; x++) {
+				
+				//System.out.println("Creating room n. " + roomCount);
+				
 				Room currentRoom = CreateRoom(roomOffsetX, roomOffsetY, x, y);
 				tiles.addAll(currentRoom.getTiles());
 				rooms.add(currentRoom);
 				roomOffsetX += (roomWidth * TILESIZE + roomWidth * TILEGAP) + ROOMGAP;
+				
+				roomCount++;
 			}
 			roomOffsetX = 0;
 			roomOffsetY += (roomHeight * TILESIZE + roomHeight * TILEGAP) + ROOMGAP;

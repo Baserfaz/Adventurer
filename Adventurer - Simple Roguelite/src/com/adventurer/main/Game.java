@@ -16,9 +16,19 @@ public class Game extends Canvas implements Runnable {
 	
 	public static final int WIDTH = 1280, HEIGHT = 720;
 	public static final int SPRITESIZE = 16;
-	public static final int CAMERAZOOM = 4; 
+	public static final int CAMERAZOOM = 3;
+	public static final int CAMERAVIEWZOOM = 0;
 	public static final double FRAME_CAP = 60.0;
 	public static final String spritesheetname = "spritesheet.png";
+	
+	//------------------------------
+	// DEBUGGING TOOLS
+	//------------------------------
+	public static final boolean DRAW_CAMERA = true;
+	
+	//------------------------------
+	
+	
 	
 	private Thread thread;
 	private boolean isRunning = false;
@@ -68,9 +78,6 @@ public class Game extends Canvas implements Runnable {
 		
 		// create player
 		ActorManager.CreatePlayerInstance(300, 100);
-		
-		// create enemies
-		//ActorManager.CreateEnemies(10);
 	}
 	
 	public synchronized void Start() {
@@ -166,14 +173,25 @@ public class Game extends Canvas implements Runnable {
 		Player player = ActorManager.GetPlayerInstance();
 		if(player != null) {
 			
-			int targety = (-player.GetWorldPosition().getY() * CAMERAZOOM - (SPRITESIZE - HEIGHT / 2)) / CAMERAZOOM;
-			int targetx = (-player.GetWorldPosition().getX() * CAMERAZOOM - (SPRITESIZE - WIDTH / 2)) / CAMERAZOOM;
+			int targetx = ((-player.GetWorldPosition().getX() * CAMERAZOOM) - (SPRITESIZE - WIDTH / 2)) / CAMERAZOOM;
+			int targety = ((-player.GetWorldPosition().getY() * CAMERAZOOM) - (SPRITESIZE - HEIGHT / 2)) / CAMERAZOOM;
 			
 			// translate
 			g.translate(targetx, targety);
 			
 			// update 'camera' position
-			Camera.instance.Update(new Coordinate(-targetx - SPRITESIZE, -targety - SPRITESIZE), SPRITESIZE * 21, SPRITESIZE * 12);
+			// including some magic numbers, which I don't really understand.. but it works.
+			Camera.instance.Update(new Coordinate(-targetx + CAMERAVIEWZOOM, -targety + CAMERAVIEWZOOM),
+					(1273 - CAMERAVIEWZOOM * 5) / CAMERAZOOM,
+					(690 - CAMERAVIEWZOOM * 5) / CAMERAZOOM);
+		
+			if(DRAW_CAMERA) {
+				g.setColor(Color.red);
+				g.drawRect((int) Camera.instance.getCameraBounds().getX(), 
+						(int) Camera.instance.getCameraBounds().getY(),
+						(int) Camera.instance.getCameraBounds().getWidth(),
+						(int) Camera.instance.getCameraBounds().getHeight());
+			}
 		}
 		
 		// render objects
