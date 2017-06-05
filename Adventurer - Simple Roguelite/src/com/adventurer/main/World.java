@@ -40,7 +40,6 @@ public class World {
 		return GetTileAtPosition(pos.getX(), pos.getY());
 	}
 	
-	
 	public Tile GetTileAtPosition(int x, int y) {
 		
 		Tile retTile = null;
@@ -307,19 +306,35 @@ public class World {
 	public void CreateVanityItems() {
 		
 		List<Tile> floorTiles = GetTilesOfType(TileType.Floor);
+		List<Tile> wallTiles = GetTilesOfType(TileType.Wall);
 		
 		// create an array of random vanity item sprites
-		SpriteType[] vanitySpriteTypes = { SpriteType.Pot01, SpriteType.PotRemains01 };
+		SpriteType[] floorVanitySpriteTypes = { SpriteType.Pot01, SpriteType.PotRemains01 };
+		SpriteType[] wallVanitySpriteTypes = { SpriteType.Torch01 };
 		
+		// create floor vanity items
 		for(Tile tile : floorTiles) {
 			
 			if(Util.GetRandomInteger() > 95) {
 				
 				// randomize spritetype
-				SpriteType st = vanitySpriteTypes[Util.GetRandomInteger(0, vanitySpriteTypes.length)];
+				SpriteType st = floorVanitySpriteTypes[Util.GetRandomInteger(0, floorVanitySpriteTypes.length)];
 				
 				// create vanity item
-				VanityItemCreator.CreateVanityItem(tile, st);
+				VanityItemCreator.CreateVanityItem(tile, st, true);
+			}
+		}
+		
+		// create wall vanity items
+		for(Tile tile : wallTiles) {
+			
+			if(Util.GetRandomInteger() > 90) {
+				
+				// randomize spritetype
+				SpriteType st = wallVanitySpriteTypes[Util.GetRandomInteger(0, wallVanitySpriteTypes.length)];
+				
+				// create vanity item
+				VanityItemCreator.CreateVanityItem(tile, st, false);
 			}
 		}
 	}

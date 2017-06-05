@@ -153,6 +153,14 @@ public class SpriteCreator {
 			row = 3;
 			column = 0;
 			break;
+		case Torch01:
+			row = 0;
+			column = 7;
+			break;
+		case SmallSkeletonRemains01:
+			row = 3;
+			column = 1;
+			break;
 		default:
 			System.out.println("SPRITETYPE NOT FOUND: " +  type);
 			break;

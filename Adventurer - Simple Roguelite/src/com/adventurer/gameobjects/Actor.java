@@ -55,7 +55,7 @@ public class Actor extends GameObject {
 			}
 			
 			// create vanity item 
-			VanityItemCreator.CreateVanityItem(tile, remainsSpriteType);
+			VanityItemCreator.CreateVanityItem(tile, remainsSpriteType, true);
 			
 			// remove gameobject
 			Remove();

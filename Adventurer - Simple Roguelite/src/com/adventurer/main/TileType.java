@@ -1,7 +1,6 @@
 package com.adventurer.main;
 
 public enum TileType {
-
 	Floor(),
 	Wall(),
 	OuterWall(),
@@ -9,5 +8,4 @@ public enum TileType {
 	Door(),
 	LockedDoor(),
 	TrapTile();
-	
 }

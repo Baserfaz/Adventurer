@@ -12,28 +12,15 @@ public class Enemy extends Actor {
 	
 	private EnemyType enemyType;
 	
-	private BufferedImage unknownActorSprite = null;
-	
-	private boolean blinking = false;
-	private long spriteBlinkTimer = 0;
-	private int spriteBlinkCooldown = 1000;
-	
-	private int lastXpos = 0;
-	private int lastYpos = 0;
 	
 	public Enemy(Coordinate worldPos, Coordinate tilePos, EnemyType type, SpriteType spritetype, int maxHP, int damage) {
 		super(worldPos, tilePos, spritetype, maxHP, damage);
 		
 		this.setEnemyType(type);
 		this.moveTimer = System.currentTimeMillis();
-		
-		this.unknownActorSprite = SpriteCreator.instance.CreateSprite(SpriteType.UnknownActor);
 	}
 
 	public void render(Graphics g) {
-		
-		int x = this.GetWorldPosition().getX();
-		int y = this.GetWorldPosition().getY();
 		
 		if(hidden == false) {
 			
@@ -43,24 +30,18 @@ public class Enemy extends Actor {
 					flippedSpriteHor = SpriteCreator.instance.FlipSpriteHorizontally(sprite);
 				}
 				
-				g.drawImage(flippedSpriteHor, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+				Renderer.RenderSprite(flippedSpriteHor, this.GetWorldPosition(), g);
+				
 			} else if(lookDir == Direction.West) {
-				g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
+				
+				Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
+				
 			}
-			
-			// update last seen positions
-			lastXpos = x;
-			lastYpos = y;
 			
 		} else if(hidden == true && discovered == true){
 			
-			/*if(System.currentTimeMillis() > spriteBlinkTimer) {
-				if(blinking == false) blinking = true;
-				else blinking = false;
-				spriteBlinkTimer = System.currentTimeMillis() + spriteBlinkCooldown;
-			}
-			if(blinking) g.drawImage(unknownActorSprite, lastXpos, lastYpos, Game.SPRITESIZE, Game.SPRITESIZE, null);
-			*/
+			// create ghost image?
+			
 		}
 	}
 	
@@ -93,10 +74,6 @@ public class Enemy extends Actor {
 		} else {
 			OnDeath(World.instance.GetTileAtPosition(this.GetTilePosition()));
 		}
-	}
-	
-	public int[] GetLastSeenPosition() {
-		return new int[] { lastXpos, lastYpos };
 	}
 	
 	public void Move(Direction dir) {
