@@ -40,16 +40,16 @@ public class Player extends Actor {
 				flippedSpriteHor = SpriteCreator.instance.FlipSpriteHorizontally(sprite);
 			}
 			
-			RenderSprite(flippedSpriteHor, this.GetWorldPosition(), g);
+			Renderer.RenderSprite(flippedSpriteHor, this.GetWorldPosition(), g);
 			
 		} else if(lookDir == Direction.West) {
 			
-			RenderSprite(sprite, this.GetWorldPosition(), g);
+			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 		} else {
 			
 			// TODO: up & down
-			RenderSprite(sprite, this.GetWorldPosition(), g);
+			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 		}
 	}

@@ -2,6 +2,7 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import com.adventurer.main.*;
@@ -39,18 +40,6 @@ public abstract class GameObject {
 	public abstract void tick();
 	public abstract void render(Graphics g);
 	public abstract Rectangle GetBounds();
-	
-	protected void RenderSprite(BufferedImage sprite, Coordinate pos, Graphics g) {
-		g.drawImage(sprite, pos.getX(), pos.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
-	}
-	
-	protected void RenderSprite(BufferedImage sprite, Coordinate pos, Direction dir, Graphics g) {
-		
-		int x = pos.getX();
-		int y = pos.getY();
-		
-		g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
-	}
 	
 	public String GetInfo() {
 		return "GameObject: " + this.toString() + ", tilePos: (" + this.GetTilePosition().getX() + ", " + this.GetTilePosition().getY() +"), "

@@ -74,7 +74,7 @@ public class Bomb extends Item {
 		
 		if(alive && hidden == false) {
 			
-			RenderSprite(sprite, this.GetWorldPosition(), g);
+			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 		} else if(alive && discovered == true && hidden == true) {
 			
@@ -82,7 +82,7 @@ public class Bomb extends Item {
 				tintedSprite = Util.tint(sprite);
 			}
 			
-			RenderSprite(tintedSprite, this.GetWorldPosition(), g);
+			Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), g);
 			
 		}
 	}

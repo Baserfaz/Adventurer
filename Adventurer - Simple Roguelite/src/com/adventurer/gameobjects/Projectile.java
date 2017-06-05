@@ -14,7 +14,7 @@ public class Projectile extends Item {
 	
 	private int damage = 0;
 	
-	private int movementSpeed = 1;
+	private int movementSpeed = 2;
 	
 	private int targetx = this.GetWorldPosition().getX();
 	private int targety = this.GetWorldPosition().getY();
@@ -45,7 +45,7 @@ public class Projectile extends Item {
 		
 		if(alive && hidden == false) {
 			
-			RenderSprite(sprite, this.GetWorldPosition(), direction, g);
+			Renderer.RenderSprite(sprite, this.GetWorldPosition(), direction, g);
 			
 		} else if(tileDiscovered == false) { 
 		
@@ -57,7 +57,7 @@ public class Projectile extends Item {
 				tintedSprite = Util.tint(sprite);
 			}
 			
-			RenderSprite(tintedSprite, this.GetWorldPosition(), direction, g);
+			Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), direction, g);
 		}
 	}
 	

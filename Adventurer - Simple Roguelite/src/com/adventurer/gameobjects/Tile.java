@@ -65,12 +65,12 @@ public class Tile extends GameObject {
 		if(hidden == false) {
 			
 			// render tile
-			RenderSprite(sprite, this.GetWorldPosition(), g);
+			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 			// render vanity items
 			for(GameObject vi : vanityItems) {
 				
-				RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
+				Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
 			}
 			
 		} else if(inView == false) {
@@ -83,7 +83,7 @@ public class Tile extends GameObject {
 			if(discoveredSprite == null) {
 				discoveredSprite = Util.tint(sprite);
 			} else {
-				RenderSprite(discoveredSprite, this.GetWorldPosition(), g);
+				Renderer.RenderSprite(discoveredSprite, this.GetWorldPosition(), g);
 			}
 			
 			// render vanity items
@@ -95,7 +95,7 @@ public class Tile extends GameObject {
 					vi.SetTintedSprite(Util.tint(vi.GetSprite()));
 				}
 				
-				RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
+				Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
 			}
 			
 		}
