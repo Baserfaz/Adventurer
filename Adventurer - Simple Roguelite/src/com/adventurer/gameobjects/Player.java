@@ -23,7 +23,7 @@ public class Player extends Actor {
 			UpdatePosition();
 			
 			// update LOS
-			if(losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
+			//if(losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
 			
 		} else {
 			

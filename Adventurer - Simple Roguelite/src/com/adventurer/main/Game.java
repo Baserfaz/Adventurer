@@ -25,9 +25,13 @@ public class Game extends Canvas implements Runnable {
 	
 	private Window window;
 	
-	// tiles
+	// room count in world
 	private final int worldHeight = 10;
 	private final int worldWidth = 10;
+	
+	// tiles in one room
+	private final int roomHeight = 10;
+	private final int roomWidth = 10;
 	
 	public Game() {
 		
@@ -60,13 +64,13 @@ public class Game extends Canvas implements Runnable {
 		new Camera();
 		
 		// create world
-		new World(worldWidth, worldHeight);
+		new World(worldWidth, worldHeight, roomWidth, roomHeight);
 		
 		// create player
 		ActorManager.CreatePlayerInstance(300, 100);
 		
 		// create enemies
-		ActorManager.CreateEnemies(10);
+		//ActorManager.CreateEnemies(10);
 	}
 	
 	public synchronized void Start() {

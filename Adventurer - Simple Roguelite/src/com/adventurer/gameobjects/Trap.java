@@ -6,8 +6,8 @@ public class Trap extends Tile {
 
 	private int damage = 0;
 	
-	public Trap(Coordinate worldPos, SpriteType spritetype, TileType type, Coordinate tilePos, int damage) {
-		super(worldPos, spritetype, type, tilePos);
+	public Trap(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type, int damage) {
+		super(worldPos, tilePos, spritetype, type);
 		
 		this.setDamage(damage);
 	}

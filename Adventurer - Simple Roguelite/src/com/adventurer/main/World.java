@@ -10,28 +10,35 @@ import com.adventurer.gameobjects.Trap;
 
 public class World {
 
-	private int height;
-	private int width;
+	private int worldHeight;
+	private int worldWidth;
+	
+	private int roomHeight;
+	private int roomWidth;
+	
 	private List<Tile> tiles;
+	private List<Room> rooms;
 	
-	public static final int tileSize = 16;
-	public static final int tileGap = 2;
-	
-	public int tileCount = 0;
+	public static final int TILESIZE = 16;
+	public static final int TILEGAP = 2;
+	public static final int ROOMGAP = 1; // both rooms have a room gap, so the actual gap is 2 * ROOMGAP.
 	
 	public static World instance;
 	
-	public World(int width, int height) {
+	public World(int wwidth, int wheight, int rwidth, int rheight) {
 		
 		if(instance != null) return;
 		
 		World.instance = this;
 		
-		this.height = height;
-		this.width = width;
-		this.tiles = new ArrayList<Tile>();
+		this.worldHeight = wheight;
+		this.worldWidth = wwidth;
 		
-		this.tileCount = width * height;
+		this.roomHeight = rheight;
+		this.roomWidth = rwidth;
+		
+		this.tiles = new ArrayList<Tile>();
+		this.rooms = new ArrayList<Room>();
 		
 		CreateWorld();
 	}
@@ -203,37 +210,8 @@ public class World {
 		return position;
 	}
 	
-	// THIS CAUSES PROBLEMS - NO IDEA WHY!!??
-	/*public Coordinate[] GetFreePosition() {
-		
-		List<Tile> possibleTiles = new ArrayList<Tile>();
-		Coordinate[] position = new Coordinate[2];
-		
-		// get all possible tiles
-		for(int i = 0; i < tiles.size(); i++) {
-			
-			Tile tile = tiles.get(i);
-			
-			if(tile.GetTileType() == TileType.Floor && tile.GetActor() == null) {
-				possibleTiles.add(tile);
-			}
-		}
-		
-		// get a random number
-		int random = Util.GetRandomInteger(0, possibleTiles.size());
-		
-		// get a random tile from possible tiles.
-		Tile randomTile = possibleTiles.get(random);
-		
-		// assign positions
-		position[0] = randomTile.GetWorldPosition();
-		position[1] = randomTile.GetTilePosition();
-		
-		return position;
-	}*/
-	
 	public int ConvertTilePositionToWorld(int pos) {
-		return (pos * tileSize + tileGap * pos);
+		return (pos * TILESIZE + TILEGAP * pos);
 	}
 	
 	// creates a new TILE and destroys the old one.
@@ -244,28 +222,15 @@ public class World {
 		// create new tile
 		if(newType == TileType.TrapTile) {
 			
-			newTile = (Trap) new Trap(
-					old.GetWorldPosition(),
-					SpriteType.TrapTile01,
-					TileType.TrapTile, 
-					old.GetTilePosition(),
-					100);
+			newTile = (Trap) new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.TrapTile, 100);
 			
 		} else if(newType == TileType.Door) {
 			
-			newTile = (Door) new Door(
-					old.GetWorldPosition(),
-					SpriteType.Door01,
-					TileType.Door, 
-					old.GetTilePosition());
+			newTile = (Door) new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Door01, TileType.Door);
 			
 		} else if(newType == TileType.Floor) {
 			
-			newTile = new Tile(
-					old.GetWorldPosition(),
-					SpriteType.FloorTile01,
-					TileType.Floor, 
-					old.GetTilePosition());
+			newTile = new Tile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.FloorTile01, TileType.Floor);
 			
 		} else {
 			System.out.println("WORLD.REPLACETILE: TILETYPE NOT YET IMPLEMENTED!");
@@ -292,8 +257,8 @@ public class World {
 	
 	public List<Tile> GetTilesOfType(TileType type) {
 		List<Tile> foundTiles = new ArrayList<Tile>();
-		for(int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
+		for(int y = 0; y < worldHeight; y++) {
+			for (int x = 0; x < worldWidth; x++) {
 				Tile current = GetTileAtPosition(x, y);
 				if(current.GetTileType() == type) {
 					foundTiles.add(current);
@@ -358,10 +323,11 @@ public class World {
 		// TODO
 	}
 	
+	// creates doors randomly
 	public void CreateDoors() {
 		
-		for(int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
+		for(int y = 0; y < worldHeight; y++) {
+			for (int x = 0; x < worldWidth; x++) {
 				
 				// limit the door count
 				if(Util.GetRandomInteger() < 50) continue;
@@ -450,57 +416,82 @@ public class World {
 		else if(fromY < toY) dir = Direction.South;
 		else if(fromY > toY) dir = Direction.North;
 		
-		//System.out.print("from: " + fromX + ", " + fromY + "; to: " + toX + ", " + toY + "; dir: " + dir + "\n");
-		
 		return dir;
 	}
 	
 	private void CreateWorld() {
 		
+		// creates rooms
+		
+		int roomOffsetY = 0;
+		int roomOffsetX = 0;
+		
+		for(int y = 0; y < worldHeight; y++) {
+			for(int x = 0; x < worldWidth; x++) {
+				Room currentRoom = CreateRoom(roomOffsetX, roomOffsetY, x, y);
+				tiles.addAll(currentRoom.getTiles());
+				rooms.add(currentRoom);
+				roomOffsetX += (roomWidth * TILESIZE + roomWidth * TILEGAP) + ROOMGAP;
+			}
+			roomOffsetX = 0;
+			roomOffsetY += (roomHeight * TILESIZE + roomHeight * TILEGAP) + ROOMGAP;
+		}
+	}
+	
+	private Room CreateRoom(int roomOffsetX, int roomOffsetY, int roomStartX, int roomStartY) {
+		
+		// creates tiles inside room
+		
+		List<Tile> roomTiles = new ArrayList<Tile>();
+		
 		int offsetY = 0;
 		int offsetX = 0;
 		
-		for(int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
+		for(int y = 0; y < roomHeight; y++) {
+			for (int x = 0; x < roomWidth; x++) {
 				
 				Tile tile = null;
 				
-				Coordinate tilePos = new Coordinate(x, y);
-				Coordinate worldPos = new Coordinate(x * tileSize + offsetX, y * tileSize + offsetY);
+				Coordinate tilePos = new Coordinate(x + (roomStartX * roomWidth), y + (roomStartY * roomHeight));
+				Coordinate worldPos = new Coordinate(x * TILESIZE + offsetX + roomOffsetX, y * TILESIZE + offsetY + roomOffsetY);
 				
 				// create outer wall
-				if(y == 0 || y == height - 1 || x == 0 || x == width - 1) {
+				if(y == 0 || y == roomHeight - 1 || x == 0 || x == roomWidth - 1) {
 							
-					tile = new Tile(worldPos, SpriteType.Wall01, TileType.OuterWall, tilePos);
+					tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 					
 				} else {
 					
 					if(Util.GetRandomInteger() > 20) {
 						
 						// create floor 
-						tile = new Tile(worldPos, SpriteType.FloorTile01, TileType.Floor, tilePos);
+						tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);
 						
 					} else {
 						
 						// create wall
-						tile = new Tile(worldPos, SpriteType.Wall01, TileType.Wall, tilePos);
+						tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.Wall);
 					}
 				}
 				
 				// add to tiles list
-				tiles.add(tile);
+				roomTiles.add(tile);
 				
-				offsetX += tileGap;
+				offsetX += TILEGAP;
 				
 			}
 			offsetX = 0;
-			offsetY += tileGap;
+			offsetY += TILEGAP;
 		}
 		
-		CreateDoors();
-		CreateTraps();
-		CreateIndestructibleWalls();
-		CreateVanityItems();
+		//CreateDoors();
+		//CreateTraps();
+		//CreateIndestructibleWalls();
+		//CreateVanityItems();
+		
+		Room room = new Room(roomWidth, roomHeight, new Coordinate(roomStartX, roomStartY), roomTiles);
+		
+		return room;
 	}
 	
 	public World GetWorld() {
@@ -508,11 +499,11 @@ public class World {
 	}
 	
 	public int GetHeight() {
-		return this.height;
+		return this.worldHeight;
 	}
 	
 	public int GetWidth() {
-		return this.width;
+		return this.worldWidth;
 	}
 	
 	public List<Tile> GetTiles() {
@@ -525,5 +516,21 @@ public class World {
 	
 	public void RemoveTiles(Tile t) {
 		this.tiles.remove(t);
+	}
+
+	public int getRoomHeight() {
+		return roomHeight;
+	}
+
+	public void setRoomHeight(int roomHeight) {
+		this.roomHeight = roomHeight;
+	}
+
+	public int getRoomWidth() {
+		return roomWidth;
+	}
+
+	public void setRoomWidth(int roomWidth) {
+		this.roomWidth = roomWidth;
 	}
 }

@@ -25,7 +25,7 @@ public class Tile extends GameObject {
 	protected int fallingSpeed = 1;
 	protected int fallingYOffset = 10;
 	
-	public Tile(Coordinate worldPos, SpriteType spritetype, TileType type, Coordinate tilePos) {
+	public Tile(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type) {
 		super(worldPos, tilePos, spritetype);
 		
 		this.type = type;
@@ -40,7 +40,7 @@ public class Tile extends GameObject {
 		int y = this.GetWorldPosition().getY();
 		
 		if(camera != null) {
-			if(camera.contains(x + World.tileSize / 2, y + World.tileSize / 2)) {
+			if(camera.contains(x + World.TILESIZE / 2, y + World.TILESIZE / 2)) {
 				inView = true;
 				Show();
 			} else {

@@ -8,8 +8,8 @@ public class DestructibleTile extends Tile {
 
 	private Health tileHealth = null;
 	
-	public DestructibleTile(Coordinate worldPos, SpriteType spritetype, TileType type, Coordinate tilePos, int health) {
-		super(worldPos, spritetype, type, tilePos);
+	public DestructibleTile(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type, int health) {
+		super(worldPos, tilePos, spritetype, type);
 		
 		this.tileHealth = new Health(health, this);
 	}
@@ -32,7 +32,7 @@ public class DestructibleTile extends Tile {
 			int y = this.GetWorldPosition().getY();
 			
 			if(camera != null) {
-				if(camera.contains(this.GetWorldPosition().getX() + World.tileSize / 2, this.GetWorldPosition().getY() + World.tileSize / 2)) {
+				if(camera.contains(this.GetWorldPosition().getX() + World.TILESIZE / 2, this.GetWorldPosition().getY() + World.TILESIZE / 2)) {
 					inView = true;
 					Show();
 				} else {
