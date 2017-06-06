@@ -272,7 +272,7 @@ public class World {
 		return foundTiles;
 	}
 	
-	public void CreateVanityItems(List<Tile> roomTiles) {
+	public void CreateVanityItemsInsideRoom(List<Tile> roomTiles) {
 		
 		List<Tile> floorTiles = GetTilesOfType(TileType.Floor, roomTiles);
 		List<Tile> wallTiles = GetTilesOfType(TileType.Wall, roomTiles);
@@ -308,7 +308,7 @@ public class World {
 		}
 	}
 	
-	public void CreateTraps(List<Tile> roomTiles) {
+	public void CreateTrapsInsideRoom(List<Tile> roomTiles) {
 		
 		List<Tile> floorTiles = GetTilesOfType(TileType.Floor, roomTiles);
 		
@@ -322,7 +322,7 @@ public class World {
 		}
 	}
 	
-	public void CreateDestructibleWalls(List<Tile> roomTiles) {
+	public void CreateDestructibleWallsInsideRoom(List<Tile> roomTiles) {
 		
 		List<Tile> wallTiles = GetTilesOfType(TileType.Wall, roomTiles);
 		
@@ -337,12 +337,12 @@ public class World {
 	}
 	
 	// creates doors randomly
-	public void CreateDoors(List<Tile> roomTiles) {
+	public void CreateDoorsInsideRoom(List<Tile> roomTiles) {
 		
 		for(Tile current : roomTiles) {
 			
 			// limit the door count
-			//if(Util.GetRandomInteger() < 50) continue;
+			if(Util.GetRandomInteger() < 70) continue;
 			
 			// tile should be floor.
 			if(current.GetTileType() != TileType.Floor) continue;
@@ -466,6 +466,9 @@ public class World {
 		int offsetY = 0;
 		int offsetX = 0;
 		
+		boolean horizontalDoor = false;
+		boolean verticalDoor = false;
+		
 		for(int y = 0; y < roomHeight; y++) {
 			for (int x = 0; x < roomWidth; x++) {
 				
@@ -483,7 +486,31 @@ public class World {
 				// OUTERWALL CALCULATIONS
 				if (y == 0) { // TOP TILES
 						
-					tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+					// ----- creates horizontal doors between rooms
+					if(roomStartY > 0 && (x != 0 && x != roomWidth - 1)) {
+						if(horizontalDoor == false) {
+							
+							// force create door
+							// if a door has not yet been created
+							// and it's the last spot.
+							if(x == roomWidth - 2) {
+								tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door);
+								horizontalDoor = true;
+							} else {
+								if(Util.GetRandomInteger() > 80) {
+									tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door);
+									horizontalDoor = true;
+								} else {
+									tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+								}
+							}
+						} else {
+							tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+						}
+					} else {
+						tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+					}
+					// ------
 					
 				} else if(y == roomHeight - 1) { // BOTTOM TILES
 					
@@ -515,7 +542,31 @@ public class World {
 					
 				} else if(x == 0) { // LEFT TILES
 					
-					tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+					// ----- creates vertical doors between rooms
+					if(roomStartX > 0 && (y != 0 && y != roomHeight - 1)) {
+						if(verticalDoor == false) {
+							
+							// force create door
+							// if a door has not yet been created
+							// and it's the last spot.
+							if(y == roomHeight - 2) {
+								tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door);
+								verticalDoor = true;
+							} else {
+								if(Util.GetRandomInteger() > 80) {
+									tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door);
+									verticalDoor = true;
+								} else {
+									tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+								}
+							}
+						} else {
+							tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+						}
+					} else {
+						tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+					}
+					// ------
 					
 				} else if(x == roomWidth - 1) { // RIGHT TILES
 					
@@ -561,10 +612,13 @@ public class World {
 			offsetY += TILEGAP;
 		}
 		
-		CreateDoors(roomTiles);
-		CreateTraps(roomTiles);
-		CreateDestructibleWalls(roomTiles);
-		CreateVanityItems(roomTiles);
+		CreateDoorsInsideRoom(roomTiles);
+		CreateTrapsInsideRoom(roomTiles);
+		CreateDestructibleWallsInsideRoom(roomTiles);
+		CreateVanityItemsInsideRoom(roomTiles);
+		
+		// create enemies
+		ActorManager.CreateEnemies(5);
 		
 		Room room = new Room(roomWidth, roomHeight, new Coordinate(roomStartX, roomStartY), roomTiles);
 		

@@ -16,7 +16,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public static final int WIDTH = 1280, HEIGHT = 720; 			// viewport size
 	public static final int SPRITESIZE = 16; 						// sprite size in pixels
-	public static final int CAMERAZOOM = 1; 						// level of zoom
+	public static final int CAMERAZOOM = 4; 						// level of zoom
 	public static final int CAMERAVIEWZOOM = 0; 					// shrinks the camera view so smaller amount of tiles are being rendered
 	public static final double FRAME_CAP = 60.0;					// cap the framerate to this
 	public static final String spritesheetname = "spritesheet.png";	// main spritesheet name
@@ -24,11 +24,11 @@ public class Game extends Canvas implements Runnable {
 	//------------------------------
 	// DEBUGGING TOOLS
 	
-	public static final boolean DRAW_CAMERA = true;
+	public static final boolean DRAW_CAMERA = false;
 	public static final boolean PRINT_WORLD_CREATION_PERCENTAGE_DONE = true;
 	public static final boolean PRINT_WORLD_CREATION_START_END = true;
 	public static final boolean PRINT_DOOR_CREATED = false;
-	public static final boolean CALCULATE_PLAYER_LOS = false;
+	public static final boolean CALCULATE_PLAYER_LOS = true;
 	
 	//------------------------------
 	

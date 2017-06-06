@@ -18,8 +18,6 @@ public class Tile extends GameObject {
 	protected Actor actor = null;
 	protected List<GameObject> vanityItems = new ArrayList<GameObject>();
 	
-	protected BufferedImage discoveredSprite = null;
-	
 	// tile falling effect
 	protected int targety = 0;
 	protected int fallingSpeed = 1;
@@ -80,10 +78,10 @@ public class Tile extends GameObject {
 		} else if(hidden == true && discovered) {
 			
 			// create tinted version of the sprite 
-			if(discoveredSprite == null) {
-				discoveredSprite = Util.tint(sprite, true);
+			if(tintedSprite == null) {
+				tintedSprite = Util.tint(sprite, true);
 			} else {
-				Renderer.RenderSprite(discoveredSprite, this.GetWorldPosition(), g);
+				Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), g);
 			}
 			
 			// render vanity items
@@ -94,10 +92,8 @@ public class Tile extends GameObject {
 				if(vi.GetTintedSprite() == null) {
 					vi.SetTintedSprite(Util.tint(vi.GetSprite(), true));
 				}
-				
-				Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
+				Renderer.RenderSprite(vi.GetTintedSprite(), vi.GetWorldPosition(), g);
 			}
-			
 		}
 	}
 	
