@@ -4,7 +4,7 @@ public enum TileType {
 	Floor(),
 	Wall(),
 	OuterWall(),
-	DestructibleObject(),
+	DestructibleTile(),
 	Door(),
 	LockedDoor(),
 	TrapTile();

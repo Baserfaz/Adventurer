@@ -81,7 +81,7 @@ public class Tile extends GameObject {
 			
 			// create tinted version of the sprite 
 			if(discoveredSprite == null) {
-				discoveredSprite = Util.tint(sprite);
+				discoveredSprite = Util.tint(sprite, true);
 			} else {
 				Renderer.RenderSprite(discoveredSprite, this.GetWorldPosition(), g);
 			}
@@ -92,7 +92,7 @@ public class Tile extends GameObject {
 				VanityItem vi = (VanityItem) go;
 				
 				if(vi.GetTintedSprite() == null) {
-					vi.SetTintedSprite(Util.tint(vi.GetSprite()));
+					vi.SetTintedSprite(Util.tint(vi.GetSprite(), true));
 				}
 				
 				Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);

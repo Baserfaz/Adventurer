@@ -99,7 +99,7 @@ public class Player extends Actor {
 			if(tile.GetActor() instanceof Enemy)
 				Attack(tile);
 			
-		} else if(tile.GetTileType() == TileType.DestructibleObject) {
+		} else if(tile.GetTileType() == TileType.DestructibleTile) {
 			// TODO
 		}
 	}

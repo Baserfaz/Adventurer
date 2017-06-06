@@ -54,7 +54,7 @@ public class Projectile extends Item {
 		} else if(alive && discovered && hidden) {
 			
 			if(tintedSprite == null) {
-				tintedSprite = Util.tint(sprite);
+				tintedSprite = Util.tint(sprite, true);
 			}
 			
 			Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), direction, g);

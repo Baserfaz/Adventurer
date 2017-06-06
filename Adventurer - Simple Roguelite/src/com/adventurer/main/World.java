@@ -48,13 +48,9 @@ public class World {
 	}
 	
 	public Tile GetTileAtPosition(int x, int y) {
-		
 		Tile retTile = null;
-		
-		for(int i = 0; i < tiles.size(); i++) {
-			Tile tile = tiles.get(i);
+		for(Tile tile : tiles) {
 			Coordinate position = tile.GetTilePosition();
-			
 			if(position.getX() == x && position.getY() == y) {
 				retTile = tile;
 				break;
@@ -221,13 +217,17 @@ public class World {
 		
 		// create new tile
 		if(newType == TileType.TrapTile) {
-			newTile = (Trap) new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.TrapTile, 100);
+			newTile = new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.TrapTile, 100);
 		} else if(newType == TileType.Door) {
-			newTile = (Door) new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Door01, TileType.Door);
+			newTile = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Door01, TileType.Door);
 		} else if(newType == TileType.Floor) {
 			newTile = new Tile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.FloorTile01, TileType.Floor);
+		} else if(newType == TileType.DestructibleTile) {
+			newTile = new DestructibleTile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.DestructibleWall, TileType.DestructibleTile, 300);
 		} else {
 			System.out.println("WORLD.REPLACETILE: TILETYPE NOT YET IMPLEMENTED!");
+			new Exception().printStackTrace();
+			System.exit(1);
 		}
 		
 		// add new tile to our list of tiles.
@@ -262,10 +262,20 @@ public class World {
 		return foundTiles;
 	}
 	
-	public void CreateVanityItems() {
+	public List<Tile> GetTilesOfType(TileType type, List<Tile> tiles) {
+		List<Tile> foundTiles = new ArrayList<Tile>();
+		for(Tile tile : tiles) {
+			if(tile.GetTileType() == type) {
+				foundTiles.add(tile);
+			}
+		}
+		return foundTiles;
+	}
+	
+	public void CreateVanityItems(List<Tile> roomTiles) {
 		
-		List<Tile> floorTiles = GetTilesOfType(TileType.Floor);
-		List<Tile> wallTiles = GetTilesOfType(TileType.Wall);
+		List<Tile> floorTiles = GetTilesOfType(TileType.Floor, roomTiles);
+		List<Tile> wallTiles = GetTilesOfType(TileType.Wall, roomTiles);
 		
 		// create an array of random vanity item sprites
 		SpriteType[] floorVanitySpriteTypes = { SpriteType.Pot01, SpriteType.PotRemains01 };
@@ -298,9 +308,9 @@ public class World {
 		}
 	}
 	
-	public void CreateTraps() {
+	public void CreateTraps(List<Tile> roomTiles) {
 		
-		List<Tile> floorTiles = GetTilesOfType(TileType.Floor);
+		List<Tile> floorTiles = GetTilesOfType(TileType.Floor, roomTiles);
 		
 		for(Tile tile : floorTiles) {
 			
@@ -310,11 +320,20 @@ public class World {
 				ReplaceTile(tile, TileType.TrapTile, SpriteType.TrapTile01);
 			}
 		}
-		
 	}
 	
-	public void CreateIndestructibleWalls() {
-		// TODO
+	public void CreateDestructibleWalls(List<Tile> roomTiles) {
+		
+		List<Tile> wallTiles = GetTilesOfType(TileType.Wall, roomTiles);
+		
+		for(Tile tile : wallTiles) {
+			if(Util.GetRandomInteger() > 95) {
+				
+				// change tile type & sprite type
+				ReplaceTile(tile, TileType.DestructibleTile, SpriteType.DestructibleWall);
+				
+			}
+		}
 	}
 	
 	// creates doors randomly
@@ -351,7 +370,7 @@ public class World {
 					// save data to array.
 					dirData.add(dirToCurrent);
 					
-				} else if(t.GetTileType() == TileType.DestructibleObject || t.GetTileType() == TileType.Door) {
+				} else if(t.GetTileType() == TileType.DestructibleTile || t.GetTileType() == TileType.Door) {
 					
 					// this is not a valid spot for a door!
 					valid = false;
@@ -408,6 +427,8 @@ public class World {
 	
 	private void CreateWorld() {
 		
+		// TODO: SOMETIMES CREATES 1 EXTRA TILE SOMEWHERE!
+		
 		int roomOffsetY = 0;
 		int roomOffsetX = 0;
 		
@@ -418,6 +439,7 @@ public class World {
 		
 		for(int y = 0; y < worldHeight; y++) {
 			for(int x = 0; x < worldWidth; x++) {
+				
 				Room currentRoom = CreateRoom(roomOffsetX, roomOffsetY, x, y);
 				rooms.add(currentRoom);
 				roomOffsetX += (roomWidth * TILESIZE + roomWidth * TILEGAP) + ROOMGAP;
@@ -426,7 +448,7 @@ public class World {
 				
 				if(Game.PRINT_WORLD_CREATION_PERCENTAGE_DONE) {
 					double percentageDone = ((double) roomCount / roomMaxCount) * 100;
-					System.out.println("Creating world: " + percentageDone);
+					System.out.printf("Creating world: %.0f \n", percentageDone);
 				}
 				
 			}
@@ -434,7 +456,7 @@ public class World {
 			roomOffsetY += (roomHeight * TILESIZE + roomHeight * TILEGAP) + ROOMGAP;
 		}
 		
-		if(Game.PRINT_WORLD_CREATION_START_END) System.out.println("End world creation.");
+		if(Game.PRINT_WORLD_CREATION_START_END) System.out.println("World created! (Tile count: " + tiles.size() + ")");
 	}
 	
 	private Room CreateRoom(int roomOffsetX, int roomOffsetY, int roomStartX, int roomStartY) {
@@ -452,23 +474,80 @@ public class World {
 				Coordinate tilePos = new Coordinate(x + (roomStartX * roomWidth), y + (roomStartY * roomHeight));
 				Coordinate worldPos = new Coordinate(x * TILESIZE + offsetX + roomOffsetX, y * TILESIZE + offsetY + roomOffsetY);
 				
-				// create outer wall
-				if(y == 0 || y == roomHeight - 1 || x == 0 || x == roomWidth - 1) {
-							
+				if(GetTileAtPosition(tilePos) != null) {
+					System.out.println("TILE ALREADY EXISTS ON THIS COORDINATE: " + tilePos.getX() + ", " + tilePos.getY());
+					new Exception().printStackTrace();
+					System.exit(1);
+				}
+				
+				// OUTERWALL CALCULATIONS
+				if (y == 0) { // TOP TILES
+						
 					tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 					
-				} else {
+				} else if(y == roomHeight - 1) { // BOTTOM TILES
 					
-					if(Util.GetRandomInteger() > 20) {
+					if(roomStartX == worldWidth - 1 && roomStartY == worldWidth - 1) { // BOTTOM RIGHT ROOM
 						
-						// create floor 
-						tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);
+						tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 						
-					} else {
+					} else if(roomStartX == worldWidth - 1) { // RIGHTMOST ROOM
 						
-						// create wall
-						tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.Wall);
+						if(x == 0 || x == roomWidth - 1) {
+							tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+						} else {
+							tile = RandomizeTileFloorWall(worldPos, tilePos);
+						}
+						
+					} else if(roomStartY == worldHeight - 1) { // BOTTOM-MOST ROOM
+						
+						tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+						
+					} else { // OTHER ROOM
+						
+						if(x == 0) {
+							tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+						} else {
+							tile = RandomizeTileFloorWall(worldPos, tilePos);
+						}
+						
 					}
+					
+				} else if(x == 0) { // LEFT TILES
+					
+					tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+					
+				} else if(x == roomWidth - 1) { // RIGHT TILES
+					
+					if(roomStartX == worldWidth - 1 && roomStartY == worldWidth - 1) { // BOTTOM RIGHT ROOM
+						
+						tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+						
+					} else if(roomStartX == worldWidth - 1) { // RIGHTMOST ROOM
+						
+						tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+						
+					} else if(roomStartY == worldHeight - 1) { // BOTTOM-MOST ROOM
+						
+						tile = RandomizeTileFloorWall(worldPos, tilePos);
+						
+					} else { // OTHER ROOM
+						
+						if(y == 0) {
+							tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+						} else {
+							tile = RandomizeTileFloorWall(worldPos, tilePos);
+						}
+						
+					}
+				
+				// OTHER TILE TYPE CALCULATIONS
+				} else tile = RandomizeTileFloorWall(worldPos, tilePos);
+				
+				if(tile == null) {
+					System.out.print("WORLD.CREATEROOM: TILE IS NULL! \n");
+					new Exception().printStackTrace();
+					System.exit(1);
 				}
 				
 				// add to tiles list
@@ -483,13 +562,20 @@ public class World {
 		}
 		
 		CreateDoors(roomTiles);
-		//CreateTraps();
-		//CreateIndestructibleWalls();
-		//CreateVanityItems();
+		CreateTraps(roomTiles);
+		CreateDestructibleWalls(roomTiles);
+		CreateVanityItems(roomTiles);
 		
 		Room room = new Room(roomWidth, roomHeight, new Coordinate(roomStartX, roomStartY), roomTiles);
 		
 		return room;
+	}
+	
+	public Tile RandomizeTileFloorWall(Coordinate worldPos, Coordinate tilePos) {
+		Tile tile = null;
+		if(Util.GetRandomInteger() > 20) tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);
+		else tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.Wall);
+		return tile;
 	}
 	
 	public World GetWorld() {

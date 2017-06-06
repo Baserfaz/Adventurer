@@ -79,7 +79,7 @@ public class Bomb extends Item {
 		} else if(alive && discovered == true && hidden == true) {
 			
 			if(tintedSprite == null) {
-				tintedSprite = Util.tint(sprite);
+				tintedSprite = Util.tint(sprite, true);
 			}
 			
 			Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), g);

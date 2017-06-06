@@ -36,7 +36,7 @@ public class Util {
 	}
 	
 	// http://stackoverflow.com/questions/4248104/applying-a-tint-to-an-image-in-java
-	public static BufferedImage tint(BufferedImage image) {
+	public static BufferedImage tint(BufferedImage image, boolean darker) {
 		
 		// copy the image 
 		BufferedImage tintedImage = Util.deepCopy(image);
@@ -48,9 +48,12 @@ public class Util {
 				// second parameter is if there is alpha channel.
 				Color color = new Color(tintedImage.getRGB(x, y), true);
 				
-				// make the pixel's color darker.
-				Color tintedColor = color.darker().darker();
+				Color tintedColor = null;
 				
+				// make the pixel's color darker.
+				if(darker) tintedColor = color.darker().darker();
+				else tintedColor = color.brighter();
+					
 				// apply color to new image.
 				tintedImage.setRGB(x, y, tintedColor.getRGB());
 			}
