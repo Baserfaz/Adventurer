@@ -26,13 +26,7 @@ public class Renderer {
 	// render without rotation
 	public static void RenderSprite(BufferedImage sprite, Coordinate pos, Graphics g) {
 		
-		int width = sprite.getWidth() * Game.CAMERAZOOM;
-		int height = sprite.getHeight() * Game.CAMERAZOOM;
-		
-		BufferedImage scaledSprite = getScaledImage(sprite, width, height);
-		
-		//g.drawImage(sprite, pos.getX(), pos.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
-		g.drawImage(scaledSprite, pos.getX() * Game.CAMERAZOOM, pos.getY() * Game.CAMERAZOOM, null);
+		g.drawImage(sprite, pos.getX(), pos.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
 	}
 	
 	// render with 90 degree rotation 
