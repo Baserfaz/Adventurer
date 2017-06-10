@@ -24,5 +24,8 @@ public enum SpriteType {
 	Bomb01(),
 	Smoke01(),
 	Torch01(),
-	SmallSkeletonRemains01();
+	SmallSkeletonRemains01(),
+	BloodGib01(),
+	BoneGib01(),
+	PotGib01();
 }

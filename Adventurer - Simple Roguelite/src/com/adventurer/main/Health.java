@@ -4,16 +4,12 @@ import com.adventurer.gameobjects.GameObject;
 
 public class Health {
 	
-	private GameObject owner;
-	
 	private int currentHP = 0;
 	private int maxHP = 100;
 	
 	private boolean dead = false;
 	
-	public Health(int maxHP, GameObject owner) {
-		
-		this.owner = owner;
+	public Health(int maxHP) {
 		this.maxHP = maxHP;
 		this.currentHP = this.maxHP;
 	}

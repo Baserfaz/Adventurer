@@ -1,8 +1,10 @@
 package com.adventurer.main;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adventurer.gameobjects.DestructibleItem;
 import com.adventurer.gameobjects.DestructibleTile;
 import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Tile;
@@ -96,6 +98,21 @@ public class World {
 		return foundTiles;
 	}
 	
+	public Tile GetTileWithWorldPosition(Coordinate wpos) {
+		
+		Tile ret = null;
+		
+		for(Tile tile : tiles) {
+			if(tile.GetBounds().contains(new Point(wpos.getX(), wpos.getY()))) {
+				ret = tile;
+				break;
+			}
+		}
+		
+		
+		return ret;
+	}
+	
 	public List<Tile> GetSurroundingTiles(Coordinate pos) {
 		return GetSurroundingTiles(pos.getX(), pos.getY());
 	}
@@ -177,7 +194,7 @@ public class World {
 			
 			Tile tile = tiles.get(i);
 			
-			if(tile.GetTileType() == TileType.Floor && tile.GetActor() == null) {
+			if(tile.GetTileType() == TileType.Floor && tile.GetActor() == null && tile.GetItem() == null) {
 				possibleTiles.add(tile);
 			}
 		}
@@ -272,13 +289,27 @@ public class World {
 		return foundTiles;
 	}
 	
+	public void CreateDestructibleItemsInsideRoom(List<Tile> roomTiles) {
+		
+		for(Tile tile : roomTiles) {
+			
+			if(Util.GetRandomInteger() > 90) {
+				if(tile.GetTileType() == TileType.Floor) {
+					
+					DestructibleItem item = new DestructibleItem(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Pot01, 200);
+					
+				}
+			}
+		}
+	}
+	
 	public void CreateVanityItemsInsideRoom(List<Tile> roomTiles) {
 		
 		List<Tile> floorTiles = GetTilesOfType(TileType.Floor, roomTiles);
 		List<Tile> wallTiles = GetTilesOfType(TileType.Wall, roomTiles);
 		
 		// create an array of random vanity item sprites
-		SpriteType[] floorVanitySpriteTypes = { SpriteType.Pot01, SpriteType.PotRemains01 };
+		SpriteType[] floorVanitySpriteTypes = { SpriteType.PotRemains01 };
 		SpriteType[] wallVanitySpriteTypes = { SpriteType.Torch01 };
 		
 		// create floor vanity items
@@ -303,7 +334,7 @@ public class World {
 				SpriteType st = wallVanitySpriteTypes[Util.GetRandomInteger(0, wallVanitySpriteTypes.length)];
 				
 				// create vanity item
-				VanityItemCreator.CreateVanityItem(tile, st, false);
+				VanityItemCreator.CreateLightSource(tile, st, false);
 			}
 		}
 	}
@@ -615,6 +646,7 @@ public class World {
 		CreateDoorsInsideRoom(roomTiles);
 		CreateTrapsInsideRoom(roomTiles);
 		CreateDestructibleWallsInsideRoom(roomTiles);
+		CreateDestructibleItemsInsideRoom(roomTiles);
 		CreateVanityItemsInsideRoom(roomTiles);
 		
 		// create enemies

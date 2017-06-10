@@ -7,48 +7,6 @@ public class ActorManager {
 	private static Player playerInstance = null;
 	private static Enemy[] enemyInstances = null;
 	
-	public static void ActorTakeDamage(Actor actor, int damage) {
-		
-		Tile tile = World.instance.GetTileAtPosition(actor.GetTilePosition());
-		
-		// damage
-		actor.GetHealth().TakeDamage(damage);
-		
-		// effects
-		if(actor.isDiscovered()) EffectCreator.CreateHitEffect(tile);
-		
-		// creates blood
-		if(actor instanceof Player) {
-			
-			VanityItemCreator.CreateSmallBlood(tile);
-			
-		} else {
-			
-			SpriteType spritetype = SpriteType.SmallBlood01;
-			
-			switch(((Enemy)actor).getEnemyType()) {
-			case Skeleton:
-				spritetype = SpriteType.SmallSkeletonRemains01;
-				break;
-			case Maggot:
-				spritetype = SpriteType.SmallBlood01;
-				break;
-			case Zombie:
-				spritetype = SpriteType.SmallBlood01;
-				break;
-			default:
-				System.out.println("ENEMYTYPE NOT YET IMPLEMENTED!");
-				break;
-			}
-			
-			VanityItemCreator.CreateVanityItem(tile, spritetype, true);
-		}
-	}
-	
-	public static void ActorTakeDamage(Tile tile, int damage) {
-		ActorTakeDamage(tile.GetActor(), damage);
-	}
-	
 	public static Player CreatePlayerInstance(int maxHP, int damage) {
 		
 		if(playerInstance != null) {

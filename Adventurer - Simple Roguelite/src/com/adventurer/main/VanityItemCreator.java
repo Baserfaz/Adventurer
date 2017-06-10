@@ -2,11 +2,37 @@ package com.adventurer.main;
 
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.VanityItem;
+import com.adventurer.gameobjects.LightSource;
 
 public class VanityItemCreator {
 
 	private static Coordinate GetOffsets(int max, int min) {
 		return new Coordinate(Util.GetRandomInteger(min, max), Util.GetRandomInteger(min, max));
+	}
+	
+	public static VanityItem CreateLightSource(Tile tile, SpriteType spriteType, boolean setOffset) {
+		// randomize sprite offset on the tile.
+		int value = Game.SPRITESIZE / 4;
+		Coordinate offsets = GetOffsets(value, -value);
+		Coordinate pos = null;
+		
+		if(setOffset) {
+			pos = new Coordinate(tile.GetWorldPosition().getX() + offsets.getX(), tile.GetWorldPosition().getY() + offsets.getY());
+		} else {
+			pos = tile.GetWorldPosition();
+		}
+		
+		// create vanity item
+		LightSource lightsource = new LightSource(pos, tile.GetTilePosition(), spriteType);
+		
+		// register created vanity item to the tile given.
+		tile.AddVanityItem(lightsource);
+		
+		return lightsource;
+	}
+	
+	public static VanityItem CreateVanityItem(Coordinate pos, SpriteType spriteType, boolean setOffset) {
+		return CreateVanityItem(World.instance.GetTileAtPosition(pos), spriteType, setOffset);
 	}
 	
 	public static VanityItem CreateVanityItem(Tile tile, SpriteType spriteType, boolean setOffset) {

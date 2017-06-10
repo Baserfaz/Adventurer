@@ -4,6 +4,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import com.adventurer.gameobjects.Bomb;
+import com.adventurer.gameobjects.Gib;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Projectile;
 import com.adventurer.gameobjects.Tile;
@@ -61,6 +62,13 @@ public class KeyInput extends KeyAdapter {
 				new Bomb(t.GetWorldPosition(), t.GetTilePosition(), SpriteType.Bomb01, 1500, 300);
 			}
 		}
+		
+		// GIB TESTER
+		/*if(key == KeyEvent.VK_ENTER) {
+			Tile tile = World.instance.GetTileAtPosition(player.GetTilePosition());
+			// create effect on tile.
+			EffectCreator.CreateGibs(tile, Util.GetRandomInteger(10, 15));
+		}*/
 		
 		// shooting debugging
 		if(key == KeyEvent.VK_UP) {

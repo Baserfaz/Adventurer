@@ -161,6 +161,18 @@ public class SpriteCreator {
 			row = 3;
 			column = 1;
 			break;
+		case BloodGib01:
+			row = 3;
+			column = 2;
+			break;
+		case BoneGib01:
+			row = 3;
+			column = 3;
+			break;
+		case PotGib01:
+			row = 3;
+			column = 4;
+			break;
 		default:
 			System.out.println("SPRITETYPE NOT FOUND: " +  type);
 			break;

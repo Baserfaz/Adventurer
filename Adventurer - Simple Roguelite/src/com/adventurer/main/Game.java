@@ -162,17 +162,6 @@ public class Game extends Canvas implements Runnable {
 		
 		//-------------------------------------------
 		// DRAW GRAPHICS HERE
-		// - gameobjects that are rendered first are bottom
-		// - gameobjects that are rendered last are top
-		
-		// TODO: draw order:
-		// 0. background
-		// 1. tiles 
-		// 2. vanity items (blood etc.)
-		// 3. items
-		// 4. actors
-		// 5. effects
-		// 6. GUI
 		
 		// set background
 		g.setColor(Color.black);
@@ -206,11 +195,8 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		// render objects
+		// uses simplistic rendering queue
 		Handler.instance.render(g);
-		
-		// render GUI
-		// after everything else.
-		// TODO: GUI
 		
 		//-------------------------------------------
 		g.dispose();

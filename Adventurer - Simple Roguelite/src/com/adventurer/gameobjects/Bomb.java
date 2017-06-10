@@ -50,6 +50,7 @@ public class Bomb extends Item {
 					
 					// open door
 					((Door) tile).Open();
+					EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 6), SpriteType.PotGib01);
 					
 				} else if(tile.GetActor() != null && tile.GetItem() != this && tile.GetItem() == null) {
 					
@@ -60,8 +61,14 @@ public class Bomb extends Item {
 						
 					} else {
 						
-						ActorManager.ActorTakeDamage(tile, damage);
+						DamageHandler.ActorTakeDamage(tile, damage);
 					}
+				} else if(tile.GetItem() != null) {
+					
+					if(tile.GetItem() instanceof DestructibleItem) {
+						DamageHandler.ItemTakeDamage((DestructibleItem)tile.GetItem(), damage);
+					}
+					
 				}
 			}
 			

@@ -118,7 +118,18 @@ public class Projectile extends Item {
 			
 		} else if(tile.GetActor() != null) {
 			
-			ActorManager.ActorTakeDamage(tile, damage);
+			DamageHandler.ActorTakeDamage(tile, damage);
+			
+			alive = false;
+			Remove();
+			
+		} else if(tile.GetItem() != null) {
+			
+			Item item = tile.GetItem();
+			
+			if(item instanceof DestructibleItem) {
+				DamageHandler.ItemTakeDamage((DestructibleItem) item, damage);
+			}
 			
 			alive = false;
 			Remove();
@@ -126,7 +137,7 @@ public class Projectile extends Item {
 		} else {
 			
 			// create effect
-			if(tile.GetDiscovered()) EffectCreator.CreateHitEffect(tile);
+			if(tile.GetDiscovered()) EffectCreator.CreateStaticHitEffect(tile);
 			
 			alive = false;
 			Remove();

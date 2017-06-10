@@ -161,7 +161,7 @@ public class Tile extends GameObject {
 		this.type = t;
 	}
 	
-	public GameObject GetItem() {
+	public Item GetItem() {
 		return item;
 	}
 

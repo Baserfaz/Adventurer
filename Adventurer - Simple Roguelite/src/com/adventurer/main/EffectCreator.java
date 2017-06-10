@@ -1,18 +1,38 @@
 package com.adventurer.main;
 
 import com.adventurer.gameobjects.Effect;
+import com.adventurer.gameobjects.Gib;
 import com.adventurer.gameobjects.Tile;
 
 public class EffectCreator {
 
-	public static void CreateHitEffect(Tile tile) {
+	public static void CreateStaticHitEffect(Tile tile) {
 		// create effect.
-		new Effect(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Hit01, 100, false);
+		new Effect(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Hit01, 100);
 	}
 	
-	public static void CreateHitEffect(Coordinate worldPos, Coordinate tilePos) {
-		// create effect.
-		new Effect(worldPos, tilePos, SpriteType.Hit01, 100, false);
+	public static void CreateGibs(Coordinate pos, int gibCount, SpriteType spritetype) {
+		Tile tile = World.instance.GetTileAtPosition(pos);
+		CreateGibs(tile, gibCount, spritetype);
+	}
+	
+	public static void CreateGibs(Tile tile, int gibCount, SpriteType spritetype) {
+		for(int i = 0; i < gibCount; i++) {
+			
+			// randomize sprite offset on the tile.
+			int value = Game.SPRITESIZE / 4;
+			int spriteOffsetX = Util.GetRandomInteger(-value, value);
+			int spriteOffsetY = Util.GetRandomInteger(-value, value);
+			
+			// randomize timer
+			int randomTTL = Util.GetRandomInteger(500, 1000);
+			
+			// calculate worldPosition
+			Coordinate pos = new Coordinate(tile.GetWorldPosition().getX() + spriteOffsetX, tile.GetWorldPosition().getY() + spriteOffsetY);
+			
+			// create effect.
+			new Gib(pos, tile.GetTilePosition(), spritetype, randomTTL);
+		}
 	}
 	
 	public static void CreateSmokeEffect(Tile tile, int smokePuffCount) {

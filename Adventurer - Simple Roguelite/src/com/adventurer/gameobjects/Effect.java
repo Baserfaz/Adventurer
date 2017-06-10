@@ -12,9 +12,16 @@ import com.adventurer.main.Util;
 
 public class Effect extends GameObject {
 	
-	private long liveTimer = 0;
-	private boolean isAlive = true;
+	protected long liveTimer = 0;
+	protected boolean isAlive = true;
 	private boolean allowMovement = false;
+	
+	public Effect(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int timeToLiveInMs) {
+		super(worldPos, tilePos, spritetype);
+		
+		this.liveTimer = System.currentTimeMillis() + timeToLiveInMs;
+		this.allowMovement = false;
+	}
 	
 	public Effect(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int timeToLiveInMs, boolean allowMovement) {
 		super(worldPos, tilePos, spritetype);
@@ -33,7 +40,11 @@ public class Effect extends GameObject {
 			int y = this.GetWorldPosition().getY();
 			
 			if(allowMovement) {
-				if(Util.GetRandomInteger() > 90) this.SetWorldPosition(x, y - 1);
+				
+				if(Util.GetRandomInteger() > 90) {
+					this.SetWorldPosition(x, y - 1);
+				}
+				
 			}
 		}
 	}

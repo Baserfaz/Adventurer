@@ -25,7 +25,7 @@ public class Actor extends GameObject {
 		
 		this.lookDir = Direction.West;
 		this.damage = damage;
-		this.myHP = new Health(maxHP, this);
+		this.myHP = new Health(maxHP);
 		
 		// register to tile
 		World.instance.GetTileAtPosition(this.GetTilePosition()).SetActor(this);
@@ -90,11 +90,26 @@ public class Actor extends GameObject {
 	
 	public void Attack(Tile tile) {
 		
+		// 1. try get actor
 		GameObject object = tile.GetActor();
-		if(object == null) return;
 		
-		// take damage
-		ActorManager.ActorTakeDamage(tile, 100);
+		// 2. if actor is null 
+		//    try get item
+		if(object == null) {
+			
+			object = tile.GetItem();
+			
+			// 3. if the item is destructible
+			if(object instanceof DestructibleItem) {
+				
+				// 4. object takes damage
+				DamageHandler.ItemTakeDamage((DestructibleItem) object, damage);
+			}
+		} else {
+			
+			// 5. actor takes damage
+			DamageHandler.ActorTakeDamage(tile, damage);
+		}
 	}
 	
 	protected void UpdatePosition() {

@@ -11,7 +11,7 @@ public class DestructibleTile extends Tile {
 	public DestructibleTile(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type, int health) {
 		super(worldPos, tilePos, spritetype, type);
 		
-		this.tileHealth = new Health(health, this);
+		this.tileHealth = new Health(health);
 	}
 
 	public void tick() {
