@@ -61,6 +61,33 @@ public class Util {
 		return tintedImage;
 	}
 	
+	// https://stackoverflow.com/questions/4248104/applying-a-tint-to-an-image-in-java
+	public static BufferedImage tintWithColor(BufferedImage image, Color tintColor) {
+		
+		// copy the image 
+		BufferedImage tintedImage = Util.deepCopy(image);
+		
+		// loop through all pixels
+		for(int x = 0; x < tintedImage.getWidth(); x++) {
+			for (int y = 0; y < tintedImage.getHeight(); y++) {
+				
+				// second parameter is if there is alpha channel.
+				Color pixelColor = new Color(tintedImage.getRGB(x, y), true);
+				
+				int r = (pixelColor.getRed() + tintColor.getRed()) / 2;
+	            int g = (pixelColor.getGreen() + tintColor.getGreen()) / 2;
+	            int b = (pixelColor.getBlue() + tintColor.getBlue()) / 2;
+	            int a = pixelColor.getAlpha();
+	            
+	            int rgba = (a << 24) | (r << 16) | (g << 8) | b;
+	            
+				// apply color to new image.
+				tintedImage.setRGB(x, y, rgba);
+			}
+		}
+		return tintedImage;
+	}
+	
 	// http://stackoverflow.com/questions/3514158/how-do-you-clone-a-bufferedimage
 	public static BufferedImage deepCopy(BufferedImage bi) {
 		 ColorModel cm = bi.getColorModel();

@@ -23,6 +23,9 @@ public class DestructibleItem extends Item {
 	}
 
 	public void tick() {
+		
+		if(health == null) return;
+		
 		if(health.isDead()) {
 			alive = false;
 			VanityItemCreator.CreateVanityItem(this.GetTilePosition(), SpriteType.PotRemains01, true);

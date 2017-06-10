@@ -1,11 +1,17 @@
 package com.adventurer.main;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class Renderer {
 
+	public static void RenderSpriteWithTint(BufferedImage sprite, Coordinate pos, Graphics g, Color tint) {
+		BufferedImage img = Util.tintWithColor(sprite, tint);
+		g.drawImage(img, pos.getX(), pos.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
+	}
+	
 	// render without rotation
 	public static void RenderSprite(BufferedImage sprite, Coordinate pos, Graphics g) {
 		g.drawImage(sprite, pos.getX(), pos.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);

@@ -1,5 +1,6 @@
 package com.adventurer.gameobjects;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -13,6 +14,8 @@ public class Tile extends GameObject {
 	protected TileType type;
 	protected boolean discovered = false; 
 	protected boolean inView = false;
+	
+	protected boolean selected = false;
 	
 	protected Item item = null;
 	protected Actor actor = null;
@@ -59,6 +62,11 @@ public class Tile extends GameObject {
 	}
 	
 	public void render(Graphics g) {
+		
+		if(selected) {
+			Renderer.RenderSpriteWithTint(sprite, this.GetWorldPosition(), g, Color.red);
+			return;
+		}
 		
 		if(hidden == false) {
 			
@@ -139,6 +147,19 @@ public class Tile extends GameObject {
 		}
 	}
 
+	private void Deselect() {
+		this.selected = false;
+	}
+	
+	private void Select() {
+		this.selected = true;
+	}
+	
+	public void toggleSelect() {
+		if (this.selected) this.selected = false;
+		else this.selected = true;
+	}
+	
 	public void Remove() {
 		World.instance.RemoveTiles(this);
 		Handler.instance.RemoveObject(this);
