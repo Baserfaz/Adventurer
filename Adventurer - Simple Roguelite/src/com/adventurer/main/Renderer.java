@@ -3,10 +3,21 @@ package com.adventurer.main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 public class Renderer {
 
+	// https://stackoverflow.com/questions/11367324/how-do-i-scale-a-bufferedimage
+	private static BufferedImage getScaledImage(BufferedImage sprite, int w, int h){
+	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
+	    Graphics2D g2 = resizedImg.createGraphics();
+	    g2.drawImage(sprite, 0, 0, w, h, null);
+	    g2.dispose();
+	    return resizedImg;
+	}
+	
 	public static void RenderSpriteWithTint(BufferedImage sprite, Coordinate pos, Graphics g, Color tint) {
 		BufferedImage img = Util.tintWithColor(sprite, tint);
 		g.drawImage(img, pos.getX(), pos.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
@@ -14,7 +25,14 @@ public class Renderer {
 	
 	// render without rotation
 	public static void RenderSprite(BufferedImage sprite, Coordinate pos, Graphics g) {
-		g.drawImage(sprite, pos.getX(), pos.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
+		
+		int width = sprite.getWidth() * Game.CAMERAZOOM;
+		int height = sprite.getHeight() * Game.CAMERAZOOM;
+		
+		BufferedImage scaledSprite = getScaledImage(sprite, width, height);
+		
+		//g.drawImage(sprite, pos.getX(), pos.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
+		g.drawImage(scaledSprite, pos.getX() * Game.CAMERAZOOM, pos.getY() * Game.CAMERAZOOM, null);
 	}
 	
 	// render with 90 degree rotation 

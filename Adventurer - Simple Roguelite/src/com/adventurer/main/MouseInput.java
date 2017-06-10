@@ -1,5 +1,6 @@
 package com.adventurer.main;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -24,20 +25,23 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 			
 			Rectangle camera = Camera.instance.getCameraBounds();
 			
-			int x = (int) Math.floor((mouseX + camera.getX()) / 400); //(Game.SPRITESIZE * Game.CAMERAZOOM));
-			int y = (int) Math.floor((mouseY + camera.getY()) / 400);//(Game.SPRITESIZE * Game.CAMERAZOOM));
+			//int x = (int) Math.floor((mouseX + camera.x) /  (double) (Game.SPRITESIZE * Game.CAMERAZOOM));
+			//int y = (int) Math.floor((mouseY + camera.y) / (double) (Game.SPRITESIZE * Game.CAMERAZOOM));
 			
-			Tile tile = World.instance.GetTileAtPosition(x, y);
+			int x = mouseX + camera.x;
+			int y = mouseY + camera.y;
 			
-			System.out.println("clicked: " + x + ", " + y + ", camera pos: " + camera.getX() + ", " + camera.getY());
-			
-			if(tile != null) {
-				tile.toggleSelect();
-				System.out.println(tile.GetInfo());
+			for(Tile tile : World.instance.GetTiles()) {
+				if(tile.isInView() && tile.isDiscovered()) {
+					
+					if(tile.GetBounds().contains(new Point(x, y))) {
+						
+						tile.toggleSelect();
+						
+					}
+				}
 			}
-			
 		}
-		
 	}
 	
 	public void mouseReleased(MouseEvent e) {}

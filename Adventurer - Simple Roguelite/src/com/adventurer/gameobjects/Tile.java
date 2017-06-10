@@ -12,9 +12,7 @@ import com.adventurer.main.*;
 public class Tile extends GameObject {
 
 	protected TileType type;
-	protected boolean discovered = false; 
 	protected boolean inView = false;
-	
 	protected boolean selected = false;
 	
 	protected Item item = null;
@@ -146,13 +144,9 @@ public class Tile extends GameObject {
 			this.GetItem().Discover();
 		}
 	}
-
-	private void Deselect() {
-		this.selected = false;
-	}
 	
-	private void Select() {
-		this.selected = true;
+	public boolean isInView() {
+		return this.inView;
 	}
 	
 	public void toggleSelect() {
@@ -164,10 +158,6 @@ public class Tile extends GameObject {
 		World.instance.RemoveTiles(this);
 		Handler.instance.RemoveObject(this);
 		Hide();
-	}
-	
-	public boolean GetDiscovered() {
-		return this.discovered;
 	}
 	
 	public Rectangle GetBounds() {

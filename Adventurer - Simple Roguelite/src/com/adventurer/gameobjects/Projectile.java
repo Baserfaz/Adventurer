@@ -137,7 +137,7 @@ public class Projectile extends Item {
 		} else {
 			
 			// create effect
-			if(tile.GetDiscovered()) EffectCreator.CreateStaticHitEffect(tile);
+			if(tile.isDiscovered()) EffectCreator.CreateStaticHitEffect(tile);
 			
 			alive = false;
 			Remove();

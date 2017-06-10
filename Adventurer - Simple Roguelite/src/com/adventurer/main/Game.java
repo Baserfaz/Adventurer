@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 
 import com.adventurer.gameobjects.Player;
@@ -16,8 +17,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public static final int WIDTH = 1280, HEIGHT = 720; 			// viewport size
 	public static final int SPRITESIZE = 16; 						// sprite size in pixels
-	public static final int CAMERAZOOM = 4; 						// level of zoom
-	public static final int CAMERAVIEWZOOM = 0; 					// shrinks the camera view so smaller amount of tiles are being rendered
+	public static final int CAMERAZOOM = 1; 						// level of zoom
 	public static final double FRAME_CAP = 60.0;					// cap the framerate to this
 	public static final String spritesheetname = "spritesheet.png";	// main spritesheet name
 	
@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean PRINT_WORLD_CREATION_PERCENTAGE_DONE = true;
 	public static final boolean PRINT_WORLD_CREATION_START_END = true;
 	public static final boolean PRINT_DOOR_CREATED = false;
-	public static final boolean CALCULATE_PLAYER_LOS = false;
+	public static final boolean CALCULATE_PLAYER_LOS = true;
 	
 	//------------------------------
 	
@@ -38,8 +38,8 @@ public class Game extends Canvas implements Runnable {
 	private Window window;
 	
 	// room count in world
-	private final int worldHeight = 1;
-	private final int worldWidth = 1;
+	private final int worldHeight = 5;
+	private final int worldWidth = 5;
 	
 	// tiles in one room
 	private final int roomHeight = 10;
@@ -168,7 +168,7 @@ public class Game extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		// zoom
-		g2d.scale(CAMERAZOOM, CAMERAZOOM);
+		//g2d.scale(CAMERAZOOM, CAMERAZOOM);
 		
 		// camera follow
 		Player player = ActorManager.GetPlayerInstance();
@@ -181,9 +181,9 @@ public class Game extends Canvas implements Runnable {
 			g.translate(targetx, targety);
 			
 			// update 'camera' position
-			Camera.instance.Update(new Coordinate(-targetx + CAMERAVIEWZOOM, -targety + CAMERAVIEWZOOM),
-					(1273 - CAMERAVIEWZOOM * 5) / CAMERAZOOM,
-					(690 - CAMERAVIEWZOOM * 5) / CAMERAZOOM);
+			Camera.instance.Update(new Coordinate(-targetx, -targety),
+					1273 / CAMERAZOOM,
+					690 / CAMERAZOOM);
 		
 			if(DRAW_CAMERA) {
 				g.setColor(Color.red);
