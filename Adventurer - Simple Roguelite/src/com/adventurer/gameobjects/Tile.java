@@ -14,6 +14,7 @@ public class Tile extends GameObject {
 	protected TileType type;
 	protected boolean inView = false;
 	protected boolean selected = false;
+	protected boolean lit = false;
 	
 	protected Item item = null;
 	protected Actor actor = null;
@@ -73,12 +74,24 @@ public class Tile extends GameObject {
 		
 		if(hidden == false) {
 			
-			// render tile
-			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-			
-			// render vanity items
-			for(GameObject vi : vanityItems) {
-				Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
+			if(lit) {
+				
+				Renderer.RenderSprite(Util.tint(sprite, false), this.GetWorldPosition(), g);
+				
+				for(GameObject vi : vanityItems) {
+					Renderer.RenderSprite(Util.tint(vi.GetSprite(), false), vi.GetWorldPosition(), g);
+				}
+				
+			} else {
+				
+				// render tile
+				Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
+				
+				// render vanity items
+				for(GameObject vi : vanityItems) {
+					Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
+				}
+				
 			}
 			
 		} else if(inView == false) {
@@ -153,6 +166,15 @@ public class Tile extends GameObject {
 		World.instance.RemoveTiles(this);
 		Handler.instance.RemoveObject(this);
 		Hide();
+	}
+	
+	public boolean isLit() {
+		return this.lit;
+	}
+	
+	public void toggleLit() {
+		if(this.lit) this.lit = false;
+		else this.lit = true;
 	}
 	
 	public void toggleSelect() {

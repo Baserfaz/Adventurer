@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 public class Renderer {
 
 	// https://stackoverflow.com/questions/11367324/how-do-i-scale-a-bufferedimage
+	@SuppressWarnings("unused")
 	private static BufferedImage getScaledImage(BufferedImage sprite, int w, int h){
 	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
 	    Graphics2D g2 = resizedImg.createGraphics();

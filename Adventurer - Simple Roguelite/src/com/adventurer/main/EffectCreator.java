@@ -1,5 +1,7 @@
 package com.adventurer.main;
 
+import java.util.List;
+
 import com.adventurer.gameobjects.Effect;
 import com.adventurer.gameobjects.Gib;
 import com.adventurer.gameobjects.Tile;
@@ -32,6 +34,17 @@ public class EffectCreator {
 			
 			// create effect.
 			new Gib(pos, tile.GetTilePosition(), spritetype, randomTTL);
+		}
+	}
+	
+	public static void CreateGasEffectArea(Tile tile, int gasPuffCount) {
+		
+		List<Tile> tiles = World.instance.GetSurroundingTiles(tile.GetTilePosition());
+		
+		for(Tile t : tiles) {
+			
+			// create effects
+			EffectCreator.CreateGasEffect(t, Util.GetRandomInteger(3, 7));
 		}
 	}
 	

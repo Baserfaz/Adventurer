@@ -43,7 +43,7 @@ public abstract class GameObject {
 	
 	public String GetInfo() {
 		return "GameObject: " + this.toString() + ", tilePos: (" + this.GetTilePosition().getX() + ", " + this.GetTilePosition().getY() +"), "
-				+ "worldPos: (" + this.GetWorldPosition().getX() + ", " + this.GetWorldPosition().getY() + ")";
+				+ "worldPos: (" + this.GetWorldPosition().getX() + ", " + this.GetWorldPosition().getY() + ")" + ", hidden: " + this.hidden + ", discovered: " + this.discovered;
 	}
 	
 	public boolean isDiscovered() {

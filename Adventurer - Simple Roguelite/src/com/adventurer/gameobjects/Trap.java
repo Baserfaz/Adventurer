@@ -32,19 +32,15 @@ public class Trap extends Tile {
 	private void ActivateGasTrap() {
 		
 		List<Tile> tiles = World.instance.GetSurroundingTiles(this.GetTilePosition());
-		
 		for(Tile tile : tiles) {
-			
-			// create effects
-			EffectCreator.CreateGasEffect(tile, Util.GetRandomInteger(3, 7));
-			
 			if (tile.GetActor() != null) {
 				if(tile.GetActor() instanceof Enemy || tile.GetActor() instanceof Player) {
 					DamageHandler.ActorTakeDamage(tile.GetActor(), damage);
 				}
 			}
-			
 		}
+		
+		EffectCreator.CreateGasEffectArea(this, Util.GetRandomInteger(3, 7));
 	}
 	
 	private void ActivateProjectileTrap() {
