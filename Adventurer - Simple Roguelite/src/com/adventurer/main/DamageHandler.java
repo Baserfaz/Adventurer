@@ -22,7 +22,7 @@ public class DamageHandler {
 		if(actor instanceof Player) {
 			
 			//VanityItemCreator.CreateSmallBlood(tile);
-			EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 5), SpriteType.BloodGib01);
+			EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 5), SpriteType.PlayerGib01);
 			
 		} else {
 			

@@ -61,7 +61,12 @@ public class Actor extends GameObject {
 			Remove();
 			
 		} else {
-			System.out.println("Player ded");
+			
+			// create vanity item 
+			VanityItemCreator.CreateVanityItem(tile, SpriteType.PlayerRemains01, true);
+			
+			// remove gameobject
+			Remove();
 		}
 		
 	}
