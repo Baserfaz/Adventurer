@@ -189,6 +189,10 @@ public class SpriteCreator {
 			row = 4;
 			column = 0;
 			break;
+		case GasCloud01:
+			row = 2;
+			column = 7;
+			break;
 		default:
 			System.out.println("SPRITETYPE NOT FOUND: " +  type);
 			break;

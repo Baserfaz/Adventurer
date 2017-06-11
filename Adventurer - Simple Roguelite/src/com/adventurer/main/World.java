@@ -234,7 +234,19 @@ public class World {
 		
 		// create new tile
 		if(newType == TileType.TrapTile) {
-			newTile = new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.TrapTile, 100);
+			
+			// randomize trap type
+			TrapType randTrapType = TrapType.values()[Util.GetRandomInteger(0, TrapType.values().length)];
+			
+			switch(randTrapType) {
+			case Projectile:
+				newTile = new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.TrapTile, TrapType.Projectile, 100);
+				break;
+			case Gas:
+				newTile = new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.TrapTile, TrapType.Gas, 25);
+				break;
+			}
+		
 		} else if(newType == TileType.Door) {
 			newTile = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Door01, TileType.Door, false);
 		} else if(newType == TileType.LockedDoor) {

@@ -41,6 +41,7 @@ public class Effect extends GameObject {
 			
 			if(allowMovement) {
 				
+				// TODO: upwards motion is hard coded atm.
 				if(Util.GetRandomInteger() > 90) {
 					this.SetWorldPosition(x, y - 1);
 				}

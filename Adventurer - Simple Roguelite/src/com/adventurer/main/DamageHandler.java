@@ -44,7 +44,6 @@ public class DamageHandler {
 				System.exit(1);
 			}
 			
-			//VanityItemCreator.CreateVanityItem(tile, spritetype, true);
 			EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 5), spritetype);
 		}
 	}

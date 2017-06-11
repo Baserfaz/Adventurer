@@ -1,19 +1,53 @@
 package com.adventurer.gameobjects;
 
+import java.util.List;
+
 import com.adventurer.main.*;
 
 public class Trap extends Tile {
 
 	private int damage = 0;
+	private TrapType trapType;
 	
-	public Trap(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type, int damage) {
-		super(worldPos, tilePos, spritetype, type);
+	public Trap(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType tiletype, TrapType traptype, int damage) {
+		super(worldPos, tilePos, spritetype, tiletype);
 		
 		this.setDamage(damage);
+		this.trapType = traptype;
 	}
 
 	public void Activate() {
 		
+		switch(this.trapType) {
+		case Projectile:
+			ActivateProjectileTrap();
+			break;
+		case Gas:
+			ActivateGasTrap();
+			break;
+		}
+		
+	}
+	
+	private void ActivateGasTrap() {
+		
+		List<Tile> tiles = World.instance.GetSurroundingTiles(this.GetTilePosition());
+		
+		for(Tile tile : tiles) {
+			
+			// create effects
+			EffectCreator.CreateGasEffect(tile, Util.GetRandomInteger(3, 7));
+			
+			if (tile.GetActor() != null) {
+				if(tile.GetActor() instanceof Enemy || tile.GetActor() instanceof Player) {
+					DamageHandler.ActorTakeDamage(tile.GetActor(), damage);
+				}
+			}
+			
+		}
+	}
+	
+	private void ActivateProjectileTrap() {
 		// --------------------------
 		// 1. get a random wall in some direction
 		// 2. shoot an arrow from that wall towards the trap
@@ -50,6 +84,8 @@ public class Trap extends Tile {
 				break;
 			default:
 				System.out.println("NOT A CARDINAL DIRECTION!");
+				new Exception().printStackTrace();
+				System.exit(1);
 				break;
 			}
 		} while(current.GetTileType() == TileType.Floor);

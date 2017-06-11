@@ -31,5 +31,6 @@ public enum SpriteType {
 	PlayerGib01(),
 	Wall01Gib01(), 
 	LockedDoor01Gib01(), 
-	PlayerRemains01();
+	PlayerRemains01(), 
+	GasCloud01();
 }

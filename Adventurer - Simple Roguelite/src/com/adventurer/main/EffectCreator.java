@@ -35,6 +35,31 @@ public class EffectCreator {
 		}
 	}
 	
+	public static void CreateGasEffect(Tile tile, int gasPuffCount) {
+		
+		// create a smoke cloud by 
+		// creating multiple smoke "puffs"
+		// that are in random position
+		// and have random live time.
+		
+		for(int i = 0; i < gasPuffCount; i++) {
+			
+			// randomize sprite offset on the tile.
+			int value = Game.SPRITESIZE / 4;
+			int spriteOffsetX = Util.GetRandomInteger(-value, value);
+			int spriteOffsetY = Util.GetRandomInteger(-value, value);
+			
+			// randomize timer
+			int randomTTL = Util.GetRandomInteger(1000, 1500);
+			
+			// calculate worldPosition
+			Coordinate pos = new Coordinate(tile.GetWorldPosition().getX() + spriteOffsetX, tile.GetWorldPosition().getY() + spriteOffsetY);
+			
+			// create effect.
+			new Effect(pos, tile.GetTilePosition(), SpriteType.GasCloud01, randomTTL, true);
+		}
+	}
+	
 	public static void CreateSmokeEffect(Tile tile, int smokePuffCount) {
 		
 		// create a smoke cloud by 
