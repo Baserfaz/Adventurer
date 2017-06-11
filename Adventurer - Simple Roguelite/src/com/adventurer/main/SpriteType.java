@@ -27,5 +27,7 @@ public enum SpriteType {
 	SmallSkeletonRemains01(),
 	BloodGib01(),
 	BoneGib01(),
-	PotGib01();
+	PotGib01(), 
+	Wall01Gib01(), 
+	LockedDoor01Gib01();
 }

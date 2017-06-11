@@ -25,7 +25,6 @@ public class Renderer {
 	
 	// render without rotation
 	public static void RenderSprite(BufferedImage sprite, Coordinate pos, Graphics g) {
-		
 		g.drawImage(sprite, pos.getX(), pos.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
 	}
 	

@@ -173,6 +173,14 @@ public class SpriteCreator {
 			row = 3;
 			column = 4;
 			break;
+		case LockedDoor01Gib01:
+			row = 3;
+			column = 5;
+			break;
+		case Wall01Gib01:
+			row = 3;
+			column = 6;
+			break;
 		default:
 			System.out.println("SPRITETYPE NOT FOUND: " +  type);
 			break;

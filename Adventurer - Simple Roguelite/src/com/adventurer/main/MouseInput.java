@@ -37,14 +37,13 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 			int x = (mouseX / Game.CAMERAZOOM + camera.x);
 			int y = (mouseY / Game.CAMERAZOOM + camera.y);
 			
-			System.out.println("pos: " + x + ", " + y);
-			
 			for(Tile tile : World.instance.GetTiles()) {
 				if(tile.isInView()) {
 					
 					if(Game.CALCULATE_PLAYER_LOS == false || tile.isDiscovered()) {
 						if(tile.GetBounds().contains(new Point(x, y))) {
 							tile.toggleSelect();
+							System.out.println(tile.GetInfo());
 						}
 					}
 				}

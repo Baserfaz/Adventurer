@@ -63,6 +63,11 @@ public class Tile extends GameObject {
 		
 		if(selected) {
 			Renderer.RenderSpriteWithTint(sprite, this.GetWorldPosition(), g, Color.red);
+			
+			for(GameObject vi : vanityItems) {
+				Renderer.RenderSpriteWithTint(vi.GetSprite(), vi.GetWorldPosition(), g, Color.red);
+			}
+			
 			return;
 		}
 		
@@ -73,7 +78,6 @@ public class Tile extends GameObject {
 			
 			// render vanity items
 			for(GameObject vi : vanityItems) {
-				
 				Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
 			}
 			
@@ -145,8 +149,10 @@ public class Tile extends GameObject {
 		}
 	}
 	
-	public boolean isInView() {
-		return this.inView;
+	public void Remove() {
+		World.instance.RemoveTiles(this);
+		Handler.instance.RemoveObject(this);
+		Hide();
 	}
 	
 	public void toggleSelect() {
@@ -154,10 +160,14 @@ public class Tile extends GameObject {
 		else this.selected = true;
 	}
 	
-	public void Remove() {
-		World.instance.RemoveTiles(this);
-		Handler.instance.RemoveObject(this);
-		Hide();
+	public String GetInfo() {
+		String s = super.GetInfo();
+		s += ", Item: " + this.GetItem() + ", Actor: " + this.GetActor();
+		return s;
+	}
+	
+	public boolean isInView() {
+		return this.inView;
 	}
 	
 	public Rectangle GetBounds() {

@@ -236,7 +236,9 @@ public class World {
 		if(newType == TileType.TrapTile) {
 			newTile = new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.TrapTile, 100);
 		} else if(newType == TileType.Door) {
-			newTile = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Door01, TileType.Door);
+			newTile = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Door01, TileType.Door, false);
+		} else if(newType == TileType.LockedDoor) {
+			newTile = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.LockedDoor01, TileType.Door, true);
 		} else if(newType == TileType.Floor) {
 			newTile = new Tile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.FloorTile01, TileType.Floor);
 		} else if(newType == TileType.DestructibleTile) {
@@ -264,6 +266,9 @@ public class World {
 		
 		// 2. change the graphics of old tile.
 		oldTile.SetSprite(SpriteCreator.instance.CreateSprite(newSpriteType));
+		
+		// 3. reset tinted sprite
+		oldTile.SetTintedSprite(null);
 	}
 	
 	public List<Tile> GetTilesOfType(TileType type) {
@@ -294,7 +299,7 @@ public class World {
 		for(Tile tile : roomTiles) {
 			
 			if(Util.GetRandomInteger() > 90) {
-				if(tile.GetTileType() == TileType.Floor) {
+				if(tile.GetTileType() == TileType.Floor && tile.GetItem() == null) {
 					
 					DestructibleItem item = new DestructibleItem(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Pot01, 200);
 					
@@ -490,6 +495,8 @@ public class World {
 		if(Game.PRINT_WORLD_CREATION_START_END) System.out.println("World created! (Tile count: " + tiles.size() + ")");
 	}
 	
+	
+	// TODO: refactor this spaghetti method... (._.)
 	private Room CreateRoom(int roomOffsetX, int roomOffsetY, int roomStartX, int roomStartY) {
 		
 		List<Tile> roomTiles = new ArrayList<Tile>();
@@ -521,24 +528,39 @@ public class World {
 					if(roomStartY > 0 && (x != 0 && x != roomWidth - 1)) {
 						if(horizontalDoor == false) {
 							
-							// force create door
+							// force create door on the last tile that can be a door
 							// if a door has not yet been created
-							// and it's the last spot.
 							if(x == roomWidth - 2) {
-								tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door);
+								
+								tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false);
 								horizontalDoor = true;
+								
 							} else {
+								
+								// randomize the location of a door
 								if(Util.GetRandomInteger() > 80) {
-									tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door);
+									
+									// randomize if the door is locked
+									if(Util.GetRandomInteger() > 75) {
+										tile = new Door(worldPos, tilePos, SpriteType.LockedDoor01, TileType.LockedDoor, true);
+									} else {
+										tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false);
+									}
+									
 									horizontalDoor = true;
+									
 								} else {
 									tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 								}
+								
 							}
+							
 						} else {
+							// door is already created for this set of walls
 							tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 						}
 					} else {
+						// corner pieces cant be doors.
 						tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 					}
 					// ------
@@ -577,24 +599,38 @@ public class World {
 					if(roomStartX > 0 && (y != 0 && y != roomHeight - 1)) {
 						if(verticalDoor == false) {
 							
-							// force create door
+							// force create door on the last tile that can be a door
 							// if a door has not yet been created
-							// and it's the last spot.
 							if(y == roomHeight - 2) {
-								tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door);
+								
+								tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false);
 								verticalDoor = true;
+								
 							} else {
+								
+								// randomize the location of a door
 								if(Util.GetRandomInteger() > 80) {
-									tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door);
+									
+									// randomize if the door is locked
+									if(Util.GetRandomInteger() > 50) {
+										tile = new Door(worldPos, tilePos, SpriteType.LockedDoor01, TileType.LockedDoor, true);
+									} else {
+										tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false);
+									}
+									
 									verticalDoor = true;
+									
 								} else {
 									tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 								}
 							}
+							
 						} else {
+							// one door is already created on this set of tiles.
 							tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 						}
 					} else {
+						// corner pieces cant be doors.
 						tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 					}
 					// ------
@@ -652,6 +688,7 @@ public class World {
 		// create enemies
 		ActorManager.CreateEnemies(5);
 		
+		// create room object
 		Room room = new Room(roomWidth, roomHeight, new Coordinate(roomStartX, roomStartY), roomTiles);
 		
 		return room;

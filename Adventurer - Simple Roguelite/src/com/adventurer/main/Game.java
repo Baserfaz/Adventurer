@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable {
 	//------------------------------
 	// DEBUGGING TOOLS
 	
-	public static final boolean DRAW_CAMERA = true;
+	public static final boolean DRAW_CAMERA = false;
 	public static final boolean PRINT_WORLD_CREATION_PERCENTAGE_DONE = false;
 	public static final boolean PRINT_WORLD_CREATION_START_END = false;
 	public static final boolean PRINT_DOOR_CREATED = false;
@@ -38,8 +38,8 @@ public class Game extends Canvas implements Runnable {
 	private Window window;
 	
 	// room count in world
-	private final int worldHeight = 1;
-	private final int worldWidth = 1;
+	private final int worldHeight = 3;
+	private final int worldWidth = 3;
 	
 	// tiles in one room
 	private final int roomHeight = 10;

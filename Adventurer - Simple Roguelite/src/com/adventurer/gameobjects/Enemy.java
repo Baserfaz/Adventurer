@@ -56,6 +56,9 @@ public class Enemy extends Actor {
 			
 			if(current > moveTimer && canMove) {
 				
+				// TODO: random, aggressive, defensive behaviors
+				
+				// - ------------- RANDOM ----------------
 				// randomize direction
 				Direction randomDir = Util.GetRandomCardinalDirection();
 				
@@ -64,6 +67,7 @@ public class Enemy extends Actor {
 				
 				// move
 				Move(randomDir);
+				// --------------------------------------
 				
 				// update timer
 				moveTimer = current + moveCooldownBase + Util.GetRandomInteger(0, 500);
@@ -81,7 +85,7 @@ public class Enemy extends Actor {
 		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), dir);
 		World world = World.instance.GetWorld();
 		
-		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null) {
+		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null && tile.GetItem() == null) {
 			
 			// tile is our new tile
 			world.GetTileAtPosition(this.GetTilePosition()).SetActor(null);
@@ -109,8 +113,7 @@ public class Enemy extends Actor {
 				((Trap)tile).Activate();
 			}
 			
-			
-		} else if(tile.GetTileType() == TileType.Door) {
+		} else if(tile instanceof Door) {
 			
 			// open door
 			// TODO: if the enemy can open door
@@ -118,8 +121,7 @@ public class Enemy extends Actor {
 			
 		} else if(tile.GetActor() != null) {
 			
-			if(tile.GetActor() instanceof Player)
-				Attack(tile);
+			if(tile.GetActor() instanceof Player) Attack(tile);
 			
 		}
 	}

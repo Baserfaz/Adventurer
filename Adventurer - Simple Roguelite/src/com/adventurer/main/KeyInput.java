@@ -63,13 +63,6 @@ public class KeyInput extends KeyAdapter {
 			}
 		}
 		
-		// GIB TESTER
-		/*if(key == KeyEvent.VK_ENTER) {
-			Tile tile = World.instance.GetTileAtPosition(player.GetTilePosition());
-			// create effect on tile.
-			EffectCreator.CreateGibs(tile, Util.GetRandomInteger(10, 15));
-		}*/
-		
 		// shooting debugging
 		if(key == KeyEvent.VK_UP) {
 			player.Shoot(player.GetTilePosition(), Direction.North);

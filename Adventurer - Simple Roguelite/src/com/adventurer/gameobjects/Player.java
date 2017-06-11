@@ -90,9 +90,20 @@ public class Player extends Actor {
 				((Trap)tile).Activate();
 			}
 			
-		} else if(tile.GetTileType() == TileType.Door) {
+		} else if(tile instanceof Door) {
 			
-			((Door)tile).Open();
+			Door door = (Door) tile;
+			if(door.isLocked()) {
+				
+				// TODO: KEYS
+				door.Unlock();
+				
+				// effects
+				EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 7), SpriteType.LockedDoor01Gib01);
+				
+			} else {
+				door.Open();
+			}
 			
 		} else if(tile.GetActor() != null) {
 			

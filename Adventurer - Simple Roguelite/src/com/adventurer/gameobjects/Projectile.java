@@ -13,7 +13,6 @@ public class Projectile extends Item {
 	private boolean tileDiscovered = true;
 	
 	private int damage = 0;
-	
 	private int movementSpeed = 2;
 	
 	private int targetx = this.GetWorldPosition().getX();
