@@ -33,5 +33,8 @@ public enum SpriteType {
 	LockedDoor01Gib01(), 
 	PlayerRemains01(), 
 	GasCloud01(), 
-	Spear01();
+	Spear01(),
+	ArrowTurretWest(),
+	ArrowTurretNorth(),
+	ArrowTurretSouth();
 }

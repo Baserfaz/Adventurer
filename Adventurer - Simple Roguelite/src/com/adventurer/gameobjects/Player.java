@@ -110,16 +110,18 @@ public class Player extends Actor {
 			
 		} else if(tile.GetActor() != null) {
 			
-			if(tile.GetActor() instanceof Enemy)
+			if(tile.GetActor() instanceof Enemy || tile.GetActor() instanceof Turret) {
 				Attack(tile);
+			}
 			
 		} else if(tile.GetItem() != null) {
 			
-			if(tile.GetItem() instanceof DestructibleItem)
+			if(tile.GetItem() instanceof DestructibleItem) {
 				Attack(tile);
+			}
 			
 		} else if(tile.GetTileType() == TileType.DestructibleTile) {
 			// TODO
-		}
+		} 
 	}
 }

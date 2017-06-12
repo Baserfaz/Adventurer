@@ -1,6 +1,8 @@
 package com.adventurer.main;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
@@ -88,6 +90,44 @@ public class Util {
 		return tintedImage;
 	}
 	
+	public static BufferedImage highlightTileBorders(BufferedImage image, Color tintColor) {
+		
+		// copy the image 
+		BufferedImage tintedImage = Util.deepCopy(image);
+		
+		// loop through all pixels
+		for(int x = 0; x < tintedImage.getWidth(); x++) {
+			for (int y = 0; y < tintedImage.getHeight(); y++) {
+				
+				// second parameter is if there is alpha channel.
+				Color pixelColor = new Color(tintedImage.getRGB(x, y), true);
+				int r, g, b, a, rgba;
+				
+				if(x == 0 || x == tintedImage.getWidth() - 1 || y == 0 || y == tintedImage.getHeight() - 1) {
+				
+					r = (pixelColor.getRed() + tintColor.getRed()) / 2;
+		            g = (pixelColor.getGreen() + tintColor.getGreen()) / 2;
+		            b = (pixelColor.getBlue() + tintColor.getBlue()) / 2;
+		            a = pixelColor.getAlpha();
+		            rgba = (a << 24) | (r << 16) | (g << 8) | b;
+					
+				} else {
+					
+					r = pixelColor.getRed();
+		            g = pixelColor.getGreen();
+		            b = pixelColor.getBlue();
+		            a = pixelColor.getAlpha();
+		            rgba = (a << 24) | (r << 16) | (g << 8) | b;
+		            
+				}
+				
+				// apply color to new image.
+				tintedImage.setRGB(x, y, rgba);
+			}
+		}
+		return tintedImage;
+	}
+	
 	// http://stackoverflow.com/questions/3514158/how-do-you-clone-a-bufferedimage
 	public static BufferedImage deepCopy(BufferedImage bi) {
 		 ColorModel cm = bi.getColorModel();
@@ -95,5 +135,4 @@ public class Util {
 		 WritableRaster raster = bi.copyData(null);
 		 return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 	}
-	
 }

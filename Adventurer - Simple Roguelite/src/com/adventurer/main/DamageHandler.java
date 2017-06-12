@@ -24,7 +24,7 @@ public class DamageHandler {
 			//VanityItemCreator.CreateSmallBlood(tile);
 			EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 5), SpriteType.PlayerGib01);
 			
-		} else {
+		} else if(actor instanceof Enemy) {
 			
 			SpriteType spritetype = SpriteType.BloodGib01;
 			
@@ -45,7 +45,12 @@ public class DamageHandler {
 			}
 			
 			EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 5), spritetype);
+		} else {
+			
+			// TODO: TURRET GIBS
+			
 		}
+		
 	}
 	
 	public static void ActorTakeDamage(Tile tile, int damage) {

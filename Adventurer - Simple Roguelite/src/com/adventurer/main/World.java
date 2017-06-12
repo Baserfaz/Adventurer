@@ -9,6 +9,7 @@ import com.adventurer.gameobjects.DestructibleTile;
 import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Trap;
+import com.adventurer.gameobjects.Turret;
 
 public class World {
 
@@ -455,6 +456,19 @@ public class World {
 		}
 	}
 	
+	private void CreateTurretsInsideRoom(List<Tile> roomTiles) {
+		
+		for(Tile tile : roomTiles) {
+		
+			if(tile.GetTileType() == TileType.Floor && tile.GetActor() == null && tile.GetItem() == null && Util.GetRandomInteger() > 95) {
+			
+				Turret turret = new Turret(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.ArrowTurretNorth, 100);
+				
+			}
+		}
+	}
+	
+	
 	// works only with cardinal tiles!
 	public Direction GetDirectionOfTileFromPoint(Tile from, Tile to) {
 		
@@ -693,6 +707,7 @@ public class World {
 		
 		CreateDoorsInsideRoom(roomTiles);
 		CreateTrapsInsideRoom(roomTiles);
+		CreateTurretsInsideRoom(roomTiles);
 		CreateDestructibleWallsInsideRoom(roomTiles);
 		CreateDestructibleItemsInsideRoom(roomTiles);
 		CreateVanityItemsInsideRoom(roomTiles);
@@ -706,6 +721,7 @@ public class World {
 		return room;
 	}
 	
+	// randomly creates either floor or wall tile.
 	public Tile RandomizeTileFloorWall(Coordinate worldPos, Coordinate tilePos) {
 		Tile tile = null;
 		if(Util.GetRandomInteger() > 20) tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);

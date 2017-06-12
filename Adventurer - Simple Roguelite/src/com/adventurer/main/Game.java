@@ -17,7 +17,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public static final int WIDTH = 1280, HEIGHT = 720; 			// viewport size
 	public static final int SPRITESIZE = 16; 						// sprite size in pixels
-	public static final int CAMERAZOOM = 4; 						// level of zoom
+	public static final int CAMERAZOOM = 2; 						// level of zoom
 	public static final double FRAME_CAP = 60.0;					// cap the framerate to this
 	public static final String spritesheetname = "spritesheet.png";	// main spritesheet name
 	
@@ -139,7 +139,7 @@ public class Game extends Canvas implements Runnable {
 			}
 			
 			// render the scene
-			if(isRunning && render) {
+			if(isRunning  && render) {
 				render();
 				frames++;
 			}

@@ -19,6 +19,11 @@ public class Renderer {
 	    return resizedImg;
 	}
 	
+	public static void RenderSpriteWithBorder(BufferedImage sprite, Coordinate pos, Graphics g, Color borderColor) {
+		BufferedImage img = Util.highlightTileBorders(sprite, borderColor);
+		g.drawImage(img, pos.getX(), pos.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
+	}
+	
 	public static void RenderSpriteWithTint(BufferedImage sprite, Coordinate pos, Graphics g, Color tint) {
 		BufferedImage img = Util.tintWithColor(sprite, tint);
 		g.drawImage(img, pos.getX(), pos.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);

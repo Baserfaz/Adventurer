@@ -131,6 +131,8 @@ public class Projectile extends Item {
 			
 			if(item instanceof DestructibleItem) {
 				DamageHandler.ItemTakeDamage((DestructibleItem) item, damage);
+			} else if(tile.GetItem() instanceof Projectile) {
+				tile.GetItem().Remove();
 			}
 			
 			alive = false;

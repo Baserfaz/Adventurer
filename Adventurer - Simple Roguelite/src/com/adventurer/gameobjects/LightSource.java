@@ -22,15 +22,15 @@ public class LightSource extends VanityItem {
 				EffectCreator.CreateSmokeEffect(this.currentTile, Util.GetRandomInteger(1, 3));
 			}
 			
-			/*List<Tile> tiles = World.instance.GetSurroundingTiles(this.GetTilePosition());
+			List<Tile> tiles = World.instance.GetSurroundingTiles(this.GetTilePosition());
 			
 			for(Tile t : tiles) {
 				if(t != null) {
-					if(Util.GetRandomInteger() > 99 && Util.GetRandomInteger() > 50) {
+					if(Util.GetRandomInteger() > 99 && Util.GetRandomInteger() > 25) {
 						t.toggleLit();
 					}
 				}
-			}*/
+			}
 		} 
 	}
 	

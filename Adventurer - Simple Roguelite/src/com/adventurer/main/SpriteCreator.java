@@ -197,6 +197,18 @@ public class SpriteCreator {
 			row = 2;
 			column = 7;
 			break;
+		case ArrowTurretNorth:
+			row = 1;
+			column = 10;
+			break;
+		case ArrowTurretWest:
+			row = 1;
+			column = 9;
+			break;
+		case ArrowTurretSouth:
+			row = 1;
+			column = 11;
+			break;
 		default:
 			System.out.println("SPRITETYPE NOT FOUND: " +  type);
 			break;

@@ -63,10 +63,25 @@ public class Tile extends GameObject {
 	public void render(Graphics g) {
 		
 		if(selected) {
-			Renderer.RenderSpriteWithTint(sprite, this.GetWorldPosition(), g, Color.red);
 			
-			for(GameObject vi : vanityItems) {
-				Renderer.RenderSpriteWithTint(vi.GetSprite(), vi.GetWorldPosition(), g, Color.red);
+			if(hidden == false) {
+				
+				//Renderer.RenderSpriteWithTint(sprite, this.GetWorldPosition(), g, Color.red);
+				Renderer.RenderSpriteWithBorder(sprite, this.GetWorldPosition(), g, Color.red);
+				
+				for(GameObject vi : vanityItems) {
+					//Renderer.RenderSpriteWithTint(vi.GetSprite(), vi.GetWorldPosition(), g, Color.red);
+					Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
+				}
+				
+			} else {
+				
+				Renderer.RenderSpriteWithBorder(Util.tint(sprite, true), this.GetWorldPosition(), g, Color.red);
+				
+				for(GameObject vi : vanityItems) {
+					Renderer.RenderSprite(Util.tint(vi.GetSprite(), true), vi.GetWorldPosition(), g);
+				}
+				
 			}
 			
 			return;
@@ -74,6 +89,7 @@ public class Tile extends GameObject {
 		
 		if(hidden == false) {
 			
+			// brighten 
 			if(lit) {
 				
 				Renderer.RenderSprite(Util.tint(sprite, false), this.GetWorldPosition(), g);
@@ -82,6 +98,7 @@ public class Tile extends GameObject {
 					Renderer.RenderSprite(Util.tint(vi.GetSprite(), false), vi.GetWorldPosition(), g);
 				}
 				
+			// normal
 			} else {
 				
 				// render tile
