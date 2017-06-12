@@ -18,7 +18,7 @@ public class Tile extends GameObject {
 	
 	protected Item item = null;
 	protected Actor actor = null;
-	protected List<GameObject> vanityItems = new ArrayList<GameObject>();
+	protected List<VanityItem> vanityItems = new ArrayList<VanityItem>();
 	
 	// tile falling effect
 	protected int targety = 0;
@@ -124,12 +124,25 @@ public class Tile extends GameObject {
 		this.hidden = false;
 		if(this.actor != null) this.actor.Show();
 		if(this.item != null) this.item.Show();
+		
+		if(this.vanityItems.size() > 0) {
+			for(VanityItem vi : this.vanityItems) {
+				vi.Show();
+			}
+		}
+		
 	}
 	
 	public void Hide() {
 		this.hidden = true;
 		if(this.actor != null) this.actor.Hide();
 		if(this.item != null) this.item.Hide();
+		
+		if(this.vanityItems.size() > 0) {
+			for(VanityItem vi : this.vanityItems) {
+				vi.Hide();
+			}
+		}
 	}
 	
 	public void Discover() {
@@ -159,6 +172,12 @@ public class Tile extends GameObject {
 		
 		if(this.GetItem() != null) {
 			this.GetItem().Discover();
+		}
+		
+		if(this.vanityItems.size() > 0) {
+			for(VanityItem vi : this.vanityItems) {
+				vi.Discover();
+			}
 		}
 	}
 	
@@ -212,11 +231,11 @@ public class Tile extends GameObject {
 		this.vanityItems.remove(i);
 	}
 	
-	public void AddVanityItem(GameObject i) {
+	public void AddVanityItem(VanityItem i) {
 		this.vanityItems.add(i);
 	}
 	
-	public List<GameObject> GetVanityItems() {
+	public List<VanityItem> GetVanityItems() {
 		return this.vanityItems;
 	}
 	

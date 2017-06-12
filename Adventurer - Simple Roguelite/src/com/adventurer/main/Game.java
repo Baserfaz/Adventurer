@@ -38,8 +38,8 @@ public class Game extends Canvas implements Runnable {
 	private Window window;
 	
 	// room count in world
-	private final int worldHeight = 3;
-	private final int worldWidth = 3;
+	private final int worldHeight = 1;
+	private final int worldWidth = 1;
 	
 	// tiles in one room
 	private final int roomHeight = 10;

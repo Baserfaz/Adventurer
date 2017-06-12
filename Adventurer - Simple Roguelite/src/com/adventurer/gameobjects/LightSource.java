@@ -16,23 +16,22 @@ public class LightSource extends VanityItem {
 
 	public void tick() {
 		
-		Tile tile = World.instance.GetTileAtPosition(this.GetTilePosition());
-		
-		if(tile.isInView() == false || tile.isHidden() || tile.isDiscovered() == false) return;
-		
-		if(Util.GetRandomInteger() > 98) {
-			EffectCreator.CreateSmokeEffect(tile, Util.GetRandomInteger(1, 3));
-		}
-		
-		List<Tile> tiles = World.instance.GetSurroundingTiles(this.GetTilePosition());
-		
-		for(Tile t : tiles) {
-			if(t != null) {
-				if(Util.GetRandomInteger() > 99 && Util.GetRandomInteger() > 50) {
-					t.toggleLit();
-				}
+		if(this.currentTile.discovered) {
+			
+			if(Util.GetRandomInteger() > 98) {
+				EffectCreator.CreateSmokeEffect(this.currentTile, Util.GetRandomInteger(1, 3));
 			}
-		}
+			
+			/*List<Tile> tiles = World.instance.GetSurroundingTiles(this.GetTilePosition());
+			
+			for(Tile t : tiles) {
+				if(t != null) {
+					if(Util.GetRandomInteger() > 99 && Util.GetRandomInteger() > 50) {
+						t.toggleLit();
+					}
+				}
+			}*/
+		} 
 	}
 	
 	public void render() {}

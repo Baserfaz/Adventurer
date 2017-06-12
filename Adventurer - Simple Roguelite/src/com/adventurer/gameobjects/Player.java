@@ -85,6 +85,9 @@ public class Player extends Actor {
 			// set the tile's actor to be this.
 			tile.SetActor(this);
 			
+			// save our position
+			this.setTile(tile);
+			
 			// set off trap
 			if(tile instanceof Trap) {
 				((Trap)tile).Activate();

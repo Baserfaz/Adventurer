@@ -11,13 +11,12 @@ public class Actor extends GameObject {
 	protected int movementSpeed = 2;
 	
 	protected BufferedImage flippedSpriteHor = null;
+	
 	protected Direction lookDir;
 	protected Direction lastLookDir;
 	
 	protected boolean canMove = true;
-	
 	protected Health myHP;
-	
 	protected int damage = 100;
 	
 	public Actor(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int damage) {
@@ -28,8 +27,7 @@ public class Actor extends GameObject {
 		this.myHP = new Health(maxHP);
 		
 		// register to tile
-		World.instance.GetTileAtPosition(this.GetTilePosition()).SetActor(this);
-		
+		this.currentTile.SetActor(this);
 	}
 	
 	public void render(Graphics g) {}
@@ -88,9 +86,9 @@ public class Actor extends GameObject {
 		Hide();
 	}
 	
-	public void Shoot(Coordinate originTilePos, Direction direction) {
+	public void Shoot(Coordinate originTilePos, Direction direction, SpriteType projSpriteType) {
 		Tile projStartTile = World.instance.GetTileAtPosition(originTilePos);
-		new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), SpriteType.Projectile01, damage, direction);
+		new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), projSpriteType, damage, direction);
 	}
 	
 	public void Attack(Tile tile) {

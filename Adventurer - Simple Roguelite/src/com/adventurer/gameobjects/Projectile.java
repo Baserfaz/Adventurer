@@ -115,6 +115,9 @@ public class Projectile extends Item {
 			// set the tile's actor to be this.
 			tile.SetItem(this);
 			
+			// save our position
+			this.setTile(tile);
+			
 		} else if(tile.GetActor() != null) {
 			
 			DamageHandler.ActorTakeDamage(tile, damage);

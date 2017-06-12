@@ -65,13 +65,13 @@ public class KeyInput extends KeyAdapter {
 		
 		// shooting debugging
 		if(key == KeyEvent.VK_UP) {
-			player.Shoot(player.GetTilePosition(), Direction.North);
+			player.Shoot(player.GetTilePosition(), Direction.North, SpriteType.Arrow01);
 		} else if(key == KeyEvent.VK_DOWN) {
-			player.Shoot(player.GetTilePosition(), Direction.South);
+			player.Shoot(player.GetTilePosition(), Direction.South, SpriteType.Arrow01);
 		} else if(key == KeyEvent.VK_LEFT) {
-			player.Shoot(player.GetTilePosition(), Direction.West);
+			player.Shoot(player.GetTilePosition(), Direction.West, SpriteType.Arrow01);
 		} else if(key == KeyEvent.VK_RIGHT) {
-			player.Shoot(player.GetTilePosition(), Direction.East);
+			player.Shoot(player.GetTilePosition(), Direction.East, SpriteType.Arrow01);
 		}
 	}
 	

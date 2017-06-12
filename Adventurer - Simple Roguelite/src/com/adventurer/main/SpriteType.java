@@ -11,7 +11,7 @@ public enum SpriteType {
 	Blood01(),
 	SmallBlood01(), 
 	Hit01(), 
-	Projectile01(),
+	Arrow01(),
 	TrapTile01(),
 	LockedDoor01(),
 	Pot01(),
@@ -32,5 +32,6 @@ public enum SpriteType {
 	Wall01Gib01(), 
 	LockedDoor01Gib01(), 
 	PlayerRemains01(), 
-	GasCloud01();
+	GasCloud01(), 
+	Spear01();
 }

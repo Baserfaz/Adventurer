@@ -2,6 +2,7 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import com.adventurer.main.*;
 
@@ -12,11 +13,19 @@ public class Enemy extends Actor {
 	
 	private EnemyType enemyType;
 	
+	private boolean hasRangedAttack = false;
+	private SpriteType projectileType;
 	
-	public Enemy(Coordinate worldPos, Coordinate tilePos, EnemyType type, SpriteType spritetype, int maxHP, int damage) {
+	public Enemy(Coordinate worldPos, Coordinate tilePos, EnemyType enemytype, SpriteType spritetype, int maxHP, int damage) {
 		super(worldPos, tilePos, spritetype, maxHP, damage);
 		
-		this.setEnemyType(type);
+		// declare ranged units here
+		if(enemytype == EnemyType.Skeleton) {
+			this.hasRangedAttack = true;
+			this.projectileType = SpriteType.Spear01;
+		}
+		
+		this.setEnemyType(enemytype);
 		this.moveTimer = System.currentTimeMillis();
 	}
 
@@ -56,18 +65,53 @@ public class Enemy extends Actor {
 			
 			if(current > moveTimer && canMove) {
 				
-				// TODO: random, aggressive, defensive behaviors
+				// ***** Simple AI *****
+				// check if player is nearby -> attack
+				// else just move randomly.
 				
-				// - ------------- RANDOM ----------------
-				// randomize direction
-				Direction randomDir = Util.GetRandomCardinalDirection();
+				boolean canSeePlayer = false;
+				Tile playerTile = null;
 				
-				// update facing
-				if(randomDir == Direction.East || randomDir == Direction.West) lookDir = randomDir;
+				List<Tile> surroundingTiles = World.instance.GetSurroundingTiles(this.GetTilePosition());
 				
-				// move
-				Move(randomDir);
-				// --------------------------------------
+				for(Tile tile : surroundingTiles) {
+					if(tile.GetActor() != null) {
+						if(tile.GetActor() instanceof Player) {
+							canSeePlayer = true;
+							playerTile = tile;
+							break;
+						}
+					}
+				}
+				
+				if(canSeePlayer) {
+					
+					// --------------- ATTACK ----------------
+					
+					// TODO: gets stuck because of how World.GetSurroundingTiles works.
+					//  	 -> doesn't check walls + always gives east/west first.
+					Direction dir = World.instance.GetDirectionOfTileFromPoint(this.currentTile, playerTile);
+					Move(dir);
+					
+				} else {
+					// -------------- RANDOM -----------------
+					
+					// randomize direction
+					Direction randomDir = Util.GetRandomCardinalDirection();
+					
+					// randomly shoot projectile
+					if(Util.GetRandomInteger() > 80 && hasRangedAttack) {
+						
+						Shoot(this.GetTilePosition(), randomDir, projectileType);
+						
+					} else {
+						
+						// move
+						Move(randomDir);
+						
+					}
+					
+				}
 				
 				// update timer
 				moveTimer = current + moveCooldownBase + Util.GetRandomInteger(0, 500);
@@ -84,6 +128,9 @@ public class Enemy extends Actor {
 		
 		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), dir);
 		World world = World.instance.GetWorld();
+		
+		// update facing
+		if(dir == Direction.East || dir == Direction.West) lookDir = dir;
 		
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null && tile.GetItem() == null) {
 			
@@ -102,6 +149,9 @@ public class Enemy extends Actor {
 			
 			// set the tile's actor to be this.
 			tile.SetActor(this);
+
+			// save our position
+			this.setTile(tile);
 			
 			// hide ourselves if we are on a hidden tile.
 			if(tile.isHidden()) {
@@ -116,8 +166,7 @@ public class Enemy extends Actor {
 		} else if(tile instanceof Door) {
 			
 			// open door
-			// TODO: if the enemy can open door
-			// tile.ActivateTile();
+			((Door)tile).Open();
 			
 		} else if(tile.GetActor() != null) {
 			

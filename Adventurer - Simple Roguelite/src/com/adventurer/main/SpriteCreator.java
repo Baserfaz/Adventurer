@@ -101,9 +101,13 @@ public class SpriteCreator {
 			row = 1;
 			column = 2;
 			break;
-		case Projectile01:
+		case Arrow01:
 			row = 1;
 			column = 3;
+			break;
+		case Spear01:
+			row = 4;
+			column = 1;
 			break;
 		case Key01:
 			row = 1;

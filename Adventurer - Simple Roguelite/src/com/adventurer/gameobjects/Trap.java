@@ -94,7 +94,7 @@ public class Trap extends Tile {
 		else if(randomDir == Direction.West) projectileDir = Direction.East;
 		
 		// 2.2 shoot an arrow
-		new Projectile(current.GetWorldPosition(), current.GetTilePosition(), SpriteType.Projectile01, this.damage, projectileDir);
+		new Projectile(current.GetWorldPosition(), current.GetTilePosition(), SpriteType.Arrow01, this.damage, projectileDir);
 	}
 	
 	public int getDamage() {
