@@ -29,6 +29,7 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean PRINT_WORLD_CREATION_START_END = false;
 	public static final boolean PRINT_DOOR_CREATED = false;
 	public static final boolean CALCULATE_PLAYER_LOS = true;
+	public static final boolean RENDER_ACTORS_DIRECTION_ARROW = true;
 	
 	//------------------------------
 	

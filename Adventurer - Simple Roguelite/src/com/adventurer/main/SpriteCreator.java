@@ -209,6 +209,10 @@ public class SpriteCreator {
 			row = 1;
 			column = 11;
 			break;
+		case DirectionArrow:
+			row = 4;
+			column = 2;
+			break;
 		default:
 			System.out.println("SPRITETYPE NOT FOUND: " +  type);
 			break;

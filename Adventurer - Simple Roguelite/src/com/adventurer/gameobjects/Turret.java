@@ -50,19 +50,23 @@ public class Turret extends Actor {
 	public void tick() {
 		
 		if(this.GetHealth().isDead()) {
-			this.Remove();
-			return;
-		}
-		
-		if(shootTimer < System.currentTimeMillis()) {
-			shoot();
-			shootTimer = System.currentTimeMillis() + shootCooldown;
+			
+			OnDeath(this.currentTile);
+			
+		} else {
+			
+			if(shootTimer < System.currentTimeMillis()) {
+				shoot();
+				shootTimer = System.currentTimeMillis() + shootCooldown;
+			}
+			
 		}
 	}
 	
 	public void render(Graphics g) {
 		if(hidden == false) {
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
+			renderDirectionArrow(g);
 		} else if(discovered == true && hidden == true) {
 			if(tintedSprite == null) { tintedSprite = Util.tint(sprite, true); }
 			Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), g);

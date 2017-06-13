@@ -11,6 +11,7 @@ public class Actor extends GameObject {
 	protected int movementSpeed = 2;
 	
 	protected BufferedImage flippedSpriteHor = null;
+	protected BufferedImage directionArrow = null;
 	
 	protected Direction lookDir;
 	protected Direction lastLookDir;
@@ -33,6 +34,17 @@ public class Actor extends GameObject {
 	public void render(Graphics g) {}
 	public void tick() {}
 	public void Move(Direction dir) {}
+	
+	protected void renderDirectionArrow(Graphics g) {
+		
+		if(Game.RENDER_ACTORS_DIRECTION_ARROW == false) return;
+		
+		if(directionArrow == null) {
+			directionArrow = SpriteCreator.instance.CreateSprite(SpriteType.DirectionArrow);
+		}
+		
+		Renderer.RenderSprite(directionArrow, this.GetWorldPosition(), lookDir, g);
+	}
 	
 	public void OnDeath(Tile tile) {
 		
@@ -58,12 +70,19 @@ public class Actor extends GameObject {
 			// remove gameobject
 			Remove();
 			
-		} else {
+		} else if(this instanceof Player) {
 			
 			// create vanity item 
 			VanityItemCreator.CreateVanityItem(tile, SpriteType.PlayerRemains01, true);
 			
 			// remove gameobject
+			Remove();
+			
+		} else if(this instanceof Turret) {
+			
+			// create vanity item 
+			VanityItemCreator.CreateVanityItem(tile, SpriteType.PotRemains01, true);
+			
 			Remove();
 		}
 		

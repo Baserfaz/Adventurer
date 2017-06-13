@@ -36,5 +36,6 @@ public enum SpriteType {
 	Spear01(),
 	ArrowTurretWest(),
 	ArrowTurretNorth(),
-	ArrowTurretSouth();
+	ArrowTurretSouth(),
+	DirectionArrow();
 }

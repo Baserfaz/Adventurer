@@ -5,6 +5,7 @@ import com.adventurer.gameobjects.DestructibleItem;
 import com.adventurer.gameobjects.Enemy;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Tile;
+import com.adventurer.gameobjects.Turret;
 
 public class DamageHandler {
 
@@ -45,9 +46,9 @@ public class DamageHandler {
 			}
 			
 			EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 5), spritetype);
-		} else {
+		} else if(actor instanceof Turret) {
 			
-			// TODO: TURRET GIBS
+			EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 5), SpriteType.PotGib01);
 			
 		}
 		

@@ -45,7 +45,15 @@ public class Enemy extends Actor {
 				
 				Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 				
+			} else {
+				
+				// TODO: North & South sprites
+				
+				Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
+				
 			}
+			
+			renderDirectionArrow(g);
 			
 		} else if(hidden == true && discovered == true){
 			
@@ -130,7 +138,7 @@ public class Enemy extends Actor {
 		World world = World.instance.GetWorld();
 		
 		// update facing
-		if(dir == Direction.East || dir == Direction.West) lookDir = dir;
+		/*if(dir == Direction.East || dir == Direction.West)*/ lookDir = dir;
 		
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null && tile.GetItem() == null) {
 			

@@ -53,6 +53,9 @@ public class Player extends Actor {
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 		}
+		
+		renderDirectionArrow(g);
+		
 	}
 	
 	public void Move(Direction dir) {
