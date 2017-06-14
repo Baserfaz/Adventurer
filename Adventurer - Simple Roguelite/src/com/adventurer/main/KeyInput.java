@@ -57,7 +57,7 @@ public class KeyInput extends KeyAdapter {
 			
 			Tile t = World.instance.GetTileFromDirection(player.GetTilePosition(), player.GetLookDirection());
 			
-			if((t.GetTileType() == TileType.Floor || t.GetTileType() == TileType.TrapTile) && t.GetActor() == null && t.GetItem() == null) {
+			if((t.GetTileType() == TileType.Floor || t.GetTileType() == TileType.Trap) && t.GetActor() == null && t.GetItem() == null) {
 				
 				new Bomb(t.GetWorldPosition(), t.GetTilePosition(), SpriteType.Bomb01, 1500, 300);
 			}

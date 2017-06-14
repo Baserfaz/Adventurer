@@ -7,5 +7,6 @@ public enum TileType {
 	DestructibleTile(),
 	Door(),
 	LockedDoor(),
-	TrapTile();
+	Trap(),
+	Portal();
 }

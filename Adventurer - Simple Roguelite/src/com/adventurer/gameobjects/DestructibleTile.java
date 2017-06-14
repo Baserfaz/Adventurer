@@ -32,7 +32,7 @@ public class DestructibleTile extends Tile {
 			int y = this.GetWorldPosition().getY();
 			
 			if(camera != null) {
-				if(camera.contains(this.GetWorldPosition().getX() + World.TILESIZE / 2, this.GetWorldPosition().getY() + World.TILESIZE / 2)) {
+				if(camera.contains(this.GetWorldPosition().getX() + Game.SPRITESIZE / 2, this.GetWorldPosition().getY() + Game.SPRITESIZE / 2)) {
 					inView = true;
 					Show();
 				} else {

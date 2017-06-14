@@ -76,11 +76,14 @@ public class Game extends Canvas implements Runnable {
 		// create camera
 		new Camera();
 		
+		// create lobby
+		new World(PredefinedMaps.GetLobby());
+		
 		// create world
-		new World(worldWidth, worldHeight, roomWidth, roomHeight);
+		//new World(worldWidth, worldHeight, roomWidth, roomHeight);
 		
 		// create player
-		ActorManager.CreatePlayerInstance(300, 100);
+		//ActorManager.CreatePlayerInstance(300, 100);
 	}
 	
 	public synchronized void Start() {

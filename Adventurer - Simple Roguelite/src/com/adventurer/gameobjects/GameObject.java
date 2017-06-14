@@ -19,7 +19,7 @@ public abstract class GameObject {
 	protected BufferedImage sprite;
 	protected BufferedImage tintedSprite = null;
 
-	protected Tile currentTile;
+	//protected Tile currentTile;
 	
 	public GameObject(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
 		
@@ -30,7 +30,7 @@ public abstract class GameObject {
 		this.tilePosition = tilePos;
 		
 		// cache tile information
-		this.currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
+		//this.currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
 		
 		// cache sprite type
 		this.spriteType = spritetype;
@@ -51,13 +51,13 @@ public abstract class GameObject {
 				+ "worldPos: (" + this.GetWorldPosition().getX() + ", " + this.GetWorldPosition().getY() + ")" + ", hidden: " + this.hidden + ", discovered: " + this.discovered;
 	}
 	
-	public Tile getTile() {
+	/*public Tile getTile() {
 		return this.currentTile;
 	}
 	
 	public void setTile(Tile tile) {
 		this.currentTile = tile;
-	}
+	}*/
 	
 	public boolean isDiscovered() {
 		return this.discovered;

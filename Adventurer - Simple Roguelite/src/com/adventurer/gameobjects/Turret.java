@@ -8,6 +8,7 @@ import com.adventurer.main.Renderer;
 import com.adventurer.main.SpriteCreator;
 import com.adventurer.main.SpriteType;
 import com.adventurer.main.Util;
+import com.adventurer.main.World;
 
 public class Turret extends Actor {
 	
@@ -51,7 +52,7 @@ public class Turret extends Actor {
 		
 		if(this.GetHealth().isDead()) {
 			
-			OnDeath(this.currentTile);
+			OnDeath(World.instance.GetTileAtPosition(this.GetTilePosition()));
 			
 		} else {
 			
@@ -74,6 +75,7 @@ public class Turret extends Actor {
 	} 
 	
 	public void shoot() {
-		new Projectile(this.currentTile.GetWorldPosition(), this.currentTile.GetTilePosition(), projSpriteType, damage, lookDir);
+		//Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
+		new Projectile(this.GetWorldPosition(), this.GetTilePosition(), projSpriteType, damage, lookDir);
 	}
 }

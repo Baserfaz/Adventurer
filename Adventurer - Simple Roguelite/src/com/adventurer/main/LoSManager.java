@@ -56,7 +56,7 @@ public class LoSManager {
 			retTiles.add(tile);
 			offset ++;
 			
-		} while ((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null && tile.GetItem() == null);
+		} while ((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.Trap) && tile.GetActor() == null && tile.GetItem() == null);
 		
 		return retTiles;
 	}
@@ -73,6 +73,8 @@ public class LoSManager {
 		for(int i = 0; i < allTiles.size(); i++) {
 			allTiles.get(i).Hide();
 		}
+		
+		// TODO: better FOV calculations
 		
 		// 2. calculate FOV
 		// ------------------------

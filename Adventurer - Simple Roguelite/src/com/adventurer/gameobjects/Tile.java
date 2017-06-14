@@ -40,7 +40,7 @@ public class Tile extends GameObject {
 		int y = this.GetWorldPosition().getY();
 		
 		if(camera != null) {
-			if(camera.contains(x + World.TILESIZE / 2, y + World.TILESIZE / 2)) {
+			if(camera.contains(x + Game.SPRITESIZE / 2, y + Game.SPRITESIZE / 2)) {
 				inView = true;
 				Show();
 			} else {

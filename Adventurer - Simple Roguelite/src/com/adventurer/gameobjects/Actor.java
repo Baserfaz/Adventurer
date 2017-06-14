@@ -28,7 +28,8 @@ public class Actor extends GameObject {
 		this.myHP = new Health(maxHP);
 		
 		// register to tile
-		this.currentTile.SetActor(this);
+		World.instance.GetTileAtPosition(tilePos).SetActor(this);
+		//this.currentTile.SetActor(this);
 	}
 	
 	public void render(Graphics g) {}

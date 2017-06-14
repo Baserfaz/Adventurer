@@ -16,10 +16,12 @@ public class LightSource extends VanityItem {
 
 	public void tick() {
 		
-		if(this.currentTile.discovered) {
+		Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
+		
+		if(currentTile.discovered) {
 			
 			if(Util.GetRandomInteger() > 98) {
-				EffectCreator.CreateSmokeEffect(this.currentTile, Util.GetRandomInteger(1, 3));
+				EffectCreator.CreateSmokeEffect(currentTile, Util.GetRandomInteger(1, 3));
 			}
 			
 			List<Tile> tiles = World.instance.GetSurroundingTiles(this.GetTilePosition());

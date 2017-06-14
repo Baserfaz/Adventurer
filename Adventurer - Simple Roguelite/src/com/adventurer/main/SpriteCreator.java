@@ -213,6 +213,10 @@ public class SpriteCreator {
 			row = 4;
 			column = 2;
 			break;
+		case Portal01:
+			row = 0;
+			column = 10;
+			break;
 		default:
 			System.out.println("SPRITETYPE NOT FOUND: " +  type);
 			break;

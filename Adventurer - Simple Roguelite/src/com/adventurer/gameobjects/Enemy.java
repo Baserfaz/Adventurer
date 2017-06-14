@@ -98,7 +98,8 @@ public class Enemy extends Actor {
 					
 					// TODO: gets stuck because of how World.GetSurroundingTiles works.
 					//  	 -> doesn't check walls + always gives east/west first.
-					Direction dir = World.instance.GetDirectionOfTileFromPoint(this.currentTile, playerTile);
+					Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
+					Direction dir = World.instance.GetDirectionOfTileFromPoint(currentTile, playerTile);
 					Move(dir);
 					
 				} else {
@@ -140,7 +141,7 @@ public class Enemy extends Actor {
 		// update facing
 		/*if(dir == Direction.East || dir == Direction.West)*/ lookDir = dir;
 		
-		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null && tile.GetItem() == null) {
+		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.Trap) && tile.GetActor() == null && tile.GetItem() == null) {
 			
 			// tile is our new tile
 			world.GetTileAtPosition(this.GetTilePosition()).SetActor(null);
@@ -158,8 +159,8 @@ public class Enemy extends Actor {
 			// set the tile's actor to be this.
 			tile.SetActor(this);
 
-			// save our position
-			this.setTile(tile);
+			// update our position
+			//this.setTile(tile);
 			
 			// hide ourselves if we are on a hidden tile.
 			if(tile.isHidden()) {

@@ -69,7 +69,7 @@ public class Player extends Actor {
 			return;
 		}
 		
-		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.TrapTile) && tile.GetActor() == null && tile.GetItem() == null) {
+		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.Trap) && tile.GetActor() == null && tile.GetItem() == null) {
 			
 			// we are no longer on the last tile
 			Tile lastTile = World.instance.GetTileAtPosition(this.GetTilePosition());
@@ -88,8 +88,8 @@ public class Player extends Actor {
 			// set the tile's actor to be this.
 			tile.SetActor(this);
 			
-			// save our position
-			this.setTile(tile);
+			// update our position
+			//this.setTile(tile);
 			
 			// set off trap
 			if(tile instanceof Trap) {
@@ -122,6 +122,10 @@ public class Player extends Actor {
 			if(tile.GetItem() instanceof DestructibleItem) {
 				Attack(tile);
 			}
+			
+		} else if(tile instanceof Portal) {
+			
+			// TODO: PORTAL CODE!
 			
 		} else if(tile.GetTileType() == TileType.DestructibleTile) {
 			// TODO

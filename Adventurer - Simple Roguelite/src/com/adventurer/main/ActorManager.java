@@ -7,11 +7,33 @@ public class ActorManager {
 	private static Player playerInstance = null;
 	private static Enemy[] enemyInstances = null;
 	
+	public static Player CreatePlayerInstance(int maxHp, int damage, Tile tile) {
+		
+		if(playerInstance != null) {
+			
+			// TODO: move the player to a position or delete?
+			
+			System.out.println("Player is already instantiated!");
+			new Exception().printStackTrace();
+			System.exit(1);
+		}
+		
+		// create player and add it to our handler.
+		playerInstance = new Player(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Player, maxHp, damage);
+		
+		return playerInstance;
+		
+	}
+	
 	public static Player CreatePlayerInstance(int maxHP, int damage) {
 		
 		if(playerInstance != null) {
+			
+			// TODO: move the player to a position or delete?
+			
 			System.out.println("Player is already instantiated!");
-			return null;
+			new Exception().printStackTrace();
+			System.exit(1);
 		}
 		
 		World world = World.instance.GetWorld();

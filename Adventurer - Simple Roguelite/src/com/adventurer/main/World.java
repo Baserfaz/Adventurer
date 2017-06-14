@@ -7,6 +7,7 @@ import java.util.List;
 import com.adventurer.gameobjects.DestructibleItem;
 import com.adventurer.gameobjects.DestructibleTile;
 import com.adventurer.gameobjects.Door;
+import com.adventurer.gameobjects.Portal;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Trap;
 import com.adventurer.gameobjects.Turret;
@@ -22,16 +23,30 @@ public class World {
 	private List<Tile> tiles;
 	private List<Room> rooms;
 	
-	public static final int TILESIZE = 16;	// should be same as Game.SPRITESIZE
 	public static final int TILEGAP = 2;	// gap between each tile.
 	public static final int ROOMGAP = 0; 	// gap between rooms
 	
 	public static World instance;
 	
-	public World(int wwidth, int wheight, int rwidth, int rheight) {
+	// creates a predefined map
+	public World(char[][] map) {
 		
 		if(instance != null) return;
+		World.instance = this;
 		
+		this.tiles = new ArrayList<Tile>();
+		
+		Tile spawnTile = CreatePredefinedMap(map);
+		
+		// create player
+		ActorManager.CreatePlayerInstance(300, 100, spawnTile);
+	}
+	
+	public World(int wwidth, int wheight, int rwidth, int rheight) {
+		
+		// TODO: this instance check should not be here!
+		
+		if(instance != null) return;
 		World.instance = this;
 		
 		this.worldHeight = wheight;
@@ -44,6 +59,9 @@ public class World {
 		this.rooms = new ArrayList<Room>();
 		
 		CreateWorld();
+		
+		// create player
+		ActorManager.CreatePlayerInstance(300, 100);
 	}
 	
 	public Tile GetTileAtPosition(Coordinate pos) {
@@ -225,7 +243,7 @@ public class World {
 	}
 	
 	public int ConvertTilePositionToWorld(int pos) {
-		return (pos * TILESIZE + TILEGAP * pos);
+		return (pos * Game.SPRITESIZE + TILEGAP * pos);
 	}
 	
 	// creates a new TILE and destroys the old one.
@@ -234,17 +252,17 @@ public class World {
 		Tile newTile = null;
 		
 		// create new tile
-		if(newType == TileType.TrapTile) {
+		if(newType == TileType.Trap) {
 			
 			// randomize trap type
 			TrapType randTrapType = TrapType.values()[Util.GetRandomInteger(0, TrapType.values().length)];
 			
 			switch(randTrapType) {
 			case Projectile:
-				newTile = new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.TrapTile, TrapType.Projectile, 100);
+				newTile = new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.Trap, TrapType.Projectile, 100);
 				break;
 			case Gas:
-				newTile = new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.TrapTile, TrapType.Gas, 25);
+				newTile = new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.Trap, TrapType.Gas, 25);
 				break;
 			}
 		
@@ -366,7 +384,7 @@ public class World {
 			if(Util.GetRandomInteger() > 98) {
 				
 				// change tile type & sprite type
-				ReplaceTile(tile, TileType.TrapTile, SpriteType.TrapTile01);
+				ReplaceTile(tile, TileType.Trap, SpriteType.TrapTile01);
 			}
 		}
 	}
@@ -504,7 +522,7 @@ public class World {
 				
 				Room currentRoom = CreateRoom(roomOffsetX, roomOffsetY, x, y);
 				rooms.add(currentRoom);
-				roomOffsetX += (roomWidth * TILESIZE + roomWidth * TILEGAP) + ROOMGAP;
+				roomOffsetX += (roomWidth * Game.SPRITESIZE + roomWidth * TILEGAP) + ROOMGAP;
 				
 				roomCount++;
 				
@@ -515,7 +533,7 @@ public class World {
 				
 			}
 			roomOffsetX = 0;
-			roomOffsetY += (roomHeight * TILESIZE + roomHeight * TILEGAP) + ROOMGAP;
+			roomOffsetY += (roomHeight * Game.SPRITESIZE + roomHeight * TILEGAP) + ROOMGAP;
 		}
 		
 		if(Game.PRINT_WORLD_CREATION_START_END) System.out.println("World created! (Tile count: " + tiles.size() + ")");
@@ -539,7 +557,7 @@ public class World {
 				Tile tile = null;
 				
 				Coordinate tilePos = new Coordinate(x + (roomStartX * roomWidth), y + (roomStartY * roomHeight));
-				Coordinate worldPos = new Coordinate(x * TILESIZE + offsetX + roomOffsetX, y * TILESIZE + offsetY + roomOffsetY);
+				Coordinate worldPos = new Coordinate(x * Game.SPRITESIZE + offsetX + roomOffsetX, y * Game.SPRITESIZE + offsetY + roomOffsetY);
 				
 				if(GetTileAtPosition(tilePos) != null) {
 					System.out.println("TILE ALREADY EXISTS ON THIS COORDINATE: " + tilePos.getX() + ", " + tilePos.getY());
@@ -727,6 +745,64 @@ public class World {
 		if(Util.GetRandomInteger() > 20) tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);
 		else tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.Wall);
 		return tile;
+	}
+	
+	private Tile CreatePredefinedMap(char[][] map) {
+		
+		int offsetY = 0;
+		int offsetX = 0;
+		
+		Tile spawnTile = null;
+		
+		for(int y = 0; y < map.length; y++) {
+			for(int x = 0; x < map[y].length; x++) {
+				
+				Tile tile = null;
+				
+				Coordinate tilePos = new Coordinate(x + roomWidth, y + roomHeight);
+				Coordinate worldPos = new Coordinate(x * Game.SPRITESIZE + offsetX, y * Game.SPRITESIZE + offsetY);
+				
+				// read map and create a tile
+				char mapChar = map[y][x];
+				
+				switch(mapChar) {
+				case '#':
+					tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+					break;
+				case '.':
+					tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);
+					break;
+				case '@':
+					tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);
+					spawnTile = tile;
+					break;
+				case 'W':
+					tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.Wall);
+					break;
+				case 'D':
+					tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false);
+					break;
+				case 'L':
+					tile = new Door(worldPos, tilePos, SpriteType.LockedDoor01, TileType.LockedDoor, true);
+					break;
+				case 'P':
+					tile = new Portal(worldPos, tilePos, SpriteType.Portal01, TileType.Portal);
+					break;
+				default:
+					System.out.println("INVALID CHARACTER AT CreatePredefinedMap.");
+					new Exception().printStackTrace();
+					System.exit(1);
+					break;
+				}
+				
+				tiles.add(tile);
+				
+				offsetX += TILEGAP;
+			}
+			offsetX = 0;
+			offsetY += TILEGAP;
+		}
+		return spawnTile;
 	}
 	
 	public World GetWorld() {
