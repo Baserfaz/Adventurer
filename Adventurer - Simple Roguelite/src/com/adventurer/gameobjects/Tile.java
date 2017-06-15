@@ -199,6 +199,19 @@ public class Tile extends GameObject {
 	}
 	
 	public void Remove() {
+		
+		if(this.GetItem() != null) {
+			this.GetItem().Remove();
+		}
+		
+		if(this.GetActor() != null && this.GetActor() instanceof Player == false) {
+			this.GetActor().Remove();
+		}
+		
+		if(this.GetVanityItems().size() > 0) {
+			for(VanityItem vi : this.GetVanityItems()) vi.Remove();
+		}
+		
 		World.instance.RemoveTiles(this);
 		Handler.instance.RemoveObject(this);
 		Hide();

@@ -9,8 +9,8 @@ import com.adventurer.main.*;
 
 public abstract class GameObject {
 
-	private Coordinate worldPosition; // this is WORLD position, in pixels.
-	private Coordinate tilePosition; // this is TILE position in the grid.
+	private Coordinate worldPosition; 	// this is WORLD position, in pixels.
+	private Coordinate tilePosition; 	// this is TILE position in the grid.
 	
 	protected boolean hidden = true;
 	protected boolean discovered = false;
@@ -18,8 +18,6 @@ public abstract class GameObject {
 	protected SpriteType spriteType;
 	protected BufferedImage sprite;
 	protected BufferedImage tintedSprite = null;
-
-	//protected Tile currentTile;
 	
 	public GameObject(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
 		
@@ -28,9 +26,6 @@ public abstract class GameObject {
 		
 		// create tile coordinates
 		this.tilePosition = tilePos;
-		
-		// cache tile information
-		//this.currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
 		
 		// cache sprite type
 		this.spriteType = spritetype;
@@ -50,14 +45,6 @@ public abstract class GameObject {
 		return "GameObject: " + this.toString() + ", tilePos: (" + this.GetTilePosition().getX() + ", " + this.GetTilePosition().getY() +"), "
 				+ "worldPos: (" + this.GetWorldPosition().getX() + ", " + this.GetWorldPosition().getY() + ")" + ", hidden: " + this.hidden + ", discovered: " + this.discovered;
 	}
-	
-	/*public Tile getTile() {
-		return this.currentTile;
-	}
-	
-	public void setTile(Tile tile) {
-		this.currentTile = tile;
-	}*/
 	
 	public boolean isDiscovered() {
 		return this.discovered;

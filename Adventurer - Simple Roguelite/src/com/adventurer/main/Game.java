@@ -39,12 +39,12 @@ public class Game extends Canvas implements Runnable {
 	private Window window;
 	
 	// room count in world
-	private final int worldHeight = 1;
-	private final int worldWidth = 1;
+	public static final int WORLDHEIGHT = 1;
+	public static final int WORLDWIDTH = 1;
 	
 	// tiles in one room
-	private final int roomHeight = 10;
-	private final int roomWidth = 10;
+	public static final int ROOMHEIGHT = 10;
+	public static final int ROOMWIDTH = 10;
 	
 	public Game() {
 		
@@ -80,10 +80,7 @@ public class Game extends Canvas implements Runnable {
 		new World(PredefinedMaps.GetLobby());
 		
 		// create world
-		//new World(worldWidth, worldHeight, roomWidth, roomHeight);
-		
-		// create player
-		//ActorManager.CreatePlayerInstance(300, 100);
+		//new World(WORLDWIDTH, WORLDHEIGHT, ROOMWIDTH, ROOMHEIGHT);
 	}
 	
 	public synchronized void Start() {

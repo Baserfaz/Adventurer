@@ -25,12 +25,35 @@ public class ActorManager {
 		
 	}
 	
+	public static void RemovePlayer() {
+		if(playerInstance != null) {
+			playerInstance.Remove();
+			playerInstance = null;
+		}
+	}
+	
+	public static void ForceMoveActor(Tile tile, Actor actor) {
+		actor.forceMove(tile.GetWorldPosition(), tile.GetTilePosition());
+	}
+	
+	public static void ForceMovePlayerToFreePosition() {
+		
+		World world = World.instance.GetWorld();
+		
+		// get position
+		int[] pos = world.GetFreePosition();
+		
+		// create coordinates
+		Coordinate playerWorldPos = new Coordinate(pos[0], pos[1]);
+		Coordinate playerTilePos = new Coordinate(pos[2], pos[3]);
+		
+		playerInstance.forceMove(playerWorldPos, playerTilePos);
+		
+	}
+	
 	public static Player CreatePlayerInstance(int maxHP, int damage) {
 		
 		if(playerInstance != null) {
-			
-			// TODO: move the player to a position or delete?
-			
 			System.out.println("Player is already instantiated!");
 			new Exception().printStackTrace();
 			System.exit(1);

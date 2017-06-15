@@ -125,7 +125,9 @@ public class Player extends Actor {
 			
 		} else if(tile instanceof Portal) {
 			
-			// TODO: PORTAL CODE!
+			ActorManager.RemovePlayer();
+			World.instance.Remove();
+			new World(Game.WORLDWIDTH, Game.WORLDHEIGHT, Game.ROOMWIDTH, Game.ROOMHEIGHT);
 			
 		} else if(tile.GetTileType() == TileType.DestructibleTile) {
 			// TODO

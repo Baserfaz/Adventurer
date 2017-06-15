@@ -31,7 +31,12 @@ public class World {
 	// creates a predefined map
 	public World(char[][] map) {
 		
-		if(instance != null) return;
+		if(instance != null) {
+			System.out.println("WORLD ALREADY EXISTS!");
+			new Exception().printStackTrace();
+			System.exit(1);
+		}
+		
 		World.instance = this;
 		
 		this.tiles = new ArrayList<Tile>();
@@ -39,14 +44,19 @@ public class World {
 		Tile spawnTile = CreatePredefinedMap(map);
 		
 		// create player
-		ActorManager.CreatePlayerInstance(300, 100, spawnTile);
+		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
+		//else ActorManager.ForceMovePlayerToFreePosition();
 	}
 	
+	// creates a random level
 	public World(int wwidth, int wheight, int rwidth, int rheight) {
 		
-		// TODO: this instance check should not be here!
+		if(instance != null) {
+			System.out.println("WORLD ALREADY EXISTS!");
+			new Exception().printStackTrace();
+			System.exit(1);
+		}
 		
-		if(instance != null) return;
 		World.instance = this;
 		
 		this.worldHeight = wheight;
@@ -61,7 +71,8 @@ public class World {
 		CreateWorld();
 		
 		// create player
-		ActorManager.CreatePlayerInstance(300, 100);
+		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100);
+		//else ActorManager.ForceMovePlayerToFreePosition();
 	}
 	
 	public Tile GetTileAtPosition(Coordinate pos) {
@@ -803,6 +814,17 @@ public class World {
 			offsetY += TILEGAP;
 		}
 		return spawnTile;
+	}
+	
+	public void Remove() {
+		
+		List<Tile> temp = new ArrayList<Tile>(tiles);
+		
+		for(Tile tile : temp) {
+			tile.Remove();
+		}
+		
+		World.instance = null;
 	}
 	
 	public World GetWorld() {

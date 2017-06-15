@@ -18,7 +18,7 @@ public class LightSource extends VanityItem {
 		
 		Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
 		
-		if(currentTile.discovered) {
+		/*if(currentTile.discovered) {
 			
 			if(Util.GetRandomInteger() > 98) {
 				EffectCreator.CreateSmokeEffect(currentTile, Util.GetRandomInteger(1, 3));
@@ -33,7 +33,7 @@ public class LightSource extends VanityItem {
 					}
 				}
 			}
-		} 
+		} */
 	}
 	
 	public void render() {}

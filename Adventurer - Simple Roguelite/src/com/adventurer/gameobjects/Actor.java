@@ -36,6 +36,24 @@ public class Actor extends GameObject {
 	public void tick() {}
 	public void Move(Direction dir) {}
 	
+	public void forceMove(Coordinate worldPos, Coordinate tilePos) {
+		
+		Tile tile = World.instance.GetTileAtPosition(tilePos);
+		
+		// update our tile position
+		this.SetTilePosition(tilePos.getX(), tilePos.getY());
+		
+		// update our world position
+		this.targetx = worldPos.getX();
+		this.targety = worldPos.getY();
+		
+		this.SetWorldPosition(worldPos);
+		
+		// set the tile's actor to be this.
+		tile.SetActor(this);
+		
+	}
+	
 	protected void renderDirectionArrow(Graphics g) {
 		
 		if(Game.RENDER_ACTORS_DIRECTION_ARROW == false) return;
