@@ -9,56 +9,56 @@ public class LoSManager {
 	
 	public LoSManager() {}
 	
-	private List<Tile> CalculateLosToDirection(Coordinate pos, Direction dir) {
+	// http://tech-algorithm.com/articles/drawing-line-using-bresenham-algorithm/
+	public List<Tile> calculateLine (int x, int y, int x2, int y2) {
 		
-		List<Tile> retTiles = new ArrayList<Tile>();
+		List<Tile> tiles = new ArrayList<Tile>();
 		
-		int x = pos.getX();
-		int y = pos.getY();
-		World world = World.instance.GetWorld();
-		
-		Tile tile = null;
-		int offset = 1;
-		
-		do {
-			switch(dir) {
-			case North:
-				tile = world.GetTileAtPosition(x, y - offset);
-				break;
-			case South:
-				tile = world.GetTileAtPosition(x, y + offset);
-				break;
-			case West:
-				tile = world.GetTileAtPosition(x - offset, y);
-				break;
-			case East:
-				tile = world.GetTileAtPosition(x + offset, y);
-				break;
-			case NorthEast:
-				tile = world.GetTileAtPosition(x + offset, y - offset);
-				break;
-			case NorthWest:
-				tile = world.GetTileAtPosition(x - offset, y - offset);
-				break;
-			case SouthEast:
-				tile = world.GetTileAtPosition(x + offset, y + offset);
-				break;
-			case SouthWest:
-				tile = world.GetTileAtPosition(x - offset, y + offset);
-				break;
-			}
+	    int w = x2 - x;
+	    int h = y2 - y;
+	    int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;
+	    
+	    if (w<0) dx1 = -1; else if (w>0) dx1 = 1;
+	    if (h<0) dy1 = -1; else if (h>0) dy1 = 1;
+	    if (w<0) dx2 = -1; else if (w>0) dx2 = 1;
+	    
+	    int longest = Math.abs(w);
+	    int shortest = Math.abs(h);
+	    
+	    if (longest > shortest == false) {
+	        longest = Math.abs(h) ;
+	        shortest = Math.abs(w) ;
+	        if (h < 0) dy2 = -1; else if (h>0) dy2 = 1;
+	        dx2 = 0;            
+	    }
+	    
+	    int numerator = longest >> 1;
+	    
+	    for (int i = 0 ;i <= longest; i++) {
+	        
+	    	Tile tile = World.instance.GetTileAtPosition(x, y);
 			
-			if(tile == null) {
-				System.out.println("NULL TILE");
-				return null;
+			if(tile != null) {
+				tiles.add(tile);
+				if(tile.GetTileType() == TileType.OuterWall || tile.GetTileType() == TileType.Wall ||
+						tile.GetTileType() == TileType.DestructibleTile || tile.GetTileType() == TileType.Door ||
+						tile.GetTileType() == TileType.LockedDoor) break;
 			}
-				
-			retTiles.add(tile);
-			offset ++;
-			
-		} while ((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.Trap) && tile.GetActor() == null && tile.GetItem() == null);
-		
-		return retTiles;
+	    	
+	        numerator += shortest;
+	        
+	        if (numerator < longest == false) {
+	        	numerator -= longest;
+	            x += dx1;
+	            y += dy1;
+	        } else {
+	            x += dx2;
+	            y += dy2;
+	        }
+	        
+	    }
+	    
+	    return tiles;
 	}
 	
 	public void CalculateLos(Coordinate position) {
@@ -74,21 +74,26 @@ public class LoSManager {
 			allTiles.get(i).Hide();
 		}
 		
-		// TODO: better FOV calculations
-		
 		// 2. calculate FOV
+		// 	  -> using Bresenham's line algorithm
 		// ------------------------
 		
-		// straight line
-		foundTiles.addAll(CalculateLosToDirection(position, ActorManager.GetPlayerInstance().GetLookDirection()));
+		for(Tile tile : allTiles) {
 		
-		// surrounding tiles
-		for(Tile tile : world.GetSurroundingTiles(position)) {
-			foundTiles.add(tile);
+			int targetx = tile.GetTilePosition().getX();
+			int targety = tile.GetTilePosition().getY();
+			
+			for(Tile t : calculateLine(position.getX(), position.getY(), targetx, targety)) {
+				
+				if(foundTiles.contains(t) == false) {
+					foundTiles.add(t);
+				}
+				
+			}
 		}
 		
 		// ------------------------
-		// 3. show tiles
+		// 3. show visible-flagged tiles
 		for(Tile tile : foundTiles) {
 			tile.Discover();
 			tile.Show();
