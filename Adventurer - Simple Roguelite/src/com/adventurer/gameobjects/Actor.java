@@ -94,8 +94,9 @@ public class Actor extends GameObject {
 			// create vanity item 
 			VanityItemCreator.CreateVanityItem(tile, SpriteType.PlayerRemains01, true);
 			
-			// remove gameobject
-			Remove();
+			ActorManager.RemovePlayer();
+			World.instance.Remove();
+			new World(PredefinedMaps.GetLobby());
 			
 		} else if(this instanceof Turret) {
 			

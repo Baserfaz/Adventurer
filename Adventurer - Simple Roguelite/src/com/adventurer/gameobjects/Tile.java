@@ -209,7 +209,8 @@ public class Tile extends GameObject {
 		}
 		
 		if(this.GetVanityItems().size() > 0) {
-			for(VanityItem vi : this.GetVanityItems()) vi.Remove();
+			List<VanityItem> temp = new ArrayList<VanityItem>(vanityItems);
+			for(VanityItem vi : temp) vi.Remove();
 		}
 		
 		World.instance.RemoveTiles(this);

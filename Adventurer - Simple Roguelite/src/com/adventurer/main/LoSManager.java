@@ -18,9 +18,9 @@ public class LoSManager {
 	    int h = y2 - y;
 	    int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;
 	    
-	    if (w<0) dx1 = -1; else if (w>0) dx1 = 1;
-	    if (h<0) dy1 = -1; else if (h>0) dy1 = 1;
-	    if (w<0) dx2 = -1; else if (w>0) dx2 = 1;
+	    if (w < 0) dx1 = -1; else if (w > 0) dx1 = 1;
+	    if (h < 0) dy1 = -1; else if (h > 0) dy1 = 1;
+	    if (w < 0) dx2 = -1; else if (w > 0) dx2 = 1;
 	    
 	    int longest = Math.abs(w);
 	    int shortest = Math.abs(h);
@@ -28,7 +28,7 @@ public class LoSManager {
 	    if (longest > shortest == false) {
 	        longest = Math.abs(h) ;
 	        shortest = Math.abs(w) ;
-	        if (h < 0) dy2 = -1; else if (h>0) dy2 = 1;
+	        if (h < 0) dy2 = -1; else if (h > 0) dy2 = 1;
 	        dx2 = 0;            
 	    }
 	    
@@ -39,6 +39,7 @@ public class LoSManager {
 	    	Tile tile = World.instance.GetTileAtPosition(x, y);
 			
 			if(tile != null) {
+				
 				tiles.add(tile);
 				
 				if(		tile.GetTileType() == TileType.OuterWall || tile.GetTileType() == TileType.Wall ||
