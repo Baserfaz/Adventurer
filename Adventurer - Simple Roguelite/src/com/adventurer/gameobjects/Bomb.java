@@ -51,10 +51,15 @@ public class Bomb extends Item {
 					
 				} else if(tile instanceof Door) {
 					
-					// open door
-					((Door) tile).Open();
-					
-					EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 6), SpriteType.PotGib01);
+					if(tile.GetTileType() == TileType.LockedDoor) {
+						
+						// dont do anything.
+						
+					} else {
+						// open door
+						((Door) tile).Open();
+						EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 6), SpriteType.PotGib01);
+					}
 					
 				} else if(tile.GetActor() != null && tile.GetItem() != this && tile.GetItem() == null) {
 					

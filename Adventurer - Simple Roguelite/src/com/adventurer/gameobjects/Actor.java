@@ -56,13 +56,32 @@ public class Actor extends GameObject {
 	
 	protected void renderDirectionArrow(Graphics g) {
 		
-		if(Game.RENDER_ACTORS_DIRECTION_ARROW == false) return;
-		
-		if(directionArrow == null) {
-			directionArrow = SpriteCreator.instance.CreateSprite(SpriteType.DirectionArrow);
+		if(this instanceof Player) {
+			
+			if(Game.RENDER_PLAYER_DIRECTION_ARROW) {
+				
+				if(directionArrow == null) {
+					directionArrow = SpriteCreator.instance.CreateSprite(SpriteType.DirectionArrow);
+				}
+				
+				Renderer.RenderSprite(directionArrow, this.GetWorldPosition(), lookDir, g);
+			}
+			
+		} else {
+			
+			if(Game.RENDER_ACTORS_DIRECTION_ARROW == false) return;
+			
+			if(directionArrow == null) {
+				directionArrow = SpriteCreator.instance.CreateSprite(SpriteType.DirectionArrow);
+			}
+			
+			Renderer.RenderSprite(directionArrow, this.GetWorldPosition(), lookDir, g);
+			
 		}
 		
-		Renderer.RenderSprite(directionArrow, this.GetWorldPosition(), lookDir, g);
+		
+		
+		
 	}
 	
 	public void OnDeath(Tile tile) {

@@ -38,5 +38,10 @@ public enum SpriteType {
 	ArrowTurretNorth(),
 	ArrowTurretSouth(),
 	DirectionArrow(),
-	Portal01();
+	Portal01(),
+	Chest01(),
+	LockedChest01(),
+	GasBarrel01(),
+	GasBarrelGib01(),
+	GoldCoin01();
 }

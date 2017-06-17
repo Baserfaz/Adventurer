@@ -489,7 +489,7 @@ public class World {
 		
 		for(Tile tile : roomTiles) {
 		
-			if(tile.GetTileType() == TileType.Floor && tile.GetActor() == null && tile.GetItem() == null && Util.GetRandomInteger() > 95) {
+			if(tile.GetTileType() == TileType.Floor && tile.GetActor() == null && tile.GetItem() == null && Util.GetRandomInteger() > 98) {
 			
 				Turret turret = new Turret(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.ArrowTurretNorth, 100);
 				
