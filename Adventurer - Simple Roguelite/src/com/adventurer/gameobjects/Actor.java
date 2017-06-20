@@ -29,7 +29,6 @@ public class Actor extends GameObject {
 		
 		// register to tile
 		World.instance.GetTileAtPosition(tilePos).SetActor(this);
-		//this.currentTile.SetActor(this);
 	}
 	
 	public void render(Graphics g) {}
@@ -78,10 +77,6 @@ public class Actor extends GameObject {
 			Renderer.RenderSprite(directionArrow, this.GetWorldPosition(), lookDir, g);
 			
 		}
-		
-		
-		
-		
 	}
 	
 	public void OnDeath(Tile tile) {
@@ -144,9 +139,57 @@ public class Actor extends GameObject {
 		Hide();
 	}
 	
+	public void UseBomb(Tile tile) {
+		
+		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.Trap) &&
+				tile.GetActor() == null && tile.GetItem() == null) {
+			
+			
+			if(this instanceof Player) {
+				
+				Player player = (Player) this;
+				Inventory inv = player.getInventory();
+				
+				if(inv.getBombCount() > 0) {
+					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Bomb01, 1500, 300);
+					inv.addBombs(-1);
+				} else {
+					// TODO: ERROR EFFECT FOR NO BOMBS!
+				}
+				
+			} else {
+				new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Bomb01, 1500, 300);
+			}
+		}
+	}
+	
 	public void Shoot(Coordinate originTilePos, Direction direction, SpriteType projSpriteType) {
-		Tile projStartTile = World.instance.GetTileAtPosition(originTilePos);
-		new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), projSpriteType, damage, direction);
+		
+		if(this instanceof Player) {
+			
+			Player player = (Player) this;
+			Inventory inv = player.getInventory();
+			
+			if(inv.getProjectileCount() > 0) {
+				
+				Tile projStartTile = World.instance.GetTileAtPosition(originTilePos);
+				new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), projSpriteType, damage, direction);
+				
+				inv.addProjectiles(-1);
+				
+			} else {
+				
+				// TODO: ERROR EFFECT NO PROJECTILES
+				
+			}
+			
+		} else {
+			
+			// enemies who can shoot dont lose projectiles.
+			Tile projStartTile = World.instance.GetTileAtPosition(originTilePos);
+			new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), projSpriteType, damage, direction);
+			
+		}
 	}
 	
 	public void Attack(Tile tile) {
@@ -166,10 +209,12 @@ public class Actor extends GameObject {
 				// 4. object takes damage
 				DamageHandler.ItemTakeDamage((DestructibleItem) object, damage);
 			}
+			
 		} else {
 			
 			// 5. actor takes damage
 			DamageHandler.ActorTakeDamage(tile, damage);
+			
 		}
 	}
 	

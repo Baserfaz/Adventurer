@@ -532,6 +532,7 @@ public class World {
 				// TODO: Randomize roomtypes here!
 				
 				Room currentRoom = CreateRoom(roomOffsetX, roomOffsetY, x, y, RoomType.Normal);
+				
 				rooms.add(currentRoom);
 				roomOffsetX += (roomWidth * Game.SPRITESIZE + roomWidth * TILEGAP) + ROOMGAP;
 				

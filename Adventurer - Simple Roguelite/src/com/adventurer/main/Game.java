@@ -30,6 +30,7 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean PRINT_DOOR_CREATED = false;
 	
 	public static final boolean CALCULATE_PLAYER_LOS = true;
+	
 	public static final boolean RENDER_ACTORS_DIRECTION_ARROW = false;
 	public static final boolean RENDER_PLAYER_DIRECTION_ARROW = true;
 	
@@ -40,6 +41,10 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean CREATE_DESTRUCTIBLE_ITEMS_INSIDE_ROOMS = false;
 	public static final boolean CREATE_DESTRUCTIBLE_WALLS_INSIDE_ROOMS = false;
 	public static final boolean CREATE_VANITY_ITEMS_INSIDE_ROOMS = false;
+	
+	public static final int START_KEY_COUNT = 1;
+	public static final int START_BOMB_COUNT = 1;
+	public static final int START_PROJECTILE_COUNT = 3;
 	
 	//------------------------------
 	

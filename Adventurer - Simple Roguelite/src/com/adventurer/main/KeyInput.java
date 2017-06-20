@@ -54,13 +54,8 @@ public class KeyInput extends KeyAdapter {
 		
 		// bomb
 		if(key == KeyEvent.VK_SPACE) {
-			
 			Tile t = World.instance.GetTileFromDirection(player.GetTilePosition(), player.GetLookDirection());
-			
-			if((t.GetTileType() == TileType.Floor || t.GetTileType() == TileType.Trap) && t.GetActor() == null && t.GetItem() == null) {
-				
-				new Bomb(t.GetWorldPosition(), t.GetTilePosition(), SpriteType.Bomb01, 1500, 300);
-			}
+			player.UseBomb(t);
 		}
 		
 		// shooting debugging

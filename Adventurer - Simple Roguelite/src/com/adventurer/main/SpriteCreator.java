@@ -217,6 +217,30 @@ public class SpriteCreator {
 			row = 0;
 			column = 10;
 			break;
+		case GoldCoin01:
+			row = 2;
+			column = 8;
+			break;
+		case Error:
+			row = 4;
+			column = 3;
+			break;
+		case Chest01:
+			row = 1;
+			column = 6;
+			break;
+		case LockedChest01:
+			row = 1;
+			column = 8;
+			break;
+		case GasBarrel01:
+			row = 1;
+			column = 7;
+			break;
+		case GasBarrelGib01:
+			row = 3;
+			column = 8;
+			break;
 		default:
 			System.out.println("SPRITETYPE NOT FOUND: " +  type);
 			break;

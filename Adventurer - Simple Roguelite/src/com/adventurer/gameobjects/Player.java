@@ -7,11 +7,13 @@ import com.adventurer.main.*;
 public class Player extends Actor {
 	
 	private LoSManager losmanager;
+	private Inventory inventory;
 	
 	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int damage) {
 		super(worldPos, tilePos, spritetype, maxHP, damage);
 		
 		this.losmanager = new LoSManager();
+		this.inventory = new Inventory(Game.START_KEY_COUNT, Game.START_BOMB_COUNT, Game.START_PROJECTILE_COUNT);
 	}
 	
 	public void tick() {
@@ -88,9 +90,6 @@ public class Player extends Actor {
 			// set the tile's actor to be this.
 			tile.SetActor(this);
 			
-			// update our position
-			//this.setTile(tile);
-			
 			// set off trap
 			if(tile instanceof Trap) {
 				((Trap)tile).Activate();
@@ -99,13 +98,23 @@ public class Player extends Actor {
 		} else if(tile instanceof Door) {
 			
 			Door door = (Door) tile;
+			
 			if(door.isLocked()) {
 				
-				// TODO: KEYS
-				door.Unlock();
+				if(inventory.getKeyCount() > 0) {
+					
+					door.Unlock();
+					
+					// effects
+					EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 7), SpriteType.LockedDoor01Gib01);
+					
+					inventory.addKeys(-1);
+					
+				} else {
+					// TODO EFFECTS
+					//EffectCreator.CreateErrorEffect();
+				}
 				
-				// effects
-				EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 7), SpriteType.LockedDoor01Gib01);
 				
 			} else {
 				door.Open();
@@ -133,4 +142,9 @@ public class Player extends Actor {
 			// TODO
 		} 
 	}
+	
+	public Inventory getInventory() {
+		return this.inventory;
+	}
+	
 }
