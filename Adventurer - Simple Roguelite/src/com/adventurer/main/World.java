@@ -518,8 +518,6 @@ public class World {
 	
 	private void CreateWorld() {
 		
-		// TODO: SOMETIMES CREATES 1 EXTRA TILE SOMEWHERE!
-		
 		int roomOffsetY = 0;
 		int roomOffsetX = 0;
 		
@@ -531,7 +529,9 @@ public class World {
 		for(int y = 0; y < worldHeight; y++) {
 			for(int x = 0; x < worldWidth; x++) {
 				
-				Room currentRoom = CreateRoom(roomOffsetX, roomOffsetY, x, y);
+				// TODO: Randomize roomtypes here!
+				
+				Room currentRoom = CreateRoom(roomOffsetX, roomOffsetY, x, y, RoomType.Normal);
 				rooms.add(currentRoom);
 				roomOffsetX += (roomWidth * Game.SPRITESIZE + roomWidth * TILEGAP) + ROOMGAP;
 				
@@ -552,7 +552,7 @@ public class World {
 	
 	
 	// TODO: refactor this spaghetti method... (._.)
-	private Room CreateRoom(int roomOffsetX, int roomOffsetY, int roomStartX, int roomStartY) {
+	private Room CreateRoom(int roomOffsetX, int roomOffsetY, int roomStartX, int roomStartY, RoomType roomType) {
 		
 		List<Tile> roomTiles = new ArrayList<Tile>();
 		
@@ -576,7 +576,6 @@ public class World {
 					System.exit(1);
 				}
 				
-				// OUTERWALL CALCULATIONS
 				if (y == 0) { // TOP TILES
 						
 					// ----- creates horizontal doors between rooms
@@ -592,7 +591,7 @@ public class World {
 								
 							} else {
 								
-								// randomize the location of a door
+								// randomize if we create a door/locked door or wall
 								if(Util.GetRandomInteger() > 80) {
 									
 									// randomize if the door is locked
@@ -631,7 +630,7 @@ public class World {
 						if(x == 0 || x == roomWidth - 1) {
 							tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 						} else {
-							tile = RandomizeTileFloorWall(worldPos, tilePos);
+							tile = RandomizeTileFloorOrWall(worldPos, tilePos);
 						}
 						
 					} else if(roomStartY == worldHeight - 1) { // BOTTOM-MOST ROOM
@@ -643,7 +642,7 @@ public class World {
 						if(x == 0) {
 							tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 						} else {
-							tile = RandomizeTileFloorWall(worldPos, tilePos);
+							tile = RandomizeTileFloorOrWall(worldPos, tilePos);
 						}
 						
 					}
@@ -702,20 +701,28 @@ public class World {
 						
 					} else if(roomStartY == worldHeight - 1) { // BOTTOM-MOST ROOM
 						
-						tile = RandomizeTileFloorWall(worldPos, tilePos);
+						tile = RandomizeTileFloorOrWall(worldPos, tilePos);
 						
 					} else { // OTHER ROOM
 						
 						if(y == 0) {
 							tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 						} else {
-							tile = RandomizeTileFloorWall(worldPos, tilePos);
+							tile = RandomizeTileFloorOrWall(worldPos, tilePos);
 						}
 						
 					}
 				
-				// OTHER TILE TYPE CALCULATIONS
-				} else tile = RandomizeTileFloorWall(worldPos, tilePos);
+				// TILES THAT ARE INSIDE THE ROOM 
+				} else {
+					
+					if(Game.CREATE_WALLS_INSIDE_ROOMS) {
+						tile = RandomizeTileFloorOrWall(worldPos, tilePos);
+					} else {
+						tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);
+					}
+					
+				}
 				
 				if(tile == null) {
 					System.out.print("WORLD.CREATEROOM: TILE IS NULL! \n");
@@ -734,24 +741,24 @@ public class World {
 			offsetY += TILEGAP;
 		}
 		
-		CreateDoorsInsideRoom(roomTiles);
-		CreateTrapsInsideRoom(roomTiles);
-		CreateTurretsInsideRoom(roomTiles);
-		CreateDestructibleWallsInsideRoom(roomTiles);
-		CreateDestructibleItemsInsideRoom(roomTiles);
-		CreateVanityItemsInsideRoom(roomTiles);
+		if(Game.CREATE_DOORS_INSIDE_ROOMS) CreateDoorsInsideRoom(roomTiles);
+		if(Game.CREATE_TRAPS_INSIDE_ROOMS) CreateTrapsInsideRoom(roomTiles);
+		if(Game.CREATE_TURRETS_INSIDE_ROOMS) CreateTurretsInsideRoom(roomTiles);
+		if(Game.CREATE_DESTRUCTIBLE_WALLS_INSIDE_ROOMS) CreateDestructibleWallsInsideRoom(roomTiles);
+		if(Game.CREATE_DESTRUCTIBLE_ITEMS_INSIDE_ROOMS) CreateDestructibleItemsInsideRoom(roomTiles);
+		if(Game.CREATE_VANITY_ITEMS_INSIDE_ROOMS) CreateVanityItemsInsideRoom(roomTiles);
 		
 		// create enemies
 		ActorManager.CreateEnemies(5);
 		
 		// create room object
-		Room room = new Room(roomWidth, roomHeight, new Coordinate(roomStartX, roomStartY), roomTiles);
+		Room room = new Room(roomWidth, roomHeight, new Coordinate(roomStartX, roomStartY), roomTiles, roomType);
 		
 		return room;
 	}
 	
 	// randomly creates either floor or wall tile.
-	public Tile RandomizeTileFloorWall(Coordinate worldPos, Coordinate tilePos) {
+	public Tile RandomizeTileFloorOrWall(Coordinate worldPos, Coordinate tilePos) {
 		Tile tile = null;
 		if(Util.GetRandomInteger() > 20) tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);
 		else tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.Wall);

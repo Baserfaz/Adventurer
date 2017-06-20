@@ -10,12 +10,14 @@ public class Room {
 	private int roomHeight;
 	private Coordinate roomPosition;
 	private List<Tile> tiles;
+	private RoomType roomType;
 	
-	public Room(int roomwidth, int roomheight, Coordinate roompos, List<Tile> tiles) {
+	public Room(int roomwidth, int roomheight, Coordinate roompos, List<Tile> tiles, RoomType roomType) {
 		this.setRoomWidth(roomwidth);
 		this.setRoomHeight(roomheight);
 		this.setRoomPosition(roompos);
 		this.setTiles(tiles);
+		this.setRoomType(roomType);
 	}
 
 	public int getRoomWidth() {
@@ -48,5 +50,13 @@ public class Room {
 
 	public void setTiles(List<Tile> tiles) {
 		this.tiles = tiles;
+	}
+
+	public RoomType getRoomType() {
+		return roomType;
+	}
+
+	public void setRoomType(RoomType roomType) {
+		this.roomType = roomType;
 	}
 }

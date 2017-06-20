@@ -22,15 +22,24 @@ public class Game extends Canvas implements Runnable {
 	public static final String spritesheetname = "spritesheet.png";	// main spritesheet name
 	
 	//------------------------------
-	// DEBUGGING TOOLS
+	// DEBUGGING TOOLS AND GAME SETTINGS
 	
 	public static final boolean DRAW_CAMERA = false;
 	public static final boolean PRINT_WORLD_CREATION_PERCENTAGE_DONE = false;
 	public static final boolean PRINT_WORLD_CREATION_START_END = false;
 	public static final boolean PRINT_DOOR_CREATED = false;
+	
 	public static final boolean CALCULATE_PLAYER_LOS = true;
 	public static final boolean RENDER_ACTORS_DIRECTION_ARROW = false;
 	public static final boolean RENDER_PLAYER_DIRECTION_ARROW = true;
+	
+	public static final boolean CREATE_WALLS_INSIDE_ROOMS = false;
+	public static final boolean CREATE_DOORS_INSIDE_ROOMS = false;
+	public static final boolean CREATE_TRAPS_INSIDE_ROOMS = false;
+	public static final boolean CREATE_TURRETS_INSIDE_ROOMS = false;
+	public static final boolean CREATE_DESTRUCTIBLE_ITEMS_INSIDE_ROOMS = false;
+	public static final boolean CREATE_DESTRUCTIBLE_WALLS_INSIDE_ROOMS = false;
+	public static final boolean CREATE_VANITY_ITEMS_INSIDE_ROOMS = false;
 	
 	//------------------------------
 	
@@ -182,7 +191,7 @@ public class Game extends Canvas implements Runnable {
 			// translate
 			g.translate(targetx, targety);
 			
-			// update 'camera' position
+			// update camera's position
 			Camera.instance.Update(new Coordinate(-targetx, -targety), 1273 / CAMERAZOOM, 690 / CAMERAZOOM);
 		
 			if(DRAW_CAMERA) {
