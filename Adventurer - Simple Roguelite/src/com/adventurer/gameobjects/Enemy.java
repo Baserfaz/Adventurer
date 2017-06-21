@@ -88,11 +88,14 @@ public class Enemy extends Actor {
 				// calculate line of sight
 				Tile[] visibleTiles = losManager.GetVisibleTiles(this.GetTilePosition());
 				
+				boolean canSeePlayer = false;
+				
 				// search for player
 				// -> updates lastPlayerPosition if player is seen.
 				for(Tile tile : visibleTiles) {
 					if(tile.GetActor() instanceof Player) {
 						lastPlayerPosition = tile;
+						canSeePlayer = true;
 						break;
 					}
 				}
@@ -107,7 +110,7 @@ public class Enemy extends Actor {
 					// --------------- ATTACK MODE ----------------
 					
 					Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
-					List<Tile> path = AStar.CalculatePath(currentTile, lastPlayerPosition, this);
+					List<Tile> path = AStar.CalculatePath(currentTile, lastPlayerPosition);
 							
 					if(path == null || path.isEmpty()) {
 						System.out.println("PATH IS EMPTY!");
@@ -127,7 +130,20 @@ public class Enemy extends Actor {
 					}
 					
 					Direction dir = World.instance.GetDirectionOfTileFromPoint(currentTile, nextStep);
-					Move(dir);
+					
+					// Decide whether to shoot, melee or move.
+					if(this.hasRangedAttack && canSeePlayer &&
+							(currentTile.GetTilePosition().getX() == lastPlayerPosition.GetTilePosition().getX() ||
+							currentTile.GetTilePosition().getY() == lastPlayerPosition.GetTilePosition().getY())) {
+						
+						// --------------- USE RANGED ATTACK ---------------
+						Shoot(this.GetTilePosition(), dir, this.projectileType);
+						
+					} else {
+						
+						// --------------- MOVE & MELEE ATTACK ---------------
+						Move(dir);
+					}
 					
 				} else {
 					

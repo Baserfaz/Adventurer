@@ -10,7 +10,7 @@ import com.adventurer.gameobjects.Tile;
 
 public class AStar {
 
-	public static List<Tile> CalculatePath(Tile start, Tile goal, Actor me) {
+	public static List<Tile> CalculatePath(Tile start, Tile goal) {
 		
 		// reset nodes
 		for(Tile tile : World.instance.GetTiles()) tile.getNode().reset();
@@ -41,7 +41,7 @@ public class AStar {
 						neighbor.GetTileType() == TileType.DestructibleTile ||
 						neighbor.GetTileType() == TileType.Door ||
 						neighbor.GetTileType() == TileType.LockedDoor ||
-						neighbor.GetActor() != null && neighbor.GetActor() == me || 
+						neighbor.GetActor() != null && neighbor.GetActor() == start.GetActor() || 
 						neighbor.GetItem() != null) continue;
 				
 				
