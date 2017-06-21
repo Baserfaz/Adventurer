@@ -26,7 +26,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public static final boolean DRAW_CAMERA = false;
 	public static final boolean DRAW_ENEMY_FOV = false;
-	public static final boolean DRAW_ENEMY_PATH = true;
+	public static final boolean DRAW_ENEMY_PATH = false; 			// works only with one enemy
 	
 	public static final boolean PRINT_WORLD_CREATION_PERCENTAGE_DONE = false;
 	public static final boolean PRINT_WORLD_CREATION_START_END = false;
@@ -37,7 +37,7 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean RENDER_ACTORS_DIRECTION_ARROW = false;
 	public static final boolean RENDER_PLAYER_DIRECTION_ARROW = true;
 	
-	public static final boolean CREATE_WALLS_INSIDE_ROOMS = false;
+	public static final boolean CREATE_WALLS_INSIDE_ROOMS = true;
 	public static final boolean CREATE_DOORS_INSIDE_ROOMS = false;
 	public static final boolean CREATE_TRAPS_INSIDE_ROOMS = false;
 	public static final boolean CREATE_TURRETS_INSIDE_ROOMS = false;
@@ -49,7 +49,8 @@ public class Game extends Canvas implements Runnable {
 	public static final int START_BOMB_COUNT = 1;
 	public static final int START_PROJECTILE_COUNT = 3;
 	
-	public static final int MAX_ENEMY_COUNT_IN_ROOM = 1;
+	public static final int MIN_ENEMY_COUNT_IN_ROOM = 1;
+	public static final int MAX_ENEMY_COUNT_IN_ROOM = 5;
 	
 	//------------------------------
 	

@@ -41,6 +41,7 @@ public class AStar {
 						neighbor.GetTileType() == TileType.DestructibleTile ||
 						neighbor.GetTileType() == TileType.Door ||
 						neighbor.GetTileType() == TileType.LockedDoor ||
+						neighbor.GetActor() != null && neighbor.GetActor() == me || 
 						neighbor.GetItem() != null) continue;
 				
 				

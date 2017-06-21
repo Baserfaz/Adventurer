@@ -763,18 +763,16 @@ public class World {
 		if(Game.CREATE_VANITY_ITEMS_INSIDE_ROOMS) CreateVanityItemsInsideRoom(roomTiles);
 		
 		// create enemies
-		ActorManager.CreateEnemies(Game.MAX_ENEMY_COUNT_IN_ROOM);
+		ActorManager.CreateEnemies(Util.GetRandomInteger(Game.MIN_ENEMY_COUNT_IN_ROOM, Game.MAX_ENEMY_COUNT_IN_ROOM));
 		
 		// create room object
-		Room room = new Room(roomWidth, roomHeight, new Coordinate(roomStartX, roomStartY), roomTiles, roomType);
-		
-		return room;
+		return new Room(roomWidth, roomHeight, new Coordinate(roomStartX, roomStartY), roomTiles, roomType);
 	}
 	
 	// randomly creates either floor or wall tile.
 	public Tile RandomizeTileFloorOrWall(Coordinate worldPos, Coordinate tilePos) {
 		Tile tile = null;
-		if(Util.GetRandomInteger() > 20) tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);
+		if(Util.GetRandomInteger() > 5) tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);
 		else tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.Wall);
 		return tile;
 	}
