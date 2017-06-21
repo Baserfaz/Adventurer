@@ -241,6 +241,14 @@ public class SpriteCreator {
 			row = 3;
 			column = 8;
 			break;
+		case Egg01:
+			row = 4;
+			column = 4;
+			break;
+		case BombGib01:
+			row = 3;
+			column = 9;
+			break;
 		default:
 			System.out.println("SPRITETYPE NOT FOUND: " +  type);
 			break;

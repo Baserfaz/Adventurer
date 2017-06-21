@@ -10,14 +10,17 @@ public class Bomb extends Item {
 
 	private int damage = 0;
 	
+	private BombType bombType;
+	
 	private long liveTimer = 0;
 	private boolean alive = false;
 	
-	public Bomb(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int liveTime, int damage) {
+	public Bomb(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int liveTime, int damage, BombType btype) {
 		super(worldPos, tilePos, spritetype);
 		this.alive = true;
 		this.damage = damage;
 		this.liveTimer = System.currentTimeMillis() + liveTime;
+		this.bombType = btype;
 	}
 	
 	public void tick() {
@@ -35,8 +38,16 @@ public class Bomb extends Item {
 			
 			for(Tile tile : tiles) {
 				
+				int amount = Util.GetRandomInteger(4, 10);
+				
 				// create effect on tile.
-				EffectCreator.CreateSmokeEffect(tile, Util.GetRandomInteger(4, 10));
+				if(bombType == BombType.Normal) {
+					EffectCreator.CreateSmokeEffect(tile, amount);
+					EffectCreator.CreateGibs(tile, amount, SpriteType.BombGib01);
+				} else if(bombType == BombType.Gas) {
+					EffectCreator.CreateGasEffect(tile, amount);
+					EffectCreator.CreateGibs(tile, amount, SpriteType.GasBarrelGib01);
+				}
 				
 				// Damage:
 				// 1. destructible tiles

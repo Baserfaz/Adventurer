@@ -44,5 +44,7 @@ public enum SpriteType {
 	GasBarrel01(),
 	GasBarrelGib01(),
 	GoldCoin01(),
-	Error();
+	Error(),
+	Egg01(), 
+	BombGib01();
 }

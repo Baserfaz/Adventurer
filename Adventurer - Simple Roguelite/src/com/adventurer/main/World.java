@@ -763,7 +763,9 @@ public class World {
 		if(Game.CREATE_VANITY_ITEMS_INSIDE_ROOMS) CreateVanityItemsInsideRoom(roomTiles);
 		
 		// create enemies
-		ActorManager.CreateEnemies(Util.GetRandomInteger(Game.MIN_ENEMY_COUNT_IN_ROOM, Game.MAX_ENEMY_COUNT_IN_ROOM));
+		if(Game.SPAWN_ENEMIES_INSIDE_ROOMS) {
+			ActorManager.CreateEnemies(Util.GetRandomInteger(Game.MIN_ENEMY_COUNT_IN_ROOM, Game.MAX_ENEMY_COUNT_IN_ROOM));
+		}
 		
 		// create room object
 		return new Room(roomWidth, roomHeight, new Coordinate(roomStartX, roomStartY), roomTiles, roomType);

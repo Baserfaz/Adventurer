@@ -76,6 +76,9 @@ public class ActorManager {
 	
 	public static void CreateEnemies(int count) {
 		for(int i = 0; i < count; i++) {
+			
+			// TODO: each enemytype has its own damage and health values.
+			
 			EnemyType randomType = EnemyType.values()[Util.GetRandomInteger(0, EnemyType.values().length)];
 			CreateEnemy(300, 100, randomType);
 		}

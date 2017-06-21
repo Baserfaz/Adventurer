@@ -100,6 +100,11 @@ public class Actor extends GameObject {
 			// create vanity item 
 			VanityItemCreator.CreateVanityItem(tile, remainsSpriteType, true);
 			
+			if(enemyType == EnemyType.Maggot) {
+				// TODO: randomize chance of dropping "an exploding egg".
+				this.UseBomb(World.instance.GetTileAtPosition(this.GetTilePosition()));
+			}
+			
 			// remove gameobject
 			Remove();
 			
@@ -151,14 +156,27 @@ public class Actor extends GameObject {
 				Inventory inv = player.getInventory();
 				
 				if(inv.getBombCount() > 0) {
-					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Bomb01, 1500, 300);
+					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Bomb01, 1500, 300, BombType.Normal);
 					inv.addBombs(-1);
 				} else {
 					// TODO: ERROR EFFECT FOR NO BOMBS!
 				}
 				
-			} else {
-				new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Bomb01, 1500, 300);
+			} else if(this instanceof Enemy) {
+				
+				Enemy enemy = (Enemy) this;
+				
+				if(enemy.getEnemyType() == EnemyType.Maggot) {
+					
+					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Egg01, 1500, 300, BombType.Gas);
+					
+				} else {
+				
+					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Bomb01, 1500, 300, BombType.Normal);
+					
+				}
+				
+				
 			}
 		}
 	}
