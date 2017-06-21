@@ -69,6 +69,8 @@ public class Enemy extends Actor {
 	
 	public void tick() {
 		
+		if(ActorManager.GetPlayerInstance() == null) return;
+		
 		if(myHP.isDead() == false) {
 		
 			// only calculate discovered enemies behavior.
@@ -87,6 +89,7 @@ public class Enemy extends Actor {
 				Tile[] visibleTiles = losManager.GetVisibleTiles(this.GetTilePosition());
 				
 				// search for player
+				// -> updates lastPlayerPosition if player is seen.
 				for(Tile tile : visibleTiles) {
 					if(tile.GetActor() instanceof Player) {
 						lastPlayerPosition = tile;
@@ -101,28 +104,34 @@ public class Enemy extends Actor {
 				
 				if(lastPlayerPosition != null) {
 					
-					// --------------- ATTACK ----------------
+					// --------------- ATTACK MODE ----------------
 					
-					// A*
 					Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
-					List<Tile> path = AStar.CalculatePath(currentTile, lastPlayerPosition);
-					
-					if(path.isEmpty()) {
+					List<Tile> path = AStar.CalculatePath(currentTile, lastPlayerPosition, this);
+							
+					if(path == null || path.isEmpty()) {
 						System.out.println("PATH IS EMPTY!");
 						return;
 					}
+					
+					Tile nextStep = path.get(path.size() - 2);
 					
 					if(Game.DRAW_ENEMY_PATH) {
 						for(Tile tile : World.instance.GetTiles()) tile.Deselect();
 						for(Tile tile : path) tile.Select();
 					}
 					
-					Direction dir = World.instance.GetDirectionOfTileFromPoint(currentTile, path.get(0));
+					if(nextStep == null) {
+						System.out.println("NEXT STEP IS NULL!");
+						return;
+					}
+					
+					Direction dir = World.instance.GetDirectionOfTileFromPoint(currentTile, nextStep);
 					Move(dir);
 					
 				} else {
 					
-					// -------------- RANDOM -----------------
+					// -------------- RANDOM MODE -----------------
 					
 					// randomize direction
 					Direction randomDir = Util.GetRandomCardinalDirection();

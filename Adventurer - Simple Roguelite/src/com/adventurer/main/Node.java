@@ -20,5 +20,10 @@ public class Node {
 	public void setgScore(double gScore) {
 		this.gScore = gScore;
 	}
+
+	public void reset() {
+		this.setfScore(Double.POSITIVE_INFINITY);
+		this.setgScore(Double.POSITIVE_INFINITY);
+	}
 	
 }

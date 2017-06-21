@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Tile;
 
 public class AStar {
 
-	public static List<Tile> CalculatePath(Tile start, Tile goal) {
+	public static List<Tile> CalculatePath(Tile start, Tile goal, Actor me) {
+		
+		// reset nodes
+		for(Tile tile : World.instance.GetTiles()) tile.getNode().reset();
 		
 		Map<Tile, Tile> cameFrom = new HashMap<Tile, Tile>();
 		
@@ -25,12 +29,20 @@ public class AStar {
 			
 			Tile current = getNodeWithLowestFScore(openSet);
 			
-			if(current == goal) return reconstruct_path(cameFrom, current);
+			if(current == goal) return reconstruct_path(cameFrom, current, goal);
 			
 			openSet.remove(current);
 			closedSet.add(current);
 			
 			for(Tile neighbor : World.instance.GetTilesInCardinalDirection(current)) {
+				
+				if(neighbor.GetTileType() == TileType.Wall ||
+						neighbor.GetTileType() == TileType.OuterWall ||
+						neighbor.GetTileType() == TileType.DestructibleTile ||
+						neighbor.GetTileType() == TileType.Door ||
+						neighbor.GetTileType() == TileType.LockedDoor ||
+						neighbor.GetItem() != null) continue;
+				
 				
 				if(closedSet.contains(neighbor)) continue;
 				if(openSet.contains(neighbor) == false) openSet.add(neighbor);
@@ -47,9 +59,11 @@ public class AStar {
 		return null;
 	}
 	
-	private static List<Tile> reconstruct_path(Map<Tile, Tile> cameFrom, Tile current) {
+	private static List<Tile> reconstruct_path(Map<Tile, Tile> cameFrom, Tile current, Tile goal) {
 		
 		List<Tile> totalPath = new ArrayList<Tile>();
+		
+		totalPath.add(goal);
 		
 		while(cameFrom.containsKey(current)) {
 			current = cameFrom.get(current);
