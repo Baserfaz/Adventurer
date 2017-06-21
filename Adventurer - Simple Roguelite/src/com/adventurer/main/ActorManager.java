@@ -77,10 +77,13 @@ public class ActorManager {
 	public static void CreateEnemies(int count) {
 		for(int i = 0; i < count; i++) {
 			
-			// TODO: each enemytype has its own damage and health values.
-			
 			EnemyType randomType = EnemyType.values()[Util.GetRandomInteger(0, EnemyType.values().length)];
-			CreateEnemy(300, 100, randomType);
+			int damage = 100;
+			int health = 300;
+			
+			// TODO: enemy type specific damage and health
+			
+			CreateEnemy(health, damage, randomType);
 		}
 	}
 	
@@ -110,7 +113,7 @@ public class ActorManager {
 		Coordinate enemyTilePos = new Coordinate(pos[2], pos[3]);
 		
 		// create enemy object
-		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, 300, 100);
+		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, maxHP, damage);
 	}
 	
 	public static Enemy[] GetEnemyInstances() {

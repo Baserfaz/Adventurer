@@ -100,13 +100,13 @@ public class Actor extends GameObject {
 			// create vanity item 
 			VanityItemCreator.CreateVanityItem(tile, remainsSpriteType, true);
 			
+			// remove gameobject
+			Remove();
+			
 			if(enemyType == EnemyType.Maggot) {
 				// TODO: randomize chance of dropping "an exploding egg".
 				this.UseBomb(World.instance.GetTileAtPosition(this.GetTilePosition()));
 			}
-			
-			// remove gameobject
-			Remove();
 			
 		} else if(this instanceof Player) {
 			
