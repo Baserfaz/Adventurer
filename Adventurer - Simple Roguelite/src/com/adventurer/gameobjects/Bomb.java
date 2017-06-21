@@ -36,17 +36,25 @@ public class Bomb extends Item {
 			// add the current tile to the tiles list
 			tiles.add(World.instance.GetTileAtPosition(this.GetTilePosition()));
 			
+			int gibAmount = Util.GetRandomInteger(4, 10);
+			Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
+			
+			// create gib effect
+			if(bombType == BombType.Normal) {
+				EffectCreator.CreateGibs(currentTile, gibAmount, SpriteType.BombGib01);
+			} else if(bombType == BombType.Gas){
+				EffectCreator.CreateGibs(currentTile, gibAmount, SpriteType.GasBarrelGib01);
+			}
+			
 			for(Tile tile : tiles) {
 				
 				int amount = Util.GetRandomInteger(4, 10);
 				
-				// create effect on tile.
+				// create smoke effect on tile.
 				if(bombType == BombType.Normal) {
 					EffectCreator.CreateSmokeEffect(tile, amount);
-					EffectCreator.CreateGibs(tile, amount, SpriteType.BombGib01);
 				} else if(bombType == BombType.Gas) {
 					EffectCreator.CreateGasEffect(tile, amount);
-					EffectCreator.CreateGibs(tile, amount, SpriteType.GasBarrelGib01);
 				}
 				
 				// Damage:
