@@ -25,6 +25,9 @@ public class Game extends Canvas implements Runnable {
 	// DEBUGGING TOOLS AND GAME SETTINGS
 	
 	public static final boolean DRAW_CAMERA = false;
+	public static final boolean DRAW_ENEMY_FOV = false;
+	public static final boolean DRAW_ENEMY_PATH = true;
+	
 	public static final boolean PRINT_WORLD_CREATION_PERCENTAGE_DONE = false;
 	public static final boolean PRINT_WORLD_CREATION_START_END = false;
 	public static final boolean PRINT_DOOR_CREATED = false;
@@ -45,6 +48,8 @@ public class Game extends Canvas implements Runnable {
 	public static final int START_KEY_COUNT = 1;
 	public static final int START_BOMB_COUNT = 1;
 	public static final int START_PROJECTILE_COUNT = 3;
+	
+	public static final int MAX_ENEMY_COUNT_IN_ROOM = 1;
 	
 	//------------------------------
 	

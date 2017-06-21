@@ -1,0 +1,82 @@
+package com.adventurer.main;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.adventurer.gameobjects.Tile;
+
+public class AStar {
+
+	public static List<Tile> CalculatePath(Tile start, Tile goal) {
+		
+		Map<Tile, Tile> cameFrom = new HashMap<Tile, Tile>();
+		
+		List<Tile> closedSet = new ArrayList<Tile>();
+		List<Tile> openSet = new ArrayList<Tile>();
+		
+		openSet.add(start);
+		
+		start.getNode().setgScore(0d);
+		start.getNode().setfScore(heuristic_cost_estimate(start, goal));
+		
+		while(openSet.isEmpty() == false) {
+			
+			Tile current = getNodeWithLowestFScore(openSet);
+			
+			if(current == goal) return reconstruct_path(cameFrom, current);
+			
+			openSet.remove(current);
+			closedSet.add(current);
+			
+			for(Tile neighbor : World.instance.GetTilesInCardinalDirection(current)) {
+				
+				if(closedSet.contains(neighbor)) continue;
+				if(openSet.contains(neighbor) == false) openSet.add(neighbor);
+				
+				double tentative_gScore = current.getNode().getgScore() + World.instance.distanceBetweenTiles(current, neighbor);
+				
+				if(tentative_gScore >= neighbor.getNode().getgScore()) continue;
+				
+				cameFrom.put(neighbor, current);
+				neighbor.getNode().setgScore(tentative_gScore);
+				neighbor.getNode().setfScore(tentative_gScore + heuristic_cost_estimate(neighbor, goal));
+			}
+		}
+		return null;
+	}
+	
+	private static List<Tile> reconstruct_path(Map<Tile, Tile> cameFrom, Tile current) {
+		
+		List<Tile> totalPath = new ArrayList<Tile>();
+		
+		while(cameFrom.containsKey(current)) {
+			current = cameFrom.get(current);
+			totalPath.add(current);
+		}
+		
+		return totalPath;
+	}
+	
+	private static double heuristic_cost_estimate(Tile neighbor, Tile goal) {
+		// TODO: calculate traps etc.
+		return 0d;
+	}
+	
+	private static Tile getNodeWithLowestFScore(List<Tile> openSet) {
+		double lowestScore = Double.POSITIVE_INFINITY;
+		Tile chosenTile = null;
+		
+		for(Tile tile : openSet) {
+			Node node = tile.getNode();
+			if(node.getfScore() < lowestScore) {
+				lowestScore = node.getfScore();
+				chosenTile = tile;
+			}
+		}
+		return chosenTile;
+	}
+	
+	
+}

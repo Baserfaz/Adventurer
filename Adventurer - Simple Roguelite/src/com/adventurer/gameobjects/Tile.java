@@ -20,6 +20,8 @@ public class Tile extends GameObject {
 	protected Actor actor = null;
 	protected List<VanityItem> vanityItems = new ArrayList<VanityItem>();
 	
+	protected Node node;
+	
 	// tile falling effect
 	protected int targety = 0;
 	protected int fallingSpeed = 1;
@@ -29,6 +31,7 @@ public class Tile extends GameObject {
 		super(worldPos, tilePos, spritetype);
 		
 		this.type = type;
+		this.node = new Node();
 	}
 	
 	public void tick() {
@@ -232,6 +235,14 @@ public class Tile extends GameObject {
 		else this.selected = true;
 	}
 	
+	public void Select() {
+		this.selected = true;
+	}
+	
+	public void Deselect() {
+		this.selected = false;
+	}
+	
 	public String GetInfo() {
 		String s = super.GetInfo();
 		s += ", Item: " + this.GetItem() + ", Actor: " + this.GetActor();
@@ -280,5 +291,9 @@ public class Tile extends GameObject {
 
 	public void SetActor(Actor actor) {
 		this.actor = actor;
+	}
+	
+	public Node getNode() {
+		return this.node;
 	}
 }

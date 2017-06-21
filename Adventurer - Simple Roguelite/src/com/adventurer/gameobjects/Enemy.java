@@ -11,6 +11,8 @@ public class Enemy extends Actor {
 	private int moveCooldownBase = 2000;
 	private long moveTimer = 0;
 	
+	private Tile lastPlayerPosition = null;
+	
 	private EnemyType enemyType;
 	
 	private boolean hasRangedAttack = false;
@@ -81,32 +83,45 @@ public class Enemy extends Actor {
 				// * else just move randomly.
 				// *********************
 				
-				boolean canSeePlayer = false;
-				Tile playerTile = null;
-				
 				// calculate line of sight
 				Tile[] visibleTiles = losManager.GetVisibleTiles(this.GetTilePosition());
 				
 				// search for player
 				for(Tile tile : visibleTiles) {
 					if(tile.GetActor() instanceof Player) {
-						canSeePlayer = true;
-						playerTile = tile;
+						lastPlayerPosition = tile;
 						break;
 					}
 				}
 				
+				if(Game.DRAW_ENEMY_FOV) {
+					for(Tile tile : World.instance.GetTiles()) tile.Deselect();
+					for(Tile tile : visibleTiles) tile.Select();
+				}
 				
-				if(canSeePlayer) {
+				if(lastPlayerPosition != null) {
 					
 					// --------------- ATTACK ----------------
 					
-					// TODO: A*
+					// A*
 					Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
-					Direction dir = World.instance.GetDirectionOfTileFromPoint(currentTile, playerTile);
+					List<Tile> path = AStar.CalculatePath(currentTile, lastPlayerPosition);
+					
+					if(path.isEmpty()) {
+						System.out.println("PATH IS EMPTY!");
+						return;
+					}
+					
+					if(Game.DRAW_ENEMY_PATH) {
+						for(Tile tile : World.instance.GetTiles()) tile.Deselect();
+						for(Tile tile : path) tile.Select();
+					}
+					
+					Direction dir = World.instance.GetDirectionOfTileFromPoint(currentTile, path.get(0));
 					Move(dir);
 					
 				} else {
+					
 					// -------------- RANDOM -----------------
 					
 					// randomize direction

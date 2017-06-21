@@ -1,0 +1,24 @@
+package com.adventurer.main;
+
+public class Node {
+
+	private double fScore = Double.POSITIVE_INFINITY;
+	private double gScore = Double.POSITIVE_INFINITY;
+	
+	public double getfScore() {
+		return fScore;
+	}
+	
+	public void setfScore(double fScore) {
+		this.fScore = fScore;
+	}
+	
+	public double getgScore() {
+		return gScore;
+	}
+	
+	public void setgScore(double gScore) {
+		this.gScore = gScore;
+	}
+	
+}

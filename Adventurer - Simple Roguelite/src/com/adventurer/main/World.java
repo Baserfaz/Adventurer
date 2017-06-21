@@ -91,6 +91,10 @@ public class World {
 		return retTile;
 	}
 	
+	public List<Tile> GetTilesInCardinalDirection(Tile tile) {
+		return GetTilesInCardinalDirection(tile.GetTilePosition().getX(), tile.GetTilePosition().getY());
+	}
+	
 	public List<Tile> GetTilesInCardinalDirection(Coordinate pos) {
 		return GetTilesInCardinalDirection(pos.getX(), pos.getY());
 	}
@@ -497,6 +501,15 @@ public class World {
 		}
 	}
 	
+	public int distanceBetweenTiles(Tile start, Tile goal) {
+		
+		int dist_x = Math.abs(start.GetTilePosition().getX() - goal.GetTilePosition().getX());
+		int dist_y = Math.abs(start.GetTilePosition().getY() - goal.GetTilePosition().getY());
+		
+		int dist = dist_x + dist_y;
+		
+		return dist;
+	}
 	
 	// works only with cardinal tiles!
 	public Direction GetDirectionOfTileFromPoint(Tile from, Tile to) {
@@ -750,7 +763,7 @@ public class World {
 		if(Game.CREATE_VANITY_ITEMS_INSIDE_ROOMS) CreateVanityItemsInsideRoom(roomTiles);
 		
 		// create enemies
-		ActorManager.CreateEnemies(5);
+		ActorManager.CreateEnemies(Game.MAX_ENEMY_COUNT_IN_ROOM);
 		
 		// create room object
 		Room room = new Room(roomWidth, roomHeight, new Coordinate(roomStartX, roomStartY), roomTiles, roomType);
