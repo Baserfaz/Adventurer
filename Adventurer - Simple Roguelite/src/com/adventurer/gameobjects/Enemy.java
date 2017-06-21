@@ -9,7 +9,7 @@ import com.adventurer.main.*;
 
 public class Enemy extends Actor {
 
-	private int moveCooldownBase = 2000;
+	private int moveCooldownBase = 500;
 	private long moveTimer = 0;
 	
 	private Tile lastPlayerPosition = null;
