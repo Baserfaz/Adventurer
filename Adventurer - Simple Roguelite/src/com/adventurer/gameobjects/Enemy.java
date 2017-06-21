@@ -16,6 +16,8 @@ public class Enemy extends Actor {
 	private boolean hasRangedAttack = false;
 	private SpriteType projectileType;
 	
+	private EnemyLoSManager losManager;
+	
 	public Enemy(Coordinate worldPos, Coordinate tilePos, EnemyType enemytype, SpriteType spritetype, int maxHP, int damage) {
 		super(worldPos, tilePos, spritetype, maxHP, damage);
 		
@@ -26,6 +28,7 @@ public class Enemy extends Actor {
 		}
 		
 		this.setEnemyType(enemytype);
+		this.losManager = new EnemyLoSManager();
 		this.moveTimer = System.currentTimeMillis();
 	}
 
@@ -74,30 +77,31 @@ public class Enemy extends Actor {
 			if(current > moveTimer && canMove) {
 				
 				// ***** Simple AI *****
-				// check if player is nearby -> attack
-				// else just move randomly.
+				// * check if player is nearby then attack
+				// * else just move randomly.
+				// *********************
 				
 				boolean canSeePlayer = false;
 				Tile playerTile = null;
 				
-				List<Tile> surroundingTiles = World.instance.GetSurroundingTiles(this.GetTilePosition());
+				// calculate line of sight
+				Tile[] visibleTiles = losManager.GetVisibleTiles(this.GetTilePosition());
 				
-				for(Tile tile : surroundingTiles) {
-					if(tile.GetActor() != null) {
-						if(tile.GetActor() instanceof Player) {
-							canSeePlayer = true;
-							playerTile = tile;
-							break;
-						}
+				// search for player
+				for(Tile tile : visibleTiles) {
+					if(tile.GetActor() instanceof Player) {
+						canSeePlayer = true;
+						playerTile = tile;
+						break;
 					}
 				}
+				
 				
 				if(canSeePlayer) {
 					
 					// --------------- ATTACK ----------------
 					
-					// TODO: gets stuck because of how World.GetSurroundingTiles works.
-					//  	 -> doesn't check walls + always gives east/west first.
+					// TODO: A*
 					Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
 					Direction dir = World.instance.GetDirectionOfTileFromPoint(currentTile, playerTile);
 					Move(dir);
@@ -139,7 +143,7 @@ public class Enemy extends Actor {
 		World world = World.instance.GetWorld();
 		
 		// update facing
-		/*if(dir == Direction.East || dir == Direction.West)*/ lookDir = dir;
+		lookDir = dir;
 		
 		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.Trap) && tile.GetActor() == null && tile.GetItem() == null) {
 			
@@ -158,9 +162,6 @@ public class Enemy extends Actor {
 			
 			// set the tile's actor to be this.
 			tile.SetActor(this);
-
-			// update our position
-			//this.setTile(tile);
 			
 			// hide ourselves if we are on a hidden tile.
 			if(tile.isHidden()) {
@@ -175,7 +176,7 @@ public class Enemy extends Actor {
 		} else if(tile instanceof Door) {
 			
 			// open door
-			((Door)tile).Open();
+			//((Door)tile).Open();
 			
 		} else if(tile.GetActor() != null) {
 			
