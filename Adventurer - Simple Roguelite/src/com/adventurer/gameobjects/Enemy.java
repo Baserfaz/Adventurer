@@ -2,6 +2,7 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Collections;
 import java.util.List;
 
 import com.adventurer.main.*;
@@ -113,12 +114,24 @@ public class Enemy extends Actor {
 					List<Tile> path = AStar.CalculatePath(currentTile, lastPlayerPosition);
 							
 					if(path == null || path.isEmpty()) {
-						System.out.println("PATH IS EMPTY!");
+						// NO PATH AVAILABLE!
 						return;
 					}
 					
-					Tile nextStep = path.get(path.size() - 2);
+					// reverse list
+					// https://stackoverflow.com/questions/3962766/how-to-reverse-a-list-in-java
+					List<Tile> pathCopy = path.subList(0, path.size());
+					Collections.reverse(pathCopy);
 					
+					Tile nextStep = null;
+					
+					try {
+						nextStep = path.get(0);
+					} catch (ArrayIndexOutOfBoundsException e) {
+						e.printStackTrace();
+						System.exit(1);
+					}
+						
 					if(Game.DRAW_ENEMY_PATH) {
 						for(Tile tile : World.instance.GetTiles()) tile.Deselect();
 						for(Tile tile : path) tile.Select();

@@ -168,7 +168,7 @@ public class Actor extends GameObject {
 				
 				if(enemy.getEnemyType() == EnemyType.Maggot) {
 					
-					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Egg01, 1500, 300, BombType.Gas);
+					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Egg01, 900, 150, BombType.Gas);
 					
 				} else {
 				

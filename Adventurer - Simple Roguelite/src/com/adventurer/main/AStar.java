@@ -71,6 +71,9 @@ public class AStar {
 			totalPath.add(current);
 		}
 		
+		// remove the tile the enemy is currently on.
+		totalPath.remove(totalPath.size() - 1);
+		
 		return totalPath;
 	}
 	

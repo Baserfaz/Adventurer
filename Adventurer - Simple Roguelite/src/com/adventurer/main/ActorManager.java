@@ -1,5 +1,7 @@
 package com.adventurer.main;
 
+import java.util.List;
+
 import com.adventurer.gameobjects.*;
 
 public class ActorManager {
@@ -74,7 +76,7 @@ public class ActorManager {
 		return playerInstance;
 	}
 	
-	public static void CreateEnemies(int count) {
+	public static void CreateEnemies(int count, List<Tile> tiles) {
 		for(int i = 0; i < count; i++) {
 			
 			EnemyType randomType = EnemyType.values()[Util.GetRandomInteger(0, EnemyType.values().length)];
@@ -83,14 +85,14 @@ public class ActorManager {
 			
 			// TODO: enemy type specific damage and health
 			
-			CreateEnemy(health, damage, randomType);
+			CreateEnemy(health, damage, randomType, tiles);
 		}
 	}
 	
-	public static Enemy CreateEnemy(int maxHP, int damage, EnemyType enemyType) {
+	public static Enemy CreateEnemy(int maxHP, int damage, EnemyType enemyType, List<Tile> roomTiles) {
 		
 		// get position
-		int[] pos = World.instance.GetFreePosition();
+		int[] pos = World.instance.GetFreePosition(roomTiles);
 		
 		SpriteType spriteType = null;
 		

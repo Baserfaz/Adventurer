@@ -218,6 +218,46 @@ public class World {
 		return tile;
 	}
 	
+	public int[] GetFreePosition(List<Tile> _tiles) {
+		
+		List<Tile> possibleTiles = new ArrayList<Tile>();
+		int[] position = new int[4];
+		
+		// get all possible tiles
+		for(int i = 0; i < _tiles.size(); i++) {
+			
+			Tile tile = _tiles.get(i);
+			
+			if(tile.GetTileType() == TileType.Floor && tile.GetActor() == null && tile.GetItem() == null) {
+				possibleTiles.add(tile);
+			}
+		}
+		
+		// get a random number
+		int random = Util.GetRandomInteger(0, possibleTiles.size());
+		
+		// get a random tile from possible tiles.
+		Tile randomTile = possibleTiles.get(random);
+		
+		// get the position of random tile.
+		Coordinate randTilePos = randomTile.GetTilePosition();
+		
+		// world-x
+		position[0] = randomTile.GetWorldPosition().getX();
+		
+		// world-y
+		position[1] = randomTile.GetWorldPosition().getY();
+		
+		// tile-x
+		position[2] = randTilePos.getX();
+		
+		// tile-y
+		position[3] = randTilePos.getY();
+		
+		return position;
+		
+	}
+	
 	public int[] GetFreePosition() {
 		
 		List<Tile> possibleTiles = new ArrayList<Tile>();
@@ -764,7 +804,9 @@ public class World {
 		
 		// create enemies
 		if(Game.SPAWN_ENEMIES_INSIDE_ROOMS) {
-			ActorManager.CreateEnemies(Util.GetRandomInteger(Game.MIN_ENEMY_COUNT_IN_ROOM, Game.MAX_ENEMY_COUNT_IN_ROOM));
+			ActorManager.CreateEnemies(
+					Util.GetRandomInteger(Game.MIN_ENEMY_COUNT_IN_ROOM, Game.MAX_ENEMY_COUNT_IN_ROOM),
+					roomTiles);
 		}
 		
 		// create room object
