@@ -404,7 +404,6 @@ public class World {
 								SpriteType.Pot01, 100, randType);
 						
 					}
-					
 				}
 			}
 		}

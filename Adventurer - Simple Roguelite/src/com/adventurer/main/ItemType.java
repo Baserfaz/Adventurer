@@ -5,6 +5,7 @@ public enum ItemType {
 	Torch(),
 	Pot(),
 	Projectile(),
-	Bomb();
+	Bomb(),
+	Chest();
 	
 }
