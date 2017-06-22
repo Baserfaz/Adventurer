@@ -410,30 +410,47 @@ public class World {
 		}
 	}
 	
-	public void CreateVanityItemsInsideRoom(List<Tile> roomTiles) {
+	public void CreateItemsInsideRoom(List<Tile> roomTiles) {
 		
 		List<Tile> floorTiles = GetTilesOfType(TileType.Floor, roomTiles);
 		List<Tile> wallTiles = GetTilesOfType(TileType.Wall, roomTiles);
 		
 		// create an array of random vanity item sprites
-		SpriteType[] floorVanitySpriteTypes = { SpriteType.PotRemains01 };
 		SpriteType[] wallVanitySpriteTypes = { SpriteType.Torch01 };
 		
 		// create floor vanity items
 		for(Tile tile : floorTiles) {
 			
+			if(tile.GetItem() != null) continue;
+			
 			if(Util.GetRandomInteger() > 95) {
 				
-				// randomize spritetype
-				SpriteType st = floorVanitySpriteTypes[Util.GetRandomInteger(0, floorVanitySpriteTypes.length)];
+				// randomize item type
+				ItemType itemType = ItemType.values()[Util.GetRandomInteger(0, ItemType.values().length)];
+				
+				SpriteType st = null;
+				
+				switch(itemType) {
+				case Pot:
+					st = SpriteType.Pot01;
+					break;
+				case Torch:
+					st = SpriteType.FloorTorch01;
+					break;
+				default:
+					System.out.print("WORLD.CREATEITEMSINSIDEROOM: INVALID ITEMTYPE!");
+					System.exit(1);
+				}
 				
 				// create vanity item
-				VanityItemCreator.CreateVanityItem(tile, st, true);
+				ItemCreator.CreateItem(tile, st, true, itemType);
 			}
 		}
 		
 		// create wall vanity items
 		for(Tile tile : wallTiles) {
+			
+			if(tile.GetItem() != null) continue;
 			
 			if(Util.GetRandomInteger() > 90) {
 				
@@ -441,7 +458,7 @@ public class World {
 				SpriteType st = wallVanitySpriteTypes[Util.GetRandomInteger(0, wallVanitySpriteTypes.length)];
 				
 				// create vanity item
-				VanityItemCreator.CreateLightSource(tile, st, false);
+				ItemCreator.CreateLightSource(tile, st, false);
 			}
 		}
 	}
@@ -814,9 +831,11 @@ public class World {
 		if(Game.CREATE_DOORS_INSIDE_ROOMS) CreateDoorsInsideRoom(roomTiles);
 		if(Game.CREATE_TRAPS_INSIDE_ROOMS) CreateTrapsInsideRoom(roomTiles);
 		if(Game.CREATE_TURRETS_INSIDE_ROOMS) CreateTurretsInsideRoom(roomTiles);
+		
 		if(Game.CREATE_DESTRUCTIBLE_WALLS_INSIDE_ROOMS) CreateDestructibleWallsInsideRoom(roomTiles);
 		if(Game.CREATE_DESTRUCTIBLE_ITEMS_INSIDE_ROOMS) CreateDestructibleItemsInsideRoom(roomTiles);
-		if(Game.CREATE_VANITY_ITEMS_INSIDE_ROOMS) CreateVanityItemsInsideRoom(roomTiles);
+		
+		if(Game.CREATE_ITEMS_INSIDE_ROOMS) CreateItemsInsideRoom(roomTiles);
 		
 		// create enemies
 		if(Game.SPAWN_ENEMIES_INSIDE_ROOMS) {

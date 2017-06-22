@@ -43,7 +43,7 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean CREATE_TURRETS_INSIDE_ROOMS = false;
 	public static final boolean CREATE_DESTRUCTIBLE_ITEMS_INSIDE_ROOMS = true;
 	public static final boolean CREATE_DESTRUCTIBLE_WALLS_INSIDE_ROOMS = false;
-	public static final boolean CREATE_VANITY_ITEMS_INSIDE_ROOMS = false;
+	public static final boolean CREATE_ITEMS_INSIDE_ROOMS = false;
 	public static final boolean SPAWN_ENEMIES_INSIDE_ROOMS = true;
 	
 	public static final int START_KEY_COUNT = 1;

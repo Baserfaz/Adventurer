@@ -11,27 +11,6 @@ public class VanityItemCreator {
 		return new Coordinate(Util.GetRandomInteger(min, max), Util.GetRandomInteger(min, max));
 	}
 	
-	public static LightSource CreateLightSource(Tile tile, SpriteType spriteType, boolean setOffset) {
-		// randomize sprite offset on the tile.
-		int value = Game.SPRITESIZE / 4;
-		Coordinate offsets = GetOffsets(value, -value);
-		Coordinate pos = null;
-		
-		if(setOffset) {
-			pos = new Coordinate(tile.GetWorldPosition().getX() + offsets.getX(), tile.GetWorldPosition().getY() + offsets.getY());
-		} else {
-			pos = tile.GetWorldPosition();
-		}
-		
-		// create vanity item
-		LightSource lightsource = new LightSource(pos, tile.GetTilePosition(), spriteType, ItemType.Torch);
-		
-		// register created vanity item to the tile given.
-		tile.SetItem(lightsource);
-		
-		return lightsource;
-	}
-	
 	public static VanityItem CreateVanityItem(Coordinate pos, SpriteType spriteType, boolean setOffset) {
 		return CreateVanityItem(World.instance.GetTileAtPosition(pos), spriteType, setOffset);
 	}
