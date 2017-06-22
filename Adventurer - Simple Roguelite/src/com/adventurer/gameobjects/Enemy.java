@@ -115,10 +115,10 @@ public class Enemy extends Actor {
 							
 					if(path == null || path.isEmpty()) {
 						// NO PATH AVAILABLE!
+						lastPlayerPosition = null;
 						return;
 					}
 					
-					// reverse list
 					// https://stackoverflow.com/questions/3962766/how-to-reverse-a-list-in-java
 					List<Tile> pathCopy = path.subList(0, path.size());
 					Collections.reverse(pathCopy);

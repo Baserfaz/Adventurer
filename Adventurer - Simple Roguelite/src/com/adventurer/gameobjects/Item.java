@@ -5,13 +5,18 @@ import java.awt.Rectangle;
 
 import com.adventurer.main.Coordinate;
 import com.adventurer.main.Handler;
+import com.adventurer.main.ItemType;
 import com.adventurer.main.SpriteType;
 import com.adventurer.main.World;
 
 public class Item extends GameObject {
 
-	public Item(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
+	protected ItemType itemType;
+	
+	public Item(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, ItemType itemType) {
 		super(worldPos, tilePos, spritetype);
+		
+		this.itemType = itemType;
 		
 		// register to tile
 		World.instance.GetTileAtPosition(tilePos).SetItem(this);

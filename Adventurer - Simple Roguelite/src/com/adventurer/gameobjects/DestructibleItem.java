@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import com.adventurer.main.Coordinate;
 import com.adventurer.main.EffectCreator;
 import com.adventurer.main.Health;
+import com.adventurer.main.ItemType;
 import com.adventurer.main.Renderer;
 import com.adventurer.main.SpriteType;
 import com.adventurer.main.Util;
@@ -16,8 +17,8 @@ public class DestructibleItem extends Item {
 	private Health health;
 	private boolean alive = true;
 	
-	public DestructibleItem(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int health) {
-		super(worldPos, tilePos, spritetype);
+	public DestructibleItem(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int health, ItemType itemType) {
+		super(worldPos, tilePos, spritetype, itemType);
 		
 		this.setHealth(new Health(health));
 	}
@@ -28,7 +29,22 @@ public class DestructibleItem extends Item {
 		
 		if(health.isDead()) {
 			alive = false;
-			VanityItemCreator.CreateVanityItem(this.GetTilePosition(), SpriteType.PotRemains01, true);
+			
+			// TODO: create effects and vanity items here 
+			// for all item types.
+			
+			switch(itemType) {
+			case Pot:
+				VanityItemCreator.CreateVanityItem(this.GetTilePosition(), SpriteType.PotRemains01, true);
+				break;
+			case Torch:
+				VanityItemCreator.CreateVanityItem(this.GetTilePosition(), SpriteType.PotRemains01, true);
+				break;
+			default:
+				VanityItemCreator.CreateVanityItem(this.GetTilePosition(), SpriteType.PotRemains01, true);
+			}
+			
+			
 			this.Remove();
 		}
 	}

@@ -81,7 +81,7 @@ public class ActorManager {
 			
 			EnemyType randomType = EnemyType.values()[Util.GetRandomInteger(0, EnemyType.values().length)];
 			int damage = 100;
-			int health = 300;
+			int health = 100;
 			
 			// TODO: enemy type specific damage and health
 			

@@ -7,6 +7,7 @@ import java.util.List;
 import com.adventurer.gameobjects.DestructibleItem;
 import com.adventurer.gameobjects.DestructibleTile;
 import com.adventurer.gameobjects.Door;
+import com.adventurer.gameobjects.LightSource;
 import com.adventurer.gameobjects.Portal;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Trap;
@@ -387,7 +388,22 @@ public class World {
 			if(Util.GetRandomInteger() > 90) {
 				if(tile.GetTileType() == TileType.Floor && tile.GetItem() == null) {
 					
-					DestructibleItem item = new DestructibleItem(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Pot01, 200);
+					// randomizes the item type.
+					ItemType randType = ItemType.values()[Util.GetRandomInteger(0, ItemType.values().length)];
+					
+					if(randType == ItemType.Torch) {
+						
+						new LightSource(
+								tile.GetWorldPosition(), tile.GetTilePosition(),
+								SpriteType.FloorTorch01, randType);
+						
+					} else if(randType == ItemType.Pot) {
+						
+						new DestructibleItem(
+								tile.GetWorldPosition(), tile.GetTilePosition(),
+								SpriteType.Pot01, 100, randType);
+						
+					}
 					
 				}
 			}

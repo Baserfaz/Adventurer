@@ -249,6 +249,10 @@ public class SpriteCreator {
 			row = 3;
 			column = 9;
 			break;
+		case FloorTorch01:
+			row = 0;
+			column = 8;
+			break;
 		default:
 			System.out.println("SPRITETYPE NOT FOUND: " +  type);
 			break;

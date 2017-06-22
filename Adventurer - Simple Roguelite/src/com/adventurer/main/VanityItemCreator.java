@@ -2,6 +2,7 @@ package com.adventurer.main;
 
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.VanityItem;
+import com.adventurer.gameobjects.DestructibleItem;
 import com.adventurer.gameobjects.LightSource;
 
 public class VanityItemCreator {
@@ -10,7 +11,7 @@ public class VanityItemCreator {
 		return new Coordinate(Util.GetRandomInteger(min, max), Util.GetRandomInteger(min, max));
 	}
 	
-	public static VanityItem CreateLightSource(Tile tile, SpriteType spriteType, boolean setOffset) {
+	public static LightSource CreateLightSource(Tile tile, SpriteType spriteType, boolean setOffset) {
 		// randomize sprite offset on the tile.
 		int value = Game.SPRITESIZE / 4;
 		Coordinate offsets = GetOffsets(value, -value);
@@ -23,10 +24,10 @@ public class VanityItemCreator {
 		}
 		
 		// create vanity item
-		LightSource lightsource = new LightSource(pos, tile.GetTilePosition(), spriteType);
+		LightSource lightsource = new LightSource(pos, tile.GetTilePosition(), spriteType, ItemType.Torch);
 		
 		// register created vanity item to the tile given.
-		tile.AddVanityItem(lightsource);
+		tile.SetItem(lightsource);
 		
 		return lightsource;
 	}

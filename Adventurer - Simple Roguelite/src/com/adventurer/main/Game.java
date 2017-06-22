@@ -39,9 +39,9 @@ public class Game extends Canvas implements Runnable {
 	
 	public static final boolean CREATE_WALLS_INSIDE_ROOMS = true;
 	public static final boolean CREATE_DOORS_INSIDE_ROOMS = false;
-	public static final boolean CREATE_TRAPS_INSIDE_ROOMS = false;
+	public static final boolean CREATE_TRAPS_INSIDE_ROOMS = true;
 	public static final boolean CREATE_TURRETS_INSIDE_ROOMS = false;
-	public static final boolean CREATE_DESTRUCTIBLE_ITEMS_INSIDE_ROOMS = false;
+	public static final boolean CREATE_DESTRUCTIBLE_ITEMS_INSIDE_ROOMS = true;
 	public static final boolean CREATE_DESTRUCTIBLE_WALLS_INSIDE_ROOMS = false;
 	public static final boolean CREATE_VANITY_ITEMS_INSIDE_ROOMS = false;
 	public static final boolean SPAWN_ENEMIES_INSIDE_ROOMS = true;
@@ -100,9 +100,6 @@ public class Game extends Canvas implements Runnable {
 		
 		// create lobby
 		new World(PredefinedMaps.GetLobby());
-		
-		// create world
-		//new World(WORLDWIDTH, WORLDHEIGHT, ROOMWIDTH, ROOMHEIGHT);
 	}
 	
 	public synchronized void Start() {
