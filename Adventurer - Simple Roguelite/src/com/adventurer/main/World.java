@@ -410,42 +410,9 @@ public class World {
 		}
 	}
 	
-	public void CreateItemsInsideRoom(List<Tile> roomTiles) {
+	public void CreateItemsOnRoomWalls(List<Tile> roomTiles) {
 		
-		List<Tile> floorTiles = GetTilesOfType(TileType.Floor, roomTiles);
 		List<Tile> wallTiles = GetTilesOfType(TileType.Wall, roomTiles);
-		
-		// create an array of random vanity item sprites
-		SpriteType[] wallVanitySpriteTypes = { SpriteType.Torch01 };
-		
-		// create floor vanity items
-		for(Tile tile : floorTiles) {
-			
-			if(tile.GetItem() != null) continue;
-			
-			if(Util.GetRandomInteger() > 95) {
-				
-				// randomize item type
-				ItemType itemType = ItemType.values()[Util.GetRandomInteger(0, ItemType.values().length)];
-				
-				SpriteType st = null;
-				
-				switch(itemType) {
-				case Pot:
-					st = SpriteType.Pot01;
-					break;
-				case Torch:
-					st = SpriteType.FloorTorch01;
-					break;
-				default:
-					System.out.print("WORLD.CREATEITEMSINSIDEROOM: INVALID ITEMTYPE!");
-					System.exit(1);
-				}
-				
-				// create vanity item
-				ItemCreator.CreateItem(tile, st, true, itemType);
-			}
-		}
 		
 		// create wall vanity items
 		for(Tile tile : wallTiles) {
@@ -454,11 +421,10 @@ public class World {
 			
 			if(Util.GetRandomInteger() > 90) {
 				
-				// randomize spritetype
-				SpriteType st = wallVanitySpriteTypes[Util.GetRandomInteger(0, wallVanitySpriteTypes.length)];
+				// TODO: NOW HARDCODED TO ONLY CREATE TORCHES ON WALLS!!
 				
 				// create vanity item
-				ItemCreator.CreateLightSource(tile, st, false);
+				ItemCreator.CreateLightSource(tile, SpriteType.Torch01, false);
 			}
 		}
 	}
@@ -835,7 +801,7 @@ public class World {
 		if(Game.CREATE_DESTRUCTIBLE_WALLS_INSIDE_ROOMS) CreateDestructibleWallsInsideRoom(roomTiles);
 		if(Game.CREATE_DESTRUCTIBLE_ITEMS_INSIDE_ROOMS) CreateDestructibleItemsInsideRoom(roomTiles);
 		
-		if(Game.CREATE_ITEMS_INSIDE_ROOMS) CreateItemsInsideRoom(roomTiles);
+		if(Game.CREATE_ITEMS_ON_ROOM_WALLS) CreateItemsOnRoomWalls(roomTiles);
 		
 		// create enemies
 		if(Game.SPAWN_ENEMIES_INSIDE_ROOMS) {

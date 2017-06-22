@@ -24,32 +24,39 @@ public class Game extends Canvas implements Runnable {
 	//------------------------------
 	// DEBUGGING TOOLS AND GAME SETTINGS
 	
+	// draw debugging stuff
 	public static final boolean DRAW_CAMERA = false;
 	public static final boolean DRAW_ENEMY_FOV = false;
 	public static final boolean DRAW_ENEMY_PATH = false; 			// works only with one enemy
 	
+	// prints
 	public static final boolean PRINT_WORLD_CREATION_PERCENTAGE_DONE = false;
 	public static final boolean PRINT_WORLD_CREATION_START_END = false;
 	public static final boolean PRINT_DOOR_CREATED = false;
 	
+	// LOS settings
 	public static final boolean CALCULATE_PLAYER_LOS = true;
 	
+	// render settings
 	public static final boolean RENDER_ACTORS_DIRECTION_ARROW = false;
 	public static final boolean RENDER_PLAYER_DIRECTION_ARROW = true;
 	
+	// room settings
 	public static final boolean CREATE_WALLS_INSIDE_ROOMS = true;
 	public static final boolean CREATE_DOORS_INSIDE_ROOMS = false;
 	public static final boolean CREATE_TRAPS_INSIDE_ROOMS = true;
 	public static final boolean CREATE_TURRETS_INSIDE_ROOMS = false;
 	public static final boolean CREATE_DESTRUCTIBLE_ITEMS_INSIDE_ROOMS = true;
 	public static final boolean CREATE_DESTRUCTIBLE_WALLS_INSIDE_ROOMS = false;
-	public static final boolean CREATE_ITEMS_INSIDE_ROOMS = false;
+	public static final boolean CREATE_ITEMS_ON_ROOM_WALLS = true;
 	public static final boolean SPAWN_ENEMIES_INSIDE_ROOMS = true;
 	
+	// player defaults
 	public static final int START_KEY_COUNT = 1;
 	public static final int START_BOMB_COUNT = 1;
 	public static final int START_PROJECTILE_COUNT = 3;
 	
+	// enemy settings
 	public static final int MIN_ENEMY_COUNT_IN_ROOM = 1;
 	public static final int MAX_ENEMY_COUNT_IN_ROOM = 2;
 	
