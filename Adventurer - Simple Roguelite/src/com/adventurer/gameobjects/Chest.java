@@ -1,8 +1,11 @@
 package com.adventurer.gameobjects;
 
+import java.awt.Graphics;
+
 import com.adventurer.main.Coordinate;
 import com.adventurer.main.EffectCreator;
 import com.adventurer.main.ItemType;
+import com.adventurer.main.Renderer;
 import com.adventurer.main.SpriteCreator;
 import com.adventurer.main.SpriteType;
 import com.adventurer.main.Util;
@@ -17,6 +20,24 @@ public class Chest extends Item {
 		
 		this.locked = locked;
 	}
+	
+	public void render(Graphics g) {
+		if(hidden == false) {
+			
+			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
+			
+		} else if(discovered == true && hidden == true) {
+			
+			if(tintedSprite == null) {
+				tintedSprite = Util.tint(sprite, true);
+			}
+			
+			Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), g);
+			
+		}
+	}
+	
+	public void tick() {}
 	
 	public void Open() {
 		// TODO: effects + gold etc.
