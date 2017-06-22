@@ -44,4 +44,8 @@ public class Chest extends Item {
 		this.SetTintedSprite(null);
 	}
 
+	public boolean isLocked() {
+		return this.locked;
+	}
+	
 }

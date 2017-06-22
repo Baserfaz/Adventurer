@@ -129,7 +129,16 @@ public class Player extends Actor {
 		} else if(tile.GetItem() != null) {
 			
 			if(tile.GetItem() instanceof DestructibleItem) {
+				
 				Attack(tile);
+				
+			} else if(tile.GetItem() instanceof Chest) {
+				
+				Chest chest = (Chest) tile.GetItem();
+				
+				if(chest.isLocked() && inventory.getKeyCount() > 0) chest.Unlock();
+				else chest.Open();
+				
 			}
 			
 		} else if(tile instanceof Portal) {
