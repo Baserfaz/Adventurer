@@ -136,8 +136,11 @@ public class Player extends Actor {
 				
 				Chest chest = (Chest) tile.GetItem();
 				
-				if(chest.isLocked() && inventory.getKeyCount() > 0) chest.Unlock();
-				else chest.Open();
+				if(chest.isLocked() && inventory.getKeyCount() > 0) {
+					chest.Unlock();
+					inventory.addKeys(-1);
+				}
+				else if(chest.isLocked() == false) chest.Open();
 				
 			}
 			

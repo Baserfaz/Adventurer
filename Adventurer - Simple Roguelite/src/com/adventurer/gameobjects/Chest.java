@@ -22,6 +22,9 @@ public class Chest extends Item {
 	}
 	
 	public void render(Graphics g) {
+		
+		// TODO: This should perhaps be the Item classes' render version.
+		
 		if(hidden == false) {
 			
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
@@ -43,7 +46,7 @@ public class Chest extends Item {
 		// TODO: effects + gold etc.
 		
 		EffectCreator.CreateGibs(this.GetTilePosition(), Util.GetRandomInteger(3, 7), SpriteType.GoldCoin01);
-		VanityItemCreator.CreateVanityItem(this.GetTilePosition(), SpriteType.OpenChest01, true);
+		VanityItemCreator.CreateVanityItem(this.GetTilePosition(), SpriteType.OpenChest01, false);
 		
 		this.Remove();
 		
