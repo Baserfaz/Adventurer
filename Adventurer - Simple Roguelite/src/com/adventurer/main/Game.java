@@ -49,6 +49,8 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean CREATE_DESTRUCTIBLE_ITEMS_INSIDE_ROOMS = true;
 	public static final boolean CREATE_DESTRUCTIBLE_WALLS_INSIDE_ROOMS = false;
 	public static final boolean CREATE_ITEMS_ON_ROOM_WALLS = true;
+	public static final boolean CREATE_CHESTS_IN_ROOMS = true;
+	
 	public static final boolean SPAWN_ENEMIES_INSIDE_ROOMS = true;
 	
 	// player defaults

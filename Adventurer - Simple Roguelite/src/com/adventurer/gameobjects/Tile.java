@@ -27,11 +27,16 @@ public class Tile extends GameObject {
 	protected int fallingSpeed = 1;
 	protected int fallingYOffset = 10;
 	
+	protected boolean walkable = false;
+	
 	public Tile(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type) {
 		super(worldPos, tilePos, spritetype);
 		
 		this.type = type;
 		this.node = new Node();
+		
+		if(this.type == TileType.Floor || this.type == TileType.Trap) walkable = true;
+		
 	}
 	
 	public void tick() {
@@ -69,11 +74,9 @@ public class Tile extends GameObject {
 			
 			if(hidden == false) {
 				
-				//Renderer.RenderSpriteWithTint(sprite, this.GetWorldPosition(), g, Color.red);
 				Renderer.RenderSpriteWithBorder(sprite, this.GetWorldPosition(), g, Color.red);
 				
 				for(GameObject vi : vanityItems) {
-					//Renderer.RenderSpriteWithTint(vi.GetSprite(), vi.GetWorldPosition(), g, Color.red);
 					Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
 				}
 				
@@ -241,6 +244,10 @@ public class Tile extends GameObject {
 	
 	public void Deselect() {
 		this.selected = false;
+	}
+	
+	public boolean isWalkable() {
+		return this.walkable;
 	}
 	
 	public String GetInfo() {

@@ -253,6 +253,10 @@ public class SpriteCreator {
 			row = 0;
 			column = 8;
 			break;
+		case OpenChest01:
+			row = 1;
+			column = 12;
+			break;
 		default:
 			System.out.println("SPRITETYPE NOT FOUND: " +  type);
 			break;

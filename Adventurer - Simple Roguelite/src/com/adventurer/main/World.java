@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.DestructibleItem;
 import com.adventurer.gameobjects.DestructibleTile;
 import com.adventurer.gameobjects.Door;
@@ -799,6 +800,7 @@ public class World {
 		
 		if(Game.CREATE_DESTRUCTIBLE_WALLS_INSIDE_ROOMS) CreateDestructibleWallsInsideRoom(roomTiles);
 		if(Game.CREATE_DESTRUCTIBLE_ITEMS_INSIDE_ROOMS) CreateDestructibleItemsInsideRoom(roomTiles);
+		if(Game.CREATE_CHESTS_IN_ROOMS) CreateChestsInsideRoom(roomTiles);
 		
 		if(Game.CREATE_ITEMS_ON_ROOM_WALLS) CreateItemsOnRoomWalls(roomTiles);
 		
@@ -813,6 +815,21 @@ public class World {
 		return new Room(roomWidth, roomHeight, new Coordinate(roomStartX, roomStartY), roomTiles, roomType);
 	}
 	
+	private void CreateChestsInsideRoom(List<Tile> roomTiles) {
+		
+		for(Tile tile : roomTiles) {
+			if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) {
+				if(Util.GetRandomInteger() > 95) {
+					if(Util.GetRandomInteger() > 99) {
+						new Chest(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Chest01, ItemType.Chest, false);
+					} else {
+						new Chest(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.LockedChest01, ItemType.Chest, true);
+					}
+				}
+			}
+		}
+	}
+
 	// randomly creates either floor or wall tile.
 	public Tile RandomizeTileFloorOrWall(Coordinate worldPos, Coordinate tilePos) {
 		Tile tile = null;

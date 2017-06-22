@@ -47,5 +47,6 @@ public enum SpriteType {
 	Error(),
 	Egg01(), 
 	BombGib01(), 
-	FloorTorch01();
+	FloorTorch01(),
+	OpenChest01();
 }
