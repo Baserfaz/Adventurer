@@ -31,7 +31,6 @@ public class Player extends Actor {
 		} else {
 			
 			OnDeath(World.instance.GetTileAtPosition(this.GetTilePosition()));
-			
 		}
 	}
 	
@@ -71,7 +70,7 @@ public class Player extends Actor {
 			return;
 		}
 		
-		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.Trap) && tile.GetActor() == null && tile.GetItem() == null) {
+		if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) {
 			
 			// we are no longer on the last tile
 			Tile lastTile = World.instance.GetTileAtPosition(this.GetTilePosition());

@@ -96,7 +96,7 @@ public class Projectile extends Item {
 			
 		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), this.direction);
 		
-		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.Trap) && tile.GetActor() == null && tile.GetItem() == null) {
+		if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) {
 			
 			// we are no longer on the last tile
 			Tile lastTile = World.instance.GetTileAtPosition(this.GetTilePosition());
@@ -114,9 +114,6 @@ public class Projectile extends Item {
 			
 			// set the tile's actor to be this.
 			tile.SetItem(this);
-			
-			// update our position
-			//this.setTile(tile);
 			
 		} else if(tile.GetActor() != null) {
 			

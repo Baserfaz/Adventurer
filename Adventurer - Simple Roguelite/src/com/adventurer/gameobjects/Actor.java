@@ -146,8 +146,7 @@ public class Actor extends GameObject {
 	
 	public void UseBomb(Tile tile) {
 		
-		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.Trap) &&
-				tile.GetActor() == null && tile.GetItem() == null) {
+		if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) {
 			
 			
 			if(this instanceof Player) {

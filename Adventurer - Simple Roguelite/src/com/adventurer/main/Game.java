@@ -193,8 +193,7 @@ public class Game extends Canvas implements Runnable {
 		// DRAW GRAPHICS HERE
 		
 		// set background
-		g.setColor(Color.black);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+		Renderer.FillScreen(g, Color.black);
 		
 		// zoom
 		g2d.scale(CAMERAZOOM, CAMERAZOOM);
@@ -219,6 +218,10 @@ public class Game extends Canvas implements Runnable {
 						(int) Camera.instance.getCameraBounds().getWidth(),
 						(int) Camera.instance.getCameraBounds().getHeight());
 			}
+		} else {
+			
+			Renderer.FillScreen(g, Color.black);
+			
 		}
 		
 		// render objects

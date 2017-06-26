@@ -47,7 +47,6 @@ public class World {
 		
 		// create player
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
-		//else ActorManager.ForceMovePlayerToFreePosition();
 	}
 	
 	// creates a random level
@@ -74,7 +73,6 @@ public class World {
 		
 		// create player
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100);
-		//else ActorManager.ForceMovePlayerToFreePosition();
 	}
 	
 	public Tile GetTileAtPosition(Coordinate pos) {
@@ -604,7 +602,7 @@ public class World {
 	}
 	
 	
-	// TODO: refactor this spaghetti method... (._.)
+	// TODO: refactor
 	private Room CreateRoom(int roomOffsetX, int roomOffsetY, int roomStartX, int roomStartY, RoomType roomType) {
 		
 		List<Tile> roomTiles = new ArrayList<Tile>();

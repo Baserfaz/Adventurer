@@ -148,6 +148,8 @@ public class Tile extends GameObject {
 		if(this.actor != null) this.actor.Show();
 		if(this.item != null) this.item.Show();
 		
+		if(this.vanityItems == null) return;
+		
 		if(this.vanityItems.size() > 0) {
 			for(VanityItem vi : this.vanityItems) {
 				vi.Show();

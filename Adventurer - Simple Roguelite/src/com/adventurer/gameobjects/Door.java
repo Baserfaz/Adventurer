@@ -14,6 +14,7 @@ public class Door extends Tile {
 	
 	public void Open() {
 		World.instance.ReplaceTile(this, TileType.Floor, SpriteType.FloorTile01);
+		
 		//this.type = TileType.Floor;
 		//this.sprite = SpriteCreator.instance.CreateSprite(SpriteType.FloorTile01);
 		//this.SetTintedSprite(null);

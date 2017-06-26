@@ -1,6 +1,11 @@
 package com.adventurer.main;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +13,7 @@ import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Effect;
 import com.adventurer.gameobjects.GameObject;
 import com.adventurer.gameobjects.Item;
+import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.VanityItem;
 
@@ -107,7 +113,46 @@ public class Handler {
 	}	
 
 	private void renderGUI(Graphics g) {
-		// TODO
+	    
+		Player player = ActorManager.GetPlayerInstance();
+		
+		if(Camera.instance == null || player == null) return;
+		
+		Rectangle cam = Camera.instance.getCameraBounds();
+		
+		Graphics2D g2d = (Graphics2D) g;
+		
+		// change color
+		Color fontCol = new Color(128, 0, 0);
+		g2d.setColor(fontCol);
+		
+		// font settings
+		Font font = new Font("Consolas", Font.PLAIN, 8);
+		g2d.setFont(font);
+		
+		// draw health
+		g2d.drawString("HP: " + player.GetHealth().GetCurrentHealth(),
+				(int) cam.getMinX() + 5,
+				(int) cam.getMaxY() - 5);
+		
+		// draw key count
+		g2d.drawString("Keys: " + player.getInventory().getKeyCount(),
+				(int) cam.getMinX() + 100, 
+				(int) cam.getMaxY() - 5
+				);
+		
+		// draw bomb count
+		g2d.drawString("Bombs: " + player.getInventory().getBombCount(),
+				(int) cam.getMinX() + 200,
+				(int) cam.getMaxY() - 5
+				);
+		
+		// draw projectile count
+		g2d.drawString("Projectiles: " + player.getInventory().getProjectileCount(),
+				(int) cam.getMinX() + 300,
+				(int) cam.getMaxY() - 5
+				);
+		
 	}	
 	
 	

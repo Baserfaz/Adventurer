@@ -198,7 +198,7 @@ public class Enemy extends Actor {
 		// update facing
 		lookDir = dir;
 		
-		if((tile.GetTileType() == TileType.Floor || tile.GetTileType() == TileType.Trap) && tile.GetActor() == null && tile.GetItem() == null) {
+		if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) {
 			
 			// tile is our new tile
 			world.GetTileAtPosition(this.GetTilePosition()).SetActor(null);
