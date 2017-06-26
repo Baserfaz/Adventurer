@@ -58,8 +58,13 @@ public class KeyInput extends KeyAdapter {
 			player.UseBomb(t);
 		}
 		
+		// shoot
+		if(key == KeyEvent.VK_SHIFT) {
+			player.Shoot(player.GetTilePosition(), player.GetLookDirection(), SpriteType.Arrow01);
+		}
+			
 		// shooting debugging
-		if(key == KeyEvent.VK_UP) {
+		/*if(key == KeyEvent.VK_UP) {
 			player.Shoot(player.GetTilePosition(), Direction.North, SpriteType.Arrow01);
 		} else if(key == KeyEvent.VK_DOWN) {
 			player.Shoot(player.GetTilePosition(), Direction.South, SpriteType.Arrow01);
@@ -67,7 +72,7 @@ public class KeyInput extends KeyAdapter {
 			player.Shoot(player.GetTilePosition(), Direction.West, SpriteType.Arrow01);
 		} else if(key == KeyEvent.VK_RIGHT) {
 			player.Shoot(player.GetTilePosition(), Direction.East, SpriteType.Arrow01);
-		}
+		}*/
 	}
 	
 	public void keyReleased(KeyEvent e) {}
