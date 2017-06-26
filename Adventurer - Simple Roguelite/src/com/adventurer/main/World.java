@@ -25,9 +25,6 @@ public class World {
 	private List<Tile> tiles;
 	private List<Room> rooms;
 	
-	public static final int TILEGAP = 2;	// gap between each tile.
-	public static final int ROOMGAP = 0; 	// gap between rooms
-	
 	public static World instance;
 	
 	// creates a predefined map
@@ -298,7 +295,7 @@ public class World {
 	}
 	
 	public int ConvertTilePositionToWorld(int pos) {
-		return (pos * Game.SPRITESIZE + TILEGAP * pos);
+		return (pos * Game.SPRITESIZE + Game.TILEGAP * pos);
 	}
 	
 	// creates a new TILE and destroys the old one.
@@ -584,7 +581,7 @@ public class World {
 				Room currentRoom = CreateRoom(roomOffsetX, roomOffsetY, x, y, RoomType.Normal);
 				
 				rooms.add(currentRoom);
-				roomOffsetX += (roomWidth * Game.SPRITESIZE + roomWidth * TILEGAP) + ROOMGAP;
+				roomOffsetX += (roomWidth * Game.SPRITESIZE + roomWidth * Game.TILEGAP) + Game.ROOMGAP;
 				
 				roomCount++;
 				
@@ -595,7 +592,7 @@ public class World {
 				
 			}
 			roomOffsetX = 0;
-			roomOffsetY += (roomHeight * Game.SPRITESIZE + roomHeight * TILEGAP) + ROOMGAP;
+			roomOffsetY += (roomHeight * Game.SPRITESIZE + roomHeight * Game.TILEGAP) + Game.ROOMGAP;
 		}
 		
 		if(Game.PRINT_WORLD_CREATION_START_END) System.out.println("World created! (Tile count: " + tiles.size() + ")");
@@ -785,11 +782,11 @@ public class World {
 				roomTiles.add(tile);
 				tiles.add(tile);
 				
-				offsetX += TILEGAP;
+				offsetX += Game.TILEGAP;
 				
 			}
 			offsetX = 0;
-			offsetY += TILEGAP;
+			offsetY += Game.TILEGAP;
 		}
 		
 		if(Game.CREATE_DOORS_INSIDE_ROOMS) CreateDoorsInsideRoom(roomTiles);
@@ -886,10 +883,10 @@ public class World {
 				
 				tiles.add(tile);
 				
-				offsetX += TILEGAP;
+				offsetX += Game.TILEGAP;
 			}
 			offsetX = 0;
-			offsetY += TILEGAP;
+			offsetY += Game.TILEGAP;
 		}
 		return spawnTile;
 	}

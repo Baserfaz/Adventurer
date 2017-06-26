@@ -19,7 +19,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int SPRITESIZE = 16; 						// sprite size in pixels
 	public static final int CAMERAZOOM = 3; 						// level of zoom
 	public static final double FRAME_CAP = 60.0;					// cap the framerate to this
-	public static final String spritesheetname = "spritesheet.png";	// main spritesheet name
+	public static final String SPRITESHEETNAME = "spritesheet.png";	// main spritesheet name
 	
 	//------------------------------
 	// DEBUGGING TOOLS AND GAME SETTINGS
@@ -62,13 +62,6 @@ public class Game extends Canvas implements Runnable {
 	public static final int MIN_ENEMY_COUNT_IN_ROOM = 1;
 	public static final int MAX_ENEMY_COUNT_IN_ROOM = 2;
 	
-	//------------------------------
-	
-	private Thread thread;
-	private boolean isRunning = false;
-	
-	private Window window;
-	
 	// room count in world
 	public static final int WORLDHEIGHT = 2;
 	public static final int WORLDWIDTH = 2;
@@ -76,6 +69,15 @@ public class Game extends Canvas implements Runnable {
 	// tiles in one room
 	public static final int ROOMHEIGHT = 10;
 	public static final int ROOMWIDTH = 10;
+	
+	public static final int TILEGAP = 3;	// gap between each tile.
+	public static final int ROOMGAP = 0; 	// gap between rooms
+	
+	//------------------------------
+	
+	private Thread thread;
+	private boolean isRunning = false;
+	private Window window;
 	
 	public Game() {
 		
@@ -102,7 +104,7 @@ public class Game extends Canvas implements Runnable {
 		window = new Window(WIDTH, HEIGHT, "Adventurer", this);
 		
 		// create sprite creator
-		new SpriteCreator(spritesheetname);
+		new SpriteCreator(SPRITESHEETNAME);
 		
 		// create camera
 		new Camera();
