@@ -145,9 +145,20 @@ public class Player extends Actor {
 			
 		} else if(tile instanceof Portal) {
 			
-			ActorManager.RemovePlayer();
-			World.instance.Remove();
-			new World(Game.WORLDWIDTH, Game.WORLDHEIGHT, Game.ROOMWIDTH, Game.ROOMHEIGHT);
+			Portal portal = (Portal) tile;
+			
+			if(portal.isExit()) {
+				ActorManager.RemovePlayer();
+				World.instance.Remove();
+				new World(PredefinedMaps.GetLobby());
+				
+			} else {
+				ActorManager.RemovePlayer();
+				World.instance.Remove();
+				new World(RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)]);
+				
+			}
+			
 			
 		} else if(tile.GetTileType() == TileType.DestructibleTile) {
 			// TODO

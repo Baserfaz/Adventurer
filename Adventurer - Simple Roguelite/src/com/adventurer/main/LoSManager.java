@@ -1,6 +1,7 @@
 package com.adventurer.main;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import com.adventurer.gameobjects.*;
@@ -83,19 +84,23 @@ public class LoSManager {
 		// 2. calculate FOV
 		// 	  -> using Bresenham's line algorithm
 		// ------------------------
-		
-		for(Tile tile : allTiles) {
-		
-			int targetx = tile.GetTilePosition().getX();
-			int targety = tile.GetTilePosition().getY();
+		try {
+			for(Tile tile : allTiles) {
 			
-			for(Tile t : calculateLine(position.getX(), position.getY(), targetx, targety)) {
+				int targetx = tile.GetTilePosition().getX();
+				int targety = tile.GetTilePosition().getY();
 				
-				if(foundTiles.contains(t) == false) {
-					foundTiles.add(t);
+				for(Tile t : calculateLine(position.getX(), position.getY(), targetx, targety)) {
+					
+					if(foundTiles.contains(t) == false) {
+						foundTiles.add(t);
+					}
+					
 				}
-				
 			}
+		} catch (ConcurrentModificationException e) {
+			e.printStackTrace();
+			System.exit(1);
 		}
 		
 		// ------------------------

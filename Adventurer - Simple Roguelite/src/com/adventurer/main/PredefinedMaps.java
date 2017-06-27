@@ -9,20 +9,9 @@ public class PredefinedMaps {
 	 *  . -> floor
 	 *  D -> door
 	 *  L -> locked door
-	 *  P -> portal to world-1
+	 *  P -> portal to dungeon
+	 *  E -> exit from dungeon
 	 */
-	
-	// TODO: upgradeable (i.e. multiple) lobby map
-	
-	private static final char[][] spawnRoom = new char[][] {
-		{ '#', '#', '#', '#', '#', '#', '#' },
-		{ '#', '.', '.', '.', '.', '.', '#' },
-		{ '#', '.', '.', '.', '.', '.', '#' },
-		{ '#', '.', '.', '@', '.', '.', '#' },
-		{ '#', '.', '.', '.', '.', '.', '#' },
-		{ '#', '.', '.', '.', '.', '.', '#' },
-		{ '#', '#', '#', '#', '#', '#', '#' },
-	};
 	
 	private static final char[][] lobbyMap = new char[][] {
 		{ '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
@@ -40,13 +29,23 @@ public class PredefinedMaps {
 		{ '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
 	};
 	
-	private static final char[][] normal01 = new char[][] {
+	private static final char[][] small01 = new char[][] {
 		{ '#', '#', '#', '#', '#', '#', '#' },
+		{ '#', '@', '.', 'D', '.', '.', '#' },
 		{ '#', '.', '.', 'W', '.', '.', '#' },
-		{ '#', '.', '.', '.', '.', '.', '#' },
-		{ '#', 'W', '.', '.', '.', 'W', '#' },
-		{ '#', '.', '.', '.', '.', '.', '#' },
+		{ '#', 'W', 'D', 'W', 'D', 'W', '#' },
 		{ '#', '.', '.', 'W', '.', '.', '#' },
+		{ '#', '.', '.', 'W', '.', 'E', '#' },
+		{ '#', '#', '#', '#', '#', '#', '#' },
+	};
+	
+	private static final char[][] small02 = new char[][] {
+		{ '#', '#', '#', '#', '#', '#', '#' },
+		{ '#', 'E', 'W', '.', '.', '@', '#' },
+		{ '#', '.', 'W', '.', '.', '.', '#' },
+		{ '#', 'D', 'W', 'W', 'D', 'W', '#' },
+		{ '#', '.', '.', 'W', '.', '.', '#' },
+		{ '#', '.', '.', 'D', '.', '.', '#' },
 		{ '#', '#', '#', '#', '#', '#', '#' },
 	};
 	
@@ -55,11 +54,9 @@ public class PredefinedMaps {
 		// TODO: create arrays to hold rooms with different roomTypes
 		// and then get a random room.
 		
-		return normal01;
-	}
-	
-	public static char[][] GetSpawnRoom() {
-		return spawnRoom;
+		System.out.println(roomType);
+		
+		return small02;
 	}
 	
 	public static char[][] GetLobby() {

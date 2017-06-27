@@ -6,10 +6,15 @@ import com.adventurer.main.TileType;
 
 public class Portal extends Tile {
 
-	// TODO: target??
-	// TODO: take target argument: which world are we going to create.
+	private boolean exit = false;
 	
-	public Portal(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type) { 
+	public Portal(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type, boolean exit) { 
 		super(worldPos, tilePos, spritetype, type);
+		
+		this.exit = exit;
+	}
+	
+	public boolean isExit() {
+		return this.exit;
 	}
 }

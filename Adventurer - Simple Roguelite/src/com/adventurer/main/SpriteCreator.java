@@ -217,6 +217,10 @@ public class SpriteCreator {
 			row = 0;
 			column = 10;
 			break;
+		case Portal02:
+			row = 0;
+			column = 11;
+			break;
 		case GoldCoin01:
 			row = 2;
 			column = 8;
