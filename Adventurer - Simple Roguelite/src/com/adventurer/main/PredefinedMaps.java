@@ -14,6 +14,16 @@ public class PredefinedMaps {
 	
 	// TODO: upgradeable (i.e. multiple) lobby map
 	
+	private static final char[][] spawnRoom = new char[][] {
+		{ '#', '#', '#', '#', '#', '#', '#' },
+		{ '#', '.', '.', '.', '.', '.', '#' },
+		{ '#', '.', '.', '.', '.', '.', '#' },
+		{ '#', '.', '.', '@', '.', '.', '#' },
+		{ '#', '.', '.', '.', '.', '.', '#' },
+		{ '#', '.', '.', '.', '.', '.', '#' },
+		{ '#', '#', '#', '#', '#', '#', '#' },
+	};
+	
 	private static final char[][] lobbyMap = new char[][] {
 		{ '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
 		{ '#', '.', '.', '.', 'W', '.', '.', '.', 'W', '.', '.', '.', '#' },
@@ -29,6 +39,28 @@ public class PredefinedMaps {
 		{ '#', '.', '.', '.', 'W', '.', '.', '.', 'W', '.', '.', '.', '#' },
 		{ '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
 	};
+	
+	private static final char[][] normal01 = new char[][] {
+		{ '#', '#', '#', '#', '#', '#', '#' },
+		{ '#', '.', '.', 'W', '.', '.', '#' },
+		{ '#', '.', '.', '.', '.', '.', '#' },
+		{ '#', 'W', '.', '.', '.', 'W', '#' },
+		{ '#', '.', '.', '.', '.', '.', '#' },
+		{ '#', '.', '.', 'W', '.', '.', '#' },
+		{ '#', '#', '#', '#', '#', '#', '#' },
+	};
+	
+	public static char[][] GetRoom(RoomType roomType) {
+		
+		// TODO: create arrays to hold rooms with different roomTypes
+		// and then get a random room.
+		
+		return normal01;
+	}
+	
+	public static char[][] GetSpawnRoom() {
+		return spawnRoom;
+	}
 	
 	public static char[][] GetLobby() {
 		return lobbyMap;

@@ -35,7 +35,6 @@ public class World {
 			new Exception().printStackTrace();
 			System.exit(1);
 		}
-		
 		World.instance = this;
 		
 		this.tiles = new ArrayList<Tile>();
@@ -66,10 +65,14 @@ public class World {
 		this.tiles = new ArrayList<Tile>();
 		this.rooms = new ArrayList<Room>();
 		
-		CreateWorld();
-		
-		// create player
-		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100);
+		Tile spawnTile = CreateWorld();
+			
+		if(Game.USE_RANDOMIZED_ROOMS) {
+			if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100);
+		} else {
+			if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
+		}
+			
 	}
 	
 	public Tile GetTileAtPosition(Coordinate pos) {
@@ -563,7 +566,7 @@ public class World {
 		return dir;
 	}
 	
-	private void CreateWorld() {
+	private Tile CreateWorld() {
 		
 		int roomOffsetY = 0;
 		int roomOffsetX = 0;
@@ -571,36 +574,65 @@ public class World {
 		int roomCount = 0;
 		int roomMaxCount = worldHeight * worldWidth;
 		
+		Tile spawnTile = null;
+		
 		if(Game.PRINT_WORLD_CREATION_START_END) System.out.println("Begin world creation.");
 		
-		for(int y = 0; y < worldHeight; y++) {
-			for(int x = 0; x < worldWidth; x++) {
+		if(Game.USE_RANDOMIZED_ROOMS) {
+		
+			for(int y = 0; y < worldHeight; y++) {
+				for(int x = 0; x < worldWidth; x++) {
+					
+					RoomType randroomtype = RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)];
+					
+					Room currentRoom = CreateRandomRoom(roomOffsetX, roomOffsetY, x, y, randroomtype);
+					
+					rooms.add(currentRoom);
+					roomOffsetX += (roomWidth * Game.SPRITESIZE + roomWidth * Game.TILEGAP) + Game.ROOMGAP;
+					
+					roomCount++;
+					
+					if(Game.PRINT_WORLD_CREATION_PERCENTAGE_DONE) {
+						double percentageDone = ((double) roomCount / roomMaxCount) * 100;
+						System.out.printf("Creating world: %.0f \n", percentageDone);
+					}
+					
+				}
+				roomOffsetX = 0;
+				roomOffsetY += (roomHeight * Game.SPRITESIZE + roomHeight * Game.TILEGAP) + Game.ROOMGAP;
+			}
+			
+		} else {
+			
+			// TODO: room count
+			for(int i = 0; i < 5; i++) {
 				
-				// TODO: Randomize roomtypes here!
-				
-				Room currentRoom = CreateRoom(roomOffsetX, roomOffsetY, x, y, RoomType.Normal);
-				
-				rooms.add(currentRoom);
-				roomOffsetX += (roomWidth * Game.SPRITESIZE + roomWidth * Game.TILEGAP) + Game.ROOMGAP;
-				
-				roomCount++;
-				
-				if(Game.PRINT_WORLD_CREATION_PERCENTAGE_DONE) {
-					double percentageDone = ((double) roomCount / roomMaxCount) * 100;
-					System.out.printf("Creating world: %.0f \n", percentageDone);
+				if(i == 0) {
+					
+					// first room is always a "spawn room".
+					spawnTile = CreatePredefinedMap(PredefinedMaps.GetSpawnRoom());
+					
+				} else {
+					
+					RoomType randRoomType = RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)];
+					
+					// TODO: tile offsets
+					
+					CreatePredefinedMap(PredefinedMaps.GetRoom(randRoomType));
+					
 				}
 				
 			}
-			roomOffsetX = 0;
-			roomOffsetY += (roomHeight * Game.SPRITESIZE + roomHeight * Game.TILEGAP) + Game.ROOMGAP;
+			
 		}
 		
 		if(Game.PRINT_WORLD_CREATION_START_END) System.out.println("World created! (Tile count: " + tiles.size() + ")");
+		
+		return spawnTile;
 	}
 	
-	
 	// TODO: refactor
-	private Room CreateRoom(int roomOffsetX, int roomOffsetY, int roomStartX, int roomStartY, RoomType roomType) {
+	private Room CreateRandomRoom(int roomOffsetX, int roomOffsetY, int roomStartX, int roomStartY, RoomType roomType) {
 		
 		List<Tile> roomTiles = new ArrayList<Tile>();
 		

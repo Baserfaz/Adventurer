@@ -12,9 +12,6 @@ public class ActorManager {
 	public static Player CreatePlayerInstance(int maxHp, int damage, Tile tile) {
 		
 		if(playerInstance != null) {
-			
-			// TODO: move the player to a position or delete?
-			
 			System.out.println("Player is already instantiated!");
 			new Exception().printStackTrace();
 			System.exit(1);
