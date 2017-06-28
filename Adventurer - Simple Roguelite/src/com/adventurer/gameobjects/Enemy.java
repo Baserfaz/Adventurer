@@ -37,7 +37,7 @@ public class Enemy extends Actor {
 
 	public void render(Graphics g) {
 		
-		if(hidden == false) {
+		if(hidden == false && discovered) {
 			
 			if(lookDir == Direction.East) {
 				
@@ -61,10 +61,9 @@ public class Enemy extends Actor {
 			
 			renderDirectionArrow(g);
 			
-		} else if(hidden == true && discovered == true){
+		} else if(hidden && discovered){
 			
 			// create ghost image?
-			
 		}
 	}
 	

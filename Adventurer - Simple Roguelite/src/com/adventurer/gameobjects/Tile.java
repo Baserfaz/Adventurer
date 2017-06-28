@@ -93,7 +93,7 @@ public class Tile extends GameObject {
 			return;
 		}
 		
-		if(hidden == false) {
+		if(hidden == false && discovered) {
 			
 			// brighten 
 			if(lit) {
@@ -140,6 +140,8 @@ public class Tile extends GameObject {
 				}
 				Renderer.RenderSprite(vi.GetTintedSprite(), vi.GetWorldPosition(), g);
 			}
+		} else {
+			// inview && hidden && discovered == false
 		}
 	}
 	
@@ -160,6 +162,7 @@ public class Tile extends GameObject {
 	
 	public void Hide() {
 		this.hidden = true;
+		
 		if(this.actor != null) this.actor.Hide();
 		if(this.item != null) this.item.Hide();
 		

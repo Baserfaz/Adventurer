@@ -25,14 +25,6 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 			
 			Rectangle camera = Camera.instance.getCameraBounds();
 			
-			// calculates tile position (doesnt work 100% correctly)
-			//int x = (int) Math.floor((mouseX + camera.x) /  (double) (Game.SPRITESIZE * Game.CAMERAZOOM));
-			//int y = (int) Math.floor((mouseY + camera.y) / (double) (Game.SPRITESIZE * Game.CAMERAZOOM));
-			
-			// works fine with camerazoom = 1
-			//int x = mouseX + camera.x;
-			//int y = mouseY + camera.y;
-			
 			// works fine with all camerazoom!
 			int x = (mouseX / Game.CAMERAZOOM + camera.x);
 			int y = (mouseY / Game.CAMERAZOOM + camera.y);

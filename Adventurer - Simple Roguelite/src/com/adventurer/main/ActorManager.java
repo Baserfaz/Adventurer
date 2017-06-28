@@ -33,10 +33,6 @@ public class ActorManager {
 	
 	public static void ForceMoveActor(Tile tile, Actor actor) {
 		actor.forceMove(tile.GetWorldPosition(), tile.GetTilePosition());
-		
-		if(actor instanceof Player) {
-			((Player) actor).resetLOS();
-		}
 	}
 	
 	public static void ForceMovePlayerToFreePosition() {

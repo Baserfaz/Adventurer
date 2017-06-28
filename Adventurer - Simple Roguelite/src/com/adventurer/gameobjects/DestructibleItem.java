@@ -50,11 +50,11 @@ public class DestructibleItem extends Item {
 	}
 	
 	public void render(Graphics g) {
-		if(alive && hidden == false) {
+		if(alive && hidden == false && discovered) {
 			
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 			
-		} else if(alive && discovered == true && hidden == true) {
+		} else if(alive && discovered && hidden) {
 			
 			if(tintedSprite == null) {
 				tintedSprite = Util.tint(sprite, true);

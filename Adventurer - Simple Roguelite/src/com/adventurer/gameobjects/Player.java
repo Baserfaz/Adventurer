@@ -114,8 +114,10 @@ public class Player extends Actor {
 					inventory.addKeys(-1);
 					
 				} else {
+					
 					// TODO EFFECTS
 					//EffectCreator.CreateErrorEffect();
+				
 				}
 				
 				
@@ -156,17 +158,23 @@ public class Player extends Actor {
 				currentSession.saveSessionData();
 				currentSession = null;
 				
-				//ActorManager.RemovePlayer();
+				this.losmanager.setRunning(false);
+				
 				World.instance.Remove();
 				new World(PredefinedMaps.GetLobby());
+				
+				this.losmanager.setRunning(true);
 				
 			} else {
 				
 				currentSession = new Session("session_" + System.currentTimeMillis());
 				
-				//ActorManager.RemovePlayer();
+				this.losmanager.setRunning(false);
+				
 				World.instance.Remove();
 				new World(RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)]);
+				
+				this.losmanager.setRunning(true);
 				
 			}
 			
@@ -176,8 +184,8 @@ public class Player extends Actor {
 		} 
 	}
 	
-	public void resetLOS()  {
-		this.losmanager = new LoSManager();
+	public LoSManager getLosManager() {
+		return this.losmanager;
 	}
 	
 	public Inventory getInventory() {

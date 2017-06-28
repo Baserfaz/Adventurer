@@ -35,6 +35,7 @@ public class World {
 			new Exception().printStackTrace();
 			System.exit(1);
 		}
+		
 		World.instance = this;
 		
 		this.tiles = new ArrayList<Tile>();

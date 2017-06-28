@@ -10,6 +10,8 @@ public class LoSManager {
 	
 	public LoSManager() {}
 	
+	private boolean running = true;
+	
 	// http://tech-algorithm.com/articles/drawing-line-using-bresenham-algorithm/
 	public List<Tile> calculateLine (int x, int y, int x2, int y2) {
 		
@@ -70,6 +72,8 @@ public class LoSManager {
 	
 	public void CalculateLos(Coordinate position) {
 		
+		if(running == false) return;
+		
 		// list of tiles that are visible
 		List<Tile> foundTiles = new ArrayList<Tile>();
 		
@@ -85,6 +89,7 @@ public class LoSManager {
 		// 	  -> using Bresenham's line algorithm
 		// ------------------------
 		try {
+			
 			for(Tile tile : allTiles) {
 			
 				int targetx = tile.GetTilePosition().getX();
@@ -98,6 +103,7 @@ public class LoSManager {
 					
 				}
 			}
+			
 		} catch (ConcurrentModificationException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -110,4 +116,9 @@ public class LoSManager {
 			tile.Show();
 		}
 	}
+	
+	public void setRunning(boolean b) {
+		this.running = b;
+	}
+	
 }
