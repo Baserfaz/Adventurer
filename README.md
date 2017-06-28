@@ -15,6 +15,9 @@ Engine supports these features:
 
 At this moment the game supports these features:
 * Dungeon generation from predefined 2d char arrays.
+* Random dungeon generation (Boring, needs more work).
+* Projectiles
+* Turrets that shoot projectiles
 * Line of sight calculations: usees Bresenham's line algorithm.
 * Enemies use A*-pathing algorithm.
 * Enemy types: some enemies can shoot projectiles, some are only melee and some create bombs on death.
