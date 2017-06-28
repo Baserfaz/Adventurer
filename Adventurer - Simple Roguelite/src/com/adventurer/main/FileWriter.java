@@ -8,6 +8,22 @@ public class FileWriter {
 
 	public static void writeSaveFileData(SaveFile saveFile) {
 		
+		try {
+			new File("data").mkdirs();
+			
+		    PrintWriter writer = new PrintWriter("data/" + saveFile.SAVEFILENAME + ".txt", "UTF-8");
+		    
+		    writer.println("Diamondkeys: " + saveFile.getDiamondKeyCount());
+		    
+		    writer.close();
+		    
+		} catch (IOException e) {
+		   
+			e.printStackTrace();
+			System.exit(1);
+			
+		}
+		
 	}
 	
 	public static void writeSessionData(Session session) {

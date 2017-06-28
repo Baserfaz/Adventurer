@@ -11,7 +11,6 @@ public class Inventory {
 		this.setKeyCount(keys);
 		
 		// TODO: read save file and get the key count.
-		//FileReader.
 		
 		this.setDiamondKeyCount(0); 
 		this.setBombCount(bombs);

@@ -79,6 +79,8 @@ public class Game extends Canvas implements Runnable {
 	private boolean isRunning = false;
 	private Window window;
 	
+	private SaveFile currentSaveFile;
+	
 	public Game() {
 		
 		if(instance != null) return;
@@ -108,6 +110,9 @@ public class Game extends Canvas implements Runnable {
 		
 		// create camera
 		new Camera();
+		
+		// create save file 
+		setCurrentSaveFile(new SaveFile());
 		
 		// create lobby
 		new World(PredefinedMaps.GetLobby());
@@ -241,5 +246,13 @@ public class Game extends Canvas implements Runnable {
 
 	public static void main(String args[]) {
 		new Game();
+	}
+
+	public SaveFile getCurrentSaveFile() {
+		return currentSaveFile;
+	}
+
+	public void setCurrentSaveFile(SaveFile currentSaveFile) {
+		this.currentSaveFile = currentSaveFile;
 	}
 }
