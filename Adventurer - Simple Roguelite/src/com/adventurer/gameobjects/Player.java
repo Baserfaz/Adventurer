@@ -8,6 +8,7 @@ public class Player extends Actor {
 	
 	private LoSManager losmanager;
 	private Inventory inventory;
+	private Session currentSession;
 	
 	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int damage) {
 		super(worldPos, tilePos, spritetype, maxHP, damage);
@@ -29,6 +30,9 @@ public class Player extends Actor {
 			}
 			
 		} else {
+			
+			currentSession.saveSessionData();
+			currentSession = null;
 			
 			OnDeath(World.instance.GetTileAtPosition(this.GetTilePosition()));
 		}
@@ -148,12 +152,19 @@ public class Player extends Actor {
 			Portal portal = (Portal) tile;
 			
 			if(portal.isExit()) {
-				ActorManager.RemovePlayer();
+				
+				currentSession.saveSessionData();
+				currentSession = null;
+				
+				//ActorManager.RemovePlayer();
 				World.instance.Remove();
 				new World(PredefinedMaps.GetLobby());
 				
 			} else {
-				ActorManager.RemovePlayer();
+				
+				currentSession = new Session("session_" + System.currentTimeMillis());
+				
+				//ActorManager.RemovePlayer();
 				World.instance.Remove();
 				new World(RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)]);
 				
@@ -163,6 +174,10 @@ public class Player extends Actor {
 		} else if(tile.GetTileType() == TileType.DestructibleTile) {
 			// TODO
 		} 
+	}
+	
+	public void resetLOS()  {
+		this.losmanager = new LoSManager();
 	}
 	
 	public Inventory getInventory() {

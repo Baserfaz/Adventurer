@@ -46,6 +46,7 @@ public class World {
 		
 		// create player
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
+		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
 	}
 	
 	// creates a room that has a specific room type
@@ -56,6 +57,7 @@ public class World {
 			new Exception().printStackTrace();
 			System.exit(1);
 		}
+		
 		World.instance = this;
 		
 		this.tiles = new ArrayList<Tile>();
@@ -74,6 +76,7 @@ public class World {
 		
 		// create player
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
+		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
 		
 	}
 	
