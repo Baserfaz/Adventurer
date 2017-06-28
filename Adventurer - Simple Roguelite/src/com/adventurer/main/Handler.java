@@ -137,19 +137,24 @@ public class Handler {
 		
 		// draw key count
 		g2d.drawString("Keys: " + player.getInventory().getKeyCount(),
-				(int) cam.getMinX() + 100, 
+				(int) cam.getMinX() + 50, 
 				(int) cam.getMaxY() - 5
 				);
 		
+		// draw diamond key count
+		g2d.drawString("DiamondKeys: " + player.getInventory().getDiamondKeyCount(), 
+				(int) cam.getMinX() + 100, 
+				(int) cam.getMaxY() - 5);
+		
 		// draw bomb count
 		g2d.drawString("Bombs: " + player.getInventory().getBombCount(),
-				(int) cam.getMinX() + 200,
+				(int) cam.getMinX() + 180,
 				(int) cam.getMaxY() - 5
 				);
 		
 		// draw projectile count
 		g2d.drawString("Projectiles: " + player.getInventory().getProjectileCount(),
-				(int) cam.getMinX() + 300,
+				(int) cam.getMinX() + 230,
 				(int) cam.getMaxY() - 5
 				);
 		
