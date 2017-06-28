@@ -261,6 +261,14 @@ public class SpriteCreator {
 			row = 1;
 			column = 12;
 			break;
+		case DiamondKey01:
+			row = 1;
+			column = 13;
+			break;
+		case LockedDoorDiamond01:
+			row = 0;
+			column = 12;
+			break;
 		default:
 			System.out.println("SPRITETYPE NOT FOUND: " +  type);
 			break;

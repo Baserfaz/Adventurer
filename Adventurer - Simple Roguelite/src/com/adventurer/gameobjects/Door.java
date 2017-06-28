@@ -5,19 +5,17 @@ import com.adventurer.main.*;
 public class Door extends Tile {
 
 	protected boolean locked = false;
+	protected DoorType doorType;
 	
-	public Door(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type, boolean locked) {
+	public Door(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type, boolean locked, DoorType doorType) {
 		super(worldPos, tilePos, spritetype, type);
 		
+		this.doorType = doorType;
 		this.locked = locked;
 	}
 	
 	public void Open() {
 		World.instance.ReplaceTile(this, TileType.Floor, SpriteType.FloorTile01);
-		
-		//this.type = TileType.Floor;
-		//this.sprite = SpriteCreator.instance.CreateSprite(SpriteType.FloorTile01);
-		//this.SetTintedSprite(null);
 	}
 
 	public void Unlock() {
@@ -28,6 +26,10 @@ public class Door extends Tile {
 	public void Lock() {
 		this.locked = true;
 		World.instance.ChangeTile(this, TileType.LockedDoor, SpriteType.LockedDoor01);
+	}
+	
+	public DoorType getDoorType() {
+		return this.doorType;
 	}
 	
 	public boolean isLocked() {

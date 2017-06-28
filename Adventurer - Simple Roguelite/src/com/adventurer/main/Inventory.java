@@ -3,11 +3,13 @@ package com.adventurer.main;
 public class Inventory {
 
 	private int keyCount = 0;
+	private int diamondKeyCount = 0;
 	private int bombCount = 0;
 	private int projectileCount = 0;
 	
 	public Inventory(int keys, int bombs, int projectiles) {
 		this.setKeyCount(keys);
+		this.setDiamondKeyCount(0); // TODO: read save file and get the key count.
 		this.setBombCount(bombs);
 		this.setProjectileCount(projectiles);
 	}
@@ -46,5 +48,17 @@ public class Inventory {
 	
 	public void setProjectileCount(int projectileCount) {
 		this.projectileCount = projectileCount;
+	}
+
+	public int getDiamondKeyCount() {
+		return diamondKeyCount;
+	}
+
+	public void setDiamondKeyCount(int diamondKeyCount) {
+		this.diamondKeyCount = diamondKeyCount;
+	}
+	
+	public void addDiamondKeyCount(int a) {
+		this.diamondKeyCount += a;
 	}
 }

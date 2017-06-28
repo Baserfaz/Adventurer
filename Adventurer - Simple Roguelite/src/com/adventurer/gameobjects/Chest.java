@@ -2,6 +2,7 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 
+import com.adventurer.main.ActorManager;
 import com.adventurer.main.Coordinate;
 import com.adventurer.main.EffectCreator;
 import com.adventurer.main.ItemType;
@@ -47,6 +48,10 @@ public class Chest extends Item {
 		
 		EffectCreator.CreateGibs(this.GetTilePosition(), Util.GetRandomInteger(3, 7), SpriteType.GoldCoin01);
 		VanityItemCreator.CreateVanityItem(this.GetTilePosition(), SpriteType.OpenChest01, false);
+		
+		int amount = Util.GetRandomInteger(0, 5);
+		
+		ActorManager.GetPlayerInstance().getSession().addScore(amount);
 		
 		this.Remove();
 		

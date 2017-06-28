@@ -49,5 +49,7 @@ public enum SpriteType {
 	Egg01(), 
 	BombGib01(), 
 	FloorTorch01(),
-	OpenChest01();
+	OpenChest01(),
+	LockedDoorDiamond01(),
+	DiamondKey01();
 }

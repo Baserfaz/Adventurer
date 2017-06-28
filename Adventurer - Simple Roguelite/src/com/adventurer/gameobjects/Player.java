@@ -102,7 +102,7 @@ public class Player extends Actor {
 			
 			Door door = (Door) tile;
 			
-			if(door.isLocked()) {
+			if(door.isLocked() && door.getDoorType() == DoorType.Normal) {
 				
 				if(inventory.getKeyCount() > 0) {
 					
@@ -121,7 +121,25 @@ public class Player extends Actor {
 				}
 				
 				
-			} else {
+			} else if(door.isLocked() && door.getDoorType() == DoorType.Diamond) {
+			
+				if(inventory.getDiamondKeyCount() > 0) {
+					
+					door.Unlock();
+					
+					// effects
+					EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 7), SpriteType.LockedDoor01Gib01);
+					
+					inventory.addDiamondKeyCount(-1);
+					
+				} else {
+					
+					// TODO EFFECTS
+					//EffectCreator.CreateErrorEffect();
+				
+				}
+				
+			} else if(door.isLocked() == false) {
 				door.Open();
 			}
 			
@@ -182,6 +200,10 @@ public class Player extends Actor {
 		} else if(tile.GetTileType() == TileType.DestructibleTile) {
 			// TODO
 		} 
+	}
+	
+	public Session getSession() {
+		return this.currentSession;
 	}
 	
 	public LoSManager getLosManager() {

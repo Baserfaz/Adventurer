@@ -354,9 +354,9 @@ public class World {
 			}
 		
 		} else if(newType == TileType.Door) {
-			newTile = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Door01, TileType.Door, false);
+			newTile = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Door01, TileType.Door, false, DoorType.Normal);
 		} else if(newType == TileType.LockedDoor) {
-			newTile = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.LockedDoor01, TileType.Door, true);
+			newTile = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.LockedDoor01, TileType.Door, true, DoorType.Normal);
 		} else if(newType == TileType.Floor) {
 			newTile = new Tile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.FloorTile01, TileType.Floor);
 		} else if(newType == TileType.DestructibleTile) {
@@ -668,7 +668,7 @@ public class World {
 							// if a door has not yet been created
 							if(x == roomWidth - 2) {
 								
-								tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false);
+								tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false, DoorType.Normal);
 								horizontalDoor = true;
 								
 							} else {
@@ -678,9 +678,9 @@ public class World {
 									
 									// randomize if the door is locked
 									if(Util.GetRandomInteger() > 75) {
-										tile = new Door(worldPos, tilePos, SpriteType.LockedDoor01, TileType.LockedDoor, true);
+										tile = new Door(worldPos, tilePos, SpriteType.LockedDoor01, TileType.LockedDoor, true, DoorType.Normal);
 									} else {
-										tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false);
+										tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false, DoorType.Normal);
 									}
 									
 									horizontalDoor = true;
@@ -739,7 +739,7 @@ public class World {
 							// if a door has not yet been created
 							if(y == roomHeight - 2) {
 								
-								tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false);
+								tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false, DoorType.Normal);
 								verticalDoor = true;
 								
 							} else {
@@ -749,9 +749,9 @@ public class World {
 									
 									// randomize if the door is locked
 									if(Util.GetRandomInteger() > 50) {
-										tile = new Door(worldPos, tilePos, SpriteType.LockedDoor01, TileType.LockedDoor, true);
+										tile = new Door(worldPos, tilePos, SpriteType.LockedDoor01, TileType.LockedDoor, true, DoorType.Normal);
 									} else {
-										tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false);
+										tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false, DoorType.Normal);
 									}
 									
 									verticalDoor = true;
@@ -899,17 +899,20 @@ public class World {
 				case 'W':
 					tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.Wall);
 					break;
-				case 'D':
-					tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false);
+				case 'd':
+					tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false, DoorType.Normal);
 					break;
 				case 'L':
-					tile = new Door(worldPos, tilePos, SpriteType.LockedDoor01, TileType.LockedDoor, true);
+					tile = new Door(worldPos, tilePos, SpriteType.LockedDoor01, TileType.LockedDoor, true, DoorType.Normal);
 					break;
 				case 'P':
 					tile = new Portal(worldPos, tilePos, SpriteType.Portal01, TileType.Portal, false);
 					break;
 				case 'E':
 					tile = new Portal(worldPos, tilePos, SpriteType.Portal02, TileType.Portal, true);
+					break;
+				case 'D':
+					tile = new Door(worldPos, tilePos, SpriteType.LockedDoorDiamond01, TileType.Door, true, DoorType.Diamond);
 					break;
 				default:
 					System.out.println("INVALID CHARACTER AT CreatePredefinedMap.");
