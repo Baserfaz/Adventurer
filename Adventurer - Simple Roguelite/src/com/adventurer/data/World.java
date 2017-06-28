@@ -42,6 +42,10 @@ public class World {
 	// creates a predefined map
 	public World(char[][] map) {
 		
+		if(ActorManager.GetPlayerInstance() != null) {
+			ActorManager.GetPlayerInstance().getLosManager().calculateLOS = false;
+		}
+		
 		if(instance != null) {
 			System.out.println("WORLD ALREADY EXISTS!");
 			new Exception().printStackTrace();
@@ -60,10 +64,16 @@ public class World {
 		// create player
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
 		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
+		
+		ActorManager.GetPlayerInstance().getLosManager().calculateLOS = true;
 	}
 	
 	// creates a room that has a specific room type
 	public World(RoomType roomType) {
+		
+		if(ActorManager.GetPlayerInstance() != null) {
+			ActorManager.GetPlayerInstance().getLosManager().calculateLOS = false;
+		}
 		
 		if(instance != null) {
 			System.out.println("WORLD ALREADY EXISTS!");
@@ -97,7 +107,7 @@ public class World {
 			break;
 		case Treasure:
 			minEnemyCount = 0;
-			maxEnemyCount = 0;
+			maxEnemyCount = 1;
 			break;
 		}
 		
@@ -110,6 +120,8 @@ public class World {
 		// create player
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
 		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
+		
+		ActorManager.GetPlayerInstance().getLosManager().calculateLOS = true;
 		
 	}
 	

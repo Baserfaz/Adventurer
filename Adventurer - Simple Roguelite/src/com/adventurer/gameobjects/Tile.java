@@ -160,6 +160,7 @@ public class Tile extends GameObject {
 	
 	public void Show() {
 		this.hidden = false;
+		
 		if(this.actor != null) this.actor.Show();
 		if(this.item != null) this.item.Show();
 		
@@ -188,23 +189,12 @@ public class Tile extends GameObject {
 	
 	public void Discover() {
 		
-		// when first time discovering
-		// this tile -> set the target positions.
-		if(discovered == false) {
-			
-			// 1. targety: is the real world position of the tile. 
-			// 	           We save that real w.pos. in targety.
-			// 2.1 we decrease w.pos. (means we move the tile upwards by some amount).
-			// 2.2 we "lerp" from w.pos. to targety in tick-method.
-			// 3. set discovered
-			
-			int x = this.GetWorldPosition().getX();
-			int y = this.GetWorldPosition().getY();
-			
-			this.targety = this.GetWorldPosition().getY();
-			this.SetWorldPosition(x, y - fallingYOffset);
-			this.discovered = true;
-		} 
+		int x = this.GetWorldPosition().getX();
+		int y = this.GetWorldPosition().getY();
+		
+		this.targety = this.GetWorldPosition().getY();
+		this.SetWorldPosition(x, y - fallingYOffset);
+		this.discovered = true;
 		
 		// discover actors and items.
 		if(this.GetActor() != null) {
