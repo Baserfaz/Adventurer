@@ -188,23 +188,15 @@ public class Player extends Actor {
 				currentSession.saveSessionData();
 				currentSession = null;
 				
-				this.losmanager.setRunning(false);
-				
 				World.instance.Remove();
 				new World(PredefinedMaps.GetLobby());
-				
-				this.losmanager.setRunning(true);
 				
 			} else {
 				
 				currentSession = new Session("session_" + System.currentTimeMillis());
 				
-				this.losmanager.setRunning(false);
-				
 				World.instance.Remove();
 				new World(RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)]);
-				
-				this.losmanager.setRunning(true);
 				
 			}
 			

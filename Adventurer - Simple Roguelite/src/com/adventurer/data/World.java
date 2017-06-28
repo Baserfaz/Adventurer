@@ -77,15 +77,35 @@ public class World {
 		
 		Tile spawnTile = CreatePredefinedMap(PredefinedMaps.GetRandomRoomOfType(roomType));
 		
-		// TODO: room type specific stuff here
-		
 		// create stuff
 		CreateItemsOnRoomWalls(tiles);
 		
+		// randomize enemy count 
+		int minEnemyCount = 0, maxEnemyCount = 1;
+		switch(roomType) {
+		case Large:
+			minEnemyCount = 10;
+			maxEnemyCount = 20;
+			break;
+		case Normal:
+			minEnemyCount = 5;
+			maxEnemyCount = 10;
+			break;
+		case Small:
+			minEnemyCount = 2;
+			maxEnemyCount = 5;
+			break;
+		case Treasure:
+			minEnemyCount = 0;
+			maxEnemyCount = 0;
+			break;
+		}
+		
 		// create enemies
-		ActorManager.CreateEnemies(
-				Util.GetRandomInteger(1, 5),
-				tiles);
+		ActorManager.CreateEnemies(Util.GetRandomInteger(minEnemyCount, maxEnemyCount), tiles);
+		
+		// randomize treasure
+		// TODO
 		
 		// create player
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
@@ -645,7 +665,6 @@ public class World {
 		if(Game.PRINT_WORLD_CREATION_START_END) System.out.println("World created! (Tile count: " + tiles.size() + ")");
 	}
 	
-	// TODO: refactor
 	private Room CreateRandomRoom(int roomOffsetX, int roomOffsetY, int roomStartX, int roomStartY, RoomType roomType) {
 		
 		List<Tile> roomTiles = new ArrayList<Tile>();
