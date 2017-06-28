@@ -12,7 +12,6 @@ public class Session {
 	
 	public void saveSessionData() {
 		FileWriter.writeSessionData(this);
-		// TODO: modify the savefile!!!
 	}
 	
 	public void addScore(int a) {

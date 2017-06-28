@@ -61,7 +61,11 @@ public class Inventory {
 		this.diamondKeyCount = diamondKeyCount;
 	}
 	
+	// this method updates both 
+	// the inventory and savefile 
+	// --> WE NEED TO UPDATE THE SAVE FILE! (WRITE)
 	public void addDiamondKeyCount(int a) {
 		this.diamondKeyCount += a;
+		Game.instance.getCurrentSaveFile().addDiamondKeyCount(a);
 	}
 }

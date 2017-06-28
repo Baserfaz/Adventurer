@@ -111,7 +111,10 @@ public class Game extends Canvas implements Runnable {
 		// create camera
 		new Camera();
 		
-		// create save file 
+		// create save file:
+		// this creates a save file object that
+		// reads the actual permanent save file and
+		// which has the data.
 		setCurrentSaveFile(new SaveFile());
 		
 		// create lobby

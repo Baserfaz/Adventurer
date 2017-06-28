@@ -16,6 +16,8 @@ public class SaveFile {
 	
 	public SaveFile() {
 		
+		String data = FileReader.readSaveFile();
+		
 		// TODO: read save file or create a new one
 		
 		this.setDiamondKeyCount(0);
@@ -30,6 +32,10 @@ public class SaveFile {
 		this.diamondKeyCount = diamondKeyCount;
 	}
 	
-	
+	// writes the update to file
+	public void addDiamondKeyCount(int a) {
+		this.diamondKeyCount += a;
+		FileWriter.writeSaveFileData(this);
+	}
 	
 }
