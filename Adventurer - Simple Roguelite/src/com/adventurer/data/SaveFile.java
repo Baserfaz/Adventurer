@@ -1,7 +1,7 @@
 package com.adventurer.data;
 
-import com.adventurer.Utilities.FileReader;
-import com.adventurer.Utilities.FileWriter;
+import com.adventurer.utilities.FileReader;
+import com.adventurer.utilities.FileWriter;
 
 /*
  * This class gets the information about the 

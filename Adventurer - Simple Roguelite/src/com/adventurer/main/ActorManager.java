@@ -2,11 +2,11 @@ package com.adventurer.main;
 
 import java.util.List;
 
-import com.adventurer.Utilities.Util;
 import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.EnemyType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.gameobjects.*;
+import com.adventurer.utilities.Util;
 
 public class ActorManager {
 

@@ -1,6 +1,5 @@
 package com.adventurer.main;
 
-import com.adventurer.Utilities.Util;
 import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
@@ -8,6 +7,7 @@ import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.LightSource;
 import com.adventurer.gameobjects.Tile;
+import com.adventurer.utilities.Util;
 
 public class ItemCreator {
 

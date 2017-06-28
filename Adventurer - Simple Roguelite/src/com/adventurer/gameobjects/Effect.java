@@ -3,12 +3,12 @@ package com.adventurer.gameobjects;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import com.adventurer.Utilities.Renderer;
-import com.adventurer.Utilities.Util;
 import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Game;
 import com.adventurer.main.Handler;
+import com.adventurer.utilities.Renderer;
+import com.adventurer.utilities.Util;
 
 public class Effect extends GameObject {
 	

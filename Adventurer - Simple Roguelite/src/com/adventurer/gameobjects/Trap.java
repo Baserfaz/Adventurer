@@ -2,13 +2,13 @@ package com.adventurer.gameobjects;
 
 import java.util.List;
 
-import com.adventurer.Utilities.Util;
 import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.enumerations.TrapType;
 import com.adventurer.main.*;
+import com.adventurer.utilities.Util;
 
 public class Trap extends Tile {
 

@@ -2,8 +2,6 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 
-import com.adventurer.Utilities.Renderer;
-import com.adventurer.Utilities.Util;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Inventory;
 import com.adventurer.data.PredefinedMaps;
@@ -14,6 +12,8 @@ import com.adventurer.enumerations.RoomType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;
+import com.adventurer.utilities.Renderer;
+import com.adventurer.utilities.Util;
 
 public class Player extends Actor {
 	

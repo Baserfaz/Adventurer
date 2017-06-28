@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import com.adventurer.Utilities.Renderer;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Health;
 import com.adventurer.data.Inventory;
@@ -14,6 +13,7 @@ import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.EnemyType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.*;
+import com.adventurer.utilities.Renderer;
 
 public class Actor extends GameObject {
 	

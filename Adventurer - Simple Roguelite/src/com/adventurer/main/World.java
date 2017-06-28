@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.adventurer.Utilities.Util;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.Room;
@@ -24,6 +23,7 @@ import com.adventurer.gameobjects.Portal;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Trap;
 import com.adventurer.gameobjects.Turret;
+import com.adventurer.utilities.Util;
 
 public class World {
 

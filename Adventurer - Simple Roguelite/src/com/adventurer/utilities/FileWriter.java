@@ -1,4 +1,4 @@
-package com.adventurer.Utilities;
+package com.adventurer.utilities;
 
 import java.io.File;
 import java.io.IOException;

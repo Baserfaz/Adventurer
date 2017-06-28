@@ -7,13 +7,13 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 
-import com.adventurer.Utilities.Renderer;
-import com.adventurer.Utilities.Window;
 import com.adventurer.data.Camera;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.SaveFile;
 import com.adventurer.gameobjects.Player;
+import com.adventurer.utilities.Renderer;
+import com.adventurer.utilities.Window;
 
 public class Game extends Canvas implements Runnable {
 	
