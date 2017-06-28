@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.adventurer.enumerations.SpriteType;
+
 public class SpriteCreator {
 
 	private String path;

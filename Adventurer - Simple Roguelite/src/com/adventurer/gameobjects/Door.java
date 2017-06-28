@@ -1,5 +1,8 @@
 package com.adventurer.gameobjects;
 
+import com.adventurer.enumerations.DoorType;
+import com.adventurer.enumerations.SpriteType;
+import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;
 
 public class Door extends Tile {

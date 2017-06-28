@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Tile;
 

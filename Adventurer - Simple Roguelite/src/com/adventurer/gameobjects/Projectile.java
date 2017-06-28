@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.adventurer.enumerations.ItemType;
+import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.*;
 
 public class Projectile extends Item {

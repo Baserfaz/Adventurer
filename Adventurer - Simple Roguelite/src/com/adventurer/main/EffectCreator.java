@@ -2,6 +2,7 @@ package com.adventurer.main;
 
 import java.util.List;
 
+import com.adventurer.enumerations.SpriteType;
 import com.adventurer.gameobjects.Effect;
 import com.adventurer.gameobjects.Gib;
 import com.adventurer.gameobjects.Tile;

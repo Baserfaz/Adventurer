@@ -2,6 +2,10 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 
+import com.adventurer.enumerations.DoorType;
+import com.adventurer.enumerations.RoomType;
+import com.adventurer.enumerations.SpriteType;
+import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;
 
 public class Player extends Actor {

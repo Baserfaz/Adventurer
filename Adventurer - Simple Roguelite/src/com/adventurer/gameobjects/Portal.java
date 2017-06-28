@@ -1,8 +1,8 @@
 package com.adventurer.gameobjects;
 
+import com.adventurer.enumerations.SpriteType;
+import com.adventurer.enumerations.TileType;
 import com.adventurer.main.Coordinate;
-import com.adventurer.main.SpriteType;
-import com.adventurer.main.TileType;
 
 public class Portal extends Tile {
 

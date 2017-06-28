@@ -2,12 +2,12 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 
+import com.adventurer.enumerations.ItemType;
+import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Coordinate;
 import com.adventurer.main.EffectCreator;
 import com.adventurer.main.Health;
-import com.adventurer.main.ItemType;
 import com.adventurer.main.Renderer;
-import com.adventurer.main.SpriteType;
 import com.adventurer.main.Util;
 import com.adventurer.main.VanityItemCreator;
 import com.adventurer.main.World;

@@ -1,5 +1,7 @@
 package com.adventurer.main;
 
+import com.adventurer.enumerations.ItemType;
+import com.adventurer.enumerations.SpriteType;
 import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.LightSource;

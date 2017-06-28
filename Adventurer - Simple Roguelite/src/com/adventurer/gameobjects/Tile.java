@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adventurer.enumerations.SpriteType;
+import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;
 
 public class Tile extends GameObject {

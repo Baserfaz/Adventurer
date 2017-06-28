@@ -3,6 +3,7 @@ package com.adventurer.gameobjects;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.*;
 
 public class VanityItem extends GameObject {

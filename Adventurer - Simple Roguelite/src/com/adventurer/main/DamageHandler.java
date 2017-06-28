@@ -1,5 +1,6 @@
 package com.adventurer.main;
 
+import com.adventurer.enumerations.SpriteType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.DestructibleItem;
 import com.adventurer.gameobjects.Enemy;

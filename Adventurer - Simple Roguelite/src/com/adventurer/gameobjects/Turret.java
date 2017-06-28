@@ -2,11 +2,11 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 
+import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Coordinate;
 import com.adventurer.main.Direction;
 import com.adventurer.main.Renderer;
 import com.adventurer.main.SpriteCreator;
-import com.adventurer.main.SpriteType;
 import com.adventurer.main.Util;
 import com.adventurer.main.World;
 

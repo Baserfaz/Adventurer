@@ -4,6 +4,12 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adventurer.enumerations.DoorType;
+import com.adventurer.enumerations.ItemType;
+import com.adventurer.enumerations.RoomType;
+import com.adventurer.enumerations.SpriteType;
+import com.adventurer.enumerations.TileType;
+import com.adventurer.enumerations.TrapType;
 import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.DestructibleItem;
 import com.adventurer.gameobjects.DestructibleTile;

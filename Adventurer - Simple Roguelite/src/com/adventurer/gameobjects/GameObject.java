@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.*;
 
 public abstract class GameObject {

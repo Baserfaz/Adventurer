@@ -2,6 +2,7 @@ package com.adventurer.main;
 
 import java.util.List;
 
+import com.adventurer.enumerations.RoomType;
 import com.adventurer.gameobjects.Tile;
 
 public class Room {

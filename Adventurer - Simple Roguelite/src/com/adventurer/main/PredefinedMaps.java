@@ -1,5 +1,7 @@
 package com.adventurer.main;
 
+import com.adventurer.enumerations.RoomType;
+
 public class PredefinedMaps {
 
 	/*	Char to GameObject-map  

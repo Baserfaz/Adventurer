@@ -2,6 +2,9 @@ package com.adventurer.gameobjects;
 
 import java.util.List;
 
+import com.adventurer.enumerations.SpriteType;
+import com.adventurer.enumerations.TileType;
+import com.adventurer.enumerations.TrapType;
 import com.adventurer.main.*;
 
 public class Trap extends Tile {
