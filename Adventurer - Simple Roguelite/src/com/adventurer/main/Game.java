@@ -9,6 +9,10 @@ import java.awt.image.BufferStrategy;
 
 import com.adventurer.Utilities.Renderer;
 import com.adventurer.Utilities.Window;
+import com.adventurer.data.Camera;
+import com.adventurer.data.Coordinate;
+import com.adventurer.data.PredefinedMaps;
+import com.adventurer.data.SaveFile;
 import com.adventurer.gameobjects.Player;
 
 public class Game extends Canvas implements Runnable {

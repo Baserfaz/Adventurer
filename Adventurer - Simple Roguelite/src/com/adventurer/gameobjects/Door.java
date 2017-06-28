@@ -1,5 +1,6 @@
 package com.adventurer.gameobjects;
 
+import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;

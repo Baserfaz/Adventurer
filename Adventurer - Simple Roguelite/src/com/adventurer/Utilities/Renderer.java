@@ -7,8 +7,8 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
+import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.Direction;
-import com.adventurer.main.Coordinate;
 import com.adventurer.main.Game;
 
 public class Renderer {

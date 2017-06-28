@@ -1,4 +1,4 @@
-package com.adventurer.main;
+package com.adventurer.data;
 
 public class Coordinate {
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.adventurer.Utilities.Renderer;
 import com.adventurer.Utilities.Util;
+import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.BombType;
 import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;

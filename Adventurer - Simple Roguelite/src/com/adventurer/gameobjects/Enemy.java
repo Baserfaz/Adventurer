@@ -8,6 +8,7 @@ import java.util.List;
 import com.adventurer.Utilities.AStar;
 import com.adventurer.Utilities.Renderer;
 import com.adventurer.Utilities.Util;
+import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.EnemyType;
 import com.adventurer.enumerations.SpriteType;

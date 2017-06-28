@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 
-import com.adventurer.main.SaveFile;
+import com.adventurer.data.SaveFile;
 
 public class FileReader {
 

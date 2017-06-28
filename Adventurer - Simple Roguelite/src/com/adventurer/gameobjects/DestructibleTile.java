@@ -2,6 +2,9 @@ package com.adventurer.gameobjects;
 
 import java.awt.Rectangle;
 
+import com.adventurer.data.Camera;
+import com.adventurer.data.Coordinate;
+import com.adventurer.data.Health;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;

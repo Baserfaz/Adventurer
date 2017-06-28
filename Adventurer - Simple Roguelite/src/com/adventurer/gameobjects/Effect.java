@@ -5,8 +5,8 @@ import java.awt.Rectangle;
 
 import com.adventurer.Utilities.Renderer;
 import com.adventurer.Utilities.Util;
+import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.SpriteType;
-import com.adventurer.main.Coordinate;
 import com.adventurer.main.Game;
 import com.adventurer.main.Handler;
 

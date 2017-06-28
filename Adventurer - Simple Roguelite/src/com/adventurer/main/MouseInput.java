@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import com.adventurer.data.Camera;
 import com.adventurer.gameobjects.Tile;
 
 public class MouseInput implements MouseMotionListener, MouseListener {

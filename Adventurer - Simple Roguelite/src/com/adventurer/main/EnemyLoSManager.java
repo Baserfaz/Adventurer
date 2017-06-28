@@ -3,6 +3,7 @@ package com.adventurer.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.Enemy;
 import com.adventurer.gameobjects.Player;

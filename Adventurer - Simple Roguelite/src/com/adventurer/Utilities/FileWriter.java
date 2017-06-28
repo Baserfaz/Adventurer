@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import com.adventurer.data.SaveFile;
+import com.adventurer.data.Session;
 import com.adventurer.main.Game;
-import com.adventurer.main.SaveFile;
-import com.adventurer.main.Session;
 
 public class FileWriter {
 

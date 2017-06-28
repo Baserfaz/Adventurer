@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.adventurer.Utilities.Util;
+import com.adventurer.data.Coordinate;
+import com.adventurer.data.PredefinedMaps;
+import com.adventurer.data.Room;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.ItemType;

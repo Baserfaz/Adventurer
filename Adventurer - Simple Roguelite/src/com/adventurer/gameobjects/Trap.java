@@ -3,6 +3,7 @@ package com.adventurer.gameobjects;
 import java.util.List;
 
 import com.adventurer.Utilities.Util;
+import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;

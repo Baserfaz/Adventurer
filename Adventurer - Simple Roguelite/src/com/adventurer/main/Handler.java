@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adventurer.data.Camera;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Effect;
 import com.adventurer.gameobjects.GameObject;

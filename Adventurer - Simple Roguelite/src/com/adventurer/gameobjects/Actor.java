@@ -5,6 +5,10 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.adventurer.Utilities.Renderer;
+import com.adventurer.data.Coordinate;
+import com.adventurer.data.Health;
+import com.adventurer.data.Inventory;
+import com.adventurer.data.PredefinedMaps;
 import com.adventurer.enumerations.BombType;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.EnemyType;

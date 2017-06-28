@@ -1,6 +1,7 @@
-package com.adventurer.main;
+package com.adventurer.data;
 
 import com.adventurer.Utilities.FileWriter;
+import com.adventurer.main.Game;
 
 public class Session {
 

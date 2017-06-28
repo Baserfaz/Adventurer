@@ -1,4 +1,4 @@
-package com.adventurer.main;
+package com.adventurer.data;
 
 import com.adventurer.enumerations.RoomType;
 

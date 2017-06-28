@@ -3,9 +3,9 @@ package com.adventurer.gameobjects;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
-import com.adventurer.main.Coordinate;
 import com.adventurer.main.Handler;
 import com.adventurer.main.World;
 
