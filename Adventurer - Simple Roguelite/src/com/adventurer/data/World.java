@@ -1,12 +1,9 @@
-package com.adventurer.main;
+package com.adventurer.data;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.adventurer.data.Coordinate;
-import com.adventurer.data.PredefinedMaps;
-import com.adventurer.data.Room;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.ItemType;
@@ -23,6 +20,10 @@ import com.adventurer.gameobjects.Portal;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Trap;
 import com.adventurer.gameobjects.Turret;
+import com.adventurer.main.ActorManager;
+import com.adventurer.main.Game;
+import com.adventurer.main.ItemCreator;
+import com.adventurer.main.SpriteCreator;
 import com.adventurer.utilities.Util;
 
 public class World {

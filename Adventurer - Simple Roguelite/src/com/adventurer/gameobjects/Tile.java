@@ -11,6 +11,7 @@ import java.util.List;
 import com.adventurer.data.Camera;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Node;
+import com.adventurer.data.World;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;

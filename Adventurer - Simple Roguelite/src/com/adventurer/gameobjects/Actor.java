@@ -8,6 +8,7 @@ import com.adventurer.data.Coordinate;
 import com.adventurer.data.Health;
 import com.adventurer.data.Inventory;
 import com.adventurer.data.PredefinedMaps;
+import com.adventurer.data.World;
 import com.adventurer.enumerations.BombType;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.EnemyType;

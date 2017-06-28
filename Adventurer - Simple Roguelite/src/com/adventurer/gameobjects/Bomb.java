@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.util.List;
 
 import com.adventurer.data.Coordinate;
+import com.adventurer.data.World;
 import com.adventurer.enumerations.BombType;
 import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;

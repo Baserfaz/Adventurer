@@ -6,6 +6,7 @@ import com.adventurer.data.Coordinate;
 import com.adventurer.data.Inventory;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.Session;
+import com.adventurer.data.World;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.RoomType;

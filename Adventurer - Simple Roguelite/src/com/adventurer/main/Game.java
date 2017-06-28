@@ -11,6 +11,7 @@ import com.adventurer.data.Camera;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.SaveFile;
+import com.adventurer.data.World;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.utilities.Renderer;
 import com.adventurer.utilities.Window;

@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.adventurer.data.Node;
+import com.adventurer.data.World;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Tile;
-import com.adventurer.main.World;
 
 public class AStar {
 
