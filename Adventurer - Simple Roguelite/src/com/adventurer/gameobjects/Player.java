@@ -114,7 +114,7 @@ public class Player extends Actor {
 			
 			Door door = (Door) tile;
 			
-			if(door.isLocked() && door.getDoorType() == DoorType.Normal) {
+			if(door.isLocked() && door.getDoorType() == DoorType.Normal && door.GetTileType() == TileType.LockedDoor) {
 				
 				if(inventory.getKeyCount() > 0) {
 					

@@ -75,7 +75,7 @@ public class World {
 		
 		this.tiles = new ArrayList<Tile>();
 		
-		Tile spawnTile = CreatePredefinedMap(PredefinedMaps.GetRoom(roomType));
+		Tile spawnTile = CreatePredefinedMap(PredefinedMaps.GetRandomRoomOfType(roomType));
 		
 		// TODO: room type specific stuff here
 		
@@ -924,7 +924,7 @@ public class World {
 					tile = new Portal(worldPos, tilePos, SpriteType.Portal02, TileType.Portal, true);
 					break;
 				case 'D':
-					tile = new Door(worldPos, tilePos, SpriteType.LockedDoorDiamond01, TileType.Door, true, DoorType.Diamond);
+					tile = new Door(worldPos, tilePos, SpriteType.LockedDoorDiamond01, TileType.LockedDoor, true, DoorType.Diamond);
 					break;
 				default:
 					System.out.println("INVALID CHARACTER AT CreatePredefinedMap.");
