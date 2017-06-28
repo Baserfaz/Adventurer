@@ -9,10 +9,7 @@ public class Inventory {
 	
 	public Inventory(int keys, int bombs, int projectiles) {
 		this.setKeyCount(keys);
-		
-		// TODO: read save file and get the key count.
-		
-		this.setDiamondKeyCount(0); 
+		this.setDiamondKeyCount(Game.instance.getCurrentSaveFile().getDiamondKeyCount()); 
 		this.setBombCount(bombs);
 		this.setProjectileCount(projectiles);
 	}

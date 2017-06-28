@@ -18,9 +18,10 @@ public class SaveFile {
 		
 		String data = FileReader.readSaveFile();
 		
-		// TODO: read save file or create a new one
+		// get diamond key count from the file.
+		int dcount = Integer.parseInt(data.substring(7, 8));
 		
-		this.setDiamondKeyCount(0);
+		this.setDiamondKeyCount(dcount);
 		
 	}
 

@@ -55,6 +55,7 @@ public class Game extends Canvas implements Runnable {
 	
 	// player defaults
 	public static final int START_KEY_COUNT = 1;
+	public static final int START_DIAMOND_KEY_COUNT = 0;
 	public static final int START_BOMB_COUNT = 1;
 	public static final int START_PROJECTILE_COUNT = 3;
 	

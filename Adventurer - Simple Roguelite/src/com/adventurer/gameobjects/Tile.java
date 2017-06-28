@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import com.adventurer.enumerations.SpriteType;
@@ -113,8 +114,12 @@ public class Tile extends GameObject {
 				Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 				
 				// render vanity items
-				for(GameObject vi : vanityItems) {
-					Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
+				try {
+					for(GameObject vi : vanityItems) {
+						Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
+					}
+				} catch (ConcurrentModificationException e) {
+					e.printStackTrace();
 				}
 				
 			}
