@@ -1,4 +1,4 @@
-package com.adventurer.main;
+package com.adventurer.Utilities;
 
 import java.awt.Color;
 import java.awt.Graphics;

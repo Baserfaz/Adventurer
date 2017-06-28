@@ -1,9 +1,11 @@
-package com.adventurer.main;
+package com.adventurer.Utilities;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
+
+import com.adventurer.main.SaveFile;
 
 public class FileReader {
 

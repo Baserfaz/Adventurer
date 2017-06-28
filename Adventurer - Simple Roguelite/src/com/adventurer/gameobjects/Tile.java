@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
+import com.adventurer.Utilities.Renderer;
+import com.adventurer.Utilities.Util;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;

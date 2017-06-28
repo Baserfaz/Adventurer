@@ -2,6 +2,8 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 
+import com.adventurer.Utilities.Renderer;
+import com.adventurer.Utilities.Util;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.RoomType;

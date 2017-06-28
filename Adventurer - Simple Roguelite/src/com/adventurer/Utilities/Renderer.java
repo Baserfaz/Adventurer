@@ -1,4 +1,4 @@
-package com.adventurer.main;
+package com.adventurer.Utilities;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,6 +8,8 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 import com.adventurer.enumerations.Direction;
+import com.adventurer.main.Coordinate;
+import com.adventurer.main.Game;
 
 public class Renderer {
 

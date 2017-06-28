@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.adventurer.Utilities.Renderer;
+import com.adventurer.Utilities.Util;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;

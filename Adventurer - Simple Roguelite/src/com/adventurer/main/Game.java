@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 
+import com.adventurer.Utilities.Renderer;
+import com.adventurer.Utilities.Window;
 import com.adventurer.gameobjects.Player;
 
 public class Game extends Canvas implements Runnable {

@@ -1,5 +1,7 @@
 package com.adventurer.main;
 
+import com.adventurer.Utilities.FileWriter;
+
 public class Session {
 
 	private int score;

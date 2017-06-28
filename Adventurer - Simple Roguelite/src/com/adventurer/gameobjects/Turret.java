@@ -2,12 +2,12 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 
+import com.adventurer.Utilities.Renderer;
+import com.adventurer.Utilities.Util;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Coordinate;
-import com.adventurer.main.Renderer;
 import com.adventurer.main.SpriteCreator;
-import com.adventurer.main.Util;
 import com.adventurer.main.World;
 
 public class Turret extends Actor {

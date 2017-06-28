@@ -1,9 +1,11 @@
-package com.adventurer.main;
+package com.adventurer.Utilities;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+
+import com.adventurer.main.Game;
 
 public class Window extends Canvas {
 	

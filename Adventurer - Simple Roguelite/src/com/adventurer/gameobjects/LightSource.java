@@ -2,11 +2,11 @@ package com.adventurer.gameobjects;
 
 import java.util.List;
 
+import com.adventurer.Utilities.Util;
 import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Coordinate;
 import com.adventurer.main.EffectCreator;
-import com.adventurer.main.Util;
 import com.adventurer.main.World;
 
 public class LightSource extends DestructibleItem {
