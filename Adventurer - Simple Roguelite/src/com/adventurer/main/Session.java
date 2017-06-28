@@ -10,7 +10,7 @@ public class Session {
 		this.setScore(0);
 	}
 	
-	// this is called when the "sessions/run" is over.
+	// this is called when the "session/run" is over.
 	public void saveSessionData() {
 		FileWriter.writeSessionData(this);
 		FileWriter.writeSaveFileData(Game.instance.getCurrentSaveFile());

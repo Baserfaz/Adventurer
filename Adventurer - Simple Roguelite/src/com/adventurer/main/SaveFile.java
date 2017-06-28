@@ -15,16 +15,10 @@ public class SaveFile {
 	private int diamondKeyCount;
 	
 	public SaveFile() {
-		
 		String data = FileReader.readSaveFile();
-		
-		System.out.println(data);
-		
 		// get diamond key count from the file.
 		int dcount = Integer.parseInt(data.substring(7, 8));
-		
 		this.setDiamondKeyCount(dcount);
-		
 	}
 
 	public int getDiamondKeyCount() {

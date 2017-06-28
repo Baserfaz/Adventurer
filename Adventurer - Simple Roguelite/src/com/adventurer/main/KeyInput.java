@@ -53,6 +53,11 @@ public class KeyInput extends KeyAdapter {
 				player.SetLookDirection(Direction.East);
 		} 
 		
+		// DEBUG GIVE diamond key
+		/*if(key == KeyEvent.VK_0) {
+			player.getInventory().addDiamondKeyCount(1);
+		}*/
+		
 		// bomb
 		if(key == KeyEvent.VK_SPACE) {
 			Tile t = World.instance.GetTileFromDirection(player.GetTilePosition(), player.GetLookDirection());
