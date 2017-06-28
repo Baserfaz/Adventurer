@@ -8,6 +8,8 @@ import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.adventurer.enumerations.Direction;
+
 public class Util {
 	
 	public static Direction GetRandomCardinalDirection() {

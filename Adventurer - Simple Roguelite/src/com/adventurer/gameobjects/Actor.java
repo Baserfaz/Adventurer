@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.adventurer.enumerations.BombType;
+import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.EnemyType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.*;

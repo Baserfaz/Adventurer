@@ -7,6 +7,8 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
+import com.adventurer.enumerations.Direction;
+
 public class Renderer {
 
 	// https://stackoverflow.com/questions/11367324/how-do-i-scale-a-bufferedimage

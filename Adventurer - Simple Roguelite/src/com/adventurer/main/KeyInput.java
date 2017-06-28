@@ -3,6 +3,7 @@ package com.adventurer.main;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.gameobjects.Bomb;
 import com.adventurer.gameobjects.Gib;
