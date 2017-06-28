@@ -1,5 +1,5 @@
 # Adventurer - Roguelite Game
-Adventurer is a roguelite game, that uses realtime tile-based movement system. It is not turn-based and therefore it is not a rogueLIKE game.
+Adventurer is a roguelite game, that uses realtime tile-based movement system. It is not turn-based and therefore it is not a rogueLIKE game. it's created 100% with pure Java and therefore it doesn't use any game libraries. Sprites are created with pyxelEdit-software. 
 
 ## Tech
 The game uses simple 2D game engine written in Java, that is based on Notch's work, but also has my own code and some snippets from other sites. Every snippet, that is not mine, has a link to the original owner.
@@ -7,7 +7,10 @@ The game uses simple 2D game engine written in Java, that is based on Notch's wo
 ### Features
 Engine supports these features:
 * Spritesheet sprite drawing (16x16)
-* Rendering queue
+* Rendering queue (z-levels)
+* Camera: location and zoom-level.
+* Viewport moves with camera
+* Gameobjects that are inside camera's view render, others don't. 
 * ...
 
 At this moment the game supports these features:
