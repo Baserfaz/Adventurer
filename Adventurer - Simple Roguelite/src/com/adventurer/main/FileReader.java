@@ -18,6 +18,8 @@ public class FileReader {
 				// --> create empty file
 				FileWriter.createSaveFile();
 				
+				// read the default file.
+				content = readSaveFile();
 			}
 			
 		} catch (IOException e) {
