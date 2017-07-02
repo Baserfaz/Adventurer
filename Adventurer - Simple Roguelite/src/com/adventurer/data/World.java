@@ -122,7 +122,6 @@ public class World {
 		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
 		
 		ActorManager.GetPlayerInstance().getLosManager().calculateLOS = true;
-		
 	}
 	
 	// creates a random level

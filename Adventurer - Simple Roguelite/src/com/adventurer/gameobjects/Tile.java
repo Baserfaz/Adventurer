@@ -79,6 +79,11 @@ public class Tile extends GameObject {
 	
 	public void render(Graphics g) {
 		
+		// tile is outside of our view
+		if(inView == false) return;
+		
+		// Tile is selected
+		// -> override fov-rendering.
 		if(selected) {
 			
 			if(hidden == false) {
@@ -100,8 +105,9 @@ public class Tile extends GameObject {
 			}
 			
 			return;
-		}
+		} 
 		
+		// fov-rendering
 		if(hidden == false && discovered) {
 			
 			// brighten 
@@ -130,13 +136,9 @@ public class Tile extends GameObject {
 				
 			}
 			
-		} else if(inView == false) {
-		
-			// don't render this tile at all!
-			
 		} else if(hidden == true && discovered) {
 			
-			// create tinted version of the sprite 
+			// create tinted version of the sprite and cache it.
 			if(tintedSprite == null) {
 				tintedSprite = Util.tint(sprite, true);
 			} else {
@@ -151,10 +153,12 @@ public class Tile extends GameObject {
 				if(vi.GetTintedSprite() == null) {
 					vi.SetTintedSprite(Util.tint(vi.GetSprite(), true));
 				}
+				
 				Renderer.RenderSprite(vi.GetTintedSprite(), vi.GetWorldPosition(), g);
 			}
 		} else {
-			// inview && hidden && discovered == false
+			// We haven't discovered this tile and it's still hidden,
+			// therefore we don't want to render it at this point.
 		}
 	}
 	

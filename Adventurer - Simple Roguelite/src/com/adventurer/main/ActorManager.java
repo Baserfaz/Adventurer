@@ -37,11 +37,12 @@ public class ActorManager {
 	}
 	
 	public static void ForceMoveActor(Tile tile, Actor actor) {
+		Handler.instance.RemoveObject(actor);
 		actor.forceMove(tile.GetWorldPosition(), tile.GetTilePosition());
+		Handler.instance.AddObject(actor);
 	}
 	
 	public static void ForceMovePlayerToFreePosition() {
-		
 		World world = World.instance.GetWorld();
 		
 		// get position
