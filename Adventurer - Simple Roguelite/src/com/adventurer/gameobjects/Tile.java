@@ -67,7 +67,7 @@ public class Tile extends GameObject {
 			}
 		}
 		
-		UpdatePosition(x, y);
+		if(Game.ANIMATE_TILE_DISCOVERY) UpdatePosition(x, y);
 	}
 	
 	protected void UpdatePosition(int x, int y) {
@@ -192,8 +192,11 @@ public class Tile extends GameObject {
 		int x = this.GetWorldPosition().getX();
 		int y = this.GetWorldPosition().getY();
 		
-		this.targety = this.GetWorldPosition().getY();
-		this.SetWorldPosition(x, y - fallingYOffset);
+		if(Game.ANIMATE_TILE_DISCOVERY) {
+			this.targety = this.GetWorldPosition().getY();
+			this.SetWorldPosition(x, y - fallingYOffset);
+		}
+			
 		this.discovered = true;
 		
 		// discover actors and items.

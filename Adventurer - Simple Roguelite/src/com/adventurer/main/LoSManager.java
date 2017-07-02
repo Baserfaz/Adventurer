@@ -80,6 +80,8 @@ public class LoSManager {
 		// list of tiles that are visible
 		List<Tile> foundTiles = new ArrayList<Tile>();
 		
+		if(World.instance == null) return;
+		
 		World world = World.instance.GetWorld();
 		
 		// 1. hide everything
