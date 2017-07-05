@@ -17,7 +17,7 @@ import com.adventurer.utilities.Util;
 
 public class Enemy extends Actor {
 
-	private int moveCooldownBase = 500;
+	private int moveCooldownBase = 1000;
 	private long moveTimer = 0;
 	
 	private Tile lastPlayerPosition = null;

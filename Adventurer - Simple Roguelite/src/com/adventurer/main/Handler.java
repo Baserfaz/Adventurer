@@ -154,10 +154,10 @@ public class Handler {
 				);
 		
 		// draw projectile count
-		g2d.drawString("Projectiles: " + player.getInventory().getProjectileCount(),
+		/*g2d.drawString("Projectiles: " + player.getInventory().getProjectileCount(),
 				(int) cam.getMinX() + 230,
 				(int) cam.getMaxY() - 5
-				);
+				);*/
 		
 	}	
 	

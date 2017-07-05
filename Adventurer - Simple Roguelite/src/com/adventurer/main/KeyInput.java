@@ -26,28 +26,28 @@ public class KeyInput extends KeyAdapter {
 		if(player.GetHealth().isDead()) return;
 		
 		// movement
-		if(key == KeyEvent.VK_W) {
+		if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) {
 			
 			if(player.GetLookDirection() == Direction.North)
 				player.Move(Direction.North);
 			else
 				player.SetLookDirection(Direction.North);
 				
-		} else if(key == KeyEvent.VK_S) {
+		} else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) {
 			
 			if(player.GetLookDirection() == Direction.South)
 				player.Move(Direction.South);
 			else 
 				player.SetLookDirection(Direction.South);
 			
-		} else if(key == KeyEvent.VK_A) {
+		} else if(key == KeyEvent.VK_A || key == KeyEvent.VK_NUMPAD4) {
 			
 			if(player.GetLookDirection() == Direction.West)
 				player.Move(Direction.West);
 			else 
 				player.SetLookDirection(Direction.West);
 			
-		} else if(key == KeyEvent.VK_D) {
+		} else if(key == KeyEvent.VK_D || key == KeyEvent.VK_NUMPAD6) {
 			
 			if(player.GetLookDirection() == Direction.East)
 				player.Move(Direction.East);
@@ -67,9 +67,10 @@ public class KeyInput extends KeyAdapter {
 		}
 		
 		// shoot
+		/*
 		if(key == KeyEvent.VK_SHIFT) {
 			player.Shoot(player.GetTilePosition(), player.GetLookDirection(), SpriteType.Arrow01);
-		}
+		}*/
 			
 		// shooting debugging
 		/*if(key == KeyEvent.VK_UP) {

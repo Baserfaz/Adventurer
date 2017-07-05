@@ -420,6 +420,7 @@ public class World {
 	}
 	
 	// Changes tiletype and spritetype of OLD tile.
+	// doesnt remove tiles.
 	public void ChangeTile(Tile oldTile, TileType newTileType, SpriteType newSpriteType) {
 		
 		// 1. change the data of old tile.
