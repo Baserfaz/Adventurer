@@ -17,7 +17,7 @@ public class Turret extends Actor {
 	SpriteType projSpriteType;
 	
 	public Turret(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int damage) {
-		super(worldPos, tilePos, spritetype, 500, damage);
+		super(worldPos, tilePos, spritetype, 500, damage, "turret");
 		
 		this.shootTimer = System.currentTimeMillis() + shootCooldown + Util.GetRandomInteger(100, 500);
 		this.projSpriteType = SpriteType.Arrow01;

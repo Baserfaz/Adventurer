@@ -1,12 +1,14 @@
 package com.adventurer.main;
 
 import java.util.List;
+import java.util.Map;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.EnemyType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.gameobjects.*;
+import com.adventurer.utilities.FileReader;
 import com.adventurer.utilities.Util;
 
 public class ActorManager {
@@ -83,16 +85,32 @@ public class ActorManager {
 		for(int i = 0; i < count; i++) {
 			
 			EnemyType randomType = EnemyType.values()[Util.GetRandomInteger(0, EnemyType.values().length)];
-			int damage = 100;
-			int health = 100;
 			
-			// TODO: enemy type specific damage and health
+			int damage = 0;
+			int health = 0;
+			String name = "";
+			boolean isRanged = false;
 			
-			CreateEnemy(health, damage, randomType, tiles);
+			// read enemy data
+			Map<String, String> retval = FileReader.readXMLGameData(randomType.toString());
+			for(Map.Entry<String, String> entry : retval.entrySet()) {
+				String key = entry.getKey();
+				String val = entry.getValue();
+				
+				if(key == "damage") damage = Integer.parseInt(val);
+				else if(key == "health") health = Integer.parseInt(val);
+				else if(key == "name") name = val;
+				else if(key == "isRanged") isRanged = Boolean.parseBoolean(val);
+				//else System.out.println("Not yet implemented: " + key);
+				
+			}
+			
+			CreateEnemy(name, health, damage, randomType, tiles, isRanged);
 		}
 	}
 	
-	public static Enemy CreateEnemy(int maxHP, int damage, EnemyType enemyType, List<Tile> roomTiles) {
+	public static Enemy CreateEnemy(String name, int maxHP, int damage,
+			EnemyType enemyType, List<Tile> roomTiles, boolean isRanged) {
 		
 		// get position
 		int[] pos = World.instance.GetFreePosition(roomTiles);
@@ -118,7 +136,7 @@ public class ActorManager {
 		Coordinate enemyTilePos = new Coordinate(pos[2], pos[3]);
 		
 		// create enemy object
-		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, maxHP, damage);
+		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, maxHP, damage, name, isRanged);
 	}
 	
 	public static Enemy[] GetEnemyInstances() {

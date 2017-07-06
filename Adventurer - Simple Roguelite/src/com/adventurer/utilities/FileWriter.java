@@ -37,8 +37,8 @@ public class FileWriter {
 	
 	public static void writeSessionData(Session session) {
 		try {
-			new File("data").mkdirs();
-		    PrintWriter writer = new PrintWriter("data/" + session.getSessionName() + ".txt", "UTF-8");
+			new File("data/sessions").mkdirs();
+		    PrintWriter writer = new PrintWriter("data/sessions/" + session.getSessionName() + ".txt", "UTF-8");
 		    writer.println("Session name: " + session.getSessionName());
 		    writer.println("Score: " + session.getScore());
 		    writer.close();

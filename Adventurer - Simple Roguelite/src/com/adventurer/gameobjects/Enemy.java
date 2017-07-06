@@ -29,14 +29,16 @@ public class Enemy extends Actor {
 	
 	private EnemyLoSManager losManager;
 	
-	public Enemy(Coordinate worldPos, Coordinate tilePos, EnemyType enemytype, SpriteType spritetype, int maxHP, int damage) {
-		super(worldPos, tilePos, spritetype, maxHP, damage);
+	public Enemy(Coordinate worldPos, Coordinate tilePos,
+			EnemyType enemytype, SpriteType spritetype,
+			int maxHP, int damage, String name, boolean isRanged) {
+		super(worldPos, tilePos, spritetype, maxHP, damage, name);
 		
 		// declare ranged units here
-		if(enemytype == EnemyType.Skeleton) {
-			this.hasRangedAttack = true;
-			this.projectileType = SpriteType.Spear01;
-		}
+		this.hasRangedAttack = isRanged;
+		
+		// TODO: different projectiles?
+		this.projectileType = SpriteType.Spear01;
 		
 		this.setEnemyType(enemytype);
 		this.losManager = new EnemyLoSManager();

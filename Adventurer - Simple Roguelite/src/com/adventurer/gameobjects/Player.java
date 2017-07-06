@@ -23,7 +23,7 @@ public class Player extends Actor {
 	private Session currentSession;
 	
 	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int damage) {
-		super(worldPos, tilePos, spritetype, maxHP, damage);
+		super(worldPos, tilePos, spritetype, maxHP, damage, "Player");
 		
 		this.losmanager = new LoSManager();
 		this.inventory = new Inventory(Game.START_KEY_COUNT, Game.START_BOMB_COUNT, Game.START_PROJECTILE_COUNT);

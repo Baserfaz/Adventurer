@@ -30,12 +30,14 @@ public class Actor extends GameObject {
 	protected boolean canMove = true;
 	protected Health myHP;
 	protected int damage = 100;
+	protected String name = "";
 	
-	public Actor(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int damage) {
+	public Actor(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int damage, String name) {
 		super(worldPos, tilePos, spritetype);
 		
 		this.lookDir = Direction.West;
 		this.damage = damage;
+		this.name = name;
 		this.myHP = new Health(maxHP);
 		
 		// register to tile
@@ -272,6 +274,10 @@ public class Actor extends GameObject {
 			
 			canMove = true;
 		}
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 	
 	public Direction GetLookDirection() {

@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<gamedata>
+
+	<enemies>
+	
+		<enemy>
+			<name>Skeleton warrior</name>
+			<enemyType>Skeleton</enemyType>
+			<health>200</health>
+			<damage>50</damage>
+			<isRanged>true</isRanged>
+		</enemy>
+		
+		<enemy>
+			<name>Zombie walker</name>
+			<enemyType>Zombie</enemyType>
+			<health>100</health>
+			<damage>50</damage>
+			<isRanged>false</isRanged>
+		</enemy>
+		
+		<enemy>
+			<name>Maggot</name>
+			<enemyType>Maggot</enemyType>
+			<health>100</health>
+			<damage>25</damage>
+			<isRanged>false</isRanged>
+		</enemy>
+		
+	</enemies>
+	
+</gamedata>
