@@ -143,7 +143,7 @@ public class DungeonGeneration {
 					// calculate world position
 					Coordinate worldPos = World.instance.ConvertTilePositionToWorld(tilePos);
 					
-					Tile t = new Tile(worldPos, tilePos, SpriteType.TrapTile01, TileType.OuterWall);
+					Tile t = new Tile(worldPos, tilePos, SpriteType.Error, TileType.OuterWall);
 					
 					tiles_.add(t);
 				}
