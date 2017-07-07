@@ -11,6 +11,7 @@ import com.adventurer.main.Game;
 public class FileWriter {
 
 	// create a default file
+	// DONT USE THIS.
 	public static void createSaveFile() {
 		try {
 			new File("data").mkdirs();

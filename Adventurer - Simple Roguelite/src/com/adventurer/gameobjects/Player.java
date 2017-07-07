@@ -183,7 +183,10 @@ public class Player extends Actor {
 			
 			Portal portal = (Portal) tile;
 			
-			if(portal.isExit()) {
+			// TODO: shop every 10th floor?
+			// atm. session is over.
+			
+			if(portal.isExit() || currentSession.getDungeonLevel() == 10) {
 				
 				currentSession.saveSessionData();
 				currentSession = null;
@@ -193,10 +196,15 @@ public class Player extends Actor {
 				
 			} else {
 				
-				currentSession = new Session("session_" + System.currentTimeMillis());
+				if(currentSession == null) {
+					currentSession = new Session("session_" + System.currentTimeMillis());
+				} else {
+					currentSession.addDungeonLevel(1);
+				}
 				
 				World.instance.Remove();
-				new World(RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)]);
+				//new World(RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)]);
+				new World(Game.ROOM_COUNT);
 				
 			}
 			

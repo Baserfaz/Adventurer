@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public static final int WIDTH = 1280, HEIGHT = 720; 			// viewport size
 	public static final int SPRITESIZE = 16; 						// sprite size in pixels
-	public static final int CAMERAZOOM = 3; 						// level of zoom
+	public static final int CAMERAZOOM = 1; 						// level of zoom
 	public static final double FRAME_CAP = 60.0;					// cap the framerate to this
 	public static final String SPRITESHEETNAME = "spritesheet.png";	// main spritesheet name
 	
@@ -34,15 +34,13 @@ public class Game extends Canvas implements Runnable {
 	// draw debugging stuff
 	public static final boolean DRAW_CAMERA = false;
 	public static final boolean DRAW_ENEMY_FOV = false;
-	public static final boolean DRAW_ENEMY_PATH = false; 			// works only with one enemy
+	public static final boolean DRAW_ENEMY_PATH = false; 			// works correctly only with one enemy
 	
-	// prints
-	public static final boolean PRINT_WORLD_CREATION_PERCENTAGE_DONE = false;
-	public static final boolean PRINT_WORLD_CREATION_START_END = false;
-	public static final boolean PRINT_DOOR_CREATED = false;
+	// debugging -> no need to spawn lobby.
+	public static final boolean START_GAME_WITH_RANDOM_ROOM = true;
 	
 	// LOS settings
-	public static final boolean CALCULATE_PLAYER_LOS = true;
+	public static final boolean CALCULATE_PLAYER_LOS = false;
 	
 	// render settings
 	public static final boolean RENDER_ACTORS_DIRECTION_ARROW = false;
@@ -72,16 +70,20 @@ public class Game extends Canvas implements Runnable {
 	public static final int MIN_ENEMY_COUNT_IN_ROOM = 1;
 	public static final int MAX_ENEMY_COUNT_IN_ROOM = 2;
 	
-	// room count in world
-	public static final int WORLDHEIGHT = 2;
-	public static final int WORLDWIDTH = 2;
+	// tiles in world
+	public static final int WORLDHEIGHT = 25;
+	public static final int WORLDWIDTH = 25;
 	
-	// tiles in one room
-	public static final int ROOMHEIGHT = 10;
-	public static final int ROOMWIDTH = 10;
+	public static final int ROOM_COUNT = 10;
 	
-	public static final int TILEGAP = 3;	// gap between each tile.
-	public static final int ROOMGAP = 0; 	// gap between rooms
+	public static final int ROOM_MAX_WIDTH = 5;
+	public static final int ROOM_MIN_WIDHT = 2;
+	public static final int ROOM_MAX_HEIGHT = 5;
+	public static final int ROOM_MIN_HEIGHT = 2;
+	
+	public static final int ROOM_TRY_GENERATION_COUNT = 500;
+	
+	public static final int TILEGAP = 3;		// gap between each tile.
 	
 	//------------------------------
 	
@@ -128,7 +130,8 @@ public class Game extends Canvas implements Runnable {
 		setCurrentSaveFile(new SaveFile());
 		
 		// create lobby
-		new World(PredefinedMaps.GetLobby());
+		if(START_GAME_WITH_RANDOM_ROOM) new World(ROOM_COUNT);
+		else new World(PredefinedMaps.GetLobby());
 	}
 	
 	public synchronized void Start() {
@@ -193,7 +196,6 @@ public class Game extends Canvas implements Runnable {
 				frames++;
 			}
 		}
-		
 		Stop();
 	}
 	
@@ -238,6 +240,7 @@ public class Game extends Canvas implements Runnable {
 						(int) Camera.instance.getCameraBounds().getWidth(),
 						(int) Camera.instance.getCameraBounds().getHeight());
 			}
+			
 		} else {
 			
 			Renderer.FillScreen(g, Color.black);

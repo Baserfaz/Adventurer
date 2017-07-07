@@ -7,6 +7,7 @@ public class Session {
 
 	private int score;
 	private String sessionName;
+	private int dungeonLevel = 1;
 	
 	public Session(String sessionName) {
 		this.setSessionName(sessionName);
@@ -37,6 +38,18 @@ public class Session {
 
 	public void setSessionName(String sessionName) {
 		this.sessionName = sessionName;
+	}
+
+	public int getDungeonLevel() {
+		return dungeonLevel;
+	}
+
+	public void setDungeonLevel(int dungeonLevel) {
+		this.dungeonLevel = dungeonLevel;
+	}
+	
+	public void addDungeonLevel(int a) {
+		this.dungeonLevel += a;
 	}
 	
 }

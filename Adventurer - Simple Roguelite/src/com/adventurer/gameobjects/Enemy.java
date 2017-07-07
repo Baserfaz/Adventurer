@@ -1,7 +1,6 @@
 package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.List;
 
