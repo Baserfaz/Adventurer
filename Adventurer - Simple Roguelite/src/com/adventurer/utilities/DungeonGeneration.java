@@ -11,7 +11,6 @@ import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.main.Game;
-import com.adventurer.main.Handler;
 
 public class DungeonGeneration {
 
@@ -65,10 +64,58 @@ public class DungeonGeneration {
 		
 		System.out.println("Created: " + allRooms.size() + " rooms.");
 		
-		// for debugging...
-		allTiles.addAll(fillEmptyWithWalls(allTiles));
+		List<Tile> tiles_ = createWorldWalls(allTiles);
+		
+		// get free spots
+		tiles_ = fillEmptyWithWalls(tiles_);
+		
+		// TODO: create maze or connectors
+		createMaze(tiles_);
 		
 		return allTiles;
+	}
+	
+	private static List<Tile> createWorldWalls(List<Tile> tiles) {
+		
+		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
+		
+		for(int y = 0; y < Game.WORLDHEIGHT; y++) {
+			for (int x = 0; x < Game.WORLDWIDTH; x++) {
+				
+				boolean empty = true;
+				
+				for(Tile tile : tiles) {
+					
+					Coordinate pos = tile.GetTilePosition();
+					
+					if(pos.getX() == x && pos.getY() == y) {
+						empty = false;
+						break;
+					}
+				}
+				
+				if(empty && (y == 0 || y == Game.WORLDHEIGHT - 1 || x == 0 || x == Game.WORLDWIDTH - 1)) {
+					
+					Coordinate tilePos = new Coordinate(x, y);	
+					
+					// calculate world position
+					Coordinate worldPos = World.instance.ConvertTilePositionToWorld(tilePos);
+					
+					Tile t = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+					
+					tiles_.add(t);
+				}
+			}
+		}
+		
+		return tiles_;
+	}
+	
+	private static void createMaze(List<Tile> tiles) {
+		System.out.println("Creating maze...");
+		
+		
+		System.out.println("Maze created.");
 	}
 	
 	private static Room createRoom(int width, int height, RoomType roomtype, Coordinate startTilePos) {
@@ -143,7 +190,7 @@ public class DungeonGeneration {
 					// calculate world position
 					Coordinate worldPos = World.instance.ConvertTilePositionToWorld(tilePos);
 					
-					Tile t = new Tile(worldPos, tilePos, SpriteType.Error, TileType.OuterWall);
+					Tile t = new Tile(worldPos, tilePos, SpriteType.Error, TileType.Error);
 					
 					tiles_.add(t);
 				}

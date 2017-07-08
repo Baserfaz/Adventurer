@@ -8,5 +8,6 @@ public enum TileType {
 	Door(),
 	LockedDoor(),
 	Trap(),
-	Portal();
+	Portal(),
+	Error();
 }
