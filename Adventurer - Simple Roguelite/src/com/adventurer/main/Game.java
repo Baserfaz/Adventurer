@@ -71,14 +71,14 @@ public class Game extends Canvas implements Runnable {
 	public static final int MAX_ENEMY_COUNT_IN_ROOM = 2;
 	
 	// tiles in world
-	public static final int WORLDHEIGHT = 25;
-	public static final int WORLDWIDTH = 25;
+	public static final int WORLDHEIGHT = 40;
+	public static final int WORLDWIDTH = 40;
 	
 	public static final int ROOM_COUNT = 10;
 	
-	public static final int ROOM_MAX_WIDTH = 5;
+	public static final int ROOM_MAX_WIDTH = 10;
 	public static final int ROOM_MIN_WIDHT = 2;
-	public static final int ROOM_MAX_HEIGHT = 5;
+	public static final int ROOM_MAX_HEIGHT = 10;
 	public static final int ROOM_MIN_HEIGHT = 2;
 	
 	public static final int ROOM_TRY_GENERATION_COUNT = 500;

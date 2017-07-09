@@ -1,7 +1,10 @@
 package com.adventurer.utilities;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Room;
@@ -66,56 +69,12 @@ public class DungeonGeneration {
 		
 		List<Tile> tiles_ = createWorldWalls(allTiles);
 		
-		// get free spots
-		tiles_ = fillEmptyWithWalls(tiles_);
+		tiles_ = fillEmptyWithErrorTiles(tiles_);
 		
-		// TODO: create maze or connectors
+		// tiles_ contains only error tiles.
 		createMaze(tiles_);
 		
 		return allTiles;
-	}
-	
-	private static List<Tile> createWorldWalls(List<Tile> tiles) {
-		
-		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
-		
-		for(int y = 0; y < Game.WORLDHEIGHT; y++) {
-			for (int x = 0; x < Game.WORLDWIDTH; x++) {
-				
-				boolean empty = true;
-				
-				for(Tile tile : tiles) {
-					
-					Coordinate pos = tile.GetTilePosition();
-					
-					if(pos.getX() == x && pos.getY() == y) {
-						empty = false;
-						break;
-					}
-				}
-				
-				if(empty && (y == 0 || y == Game.WORLDHEIGHT - 1 || x == 0 || x == Game.WORLDWIDTH - 1)) {
-					
-					Coordinate tilePos = new Coordinate(x, y);	
-					
-					// calculate world position
-					Coordinate worldPos = World.instance.ConvertTilePositionToWorld(tilePos);
-					
-					Tile t = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
-					
-					tiles_.add(t);
-				}
-			}
-		}
-		
-		return tiles_;
-	}
-	
-	private static void createMaze(List<Tile> tiles) {
-		System.out.println("Creating maze...");
-		
-		
-		System.out.println("Maze created.");
 	}
 	
 	private static Room createRoom(int width, int height, RoomType roomtype, Coordinate startTilePos) {
@@ -164,7 +123,108 @@ public class DungeonGeneration {
 		return new Room(width, height, startTilePos, tiles, roomtype);
 	}
 	
-	private static List<Tile> fillEmptyWithWalls(List<Tile> tiles) {
+	private static void createMaze(List<Tile> tiles) {
+		System.out.println("Creating maze...");
+		
+		List<Tile> closedSet = new ArrayList<Tile>(); 		// visited tiles
+		Queue<Tile> openSet = new ArrayDeque<Tile>();		// discovered tiles
+		
+		// get a random tile
+		Tile current = tiles.remove(Util.GetRandomInteger(0, tiles.size()));
+		
+		closedSet.add(current);
+		openSet.addAll(getNeighboringWalls(current, tiles, openSet, closedSet));
+		
+		while(openSet.isEmpty() == false) {
+			
+			current = openSet.remove();
+			closedSet.add(current);
+			openSet.addAll(getNeighboringWalls(current, tiles, openSet, closedSet));
+			
+		}
+		
+		for(Tile t : closedSet) replaceTile(t, TileType.Floor);
+		
+		System.out.println("Maze created.");
+	}
+	
+	private static void replaceTile(Tile old, TileType newType) {
+		
+		
+		
+		old.Remove();
+	}
+	
+	private static List<Tile> getNeighboringWalls(Tile tile, List<Tile> tiles, Queue<Tile> openSet, List<Tile> closedSet) {
+		List<Tile> neighbors = new ArrayList<Tile>();
+		
+		int x = tile.GetTilePosition().getX();
+		int y = tile.GetTilePosition().getY();
+		
+		// neighbors
+		Coordinate top = new Coordinate(x, y - 1);
+		Coordinate bottom = new Coordinate(x, y + 1);
+		Coordinate left = new Coordinate(x - 1, y);
+		Coordinate right = new Coordinate(x + 1, y);
+		
+		for(Tile t : tiles) {
+			
+			int x_ = t.GetTilePosition().getX();
+			int y_ = t.GetTilePosition().getY();
+			
+			// check if this tile is a neighbor of the current tile.
+			// tiles contains only tile type of error tiles.
+			
+			if(openSet.contains(t) || closedSet.contains(t) || t.equals(tile)) continue;
+			
+			if(
+				(top.getX() == x_ && top.getY() == y_) 			||
+				(bottom.getX() == x_ && bottom.getY() == y_) 	||
+				(left.getX() == x_ && left.getY() == y_) 		||
+				(right.getX() == x_ && right.getY() == y_)
+			) { neighbors.add(t); }
+			
+		}
+		return neighbors;
+	}
+	
+	private static List<Tile> createWorldWalls(List<Tile> tiles) {
+		
+		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
+		
+		for(int y = 0; y < Game.WORLDHEIGHT; y++) {
+			for (int x = 0; x < Game.WORLDWIDTH; x++) {
+				
+				boolean empty = true;
+				
+				for(Tile tile : tiles) {
+					
+					Coordinate pos = tile.GetTilePosition();
+					
+					if(pos.getX() == x && pos.getY() == y) {
+						empty = false;
+						break;
+					}
+				}
+				
+				if(empty && (y == 0 || y == Game.WORLDHEIGHT - 1 || x == 0 || x == Game.WORLDWIDTH - 1)) {
+					
+					Coordinate tilePos = new Coordinate(x, y);	
+					
+					// calculate world position
+					Coordinate worldPos = World.instance.ConvertTilePositionToWorld(tilePos);
+					
+					Tile t = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
+					
+					tiles_.add(t);
+				}
+			}
+		}
+		
+		return tiles_;
+	}
+	
+	private static List<Tile> fillEmptyWithErrorTiles(List<Tile> tiles) {
 		
 		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
 		
