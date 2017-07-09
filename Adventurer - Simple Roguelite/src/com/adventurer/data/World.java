@@ -545,6 +545,6 @@ public class World {
 	}
 	
 	public void RemoveTiles(Tile t) {
-		this.tiles.remove(t);
+		if(tiles.contains(t)) this.tiles.remove(t);
 	}
 }

@@ -32,7 +32,7 @@ public class Handler {
 	public void tick() {
 		for(int i = 0; i < getObjects().size(); i++) {
 			GameObject current = getObjects().get(i);
-			current.tick();
+			if(current != null) current.tick();
 		}
 	}
 	

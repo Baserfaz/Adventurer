@@ -236,7 +236,7 @@ public class Tile extends GameObject {
 			for(VanityItem vi : temp) vi.Remove();
 		}
 		
-		World.instance.RemoveTiles(this);
+		if(World.instance != null && World.instance.GetTiles() != null) World.instance.RemoveTiles(this);
 		Handler.instance.RemoveObject(this);
 		Hide();
 	}
@@ -269,7 +269,7 @@ public class Tile extends GameObject {
 	
 	public String GetInfo() {
 		String s = super.GetInfo();
-		s += ", Item: " + this.GetItem() + ", Actor: " + this.GetActor();
+		s += ", tiletype: " + this.GetTileType() + ", Item: " + this.GetItem() + ", Actor: " + this.GetActor();
 		return s;
 	}
 	

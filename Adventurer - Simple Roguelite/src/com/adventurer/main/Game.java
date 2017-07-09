@@ -71,8 +71,8 @@ public class Game extends Canvas implements Runnable {
 	public static final int MAX_ENEMY_COUNT_IN_ROOM = 2;
 	
 	// tiles in world
-	public static final int WORLDHEIGHT = 40;
-	public static final int WORLDWIDTH = 40;
+	public static final int WORLDHEIGHT = 20;
+	public static final int WORLDWIDTH = 20;
 	
 	public static final int ROOM_COUNT = 10;
 	
@@ -221,6 +221,7 @@ public class Game extends Canvas implements Runnable {
 		g2d.scale(CAMERAZOOM, CAMERAZOOM);
 		
 		// camera follow
+		// TODO: camera shouldn't be in render().
 		Player player = ActorManager.GetPlayerInstance();
 		if(player != null) {
 			
