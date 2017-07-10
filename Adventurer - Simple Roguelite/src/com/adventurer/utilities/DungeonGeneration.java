@@ -16,7 +16,18 @@ import com.adventurer.main.Game;
 
 public class DungeonGeneration {
 
+	
+	/*
+	 * Creates Rooms, world walls and maze, in that order.
+	 * 1. Rooms are inside the world space
+	 * 2. Rooms are not overlapping
+	 * 3. Walls are created around the world edge.
+	 * 4. Maze is generated randomly
+	 * 5. Doors are created to connect the maze with other rooms.
+	 */
 	public static List<Tile> createDungeon(int roomcount) {
+		
+		long startTime = System.currentTimeMillis();
 		
 		System.out.println("Generating dungeon...");
 		
@@ -31,6 +42,8 @@ public class DungeonGeneration {
 			Coordinate startTilePos;
 			boolean failure = false;
 			
+			// This loop tries to fit different sized rooms 
+			// to the dungeon. For every room it tries this multiple times.
 			do {
 				// randomize room size
 				width = Util.GetRandomInteger(Game.ROOM_MIN_WIDHT, Game.ROOM_MAX_WIDTH);
@@ -52,6 +65,8 @@ public class DungeonGeneration {
 				// and it should be inside the world space.
 			} while (checkOverlap(startTilePos, width, height, allTiles) || checkInsideWorld(startTilePos, width, height) == false);
 			
+			// if the room fails to fit anywhere,
+			// then we won't create a room.
 			if(failure) continue;
 			
 			// create room
@@ -67,18 +82,24 @@ public class DungeonGeneration {
 		System.out.println("Created: " + allRooms.size() + " rooms.");
 		
 		// adds world walls to the list.
+		// modifies the allTiles list.
 		allTiles = createWorldWalls(allTiles);
 		
-		// empty contains only "empty" i.e. error tiles.
-		List<Tile> errorTiles = fillEmptyWithErrorTiles(allTiles);
+		// contains only "empty" i.e. error tiles.
+		// creates a new list of error tiles.
+		List<Tile> modTiles = fillEmptyWithErrorTiles(allTiles);
 		
-		// has error & maze-floor tiles
-		List<Tile> tiles_ = createMaze(errorTiles);
-	
-		// create maze walls
-		createMazeWalls(tiles_);
+		// generate maze.
+		modTiles = MazeGeneration.generateMaze_v2(modTiles);
 		
-		//allTiles.addAll(tiles_);
+		allTiles.addAll(modTiles);
+		
+		// ----------- END OF GENERATION ------------------
+		
+		int genTime = (int) (System.currentTimeMillis() - startTime);
+		
+		System.out.println("World consists of " + allTiles.size() + " tiles.");
+		System.out.println("World generated in : " + genTime + " milliseconds.");
 		
 		return allTiles;
 	}
@@ -129,111 +150,6 @@ public class DungeonGeneration {
 		return new Room(width, height, startTilePos, tiles, roomtype);
 	}
 	
-	private static List<Tile> createMaze(List<Tile> tiles) {
-		System.out.println("Creating maze...");
-		
-		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
-		
-		List<Tile> closedSet = new ArrayList<Tile>(); 		// visited tiles
-		Queue<Tile> openSet = new ArrayDeque<Tile>();		// discovered tiles
-		
-		// get a random tile
-		Tile current = tiles.get(Util.GetRandomInteger(0, tiles.size()));
-		
-		closedSet.add(current);
-		openSet.addAll(getNeighboringTiles(current, tiles, openSet, closedSet));
-		
-		while(openSet.isEmpty() == false) {
-			
-			// TODO: make random: -> no queue.
-			
-			current = openSet.remove();
-			
-			List<Tile> neighbors = getNeighboringTiles(current, tiles, openSet, closedSet);
-			
-			int floorCount = 0;
-			
-			for(Tile t : neighbors) {
-				if(closedSet.contains(t)) {
-					floorCount += 1;
-				}
-			}
-			
-			if(floorCount < 2) {
-				
-				closedSet.add(current);
-				
-				for(Tile t : neighbors) {
-					if(closedSet.contains(t) || openSet.contains(t)) continue;
-					else openSet.add(t);
-				}
-				
-			}
-		}
-		
-		// replace error tiles with floor tiles.
-		for(Tile t : closedSet)  {
-			tiles_.remove(t);
-			Tile tile_ = replaceTile(t, TileType.Floor, SpriteType.FloorTile01);
-			tiles_.add(tile_);
-		}
-		
-		System.out.println("Maze created.");
-		
-		return tiles_;
-	}
-	
-	private static List<Tile> createMazeWalls(List<Tile> tiles) {
-		
-		List<Tile> tiles_ = new ArrayList<Tile>();
-		
-		for(Tile t : tiles) {
-			if(t.GetTileType() == TileType.Error) {
-				Tile tile_ = replaceTile(t, TileType.Wall, SpriteType.Wall01);
-				tiles_.add(tile_);
-			}
-		}
-		return tiles_;
-	}
-	
-	private static Tile replaceTile(Tile old, TileType newType, SpriteType newSpriteType) {
-		Tile tile_ = new Tile(old.GetWorldPosition(), old.GetTilePosition(), newSpriteType, newType);
-		old.Remove();
-		return tile_;
-	}
-	
-	private static List<Tile> getNeighboringTiles(Tile tile, List<Tile> tiles, Queue<Tile> openSet, List<Tile> closedSet) {
-		List<Tile> neighbors = new ArrayList<Tile>();
-		
-		int x = tile.GetTilePosition().getX();
-		int y = tile.GetTilePosition().getY();
-		
-		// neighbors
-		Coordinate top = new Coordinate(x, y - 1);
-		Coordinate bottom = new Coordinate(x, y + 1);
-		Coordinate left = new Coordinate(x - 1, y);
-		Coordinate right = new Coordinate(x + 1, y);
-		
-		for(Tile t : tiles) {
-			//if(openSet.contains(t) || closedSet.contains(t)) continue;
-			
-			int x_ = t.GetTilePosition().getX();
-			int y_ = t.GetTilePosition().getY();
-			
-			// check if this tile is a neighbor of the current tile.
-			// tiles contains only tile type of error tiles.
-			
-			if(
-				(top.getX() == x_ && top.getY() == y_) 			||
-				(bottom.getX() == x_ && bottom.getY() == y_) 	||
-				(left.getX() == x_ && left.getY() == y_) 		||
-				(right.getX() == x_ && right.getY() == y_)
-			) { neighbors.add(t); }
-			
-		}
-		return neighbors;
-	}
-	
 	private static List<Tile> createWorldWalls(List<Tile> tiles) {
 		
 		// old tiles + new tiles?
@@ -267,7 +183,6 @@ public class DungeonGeneration {
 				}
 			}
 		}
-		
 		return tiles_;
 	}
 	
@@ -342,5 +257,4 @@ public class DungeonGeneration {
 		}
 		return false;
 	}
-	
 }
