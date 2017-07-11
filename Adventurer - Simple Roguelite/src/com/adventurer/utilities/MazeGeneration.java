@@ -1,83 +1,106 @@
 package com.adventurer.utilities;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Queue;
+import java.util.Stack;
 
 import com.adventurer.data.Coordinate;
+import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.Tile;
 
 public class MazeGeneration {
-
-	public static List<Tile> generateMaze_v1 (List<Tile> tiles) {
+	
+	// uses recursive backtracking algorithm, based on Jamis Buck's work.
+	// http://www.jamisbuck.org/presentations/rubyconf2011/index.html#recursive-backtracker-demo
+	public static List<Tile> generateMaze_v3(List<Tile> tiles) {
 		
-		System.out.println("Creating maze...");
+		List<Tile> tiles_ 		 = new ArrayList<Tile>(tiles);  // contains all tiles
+		Stack<Tile> visited 	 = new Stack<Tile>();			// visited tiles
+		List<Tile> concretePath  = new ArrayList<Tile>();		// floor tiles
+		List<Tile> concreteWalls = new ArrayList<Tile>();		// wall tiles
 		
-		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
+		// randomize starting tile
+		Tile current = tiles_.get(Util.GetRandomInteger(0, tiles_.size()));
+		visited.push(current);
 		
-		List<Tile> closedSet = new ArrayList<Tile>(); 		// visited tiles
-		Queue<Tile> openSet = new ArrayDeque<Tile>();		// discovered tiles
+		System.out.println("Maze started from tile: " + current.GetInfo());
 		
-		// get a random tile
-		Tile current = tiles.get(Util.GetRandomInteger(0, tiles.size()));
+		Tile cameFrom = null, neighbor = null;
 		
-		closedSet.add(current);
-		openSet.addAll(getNeighboringTiles(current, tiles, openSet, closedSet));
+		// TODO: this is absolutely ugly.
+		int c = 0, ctotal = 0;
 		
-		while(openSet.isEmpty() == false) {
+		// ----------------------------------- START MAZE GEN
+		
+		// if the stack is empty, we are done.
+		while(visited.isEmpty() == false) {
 			
-			current = openSet.remove();
+			current = visited.pop();
+			concretePath.add(current);
 			
-			List<Tile> neighbors = getNeighboringTiles(current, tiles, openSet, closedSet);
-			
-			int floorCount = 0;
-			
-			for(Tile t : neighbors) {
-				if(closedSet.contains(t)) {
-					floorCount += 1;
-				}
-			}
-			
-			if(floorCount < 2) {
+			do { // random walker
+		
+				neighbor = getRandomNeighboringTile(current, tiles_);
 				
-				closedSet.add(current);
-				
-				for(Tile t : neighbors) {
-					if(closedSet.contains(t) || openSet.contains(t)) continue;
-					else openSet.add(t);
-				}
-				
-			}
+				if(
+						(neighbor != null && 
+						visited.contains(neighbor) == false && 
+						concretePath.contains(neighbor) == false &&
+						concreteWalls.contains(neighbor) == false)
+				) {
+					
+					// If we accidentally chose the same tile where we came from,
+					// then just continue and don't count this as a failure.
+					if(neighbor.equals(cameFrom)) continue;
+					
+					// other neighbors are walls.
+					for(Tile t : getNeighboringTiles(current, tiles_)) {
+						if(t != null && 
+								t.equals(neighbor) == false &&
+								visited.contains(t) == false &&
+								concretePath.contains(t) == false &&
+								concreteWalls.contains(t) == false) concreteWalls.add(t);
+					}
+					
+					visited.push(neighbor);
+					cameFrom = current; // cache the previous tile
+					current = neighbor;
+					c = 0;
+					
+				} else { c++; }
+			} while(c < 50);
+			
+			// when the algorithm gets here,
+			// the random walker is stuck and we 
+			// are backtracking.
 		}
 		
-		// replace error tiles with floor tiles.
-		for(Tile t : closedSet)  {
+		// ------------------------------------ END OF MAZE GEN 
+		
+		// draw floor
+		for(Tile t : concretePath) {
 			tiles_.remove(t);
-			Tile tile_ = replaceTile(t, TileType.Floor, SpriteType.FloorTile01);
-			tiles_.add(tile_);
+			Tile newt = replaceTile(t, TileType.Floor, SpriteType.FloorTile01);
+			tiles_.add(newt);
 		}
 		
-		System.out.println("Maze created.");
+		// draw walls
+		for(Tile t : concreteWalls) {
+			tiles_.remove(t);
+			Tile newt = replaceTile(t, TileType.Wall, SpriteType.Wall01);
+			tiles_.add(newt);
+		}
 		
-		return createMazeWalls(tiles_);
+		// TODO: fill in walls if there are more error-tiles.
+		return tiles_;//createMazeWalls(tiles_);
 	}
 	
-	public static List<Tile> generateMaze_v2(List<Tile> tiles) {
-		List<Tile> tiles_ = new ArrayList<Tile>();
-		
-		
-		
-		
-		return tiles_;
-	}
-	
+	// replaces all error tiles with walls.
 	private static List<Tile> createMazeWalls(List<Tile> tiles) {
-		
 		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
-		
 		for(Tile t : tiles) {
 			if(t.GetTileType() == TileType.Error) {
 				tiles_.remove(t);
@@ -94,7 +117,61 @@ public class MazeGeneration {
 		return tile_;
 	}
 	
-	private static List<Tile> getNeighboringTiles(Tile tile, List<Tile> tiles, Queue<Tile> openSet, List<Tile> closedSet) {
+	private static Tile getRandomNeighboringTile(Tile tile, List<Tile> tiles) {
+		Tile chosen = null;
+		
+		Direction[] ds = new Direction[] { Direction.North, Direction.East, Direction.South, Direction.West };
+		List<Direction> dds = new ArrayList<Direction>();
+		for(Direction d : ds) {
+			dds.add(d);
+		}
+		
+		// randomize the search order.
+		Collections.shuffle(dds);
+		
+		// get first neighboring tile.
+		for(Direction d : dds) {
+			Tile n = getNeighboringTile(tile, d, tiles);
+			if(n != null) chosen = n;
+		}
+		return chosen;
+	}
+	
+	private static Tile getNeighboringTile(Tile tile, Direction dir, List<Tile> tiles) {
+		Tile chosen = null;
+		
+		int x = tile.GetTilePosition().getX();
+		int y = tile.GetTilePosition().getY();
+		
+		switch(dir) {
+		case East:
+			chosen = getTileAt(new Coordinate(x + 1, y), tiles);
+			break;
+		case North:
+			chosen = getTileAt(new Coordinate(x, y - 1), tiles);
+			break;
+		case South:
+			chosen = getTileAt(new Coordinate(x, y + 1), tiles);
+			break;
+		case West:
+			chosen = getTileAt(new Coordinate(x - 1, y), tiles);
+			break;
+		}
+		return chosen;
+	}
+	
+	private static Tile getTileAt(Coordinate pos, List<Tile> tiles) {
+		Tile tile = null;
+		for(Tile t : tiles) {
+			if(t.GetTilePosition().getX() == pos.getX() && t.GetTilePosition().getY() == pos.getY()) {
+				tile = t;
+				break;
+			}
+		}
+		return tile;
+	}
+	
+	private static List<Tile> getNeighboringTiles(Tile tile, List<Tile> tiles) {
 		List<Tile> neighbors = new ArrayList<Tile>();
 		
 		int x = tile.GetTilePosition().getX();
@@ -107,8 +184,6 @@ public class MazeGeneration {
 		Coordinate right = new Coordinate(x + 1, y);
 		
 		for(Tile t : tiles) {
-			// we want ALL tiles, no filtering here yet.
-			//if(openSet.contains(t) || closedSet.contains(t)) continue;
 			
 			int x_ = t.GetTilePosition().getX();
 			int y_ = t.GetTilePosition().getY();

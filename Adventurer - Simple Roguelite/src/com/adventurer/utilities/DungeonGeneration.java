@@ -1,9 +1,7 @@
 package com.adventurer.utilities;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Room;
@@ -90,9 +88,11 @@ public class DungeonGeneration {
 		List<Tile> modTiles = fillEmptyWithErrorTiles(allTiles);
 		
 		// generate maze.
-		modTiles = MazeGeneration.generateMaze_v2(modTiles);
+		modTiles = MazeGeneration.generateMaze_v3(modTiles);
 		
 		allTiles.addAll(modTiles);
+		
+		// TODO: create doors 
 		
 		// ----------- END OF GENERATION ------------------
 		
@@ -127,6 +127,7 @@ public class DungeonGeneration {
 				SpriteType spriteType = null;
 				
 				// decide tiletype
+				// TODO: room types
 				if(y == 0 || x == 0 || y == height + 1 || x == width + 1) {
 					tileType = TileType.OuterWall;
 					spriteType = SpriteType.Wall01;
