@@ -30,8 +30,8 @@ public class MazeGeneration {
 		
 		Tile cameFrom = null, neighbor = null;
 		
-		// TODO: this is absolutely ugly.
-		int c = 0, ctotal = 0;
+		int c = 0; // TODO: this is ugly.
+		boolean backtracking = false;
 		
 		// ----------------------------------- START MAZE GEN
 		
@@ -46,23 +46,28 @@ public class MazeGeneration {
 				neighbor = getRandomNeighboringTile(current, tiles_);
 				
 				if(
-						(neighbor != null && 
+						(backtracking == false &&
+						neighbor != null && 
 						visited.contains(neighbor) == false && 
 						concretePath.contains(neighbor) == false &&
-						concreteWalls.contains(neighbor) == false)
+						concreteWalls.contains(neighbor) == false) 
+						
 				) {
 					
 					// If we accidentally chose the same tile where we came from,
 					// then just continue and don't count this as a failure.
 					if(neighbor.equals(cameFrom)) continue;
-					
+						
 					// other neighbors are walls.
 					for(Tile t : getNeighboringTiles(current, tiles_)) {
-						if(t != null && 
+						if(
+								t != null && 
 								t.equals(neighbor) == false &&
 								visited.contains(t) == false &&
 								concretePath.contains(t) == false &&
-								concreteWalls.contains(t) == false) concreteWalls.add(t);
+								concreteWalls.contains(t) == false
+								
+						) concreteWalls.add(t);
 					}
 					
 					visited.push(neighbor);
@@ -71,11 +76,7 @@ public class MazeGeneration {
 					c = 0;
 					
 				} else { c++; }
-			} while(c < 50);
-			
-			// when the algorithm gets here,
-			// the random walker is stuck and we 
-			// are backtracking.
+			} while(c < 10);
 		}
 		
 		// ------------------------------------ END OF MAZE GEN 
