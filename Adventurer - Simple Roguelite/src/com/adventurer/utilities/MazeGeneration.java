@@ -49,12 +49,33 @@ public class MazeGeneration {
 					
 					if(neighbor != null) {
 						
-						// TODO: backtracking algorithm.
+						// our neighbor candidate should have error neighbors
+						// --> it should not be in walls or floors
+						for(Tile t : getNeighboringTiles(neighbor, tiles_)) {
+							
+							if(		
+								concretePath.contains(t) == false &&
+								concreteWalls.contains(t) == false &&
+								visited.contains(t) == false
+							) {
 						
-						backtracking = false;
+								concreteWalls.remove(neighbor);
+								
+								visited.push(neighbor);
+								cameFrom = current;
+								current = neighbor;
+								c = 0;
+								
+								backtracking = false;
+								break;
+							}
+							
+						}
 						
 					} else {
-						c++;
+						// there is no walls adjacent to 
+						// this current tile.
+						continue;
 					}
 					
 				} else {
@@ -125,7 +146,8 @@ public class MazeGeneration {
 	private static Tile getRandomNeighborWall(Tile tile, List<Tile> tiles, List<Tile> concreteWalls) {
 		List<Tile> ts = new ArrayList<Tile>();
 		for(Tile t : getNeighboringTiles(tile, tiles)) { if(concreteWalls.contains(t)) ts.add(t); }
-		return ts.get(Util.GetRandomInteger(0, ts.size()));
+		if(ts.isEmpty()) return null;
+		else return ts.get(Util.GetRandomInteger(0, ts.size()));
 	}
 	
 	private static Tile getRandomNeighborOfType(Tile tile, TileType type, List<Tile> tiles) {
