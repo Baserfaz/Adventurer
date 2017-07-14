@@ -9,7 +9,6 @@ import com.adventurer.data.Session;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
-import com.adventurer.enumerations.RoomType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;
@@ -65,14 +64,10 @@ public class Player extends Actor {
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 		} else {
-			
 			// TODO: up & down
-			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-			
+			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);	
 		}
-		
 		renderDirectionArrow(g);
-		
 	}
 	
 	public void Move(Direction dir) {
@@ -106,9 +101,7 @@ public class Player extends Actor {
 			tile.SetActor(this);
 			
 			// set off trap
-			if(tile instanceof Trap) {
-				((Trap)tile).Activate();
-			}
+			if(tile instanceof Trap) ((Trap)tile).Activate();
 			
 		} else if(tile instanceof Door) {
 			

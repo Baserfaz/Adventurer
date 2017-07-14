@@ -6,9 +6,18 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.Direction;
+import com.adventurer.enumerations.DoorType;
+import com.adventurer.enumerations.SpriteType;
+import com.adventurer.enumerations.TileType;
+import com.adventurer.gameobjects.Door;
+import com.adventurer.gameobjects.Tile;
 
 public class Util {
 	
@@ -137,4 +146,119 @@ public class Util {
 		 WritableRaster raster = bi.copyData(null);
 		 return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 	}
+	
+	// ------------------------ DUNGEON SPESIFIC
+	
+	public static Tile getTileAt(Coordinate pos, List<Tile> tiles) {
+		Tile tile = null;
+		for(Tile t : tiles) {
+			if(t.GetTilePosition().getX() == pos.getX() && t.GetTilePosition().getY() == pos.getY()) {
+				tile = t;
+				break;
+			}
+		}
+		return tile;
+	}
+	
+	public static List<Tile> getNeighboringTiles(Tile tile, List<Tile> tiles) {
+		List<Tile> neighbors = new ArrayList<Tile>();
+		
+		int x = tile.GetTilePosition().getX();
+		int y = tile.GetTilePosition().getY();
+		
+		// neighbors
+		Coordinate top = new Coordinate(x, y - 1);
+		Coordinate bottom = new Coordinate(x, y + 1);
+		Coordinate left = new Coordinate(x - 1, y);
+		Coordinate right = new Coordinate(x + 1, y);
+		
+		for(Tile t : tiles) {
+			
+			int x_ = t.GetTilePosition().getX();
+			int y_ = t.GetTilePosition().getY();
+			
+			// check if this tile is a neighbor of the current tile.
+			// tiles contains only tile type of error tiles.
+			
+			if(
+				(top.getX() == x_ && top.getY() == y_) 			||
+				(bottom.getX() == x_ && bottom.getY() == y_) 	||
+				(left.getX() == x_ && left.getY() == y_) 		||
+				(right.getX() == x_ && right.getY() == y_)
+			) { neighbors.add(t); }
+			
+		}
+		return neighbors;
+	}
+	
+	public static Tile replaceTile(Tile old, TileType newType, SpriteType newSpriteType) {
+		Tile tile_ = new Tile(old.GetWorldPosition(), old.GetTilePosition(), newSpriteType, newType);
+		old.Remove();
+		return tile_;
+	}
+	
+	public static Door replaceTileWithDoor(Tile old, boolean locked) {
+		TileType type_ = TileType.Door;
+		if(locked) type_ = TileType.LockedDoor;
+		Door door = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Door01, type_, locked, DoorType.Normal);
+		old.Remove();
+		return door;
+	}
+	
+	public static Tile getRandomNeighboringTile(Tile tile, List<Tile> tiles) {
+		Tile chosen = null;
+		
+		Direction[] ds = new Direction[] { Direction.North, Direction.East, Direction.South, Direction.West };
+		List<Direction> dds = new ArrayList<Direction>();
+		for(Direction d : ds) {
+			dds.add(d);
+		}
+		
+		// randomize the search order.
+		Collections.shuffle(dds);
+		
+		// get first neighboring tile.
+		for(Direction d : dds) {
+			Tile n = getNeighboringTile(tile, d, tiles);
+			if(n != null) chosen = n;
+		}
+		return chosen;
+	}
+	
+	public static Tile getNeighboringTile(Tile tile, Direction dir, List<Tile> tiles) {
+		Tile chosen = null;
+		
+		int x = tile.GetTilePosition().getX();
+		int y = tile.GetTilePosition().getY();
+		
+		switch(dir) {
+		case East:
+			chosen = getTileAt(new Coordinate(x + 1, y), tiles);
+			break;
+		case North:
+			chosen = getTileAt(new Coordinate(x, y - 1), tiles);
+			break;
+		case South:
+			chosen = getTileAt(new Coordinate(x, y + 1), tiles);
+			break;
+		case West:
+			chosen = getTileAt(new Coordinate(x - 1, y), tiles);
+			break;
+		}
+		return chosen;
+	}
+	
+	public static Tile getRandomNeighborWall(Tile tile, List<Tile> tiles, List<Tile> concreteWalls) {
+		List<Tile> ts = new ArrayList<Tile>();
+		for(Tile t : getNeighboringTiles(tile, tiles)) { if(concreteWalls.contains(t)) ts.add(t); }
+		if(ts.isEmpty()) return null;
+		else return ts.get(Util.GetRandomInteger(0, ts.size()));
+	}
+	
+	public static Tile getRandomNeighborOfType(Tile tile, TileType type, List<Tile> tiles) {
+		List<Tile> ts = new ArrayList<Tile>();
+		for(Tile t : getNeighboringTiles(tile, tiles)) { if(t.GetTileType() == type) ts.add(t); }
+		return ts.get(Util.GetRandomInteger(0, ts.size()));
+	}
+	
 }

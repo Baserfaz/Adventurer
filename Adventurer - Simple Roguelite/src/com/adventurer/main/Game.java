@@ -36,7 +36,7 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean DRAW_ENEMY_FOV = false;
 	public static final boolean DRAW_ENEMY_PATH = false; 			// works correctly only with one enemy
 	
-	// debugging -> no need to spawn lobby.
+	// do we create lobby or random dungeon first.
 	public static final boolean START_GAME_WITH_RANDOM_ROOM = true;
 	
 	// LOS settings
@@ -44,20 +44,14 @@ public class Game extends Canvas implements Runnable {
 	
 	// render settings
 	public static final boolean RENDER_ACTORS_DIRECTION_ARROW = false;
-	public static final boolean RENDER_PLAYER_DIRECTION_ARROW = true;
+	public static final boolean RENDER_PLAYER_DIRECTION_ARROW = false;
 	
-	// room settings
-	public static final boolean CREATE_WALLS_INSIDE_ROOMS = true;
-	public static final boolean CREATE_DOORS_INSIDE_ROOMS = false;
-	public static final boolean CREATE_TRAPS_INSIDE_ROOMS = true;
-	public static final boolean CREATE_TURRETS_INSIDE_ROOMS = false;
-	public static final boolean CREATE_DESTRUCTIBLE_ITEMS_INSIDE_ROOMS = true;
-	public static final boolean CREATE_DESTRUCTIBLE_WALLS_INSIDE_ROOMS = false;
-	public static final boolean CREATE_ITEMS_ON_ROOM_WALLS = true;
-	public static final boolean CREATE_CHESTS_IN_ROOMS = true;
+	// movement 
+	public static final boolean MOVEMENT_ROTATE_FIRST = false;
 
 	// tile settings
 	public static final boolean ANIMATE_TILE_DISCOVERY = false;
+	public static final int TILEGAP = 3;
 	
 	// player defaults
 	public static final int START_KEY_COUNT = 1;
@@ -65,25 +59,23 @@ public class Game extends Canvas implements Runnable {
 	public static final int START_BOMB_COUNT = 1;
 	public static final int START_PROJECTILE_COUNT = 0;
 	
-	// enemy settings
-	public static final boolean SPAWN_ENEMIES_INSIDE_ROOMS = true;
-	public static final int MIN_ENEMY_COUNT_IN_ROOM = 1;
-	public static final int MAX_ENEMY_COUNT_IN_ROOM = 2;
-	
-	// tiles in world
+	// world size
 	public static final int WORLDHEIGHT = 30;
 	public static final int WORLDWIDTH = 30;
 	
+	// room count
 	public static final int ROOM_COUNT = 10;
+	public static final int ROOM_DOOR_MAX_COUNT = 1;
 	
+	// room sizes
 	public static final int ROOM_MAX_WIDTH = 10;
 	public static final int ROOM_MIN_WIDHT = 2;
 	public static final int ROOM_MAX_HEIGHT = 10;
 	public static final int ROOM_MIN_HEIGHT = 2;
 	
+	// how many times the room generation 
+	// algorithm tries to fit a room to the world.
 	public static final int ROOM_TRY_GENERATION_COUNT = 1000;
-	
-	public static final int TILEGAP = 3;		// gap between each tile.
 	
 	//------------------------------
 	

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
@@ -148,10 +147,10 @@ public class Handler {
 				(int) cam.getMaxY() - 5);
 		
 		// draw bomb count
-		g2d.drawString("Bombs: " + player.getInventory().getBombCount(),
+		/*g2d.drawString("Bombs: " + player.getInventory().getBombCount(),
 				(int) cam.getMinX() + 180,
 				(int) cam.getMaxY() - 5
-				);
+				);*/
 		
 		// draw projectile count
 		/*g2d.drawString("Projectiles: " + player.getInventory().getProjectileCount(),

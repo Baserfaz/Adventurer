@@ -6,9 +6,11 @@ import java.util.List;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Room;
 import com.adventurer.data.World;
+import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.RoomType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
+import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.main.Game;
 
@@ -92,7 +94,7 @@ public class DungeonGeneration {
 		
 		allTiles.addAll(modTiles);
 		
-		// TODO: create doors 
+		allTiles = createDoorways(allRooms, allTiles);
 		
 		// ----------- END OF GENERATION ------------------
 		
@@ -102,6 +104,54 @@ public class DungeonGeneration {
 		System.out.println("World generated in : " + genTime + " milliseconds.");
 		
 		return allTiles;
+	}
+	
+	private static List<Tile> createDoorways(List<Room> rooms, List<Tile> tiles) {
+		
+		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
+		
+		for(Room room : rooms) {
+			
+			int doorCount = 0;
+			
+			for(Tile tile : room.getTiles()) {
+				
+				// 1. check if the tile is valid
+				// --> tile should be wall
+				// --> tile should have two floor neighbors
+				// 2. replace tile with a door tile
+				
+				if(
+					tile.GetTileType() == TileType.OuterWall && 
+					doorCount < Game.ROOM_DOOR_MAX_COUNT
+				) {
+					
+					// get all neighboring tiles
+					Tile up    = Util.getNeighboringTile(tile, Direction.North, tiles_);
+					Tile down  = Util.getNeighboringTile(tile, Direction.South, tiles_);
+					Tile left  = Util.getNeighboringTile(tile, Direction.West, tiles_);
+					Tile right = Util.getNeighboringTile(tile, Direction.East, tiles_);
+					
+					if(up != null && up.isWalkable() && down != null && down.isWalkable()) {
+						
+						tiles_.remove(tile);
+						Door door = Util.replaceTileWithDoor(tile, false);
+						tiles_.add(door);
+						
+						doorCount += 1;
+						
+					} else if(left != null && left.isWalkable() && right != null && right.isWalkable()) {
+						
+						tiles_.remove(tile);
+						Door door = Util.replaceTileWithDoor(tile, false);
+						tiles_.add(door);
+						
+						doorCount += 1;
+					}
+				} else break;
+			}	
+		}
+		return tiles_;
 	}
 	
 	private static Room createRoom(int width, int height, RoomType roomtype, Coordinate startTilePos) {
