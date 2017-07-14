@@ -26,8 +26,6 @@ public class MazeGeneration {
 		Tile current = tiles_.get(Util.GetRandomInteger(0, tiles_.size()));
 		visited.push(current);
 		
-		System.out.println("Maze started from tile: " + current.GetInfo());
-		
 		Tile cameFrom = null, neighbor = null;
 		
 		int c = 0; // TODO: this is ugly and has side effects.
@@ -116,7 +114,7 @@ public class MazeGeneration {
 				
 				}
 					
-			} while(c < 20);
+			} while(c < 20); // TODO: This is bad.
 			
 			// random walker got stuck.
 			// --> backtrack.
@@ -139,8 +137,7 @@ public class MazeGeneration {
 			tiles_.add(newt);
 		}
 		
-		// TODO: fill in walls if there are more error-tiles.
-		return tiles_;//createMazeWalls(tiles_);
+		return tiles_;
 	}
 	
 	private static Tile getRandomNeighborWall(Tile tile, List<Tile> tiles, List<Tile> concreteWalls) {
