@@ -44,10 +44,6 @@ public class Actor extends GameObject {
 		World.instance.GetTileAtPosition(tilePos).SetActor(this);
 	}
 	
-	public void render(Graphics g) {}
-	public void tick() {}
-	public void Move(Direction dir) {}
-	
 	public void forceMove(Coordinate worldPos, Coordinate tilePos) {
 		
 		Tile tile = World.instance.GetTileAtPosition(tilePos);
@@ -63,7 +59,6 @@ public class Actor extends GameObject {
 		
 		// set the tile's actor to be this.
 		tile.SetActor(this);
-		
 	}
 	
 	protected void renderDirectionArrow(Graphics g) {
@@ -88,7 +83,6 @@ public class Actor extends GameObject {
 			}
 			
 			Renderer.RenderSprite(directionArrow, this.GetWorldPosition(), lookDir, g);
-			
 		}
 	}
 	
@@ -137,7 +131,6 @@ public class Actor extends GameObject {
 			
 			Remove();
 		}
-		
 	}
 	
 	public void Remove() {
@@ -187,8 +180,6 @@ public class Actor extends GameObject {
 					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Bomb01, 1500, 300, BombType.Normal);
 					
 				}
-				
-				
 			}
 		}
 	}
@@ -276,38 +267,18 @@ public class Actor extends GameObject {
 		}
 	}
 	
-	public String getName() {
-		return this.name;
-	}
+	public void render(Graphics g) {}
+	public void tick() {}
+	public void Move(Direction dir) {}
 	
-	public Direction GetLookDirection() {
-		return this.lookDir;
-	}
-	
-	public void SetLookDirection(Direction dir) {
-		this.lookDir = dir;
-	}
-	
-	public void DecreaseDamage(int a) {
-		this.damage -= a;
-	}
-	
-	public void AddDamage(int a) {
-		this.damage += a;
-	}
-	
-	public void SetDamage(int a) {
-		this.damage = a;
-	}
-	
-	public int GetDamage() {
-		return this.damage;
-	}
-	
-	public Health GetHealth() {
-		return this.myHP;
-	}
-	
+	public String getName() { return this.name; }
+	public Direction GetLookDirection() { return this.lookDir; }
+	public void SetLookDirection(Direction dir) { this.lookDir = dir; }	
+	public void DecreaseDamage(int a) { this.damage -= a; }
+	public void AddDamage(int a) { this.damage += a; }	
+	public void SetDamage(int a) { this.damage = a;}
+	public int GetDamage() { return this.damage; }
+	public Health GetHealth() { return this.myHP; }
 	public Rectangle GetBounds() {
 		return new Rectangle(this.GetWorldPosition().getX(), this.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE);
 	}

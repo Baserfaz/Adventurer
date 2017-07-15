@@ -21,43 +21,18 @@ public class Room {
 		this.setRoomType(roomType);
 	}
 
-	public int getRoomWidth() {
-		return roomWidth;
-	}
+	public int getRoomWidth() { return roomWidth; }
+	public int getRoomHeight() { return roomHeight; }
+	
+	public Coordinate getRoomPosition() { return roomPosition; }
+	public List<Tile> getTiles() { return tiles; }
+	public RoomType getRoomType() { return roomType; }
+	
+	public void setRoomWidth(int roomWidth) { this.roomWidth = roomWidth; }
+	public void setRoomHeight(int roomHeight) { this.roomHeight = roomHeight; }
+	public void setRoomPosition(Coordinate roomPosition) { this.roomPosition = roomPosition; }
+	public void setTiles(List<Tile> tiles) { this.tiles = tiles; }
+	public void setRoomType(RoomType roomType) { this.roomType = roomType; }
 
-	public void setRoomWidth(int roomWidth) {
-		this.roomWidth = roomWidth;
-	}
-
-	public int getRoomHeight() {
-		return roomHeight;
-	}
-
-	public void setRoomHeight(int roomHeight) {
-		this.roomHeight = roomHeight;
-	}
-
-	public Coordinate getRoomPosition() {
-		return roomPosition;
-	}
-
-	public void setRoomPosition(Coordinate roomPosition) {
-		this.roomPosition = roomPosition;
-	}
-
-	public List<Tile> getTiles() {
-		return tiles;
-	}
-
-	public void setTiles(List<Tile> tiles) {
-		this.tiles = tiles;
-	}
-
-	public RoomType getRoomType() {
-		return roomType;
-	}
-
-	public void setRoomType(RoomType roomType) {
-		this.roomType = roomType;
-	}
+	public String printRoomPosition() { return roomPosition.getX() + ", " + roomPosition.getY(); }
 }

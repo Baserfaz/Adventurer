@@ -13,7 +13,6 @@ import com.adventurer.utilities.FileWriter;
 public class SaveFile {
 
 	public static final String SAVEFILENAME = "savefile";
-	
 	private int diamondKeyCount;
 	
 	public SaveFile() {
@@ -23,18 +22,11 @@ public class SaveFile {
 		this.setDiamondKeyCount(dcount);
 	}
 
-	public int getDiamondKeyCount() {
-		return diamondKeyCount;
-	}
-
-	public void setDiamondKeyCount(int diamondKeyCount) {
-		this.diamondKeyCount = diamondKeyCount;
-	}
-	
-	// writes the update to file
 	public void addDiamondKeyCount(int a) {
 		this.diamondKeyCount += a;
 		FileWriter.writeSaveFileData(this);
 	}
 	
+	public int getDiamondKeyCount() { return diamondKeyCount; }
+	public void setDiamondKeyCount(int diamondKeyCount) { this.diamondKeyCount = diamondKeyCount; }
 }

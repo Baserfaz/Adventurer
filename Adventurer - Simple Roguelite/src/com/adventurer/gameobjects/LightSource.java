@@ -1,13 +1,8 @@
 package com.adventurer.gameobjects;
 
-import java.util.List;
-
 import com.adventurer.data.Coordinate;
-import com.adventurer.data.World;
 import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
-import com.adventurer.main.EffectCreator;
-import com.adventurer.utilities.Util;
 
 public class LightSource extends DestructibleItem {
 	
@@ -40,5 +35,4 @@ public class LightSource extends DestructibleItem {
 	}
 	
 	public void render() {}
-	
 }

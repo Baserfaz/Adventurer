@@ -18,14 +18,10 @@ public class Enemy extends Actor {
 
 	private int moveCooldownBase = 1000;
 	private long moveTimer = 0;
-	
 	private Tile lastPlayerPosition = null;
-	
 	private EnemyType enemyType;
-	
 	private boolean hasRangedAttack = false;
 	private SpriteType projectileType;
-	
 	private EnemyLoSManager losManager;
 	
 	public Enemy(Coordinate worldPos, Coordinate tilePos,
@@ -246,12 +242,6 @@ public class Enemy extends Actor {
 		}
 	}
 
-	public EnemyType getEnemyType() {
-		return enemyType;
-	}
-
-	public void setEnemyType(EnemyType enemyType) {
-		this.enemyType = enemyType;
-	}
-	
+	public EnemyType getEnemyType() { return enemyType; }
+	public void setEnemyType(EnemyType enemyType) { this.enemyType = enemyType; }
 }

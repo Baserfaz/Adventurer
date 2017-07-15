@@ -261,4 +261,17 @@ public class Util {
 		return ts.get(Util.GetRandomInteger(0, ts.size()));
 	}
 	
+	// replaces all error tiles with walls.
+	public static List<Tile> replaceAllErrorTiles(List<Tile> tiles) {
+		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
+		for(Tile t : tiles) {
+			if(t.GetTileType() == TileType.Error) {
+				tiles_.remove(t);
+				Tile tile_ = Util.replaceTile(t, TileType.Wall, SpriteType.Wall01);
+				tiles_.add(tile_);
+			}
+		}
+		return tiles_;
+	}
+	
 }

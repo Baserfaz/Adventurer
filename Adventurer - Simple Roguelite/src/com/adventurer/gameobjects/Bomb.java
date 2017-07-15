@@ -17,9 +17,7 @@ import com.adventurer.utilities.Util;
 public class Bomb extends Item {
 
 	private int damage = 0;
-	
 	private BombType bombType;
-	
 	private long liveTimer = 0;
 	private boolean alive = false;
 	
@@ -105,7 +103,6 @@ public class Bomb extends Item {
 					if(tile.GetItem() instanceof DestructibleItem) {
 						DamageHandler.ItemTakeDamage((DestructibleItem)tile.GetItem(), damage);
 					}
-					
 				}
 			}
 			
@@ -127,7 +124,6 @@ public class Bomb extends Item {
 			}
 			
 			Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), g);
-			
 		}
 	}
 	

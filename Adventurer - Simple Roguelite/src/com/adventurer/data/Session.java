@@ -20,36 +20,14 @@ public class Session {
 		FileWriter.writeSaveFileData(Game.instance.getCurrentSaveFile());
 	}
 	
-	public void addScore(int a) {
-		this.setScore(this.getScore() + a);
-	}
-
-	public int getScore() {
-		return score;
-	}
-
-	public void setScore(int score) {
-		this.score = score;
-	}
-
-	public String getSessionName() {
-		return sessionName;
-	}
-
-	public void setSessionName(String sessionName) {
-		this.sessionName = sessionName;
-	}
-
-	public int getDungeonLevel() {
-		return dungeonLevel;
-	}
-
-	public void setDungeonLevel(int dungeonLevel) {
-		this.dungeonLevel = dungeonLevel;
-	}
+	public void addScore(int a) { this.setScore(this.getScore() + a); }
+	public void setSessionName(String sessionName) { this.sessionName = sessionName; }
+	public void setScore(int score) { this.score = score; }
+	public void addDungeonLevel(int a) { this.dungeonLevel += a;}
+	public void setDungeonLevel(int dungeonLevel) { this.dungeonLevel = dungeonLevel;}
 	
-	public void addDungeonLevel(int a) {
-		this.dungeonLevel += a;
-	}
+	public String getSessionName() { return sessionName; }
 	
+	public int getScore() { return score; }
+	public int getDungeonLevel() { return dungeonLevel; }
 }

@@ -65,7 +65,7 @@ public class Game extends Canvas implements Runnable {
 	
 	// room count
 	public static final int ROOM_COUNT = 10;
-	public static final int ROOM_DOOR_MAX_COUNT = 1;
+	public static final int ROOM_DOOR_MAX_COUNT = 2;
 	
 	// room sizes
 	public static final int ROOM_MAX_WIDTH = 10;
@@ -136,17 +136,13 @@ public class Game extends Canvas implements Runnable {
 		try {
 			thread.join();
 			isRunning = false;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) { e.printStackTrace(); }
 	}
+	
+	public void run() { GameLoop();}
 	
 	// Originally taken from Notch's work.
 	// Also applied stuff from https://www.youtube.com/watch?v=rwjZDfcQ7Rc&list=PLEETnX-uPtBXP_B2yupUKlflXBznWIlL5&index=3
-	public void run() {
-		GameLoop();
-	}
-	
 	private void GameLoop() {
 		long lastTime = System.nanoTime();
 		double unprocessedTime = 0;
@@ -234,11 +230,7 @@ public class Game extends Canvas implements Runnable {
 						(int) Camera.instance.getCameraBounds().getHeight());
 			}
 			
-		} else {
-			
-			Renderer.FillScreen(g, Color.black);
-			
-		}
+		} else Renderer.FillScreen(g, Color.black);
 		
 		// render objects
 		// uses simplistic rendering queue
@@ -249,19 +241,8 @@ public class Game extends Canvas implements Runnable {
 		bs.show();
 	}
 
-	private void tick() {
-		Handler.instance.tick();
-	}
-
-	public static void main(String args[]) {
-		new Game();
-	}
-
-	public SaveFile getCurrentSaveFile() {
-		return currentSaveFile;
-	}
-
-	public void setCurrentSaveFile(SaveFile currentSaveFile) {
-		this.currentSaveFile = currentSaveFile;
-	}
+	private void tick() { Handler.instance.tick(); }
+	public static void main(String args[]) { new Game(); }
+	public SaveFile getCurrentSaveFile() { return currentSaveFile; }
+	public void setCurrentSaveFile(SaveFile currentSaveFile) { this.currentSaveFile = currentSaveFile; }
 }

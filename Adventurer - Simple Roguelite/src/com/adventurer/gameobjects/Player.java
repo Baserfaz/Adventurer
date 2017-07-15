@@ -64,7 +64,7 @@ public class Player extends Actor {
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 		} else {
-			// TODO: up & down
+			// TODO: render north and south facing sprites.
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);	
 		}
 		renderDirectionArrow(g);
@@ -168,8 +168,7 @@ public class Player extends Actor {
 					chest.Unlock();
 					inventory.addKeys(-1);
 				}
-				else if(chest.isLocked() == false) chest.Open();
-				
+				else if(chest.isLocked() == false) chest.Open();	
 			}
 			
 		} else if(tile instanceof Portal) {
@@ -196,27 +195,15 @@ public class Player extends Actor {
 				}
 				
 				World.instance.Remove();
-				//new World(RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)]);
 				new World(Game.ROOM_COUNT);
-				
-			}
-			
+			}	
 			
 		} else if(tile.GetTileType() == TileType.DestructibleTile) {
-			// TODO
-		} 
+			// TODO: interaction with destructible tiles.
+		}
 	}
 	
-	public Session getSession() {
-		return this.currentSession;
-	}
-	
-	public LoSManager getLosManager() {
-		return this.losmanager;
-	}
-	
-	public Inventory getInventory() {
-		return this.inventory;
-	}
-	
+	public Session getSession() { return this.currentSession; }
+	public LoSManager getLosManager() { return this.losmanager; }
+	public Inventory getInventory() { return this.inventory; }
 }

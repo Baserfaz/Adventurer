@@ -52,12 +52,6 @@ public class DestructibleTile extends Tile {
 		}
 	}
 	
-	public Health getTileHealth() {
-		return tileHealth;
-	}
-
-	public void setTileHealth(Health tileHealth) {
-		this.tileHealth = tileHealth;
-	}
-
+	public Health getTileHealth() { return tileHealth; }
+	public void setTileHealth(Health tileHealth) { this.tileHealth = tileHealth; }
 }

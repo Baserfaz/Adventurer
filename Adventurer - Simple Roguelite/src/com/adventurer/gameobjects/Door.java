@@ -5,7 +5,6 @@ import com.adventurer.data.World;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
-import com.adventurer.main.*;
 
 public class Door extends Tile {
 
@@ -33,12 +32,6 @@ public class Door extends Tile {
 		World.instance.ChangeTile(this, TileType.LockedDoor, SpriteType.LockedDoor01);
 	}
 	
-	public DoorType getDoorType() {
-		return this.doorType;
-	}
-	
-	public boolean isLocked() {
-		return this.locked;
-	}
-	
+	public DoorType getDoorType() { return this.doorType; }
+	public boolean isLocked() { return this.locked; }
 }

@@ -28,11 +28,8 @@ public class Gib extends Effect {
 		this.max_y = worldPos.getY() - Util.GetRandomInteger(5, 10);
 		this.min_y = worldPos.getY() + Util.GetRandomInteger(5, 10);
 		
-		if(Util.GetRandomInteger() > 50) {
-			angleValue = -angleValue;
-		}
+		if(Util.GetRandomInteger() > 50) angleValue = -angleValue;
 	}
-
 	
 	public void render(Graphics g) {
 		if(isAlive) Renderer.RenderSpriteWithRotation(sprite, this.GetWorldPosition(), this.angle, g);
@@ -45,41 +42,25 @@ public class Gib extends Effect {
 		int x = this.GetWorldPosition().getX();
 		int y = this.GetWorldPosition().getY();
 		
-		if(y < max_y) {
-			falling = true;
-		}
+		if(y < max_y) falling = true;
 		
 		if(falling == false) {
 			
 			int x_val = 1;
+			if(Util.GetRandomInteger() > 50) x_val = 0;
 			
-			if(Util.GetRandomInteger() > 50) {
-				x_val = 0;
-			}
-			
-			if(dir == Direction.East) {
-				this.SetWorldPosition(x + x_val, y - 1);
-			} else if(dir == Direction.West) {
-				this.SetWorldPosition(x - x_val, y - 1);
-			} else {
-				this.SetWorldPosition(x, y - 1);
-			}
+			if(dir == Direction.East) this.SetWorldPosition(x + x_val, y - 1);
+			else if(dir == Direction.West) this.SetWorldPosition(x - x_val, y - 1);
+			else this.SetWorldPosition(x, y - 1);
 			
 		} else {
 			
 			int x_val = 1;
-	
-			if(Util.GetRandomInteger() > 50) {
-				x_val = 0;
-			}
+			if(Util.GetRandomInteger() > 50) x_val = 0;
 			
-			if(dir == Direction.East) {
-				this.SetWorldPosition(x + x_val, y + 1);
-			} else if(dir == Direction.West) {
-				this.SetWorldPosition(x - x_val, y + 1);
-			} else {
-				this.SetWorldPosition(x, y + 1);
-			}
+			if(dir == Direction.East) this.SetWorldPosition(x + x_val, y + 1);
+			else if(dir == Direction.West) this.SetWorldPosition(x - x_val, y + 1);
+			else this.SetWorldPosition(x, y + 1);
 			
 			if(y > min_y) {
 				
@@ -88,9 +69,7 @@ public class Gib extends Effect {
 				// TODO: check if the tile is wall, different sprite?
 				
 				// create vanity items
-				if(tile != null) {
-					VanityItemCreator.CreateVanityItem(tile, spriteType, false);
-				}
+				if(tile != null) VanityItemCreator.CreateVanityItem(tile, spriteType, false);
 				
 				// destroy effect gib
 				isAlive = false;
@@ -98,5 +77,4 @@ public class Gib extends Effect {
 			}
 		}
 	}
-	
 }

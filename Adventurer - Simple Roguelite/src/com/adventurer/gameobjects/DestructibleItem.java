@@ -4,10 +4,8 @@ import java.awt.Graphics;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Health;
-import com.adventurer.data.World;
 import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
-import com.adventurer.main.EffectCreator;
 import com.adventurer.main.VanityItemCreator;
 import com.adventurer.utilities.Renderer;
 import com.adventurer.utilities.Util;
@@ -60,17 +58,10 @@ public class DestructibleItem extends Item {
 				tintedSprite = Util.tint(sprite, true);
 			}
 			
-			Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), g);
-			
+			Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), g);	
 		}
 	}
 	
-	public Health getHealth() {
-		return health;
-	}
-
-	private void setHealth(Health health) {
-		this.health = health;
-	}
-	
+	public Health getHealth() { return health; }
+	private void setHealth(Health health) { this.health = health; }
 }

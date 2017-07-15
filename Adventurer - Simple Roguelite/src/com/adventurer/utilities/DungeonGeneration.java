@@ -15,7 +15,6 @@ import com.adventurer.gameobjects.Tile;
 import com.adventurer.main.Game;
 
 public class DungeonGeneration {
-
 	
 	/*
 	 * Creates Rooms, world walls and maze, in that order.
@@ -25,6 +24,7 @@ public class DungeonGeneration {
 	 * 4. Maze is generated randomly
 	 * 5. Doors are created to connect the maze with other rooms.
 	 */
+	
 	public static List<Tile> createDungeon(int roomcount) {
 		
 		long startTime = System.currentTimeMillis();
@@ -91,10 +91,13 @@ public class DungeonGeneration {
 		
 		// generate maze.
 		modTiles = MazeGeneration.generateMaze_v3(modTiles);
-		
 		allTiles.addAll(modTiles);
 		
+		// create doors 
 		allTiles = createDoorways(allRooms, allTiles);
+		
+		// fill in the maze's dead-ends.
+		allTiles = fillDeadEnds(allTiles);
 		
 		// ----------- END OF GENERATION ------------------
 		
@@ -103,28 +106,97 @@ public class DungeonGeneration {
 		System.out.println("World consists of " + allTiles.size() + " tiles.");
 		System.out.println("World generated in : " + genTime + " milliseconds.");
 		
-		return allTiles;
+		// just to be sure that there are no error tiles left in the dungeon.
+		return Util.replaceAllErrorTiles(allTiles);//allTiles;
+	}
+	
+	private static List<Tile> fillDeadEnds(List<Tile> tiles) {
+		List<Tile> tiles_  = new ArrayList<Tile>(tiles); // contains all tiles
+		List<Tile> remove_ = new ArrayList<Tile>();		 // contains all "to be removed"-tiles
+		List<Tile> add_    = new ArrayList<Tile>();		 // contains all "to be added"-tiles
+		
+		// TODO: some way to choose how much dead ends we want to leave.
+		// --> calculate percentage?
+		while(true) {
+			
+			for(Tile tile : tiles_) {
+				if(tile.isWalkable()) {
+					
+					int neighboringWallCount = 0;
+					boolean hasDoor = false;
+					
+					for(Tile t : Util.getNeighboringTiles(tile, tiles_)) {
+						
+						if(t instanceof Door) {
+							hasDoor = true;
+							break;
+						}
+						
+						if(t.GetTileType() == TileType.OuterWall || t.GetTileType() == TileType.Wall) {
+							neighboringWallCount += 1;
+						}					
+						
+					}
+					
+					if(neighboringWallCount >= 3 && hasDoor == false) {
+						
+						remove_.add(tile);
+						Tile newt = new Tile(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Wall01, TileType.Wall);//Util.replaceTile(tile, TileType.Floor, SpriteType.FloorTile01);
+						add_.add(newt);
+						
+						//System.out.println("replace tile: " + tile.GetInfo());
+					}
+				}	
+			}
+			
+			tiles_.removeAll(remove_);
+			tiles_.addAll(add_);
+			
+			// if there is no dead ends left -> done.
+			if(remove_.isEmpty()) break;
+			
+			// reset lists
+			remove_.clear();
+			add_.clear();
+		}
+			
+		return tiles_;
 	}
 	
 	private static List<Tile> createDoorways(List<Room> rooms, List<Tile> tiles) {
-		
 		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
 		
+		// for each room create doors.
 		for(Room room : rooms) {
 			
-			int doorCount = 0;
+			//System.out.println("********************\nRoom position: " + room.printRoomPosition());
 			
-			for(Tile tile : room.getTiles()) {
+			int doorCount = 0, y = 0, x = 0;
+			List<Tile> doorSpotCandidates = new ArrayList<Tile>();
+			
+			for(int i = 0; i < room.getTiles().size(); i++) {
+				
+				Tile tile = room.getTiles().get(i);
 				
 				// 1. check if the tile is valid
 				// --> tile should be wall
 				// --> tile should have two floor neighbors
 				// 2. replace tile with a door tile
 				
-				if(
-					tile.GetTileType() == TileType.OuterWall && 
-					doorCount < Game.ROOM_DOOR_MAX_COUNT
-				) {
+				// calculate room tile x & y coordinates from the current tile count.
+				if(i != 0) x += 1;
+				if(x == 0) /* do nothing*/ ;
+				else if(x % (room.getRoomWidth() + 2) == 0) {
+					y += 1;
+					x = 0;
+				}
+				
+				//System.out.println("Tile position: " + x + ", " + y);
+				
+				// room walls are type of outerwall.
+				if(tile.GetTileType() == TileType.OuterWall) {
+					
+					boolean createDoor = false;
 					
 					// get all neighboring tiles
 					Tile up    = Util.getNeighboringTile(tile, Direction.North, tiles_);
@@ -132,23 +204,66 @@ public class DungeonGeneration {
 					Tile left  = Util.getNeighboringTile(tile, Direction.West, tiles_);
 					Tile right = Util.getNeighboringTile(tile, Direction.East, tiles_);
 					
+					// TODO: do something with top/bottom/left/right division.
 					if(up != null && up.isWalkable() && down != null && down.isWalkable()) {
 						
-						tiles_.remove(tile);
-						Door door = Util.replaceTileWithDoor(tile, false);
-						tiles_.add(door);
-						
-						doorCount += 1;
+						// vertical doors
+						if(y == 0) {
+							
+							// top
+							createDoor = true;
+							
+						} else if(y == room.getRoomHeight() + 1) {
+							
+							// bottom
+							createDoor = true;
+						}
 						
 					} else if(left != null && left.isWalkable() && right != null && right.isWalkable()) {
 						
-						tiles_.remove(tile);
-						Door door = Util.replaceTileWithDoor(tile, false);
-						tiles_.add(door);
-						
-						doorCount += 1;
+						// horizontal
+						if(x == 0) {
+							
+							// left / west
+							createDoor = true;
+							
+						} else if(x == room.getRoomWidth() + 1) {
+							
+							// right / east
+							createDoor = true;
+						}
 					}
-				} else break;
+				
+					// if we found a tile which could be a door...
+					if(createDoor) {
+						
+						// ... add possible door places to a list
+						doorSpotCandidates.add(tile);
+					}		
+				}
+			}
+			
+			// debug/error information .....
+			//System.out.println("Entryspots found: " + doorSpotCandidates.size());
+			if(doorSpotCandidates.isEmpty()) {
+				System.out.println("ERROR: EntrySpots is empty!");
+				continue;
+			}
+			// ......
+			
+			// choose random spots to be doors.
+			List<Tile> chosenSpots = new ArrayList<Tile>();
+			while(doorCount < Math.max(Game.ROOM_DOOR_MAX_COUNT, chosenSpots.size())) {
+				Tile chosen = doorSpotCandidates.get(Util.GetRandomInteger(0, doorSpotCandidates.size()));
+				if(chosenSpots.contains(chosen)) continue;
+				chosenSpots.add(chosen);
+				doorCount += 1;
+			}
+			
+			// create doors.
+			for(Tile t : chosenSpots) {
+				tiles_.remove(t);
+				tiles_.add(Util.replaceTileWithDoor(t, false));
 			}	
 		}
 		return tiles_;

@@ -202,14 +202,6 @@ public class World {
 		return retTile;
 	}
 	
-	public List<Tile> GetTilesInCardinalDirection(Tile tile) {
-		return GetTilesInCardinalDirection(tile.GetTilePosition().getX(), tile.GetTilePosition().getY());
-	}
-	
-	public List<Tile> GetTilesInCardinalDirection(Coordinate pos) {
-		return GetTilesInCardinalDirection(pos.getX(), pos.getY());
-	}
-	
 	public List<Tile> GetTilesInCardinalDirection(int posx, int posy) {
 		
 		List<Tile> foundTiles = new ArrayList<Tile>();
@@ -519,32 +511,20 @@ public class World {
 		for(Tile tile : temp) { tile.Remove(); }
 		World.instance = null;
 	}
-	
-	public void addToRooms(Room room) {
-		this.rooms.add(room);
+
+	public List<Tile> GetTilesInCardinalDirection(Tile tile) {
+		return GetTilesInCardinalDirection(tile.GetTilePosition().getX(), tile.GetTilePosition().getY());
 	}
 	
-	public World GetWorld() {
-		return this;
+	public List<Tile> GetTilesInCardinalDirection(Coordinate pos) {
+		return GetTilesInCardinalDirection(pos.getX(), pos.getY());
 	}
 	
-	public int GetHeight() {
-		return this.worldHeight;
-	}
-	
-	public int GetWidth() {
-		return this.worldWidth;
-	}
-	
-	public List<Tile> GetTiles() {
-		return this.tiles;
-	}
-	
-	public void AddToTiles(Tile t) {
-		this.tiles.add(t);
-	}
-	
-	public void RemoveTiles(Tile t) {
-		if(tiles.contains(t)) this.tiles.remove(t);
-	}
+	public void addToRooms(Room room) { this.rooms.add(room); }
+	public void AddToTiles(Tile t) { this.tiles.add(t); }
+	public void RemoveTiles(Tile t) { if(tiles.contains(t)) this.tiles.remove(t); }
+	public List<Tile> GetTiles() { return this.tiles; }
+	public World GetWorld() { return this; }
+	public int GetHeight() { return this.worldHeight; }
+	public int GetWidth() { return this.worldWidth; }
 }

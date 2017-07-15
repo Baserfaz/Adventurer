@@ -37,11 +37,8 @@ public class Chest extends Item {
 			}
 			
 			Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), g);
-			
 		}
 	}
-	
-	public void tick() {}
 	
 	public void Open() {
 		// TODO: effects + gold etc.
@@ -53,8 +50,7 @@ public class Chest extends Item {
 		
 		ActorManager.GetPlayerInstance().getSession().addScore(amount);
 		
-		this.Remove();
-		
+		this.Remove();	
 	}
 	
 	public void Unlock() {
@@ -72,9 +68,7 @@ public class Chest extends Item {
 		this.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.LockedChest01));
 		this.SetTintedSprite(null);
 	}
-
-	public boolean isLocked() {
-		return this.locked;
-	}
 	
+	public void tick() {}
+	public boolean isLocked() { return this.locked; }
 }

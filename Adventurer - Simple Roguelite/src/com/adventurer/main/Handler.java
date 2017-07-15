@@ -20,7 +20,6 @@ import com.adventurer.gameobjects.VanityItem;
 public class Handler {
 
 	private List<GameObject> objects = new ArrayList<GameObject>();
-	
 	public static Handler instance;
 	
 	public Handler() {
@@ -35,7 +34,7 @@ public class Handler {
 		}
 	}
 	
-	// draw order:
+	// Draw order/queue:
 	// 0. background (done in game.mainloop)
 	// 1. tiles 
 	// 2. vanity items (blood etc.)
@@ -43,6 +42,7 @@ public class Handler {
 	// 4. actors
 	// 5. effects
 	// 6. GUI
+	
 	public void render(Graphics g) {
 		renderTiles(g);
 		renderVanityItems(g);
@@ -158,23 +158,10 @@ public class Handler {
 				(int) cam.getMaxY() - 5
 				);*/
 		
-	}	
-	
-	
-	public void AddObject(GameObject go) {
-		this.getObjects().add(go);
 	}
 	
-	public void RemoveObject(GameObject go) {
-		this.getObjects().remove(go);
-	}
-
-	public List<GameObject> getObjects() {
-		return objects;
-	}
-
-	public void setObjects(List<GameObject> objects) {
-		this.objects = objects;
-	}
-	
+	public void AddObject(GameObject go) { this.getObjects().add(go); }	
+	public void RemoveObject(GameObject go) { this.getObjects().remove(go); }
+	public List<GameObject> getObjects() { return objects; }
+	public void setObjects(List<GameObject> objects) { this.objects = objects;}
 }

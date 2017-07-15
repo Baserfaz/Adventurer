@@ -22,14 +22,6 @@ public class Item extends GameObject {
 		World.instance.GetTileAtPosition(tilePos).SetItem(this);
 	}
 	
-	public void tick() {}
-	
-	public void render(Graphics g) {}
-	
-	public Rectangle GetBounds() {
-		return null;
-	}
-	
 	public void Remove() {
 		
 		// get tile
@@ -44,4 +36,8 @@ public class Item extends GameObject {
 		// hide 
 		Hide();
 	}
+
+	public void tick() {}
+	public void render(Graphics g) {}
+	public Rectangle GetBounds() { return null; }
 }

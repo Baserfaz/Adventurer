@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.SpriteType;
-import com.adventurer.main.Game;
 import com.adventurer.main.Handler;
 import com.adventurer.utilities.Renderer;
 import com.adventurer.utilities.Util;
@@ -45,7 +44,6 @@ public class Effect extends GameObject {
 				if(Util.GetRandomInteger() > 90) {
 					this.SetWorldPosition(x, y - 1);
 				}
-				
 			}
 		}
 	}
@@ -60,11 +58,6 @@ public class Effect extends GameObject {
 		Hide();
 	}
 	
-	public void render(Graphics g) {
-		if(isAlive) Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-	}
-
-	public Rectangle GetBounds() {
-		return null;
-	}
+	public void render(Graphics g) { if(isAlive) Renderer.RenderSprite(sprite, this.GetWorldPosition(), g); }
+	public Rectangle GetBounds() { return null; }
 }

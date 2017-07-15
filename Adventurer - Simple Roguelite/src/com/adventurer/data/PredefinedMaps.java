@@ -107,7 +107,6 @@ public class PredefinedMaps {
 		{ '#', '#', '#', '#', '#', '#' },
 	};
 	
-	
 	public static char[][] GetRandomRoomOfType(RoomType roomType) {
 		
 		char[][] map = null;
@@ -115,8 +114,7 @@ public class PredefinedMaps {
 		if(roomType == RoomType.Normal) {
 			
 			List<char[][]> normalRooms = new ArrayList<char[][]>();
-			normalRooms.add(normal01);
-			
+			normalRooms.add(normal01);	
 			
 			map = normalRooms.get(Util.GetRandomInteger(0, normalRooms.size()));
 			
@@ -149,8 +147,5 @@ public class PredefinedMaps {
 		return map;
 	}
 	
-	public static char[][] GetLobby() {
-		return lobbyMap;
-	}
-	
+	public static char[][] GetLobby() { return lobbyMap; }
 }

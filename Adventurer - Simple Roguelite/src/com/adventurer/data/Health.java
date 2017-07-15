@@ -1,7 +1,5 @@
 package com.adventurer.data;
 
-import com.adventurer.gameobjects.GameObject;
-
 public class Health {
 	
 	private int currentHP = 0;
@@ -15,28 +13,15 @@ public class Health {
 	}
 	
 	public boolean TakeDamage(int damage) {
-		
 		this.currentHP -= damage;
-		
 		if(this.currentHP <= 0) {
 			this.currentHP = 0;
 			dead = true;
 		}
-		
 		return this.dead;
 	}
 	
-	public boolean isDead() {
-		return this.dead;
-	}
-	
-	public int GetCurrentHealth() {
-		return this.currentHP;
-	}
-	
-	public int GetMaxHP() {
-		return this.maxHP;
-	}
-	
-	
+	public boolean isDead() { return this.dead; }
+	public int GetCurrentHealth() { return this.currentHP; }
+	public int GetMaxHP() { return this.maxHP; }
 }
