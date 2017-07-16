@@ -107,7 +107,7 @@ public class DungeonGeneration {
 		System.out.println("World generated in : " + genTime + " milliseconds.");
 		
 		// just to be sure that there are no error tiles left in the dungeon.
-		return Util.replaceAllErrorTiles(allTiles);//allTiles;
+		return Util.replaceAllErrorTiles(allTiles);
 	}
 	
 	private static List<Tile> fillDeadEnds(List<Tile> tiles) {
@@ -115,8 +115,7 @@ public class DungeonGeneration {
 		List<Tile> remove_ = new ArrayList<Tile>();		 // contains all "to be removed"-tiles
 		List<Tile> add_    = new ArrayList<Tile>();		 // contains all "to be added"-tiles
 		
-		// TODO: some way to choose how much dead ends we want to leave.
-		// --> calculate percentage?
+		// fills in all "dead-ends".
 		while(true) {
 			
 			for(Tile tile : tiles_) {
@@ -126,25 +125,18 @@ public class DungeonGeneration {
 					boolean hasDoor = false;
 					
 					for(Tile t : Util.getNeighboringTiles(tile, tiles_)) {
-						
 						if(t instanceof Door) {
 							hasDoor = true;
 							break;
 						}
 						
-						if(t.GetTileType() == TileType.OuterWall || t.GetTileType() == TileType.Wall) {
-							neighboringWallCount += 1;
-						}					
-						
+						if(t.GetTileType() == TileType.OuterWall || t.GetTileType() == TileType.Wall) neighboringWallCount += 1;
 					}
 					
 					if(neighboringWallCount >= 3 && hasDoor == false) {
-						
 						remove_.add(tile);
 						Tile newt = new Tile(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Wall01, TileType.Wall);//Util.replaceTile(tile, TileType.Floor, SpriteType.FloorTile01);
 						add_.add(newt);
-						
-						//System.out.println("replace tile: " + tile.GetInfo());
 					}
 				}	
 			}
@@ -167,15 +159,13 @@ public class DungeonGeneration {
 		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
 		
 		// for each room create doors.
-		for(Room room : rooms) {
-			
-			//System.out.println("********************\nRoom position: " + room.printRoomPosition());
-			
+		for(Room room : rooms) {			
 			int doorCount = 0, y = 0, x = 0;
 			List<Tile> doorSpotCandidates = new ArrayList<Tile>();
 			
 			for(int i = 0; i < room.getTiles().size(); i++) {
 				
+				// get current tile.
 				Tile tile = room.getTiles().get(i);
 				
 				// 1. check if the tile is valid
@@ -183,15 +173,13 @@ public class DungeonGeneration {
 				// --> tile should have two floor neighbors
 				// 2. replace tile with a door tile
 				
-				// calculate room tile x & y coordinates from the current tile count.
+				// Calculate room tile x & y coordinates from the current tile count.
 				if(i != 0) x += 1;
 				if(x == 0) /* do nothing*/ ;
 				else if(x % (room.getRoomWidth() + 2) == 0) {
 					y += 1;
 					x = 0;
 				}
-				
-				//System.out.println("Tile position: " + x + ", " + y);
 				
 				// room walls are type of outerwall.
 				if(tile.GetTileType() == TileType.OuterWall) {
@@ -204,52 +192,30 @@ public class DungeonGeneration {
 					Tile left  = Util.getNeighboringTile(tile, Direction.West, tiles_);
 					Tile right = Util.getNeighboringTile(tile, Direction.East, tiles_);
 					
-					// TODO: do something with top/bottom/left/right division.
+					// vertical doors
 					if(up != null && up.isWalkable() && down != null && down.isWalkable()) {
-						
-						// vertical doors
-						if(y == 0) {
-							
-							// top
-							createDoor = true;
-							
-						} else if(y == room.getRoomHeight() + 1) {
-							
-							// bottom
-							createDoor = true;
-						}
-						
+						if(y == 0 || y == room.getRoomHeight() + 1) createDoor = true;
+					// horizontal doors
 					} else if(left != null && left.isWalkable() && right != null && right.isWalkable()) {
-						
-						// horizontal
-						if(x == 0) {
-							
-							// left / west
-							createDoor = true;
-							
-						} else if(x == room.getRoomWidth() + 1) {
-							
-							// right / east
-							createDoor = true;
-						}
+						if(x == 0 || x == room.getRoomWidth() + 1) createDoor = true;
 					}
 				
-					// if we found a tile which could be a door...
-					if(createDoor) {
-						
-						// ... add possible door places to a list
-						doorSpotCandidates.add(tile);
-					}		
+					// can't have doors neighboring each other.
+					if(doorSpotCandidates.contains(up) || doorSpotCandidates.contains(down) ||
+					   doorSpotCandidates.contains(left) || doorSpotCandidates.contains(right)
+					) createDoor = false;
+							
+					// if we found a tile which could be a door
+					// then it's valid candidate spot for a door. 
+					if(createDoor) doorSpotCandidates.add(tile);	
 				}
 			}
 			
-			// debug/error information .....
-			//System.out.println("Entryspots found: " + doorSpotCandidates.size());
+			// debug/error information ---->
 			if(doorSpotCandidates.isEmpty()) {
 				System.out.println("ERROR: EntrySpots is empty!");
 				continue;
-			}
-			// ......
+			} // <----
 			
 			// choose random spots to be doors.
 			List<Tile> chosenSpots = new ArrayList<Tile>();
@@ -271,11 +237,7 @@ public class DungeonGeneration {
 	
 	private static Room createRoom(int width, int height, RoomType roomtype, Coordinate startTilePos) {
 		
-		//System.out.println("Creating " + roomtype + " room, size: " + width + ", " + height +
-		//		", at position: (" + startTilePos.getX() + ", " + startTilePos.getY() + ").");
-		
 		int offsetY = 0, offsetX = 0;
-		
 		List<Tile> tiles = new ArrayList<Tile>();
 		
 		for(int y = 0; y < height + 2; y++) {

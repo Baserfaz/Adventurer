@@ -1,7 +1,6 @@
 package com.adventurer.enumerations;
 
 public enum SpriteType {
-
 	Player(),
 	FloorTile01(),
 	Wall01(),

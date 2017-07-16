@@ -34,17 +34,9 @@ public class World {
 	// creates a predefined map
 	public World(char[][] map) {
 		
-		if(ActorManager.GetPlayerInstance() != null) {
-			ActorManager.GetPlayerInstance().getLosManager().calculateLOS = false;
-		}
+		//if(ActorManager.GetPlayerInstance() != null) ActorManager.GetPlayerInstance().getLosManager().calculateLOS = false;
 		
-		if(instance != null) {
-			System.out.println("WORLD ALREADY EXISTS!");
-			new Exception().printStackTrace();
-			System.exit(1);
-		}
-		
-		World.instance = this;
+		initiation();
 		
 		this.tiles = new ArrayList<Tile>();
 		
@@ -53,23 +45,15 @@ public class World {
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
 		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
 		
-		ActorManager.GetPlayerInstance().getLosManager().calculateLOS = true;
+		//ActorManager.GetPlayerInstance().getLosManager().calculateLOS = true;
 	}
 	
 	// picks a random room from predefined rooms that has a specific room type
 	public World(RoomType roomType) {
 		
-		if(ActorManager.GetPlayerInstance() != null) {
-			ActorManager.GetPlayerInstance().getLosManager().calculateLOS = false;
-		}
+		//if(ActorManager.GetPlayerInstance() != null) ActorManager.GetPlayerInstance().getLosManager().calculateLOS = false;
 		
-		if(instance != null) {
-			System.out.println("WORLD ALREADY EXISTS!");
-			new Exception().printStackTrace();
-			System.exit(1);
-		}
-		
-		World.instance = this;
+		initiation();
 		
 		this.tiles = new ArrayList<Tile>();
 		
@@ -103,23 +87,23 @@ public class World {
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
 		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
 		
-		ActorManager.GetPlayerInstance().getLosManager().calculateLOS = true;
+		//ActorManager.GetPlayerInstance().getLosManager().calculateLOS = true;
 	}
 	
 	// create a randomized dungeon level
 	public World(int roomcount) {
-		
+		initiation();
+		this.tiles = DungeonGeneration.createDungeon(roomcount);
+		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100);
+	}
+	
+	private void initiation() {
 		if(instance != null) {
 			System.out.println("WORLD ALREADY EXISTS!");
 			new Exception().printStackTrace();
 			System.exit(1);
 		}
-		
 		World.instance = this;
-		
-		this.tiles = DungeonGeneration.createDungeon(roomcount);
-		
-		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100);
 	}
 	
 	private Tile CreatePredefinedMap(char[][] map) {
@@ -186,10 +170,7 @@ public class World {
 		return spawnTile;
 	}
 	
-	public Tile GetTileAtPosition(Coordinate pos) {
-		return GetTileAtPosition(pos.getX(), pos.getY());
-	}
-	
+	public Tile GetTileAtPosition(Coordinate pos) { return GetTileAtPosition(pos.getX(), pos.getY()); }
 	public Tile GetTileAtPosition(int x, int y) {
 		Tile retTile = null;
 		for(Tile tile : tiles) {
@@ -231,7 +212,6 @@ public class World {
 				}
 			}
 		}
-		
 		return foundTiles;
 	}
 	
@@ -246,10 +226,7 @@ public class World {
 		return ret;
 	}
 	
-	public List<Tile> GetSurroundingTiles(Coordinate pos) {
-		return GetSurroundingTiles(pos.getX(), pos.getY());
-	}
-	
+	public List<Tile> GetSurroundingTiles(Coordinate pos) { return GetSurroundingTiles(pos.getX(), pos.getY()); }
 	public List<Tile> GetSurroundingTiles(int posx, int posy) {
 		List<Tile> foundTiles = new ArrayList<Tile>();
 		for(int y = -1; y < 2; y++) {
@@ -260,10 +237,7 @@ public class World {
 		return foundTiles;
 	}
 	
-	public Tile GetTileFromDirection(Coordinate pos, Direction dir) {
-		return GetTileFromDirection(pos.getX(), pos.getY(), dir);
-	}
-	
+	public Tile GetTileFromDirection(Coordinate pos, Direction dir) { return GetTileFromDirection(pos.getX(), pos.getY(), dir); }
 	public Tile GetTileFromDirection(int x, int y, Direction dir) {
 		
 		Tile tile = null;
@@ -285,7 +259,6 @@ public class World {
 			System.out.println("GetTileFromDirection: NOT A CARDINAL DIRECTION!");
 			break;
 		}
-		
 		return tile;
 	}
 	
@@ -313,7 +286,6 @@ public class World {
 			System.out.println("GetTileFromDirection: NOT A CARDINAL DIRECTION!");
 			break;
 		}
-		
 		return tile;
 	}
 	
@@ -324,12 +296,8 @@ public class World {
 		
 		// get all possible tiles
 		for(int i = 0; i < _tiles.size(); i++) {
-			
 			Tile tile = _tiles.get(i);
-			
-			if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) {
-				possibleTiles.add(tile);
-			}
+			if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) possibleTiles.add(tile);
 		}
 		
 		// get a random number
@@ -354,7 +322,6 @@ public class World {
 		position[3] = randTilePos.getY();
 		
 		return position;
-		
 	}
 	
 	public int[] GetFreePosition() {
@@ -364,12 +331,8 @@ public class World {
 		
 		// get all possible tiles
 		for(int i = 0; i < tiles.size(); i++) {
-			
 			Tile tile = tiles.get(i);
-			
-			if(tile.GetTileType() == TileType.Floor && tile.GetActor() == null && tile.GetItem() == null) {
-				possibleTiles.add(tile);
-			}
+			if(tile.GetTileType() == TileType.Floor && tile.GetActor() == null && tile.GetItem() == null) possibleTiles.add(tile);
 		}
 		
 		// get a random number
@@ -512,14 +475,8 @@ public class World {
 		World.instance = null;
 	}
 
-	public List<Tile> GetTilesInCardinalDirection(Tile tile) {
-		return GetTilesInCardinalDirection(tile.GetTilePosition().getX(), tile.GetTilePosition().getY());
-	}
-	
-	public List<Tile> GetTilesInCardinalDirection(Coordinate pos) {
-		return GetTilesInCardinalDirection(pos.getX(), pos.getY());
-	}
-	
+	public List<Tile> GetTilesInCardinalDirection(Tile tile) { return GetTilesInCardinalDirection(tile.GetTilePosition().getX(), tile.GetTilePosition().getY()); }
+	public List<Tile> GetTilesInCardinalDirection(Coordinate pos) { return GetTilesInCardinalDirection(pos.getX(), pos.getY()); }
 	public void addToRooms(Room room) { this.rooms.add(room); }
 	public void AddToTiles(Tile t) { this.tiles.add(t); }
 	public void RemoveTiles(Tile t) { if(tiles.contains(t)) this.tiles.remove(t); }
