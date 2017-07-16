@@ -94,7 +94,12 @@ public class LoSManager {
 		// ------------------------
 		try {
 			
-			for(Tile tile : allTiles) {
+			// copy list to a temp list.
+			// -> if we modify allTiles 
+			// --> no concurrent modidication exception.
+			List<Tile> tiles_ = new ArrayList<Tile>(allTiles);
+			
+			for(Tile tile : tiles_) {
 			
 				int targetx = tile.GetTilePosition().getX();
 				int targety = tile.GetTilePosition().getY();

@@ -12,8 +12,8 @@ public abstract class GameObject {
 	private Coordinate worldPosition; 	// this is WORLD position, in pixels.
 	private Coordinate tilePosition; 	// this is TILE position in the grid.
 	
-	protected boolean hidden = false;
-	protected boolean discovered = true;
+	protected boolean hidden = true;
+	protected boolean discovered = false;
 	
 	protected SpriteType spriteType;
 	protected BufferedImage sprite;

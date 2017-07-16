@@ -157,7 +157,6 @@ public class DungeonGeneration {
 			remove_.clear();
 			add_.clear();
 		}
-			
 		return tiles_;
 	}
 	

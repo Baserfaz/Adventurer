@@ -21,25 +21,26 @@ public class Game extends Canvas implements Runnable {
 
 	public static Game instance;
 	
-	public static final int WIDTH = 1280, HEIGHT = 720; 			// viewport size
-	public static final int SPRITESIZE = 16; 						// sprite size in pixels
-	public static final int CAMERAZOOM = 3; 						// level of zoom
-	public static final double FRAME_CAP = 60.0;					// cap the framerate to this
-	public static final String SPRITESHEETNAME = "spritesheet.png";	// main spritesheet name
+	public static final int WIDTH              = 1280;			    // viewport width
+	public static final int HEIGHT             = 720;               // viewport height
+	public static final int SPRITESIZE         = 16;                // sprite size in pixels
+	public static final int CAMERAZOOM         = 2;                 // level of zoom
+	public static final double FRAME_CAP       = 60.0;              // cap the framerate to this
+	public static final String SPRITESHEETNAME = "spritesheet.png"; // main spritesheet name
 	
 	//------------------------------
 	// DEBUGGING TOOLS AND GAME SETTINGS
 	
 	// draw debugging stuff
-	public static final boolean DRAW_CAMERA = false;
-	public static final boolean DRAW_ENEMY_FOV = false;
+	public static final boolean DRAW_CAMERA     = false;
+	public static final boolean DRAW_ENEMY_FOV  = false;
 	public static final boolean DRAW_ENEMY_PATH = false; 			// works correctly only with one enemy
 	
 	// do we create lobby or random dungeon first.
 	public static final boolean START_GAME_WITH_RANDOM_ROOM = true;
 	
 	// LOS settings
-	public static final boolean CALCULATE_PLAYER_LOS = false;
+	public static final boolean CALCULATE_PLAYER_LOS = true;
 	
 	// render settings
 	public static final boolean RENDER_ACTORS_DIRECTION_ARROW = false;
@@ -50,25 +51,25 @@ public class Game extends Canvas implements Runnable {
 
 	// tile settings
 	public static final boolean ANIMATE_TILE_DISCOVERY = false;
-	public static final int TILEGAP = 3;
+	public static final int TILEGAP = 2;
 	
 	// player defaults
-	public static final int START_KEY_COUNT = 1;
+	public static final int START_KEY_COUNT         = 1;
 	public static final int START_DIAMOND_KEY_COUNT = 0;
-	public static final int START_BOMB_COUNT = 1;
-	public static final int START_PROJECTILE_COUNT = 0;
+	public static final int START_BOMB_COUNT        = 1;
+	public static final int START_PROJECTILE_COUNT  = 0;
 	
 	// world size
 	public static final int WORLDHEIGHT = 30;
-	public static final int WORLDWIDTH = 30;
+	public static final int WORLDWIDTH  = 30;
 	
 	// room count
-	public static final int ROOM_COUNT = 20;
+	public static final int ROOM_COUNT          = 20;
 	public static final int ROOM_DOOR_MAX_COUNT = 2;
 	
 	// room sizes
-	public static final int ROOM_MAX_WIDTH = 10;
-	public static final int ROOM_MIN_WIDHT = 2;
+	public static final int ROOM_MAX_WIDTH  = 10;
+	public static final int ROOM_MIN_WIDHT  = 2;
 	public static final int ROOM_MAX_HEIGHT = 10;
 	public static final int ROOM_MIN_HEIGHT = 2;
 	
