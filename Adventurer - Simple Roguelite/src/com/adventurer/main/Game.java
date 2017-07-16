@@ -63,7 +63,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int WORLDWIDTH = 30;
 	
 	// room count
-	public static final int ROOM_COUNT = 10;
+	public static final int ROOM_COUNT = 20;
 	public static final int ROOM_DOOR_MAX_COUNT = 2;
 	
 	// room sizes
@@ -74,7 +74,7 @@ public class Game extends Canvas implements Runnable {
 	
 	// how many times the room generation 
 	// algorithm tries to fit a room to the world.
-	public static final int ROOM_TRY_GENERATION_COUNT = 1000;
+	public static final int ROOM_TRY_GENERATION_COUNT = 10;
 	
 	//------------------------------
 	

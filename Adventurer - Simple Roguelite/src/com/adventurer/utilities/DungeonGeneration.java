@@ -101,10 +101,10 @@ public class DungeonGeneration {
 		
 		// ----------- END OF GENERATION ------------------
 		
-		int genTime = (int) (System.currentTimeMillis() - startTime);
+		double genTime = (double) (System.currentTimeMillis() - startTime) / 1000;
 		
 		System.out.println("World consists of " + allTiles.size() + " tiles.");
-		System.out.println("World generated in : " + genTime + " milliseconds.");
+		System.out.println("World generated in : " + genTime + " seconds.");
 		
 		// just to be sure that there are no error tiles left in the dungeon.
 		return Util.replaceAllErrorTiles(allTiles);
