@@ -6,8 +6,6 @@ import com.adventurer.utilities.Util;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.SpriteType;
-import com.adventurer.gameobjects.DestructibleItem;
-import com.adventurer.gameobjects.LightSource;
 
 public class VanityItemCreator {
 

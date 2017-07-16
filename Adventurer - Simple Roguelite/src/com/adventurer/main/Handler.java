@@ -55,71 +55,51 @@ public class Handler {
 	private void renderTiles(Graphics g) {
 		for(int i = 0; i < getObjects().size(); i++) {
 			GameObject current = getObjects().get(i);
-			
 			if(current == null) continue;
-			
-			if(current instanceof Tile) {
-				current.render(g);
-			}
+			if(current instanceof Tile) current.render(g);
 		}
 	}
 	
 	private void renderVanityItems(Graphics g) {
 		for(int i = 0; i < getObjects().size(); i++) {
 			GameObject current = getObjects().get(i);
-			
 			if(current == null) continue;
-			
-			if(current instanceof VanityItem) {
-				current.render(g);
-			}
+			if(current instanceof VanityItem) current.render(g);
 		}
 	}
 	
 	private void renderItems(Graphics g) {
 		for(int i = 0; i < getObjects().size(); i++) {
 			GameObject current = getObjects().get(i);
-			
 			if(current == null) continue;
-			
-			if(current instanceof Item) {
-				current.render(g);
-			}
+			if(current instanceof Item) current.render(g);
 		}
 	}
 	
 	private void renderActors(Graphics g) {
 		for(int i = 0; i < getObjects().size(); i++) {
 			GameObject current = getObjects().get(i);
-			
 			if(current == null) continue;
-			
-			if(current instanceof Actor) {
-				current.render(g);
-			}
+			if(current instanceof Actor) current.render(g);
 		}
 	}
 	
 	private void renderEffects(Graphics g) {
 		for(int i = 0; i < getObjects().size(); i++) {
 			GameObject current = getObjects().get(i);
-			
 			if(current == null) continue;
-			
-			if(current instanceof Effect) {
-				current.render(g);
-			}
+			if(current instanceof Effect) current.render(g);
 		}
 	}	
 
 	private void renderGUI(Graphics g) {
-	    
-		Player player = ActorManager.GetPlayerInstance();
 		
+		// get player
+		Player player = ActorManager.GetPlayerInstance();
 		if(Camera.instance == null || player == null) return;
 		
+		// get camera
 		Rectangle cam = Camera.instance.getCameraBounds();
-		
 		Graphics2D g2d = (Graphics2D) g;
 		
 		// change color
@@ -129,6 +109,8 @@ public class Handler {
 		// font settings
 		Font font = new Font("Consolas", Font.PLAIN, 8);
 		g2d.setFont(font);
+		
+		// ------------ DRAW GUI --------------
 		
 		// draw health
 		g2d.drawString("HP: " + player.GetHealth().GetCurrentHealth(),
@@ -157,11 +139,10 @@ public class Handler {
 				(int) cam.getMinX() + 230,
 				(int) cam.getMaxY() - 5
 				);*/
-		
 	}
 	
 	public void AddObject(GameObject go) { this.getObjects().add(go); }	
 	public void RemoveObject(GameObject go) { this.getObjects().remove(go); }
 	public List<GameObject> getObjects() { return objects; }
-	public void setObjects(List<GameObject> objects) { this.objects = objects;}
+	public void setObjects(List<GameObject> objects) { this.objects = objects; }
 }

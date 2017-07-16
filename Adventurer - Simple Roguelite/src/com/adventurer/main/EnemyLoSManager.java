@@ -52,7 +52,6 @@ public class EnemyLoSManager {
 						tile.GetItem() != null && tile.GetItem() instanceof Projectile == false || 
 						tile.GetActor() != null && tile.GetActor() instanceof Enemy == false
 				) break;
-				
 			}
 	    	
 	        numerator += shortest;
@@ -65,9 +64,7 @@ public class EnemyLoSManager {
 	            x += dx2;
 	            y += dy2;
 	        }
-	        
 	    }
-	    
 	    return tiles;
 	}
 	
@@ -83,18 +80,12 @@ public class EnemyLoSManager {
 			int targetx = tile.GetTilePosition().getX();
 			int targety = tile.GetTilePosition().getY();
 			
-			for(Tile t : calculateLine(position.getX(), position.getY(), targetx, targety)) {
-				
-				if(foundTiles.contains(t) == false) {
-					foundTiles.add(t);
-				}
-				
+			for(Tile t : calculateLine(position.getX(), position.getY(), targetx, targety)) {		
+				if(foundTiles.contains(t) == false) foundTiles.add(t);
 			}
 		}
-		
 		Tile[] allTiles = new Tile[foundTiles.size()];
 		allTiles = foundTiles.toArray(allTiles);
 		return allTiles;
 	}
-	
 }

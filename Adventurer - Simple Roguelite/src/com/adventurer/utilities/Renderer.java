@@ -3,10 +3,7 @@ package com.adventurer.utilities;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-
 import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.main.Game;
@@ -70,6 +67,5 @@ public class Renderer {
 		g2d.rotate(rot, xcenter, ycenter);
 		g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
 		g2d.rotate(-rot, xcenter, ycenter);
-		
 	}
 }

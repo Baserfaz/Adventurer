@@ -63,5 +63,4 @@ public class ItemCreator {
 	private static Coordinate GetOffsets(int max, int min) {
 		return new Coordinate(Util.GetRandomInteger(min, max), Util.GetRandomInteger(min, max));
 	}
-	
 }

@@ -18,21 +18,19 @@ public class MazeGeneration {
 	public static List<Tile> generateMaze_v3(List<Tile> tiles) {
 		
 		List<Tile> tiles_ 		 = new ArrayList<Tile>(tiles);  // contains all tiles
-		Stack<Tile> visited 	 = new Stack<Tile>();			// visited tiles
-		List<Tile> concretePath  = new ArrayList<Tile>();		// floor tiles
-		List<Tile> concreteWalls = new ArrayList<Tile>();		// wall tiles
+		Stack<Tile> visited 	 = new Stack<Tile>();           // visited tiles
+		List<Tile> concretePath  = new ArrayList<Tile>();       // floor tiles
+		List<Tile> concreteWalls = new ArrayList<Tile>();       // wall tiles
 		
 		// randomize starting tile
 		Tile current = tiles_.get(Util.GetRandomInteger(0, tiles_.size()));
 		visited.push(current);
 		
 		Tile cameFrom = null, neighbor = null;
-		int c = 0; // TODO: this is ugly and has side effects.
 		boolean backtracking = false;
-				
-		// ----------------------------------- START MAZE GEN
-		// if the stack is empty, we are done.		
+		int c = 0; // TODO: this is ugly and has side effects.		
 		
+		// ----------------------------------- START MAZE GEN
 		while(visited.isEmpty() == false) {
 			
 			current = visited.pop();
@@ -69,12 +67,7 @@ public class MazeGeneration {
 							
 						}
 						
-					} else {
-						// there is no walls adjacent to 
-						// this current tile.
-						continue;
-					}
-					
+					} else continue;
 				} else {
 				
 					neighbor = Util.getRandomNeighboringTile(current, tiles_);
@@ -135,7 +128,6 @@ public class MazeGeneration {
 			Tile newt = Util.replaceTile(t, TileType.Wall, SpriteType.Wall01);
 			tiles_.add(newt);
 		}
-		
 		return tiles_;
 	}
 }

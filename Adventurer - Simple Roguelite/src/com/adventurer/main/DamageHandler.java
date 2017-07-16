@@ -50,15 +50,8 @@ public class DamageHandler {
 			
 			EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 5), spritetype);
 		} else if(actor instanceof Turret) {
-			
-			EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 5), SpriteType.PotGib01);
-			
+			EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 5), SpriteType.PotGib01);	
 		}
-		
-	}
-	
-	public static void ActorTakeDamage(Tile tile, int damage) {
-		ActorTakeDamage(tile.GetActor(), damage);
 	}
 	
 	public static void ItemTakeDamage(DestructibleItem item, int damage) {
@@ -72,12 +65,9 @@ public class DamageHandler {
 		if(item.isDiscovered()) EffectCreator.CreateStaticHitEffect(tile);
 		
 		// create gibs
-		EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 7), SpriteType.PotGib01);
-		
+		EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 7), SpriteType.PotGib01);	
 	}
 	
-	public static void ItemTakeDamage(Tile tile, int damage) {
-		ItemTakeDamage((DestructibleItem)tile.GetItem(), damage);
-	}
-	
+	public static void ActorTakeDamage(Tile tile, int damage) { ActorTakeDamage(tile.GetActor(), damage); }
+	public static void ItemTakeDamage(Tile tile, int damage) { ItemTakeDamage((DestructibleItem)tile.GetItem(), damage); }
 }

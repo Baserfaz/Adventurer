@@ -2,7 +2,6 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
@@ -65,10 +64,6 @@ public class Projectile extends Item {
 			
 			Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), direction, g);
 		}
-	}
-	
-	public Rectangle GetBounds() {
-		return null;
 	}
 	
 	private void UpdatePosition() {
@@ -151,8 +146,7 @@ public class Projectile extends Item {
 			Remove();
 		}
 	}
-	
-	public int GetDamage() {
-		return this.damage;
-	}
+
+	public Rectangle GetBounds() { return null; }
+	public int GetDamage() { return this.damage; }
 }

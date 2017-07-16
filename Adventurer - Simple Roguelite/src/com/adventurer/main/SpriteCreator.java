@@ -21,17 +21,13 @@ public class SpriteCreator {
 	public SpriteCreator(String path) {
 		
 		if(instance != null) return;
-		
 		instance = this;
 		
 		BufferedImage image = null;
 		
 		// get the sprite sheet
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/" + path));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		try { image = ImageIO.read(getClass().getResourceAsStream("/" + path)); }
+		catch (IOException e) { e.printStackTrace(); }
 		
 		// set vars
 		this.path = path;
@@ -48,23 +44,19 @@ public class SpriteCreator {
 		tx.translate(0, -img.getHeight(null));
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 		BufferedImage image = op.filter(img, null);
-		
 		return image;
 	}
 	
 	// https://stackoverflow.com/questions/9558981/flip-image-with-graphics2d
 	public BufferedImage FlipSpriteHorizontally(BufferedImage img) {
-		
 		AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
 		tx.translate(-img.getWidth(null), 0);
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 		BufferedImage retimage = op.filter(img, null);
-		
 		return retimage;
 	}
 	
-	public BufferedImage CreateSprite(SpriteType type) {
-		
+	public BufferedImage CreateSprite(SpriteType type) {	
 		int row = 0, column = 0;
 		BufferedImage sprite = new BufferedImage(Game.SPRITESIZE, Game.SPRITESIZE, BufferedImage.TYPE_INT_ARGB);
 		int[] spritePixelData = new int[sprite.getWidth() * sprite.getHeight()];
@@ -288,10 +280,8 @@ public class SpriteCreator {
 		// get the pixel array
 		for(int y = startY; y < endY; y++) {
 			for (int x = startX; x < endX; x++) {
-				
 				// get the pixel data from the sprite sheet.
-				spritePixelData[currentPixel] = pixels[y * width + x];
-			
+				spritePixelData[currentPixel] = pixels[y * width + x];	
 				currentPixel ++;
 			}
 		}
@@ -302,23 +292,11 @@ public class SpriteCreator {
 		    	sprite.setRGB(x, y, spritePixelData[y * sprite.getWidth() + x]);
 		    }
 		}
-		
 		return sprite;
 	}
 	
-	public String GetPath() {
-		return this.path;
-	}
-	
-	public int[] GetPixelArray() {
-		return this.pixels;
-	}
-	
-	public int GetWidth() {
-		return this.width;
-	}
-	
-	public int GetHeight() {
-		return this.height;	
-	}
+	public String GetPath() { return this.path; }
+	public int[] GetPixelArray() { return this.pixels; }
+	public int GetWidth() { return this.width; }
+	public int GetHeight() { return this.height; }
 }

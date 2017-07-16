@@ -19,9 +19,7 @@ import com.adventurer.data.SaveFile;
 
 public class FileReader {
 	
-	public static Map<String, String> readXMLGameData(String key) {
-		return readXML("resources/data/gamedata.xml", key);
-	}
+	public static Map<String, String> readXMLGameData(String key) { return readXML("resources/data/gamedata.xml", key); }
 	
 	// https://stackoverflow.com/questions/428073/what-is-the-best-simplest-way-to-read-in-an-xml-file-in-java-application
 	public static Map<String, String> readXML(String filename, String key) {
@@ -68,12 +66,8 @@ public class FileReader {
 		    }
 		    
 		    
-		} catch (ParserConfigurationException | SAXException | IOException e) {
-			e.printStackTrace();
-		}
-		
+		} catch (ParserConfigurationException | SAXException | IOException e) { e.printStackTrace(); }
 		//System.out.println("filereader:readxml:enemydata: " + myMap.toString());
-		
 		return myMap;
 	}
 	
@@ -81,7 +75,6 @@ public class FileReader {
 		String content = "";
 		try { content = new String(Files.readAllBytes(Paths.get("data/" + filename))); } 
 		catch (NoSuchFileException e) { 
-			
 			if(filename == SaveFile.SAVEFILENAME + ".txt") {
 				
 				// there is no savefile created yet!
@@ -91,15 +84,9 @@ public class FileReader {
 				// read the default file.
 				content = readSaveFile();
 			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		} catch (IOException e) { e.printStackTrace(); }
 		return content;
 	}
 	
-	public static String readSaveFile() {
-		return readFile(SaveFile.SAVEFILENAME + ".txt");
-	}
+	public static String readSaveFile() { return readFile(SaveFile.SAVEFILENAME + ".txt"); }
 }

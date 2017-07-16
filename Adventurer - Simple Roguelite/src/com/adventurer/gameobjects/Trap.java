@@ -33,7 +33,6 @@ public class Trap extends Tile {
 			ActivateGasTrap();
 			break;
 		}
-		
 	}
 	
 	private void ActivateGasTrap() {
@@ -104,11 +103,6 @@ public class Trap extends Tile {
 		new Projectile(current.GetWorldPosition(), current.GetTilePosition(), SpriteType.Arrow01, this.damage, projectileDir);
 	}
 	
-	public int getDamage() {
-		return damage;
-	}
-
-	public void setDamage(int damage) {
-		this.damage = damage;
-	}
+	public int getDamage() { return damage; }
+	public void setDamage(int damage) { this.damage = damage; }
 }

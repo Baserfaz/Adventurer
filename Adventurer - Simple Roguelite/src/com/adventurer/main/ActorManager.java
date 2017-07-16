@@ -28,7 +28,6 @@ public class ActorManager {
 		playerInstance = new Player(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Player, maxHp, damage);
 		
 		return playerInstance;
-		
 	}
 	
 	public static void RemovePlayer() {
@@ -55,7 +54,6 @@ public class ActorManager {
 		Coordinate playerTilePos = new Coordinate(pos[2], pos[3]);
 		
 		playerInstance.forceMove(playerWorldPos, playerTilePos);
-		
 	}
 	
 	public static Player CreatePlayerInstance(int maxHP, int damage) {
@@ -104,13 +102,12 @@ public class ActorManager {
 				//else System.out.println("Not yet implemented: " + key);
 				
 			}
-			
 			CreateEnemy(name, health, damage, randomType, tiles, isRanged);
 		}
 	}
 	
 	public static Enemy CreateEnemy(String name, int maxHP, int damage,
-			EnemyType enemyType, List<Tile> roomTiles, boolean isRanged) {
+		EnemyType enemyType, List<Tile> roomTiles, boolean isRanged) {
 		
 		// get position
 		int[] pos = World.instance.GetFreePosition(roomTiles);
@@ -139,12 +136,6 @@ public class ActorManager {
 		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, maxHP, damage, name, isRanged);
 	}
 	
-	public static Enemy[] GetEnemyInstances() {
-		return enemyInstances;
-	}
-	
-	public static Player GetPlayerInstance() {
-		return playerInstance;
-	}
-	
+	public static Enemy[] GetEnemyInstances() { return enemyInstances; }
+	public static Player GetPlayerInstance() { return playerInstance; }
 }

@@ -36,5 +36,4 @@ public class VanityItem extends GameObject {
 		// hide 
 		Hide();
 	}
-	
 }

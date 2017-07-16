@@ -14,7 +14,5 @@ public class Portal extends Tile {
 		this.exit = exit;
 	}
 	
-	public boolean isExit() {
-		return this.exit;
-	}
+	public boolean isExit() { return this.exit; }
 }

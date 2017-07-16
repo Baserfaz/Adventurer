@@ -45,7 +45,6 @@ public class Tile extends GameObject {
 		this.node = new Node();
 		
 		if(this.type == TileType.Floor || this.type == TileType.Trap) walkable = true;
-		
 	}
 	
 	public void tick() {
@@ -241,10 +240,6 @@ public class Tile extends GameObject {
 		Hide();
 	}
 	
-	public boolean isLit() {
-		return this.lit;
-	}
-	
 	public void toggleLit() {
 		if(this.lit) this.lit = false;
 		else this.lit = true;
@@ -254,70 +249,34 @@ public class Tile extends GameObject {
 		if (this.selected) this.selected = false;
 		else this.selected = true;
 	}
-	
-	public void Select() {
-		this.selected = true;
-	}
-	
-	public void Deselect() {
-		this.selected = false;
-	}
-	
-	public boolean isWalkable() {
-		return this.walkable;
-	}
-	
+
 	public String GetInfo() {
 		String s = super.GetInfo();
 		s += ", tiletype: " + this.GetTileType() + ", Item: " + this.GetItem() + ", Actor: " + this.GetActor();
 		return s;
 	}
+
+	public void Select() { this.selected = true; }
+	public void Deselect() { this.selected = false; }
 	
-	public boolean isInView() {
-		return this.inView;
-	}
+	public boolean isLit() { return this.lit; }
+	public boolean isWalkable() { return this.walkable; }
+	public boolean isInView() { return this.inView; }
+	
+	public TileType GetTileType() { return this.type; }
+	public Item GetItem() { return item; }
+	public Actor GetActor() { return this.actor; }
+	public Node getNode() { return this.node; }
+	
+	public void SetActor(Actor actor) { this.actor = actor; }
+	public void SetTileType(TileType t) { this.type = t; }
+	public void SetItem(Item item) { this.item = item; }
+	
+	public void RemoveVanityItem(GameObject i) { this.vanityItems.remove(i); }
+	public void AddVanityItem(VanityItem i) { this.vanityItems.add(i); }
+	public List<VanityItem> GetVanityItems() { return this.vanityItems; }
 	
 	public Rectangle GetBounds() {
 		return new Rectangle(this.GetWorldPosition().getX(), this.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE);
-	}
-	
-	public TileType GetTileType() {
-		return this.type;
-	}
-
-	public void SetTileType(TileType t) {
-		this.type = t;
-	}
-	
-	public Item GetItem() {
-		return item;
-	}
-
-	public void RemoveVanityItem(GameObject i) {
-		this.vanityItems.remove(i);
-	}
-	
-	public void AddVanityItem(VanityItem i) {
-		this.vanityItems.add(i);
-	}
-	
-	public List<VanityItem> GetVanityItems() {
-		return this.vanityItems;
-	}
-	
-	public void SetItem(Item item) {
-		this.item = item;
-	}
-
-	public Actor GetActor() {
-		return this.actor;
-	}
-
-	public void SetActor(Actor actor) {
-		this.actor = actor;
-	}
-	
-	public Node getNode() {
-		return this.node;
 	}
 }

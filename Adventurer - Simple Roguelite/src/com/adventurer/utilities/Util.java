@@ -1,8 +1,6 @@
 package com.adventurer.utilities;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
@@ -10,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-
 import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
@@ -21,32 +18,18 @@ import com.adventurer.gameobjects.Tile;
 
 public class Util {
 	
-	public static Direction GetRandomCardinalDirection() {
-		return Direction.values()[Util.GetRandomInteger(0, 4)];
-	}
-	
-	public static int GetRandomInteger() {
-		return ThreadLocalRandom.current().nextInt(0, 101);
-	}
-	
-	public static int GetRandomInteger(int min, int max) {
-		return ThreadLocalRandom.current().nextInt(min, max);
-	}
+	public static Direction GetRandomCardinalDirection() { return Direction.values()[Util.GetRandomInteger(0, 4)]; }
+	public static int GetRandomInteger() { return ThreadLocalRandom.current().nextInt(0, 101); }
+	public static int GetRandomInteger(int min, int max) { return ThreadLocalRandom.current().nextInt(min, max); }
 	
 	// http://stackoverflow.com/questions/16656651/does-java-have-a-clamp-function
-	public static int clamp(int val, int min, int max) {
-	    return Math.max(min, Math.min(max, val));
-	}
+	public static int clamp(int val, int min, int max) { return Math.max(min, Math.min(max, val)); }
 	
 	// http://www.java-gaming.org/index.php?topic=34706.0
-	public static float lerp(float point1, float point2, float alpha) {
-	    return point1 + alpha * (point2 - point1);
-	}
+	public static float lerp(float point1, float point2, float alpha) { return point1 + alpha * (point2 - point1); }
 	
 	// http://www.java-gaming.org/index.php?topic=34706.0
-	public static int lerp(int point1, int point2, float alpha) {
-	    return Math.round(point1 + alpha * (point2 - point1));
-	}
+	public static int lerp(int point1, int point2, float alpha) { return Math.round(point1 + alpha * (point2 - point1)); }
 	
 	// http://stackoverflow.com/questions/4248104/applying-a-tint-to-an-image-in-java
 	public static BufferedImage tint(BufferedImage image, boolean darker) {
@@ -273,5 +256,4 @@ public class Util {
 		}
 		return tiles_;
 	}
-	
 }

@@ -13,7 +13,6 @@ import com.adventurer.utilities.Util;
 public class EffectCreator {
 
 	public static void CreateStaticHitEffect(Tile tile) {
-		// create effect.
 		new Effect(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Hit01, 100);
 	}
 	
@@ -42,14 +41,8 @@ public class EffectCreator {
 	}
 	
 	public static void CreateGasEffectArea(Tile tile, int gasPuffCount) {
-		
 		List<Tile> tiles = World.instance.GetSurroundingTiles(tile.GetTilePosition());
-		
-		for(Tile t : tiles) {
-			
-			// create effects
-			EffectCreator.CreateGasEffect(t, Util.GetRandomInteger(3, 7));
-		}
+		for(Tile t : tiles) { EffectCreator.CreateGasEffect(t, Util.GetRandomInteger(3, 7)); }
 	}
 	
 	public static void CreateGasEffect(Tile tile, int gasPuffCount) {

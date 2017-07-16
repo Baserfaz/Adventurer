@@ -8,9 +8,9 @@ import java.util.Map;
 import com.adventurer.data.Node;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.TileType;
-import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Tile;
 
+// Implemented from Wikipedia's AStar article.
 public class AStar {
 
 	public static List<Tile> CalculatePath(Tile start, Tile goal) {
@@ -18,20 +18,17 @@ public class AStar {
 		// reset nodes
 		for(Tile tile : World.instance.GetTiles()) tile.getNode().reset();
 		
-		Map<Tile, Tile> cameFrom = new HashMap<Tile, Tile>();
-		
-		List<Tile> closedSet = new ArrayList<Tile>();
-		List<Tile> openSet = new ArrayList<Tile>();
+		Map<Tile, Tile> cameFrom = new HashMap<Tile, Tile>(); // save path tile and it's child tile
+		List<Tile> closedSet     = new ArrayList<Tile>();     //  
+		List<Tile> openSet       = new ArrayList<Tile>();     // visited
 		
 		openSet.add(start);
-		
 		start.getNode().setgScore(0d);
 		start.getNode().setfScore(heuristic_cost_estimate(start, goal));
 		
 		while(openSet.isEmpty() == false) {
 			
 			Tile current = getNodeWithLowestFScore(openSet);
-			
 			if(current == goal) return reconstruct_path(cameFrom, current, goal);
 			
 			openSet.remove(current);
@@ -52,7 +49,6 @@ public class AStar {
 				if(openSet.contains(neighbor) == false) openSet.add(neighbor);
 				
 				double tentative_gScore = current.getNode().getgScore() + World.instance.distanceBetweenTiles(current, neighbor);
-				
 				if(tentative_gScore >= neighbor.getNode().getgScore()) continue;
 				
 				cameFrom.put(neighbor, current);
@@ -64,9 +60,7 @@ public class AStar {
 	}
 	
 	private static List<Tile> reconstruct_path(Map<Tile, Tile> cameFrom, Tile current, Tile goal) {
-		
 		List<Tile> totalPath = new ArrayList<Tile>();
-		
 		totalPath.add(goal);
 		
 		while(cameFrom.containsKey(current)) {
@@ -76,7 +70,6 @@ public class AStar {
 		
 		// remove the tile the enemy is currently on.
 		totalPath.remove(totalPath.size() - 1);
-		
 		return totalPath;
 	}
 	
@@ -98,6 +91,4 @@ public class AStar {
 		}
 		return chosenTile;
 	}
-	
-	
 }

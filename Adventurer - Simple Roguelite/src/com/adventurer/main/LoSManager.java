@@ -100,11 +100,7 @@ public class LoSManager {
 				int targety = tile.GetTilePosition().getY();
 				
 				for(Tile t : calculateLine(position.getX(), position.getY(), targetx, targety)) {
-					
-					if(foundTiles.contains(t) == false) {
-						foundTiles.add(t);
-					}
-					
+					if(foundTiles.contains(t) == false) foundTiles.add(t);
 				}
 			}
 			

@@ -49,18 +49,12 @@ public class Turret extends Actor {
 	}
 	
 	public void tick() {
-		
-		if(this.GetHealth().isDead()) {
-			
-			OnDeath(World.instance.GetTileAtPosition(this.GetTilePosition()));
-			
-		} else {
-			
+		if(this.GetHealth().isDead()) OnDeath(World.instance.GetTileAtPosition(this.GetTilePosition()));
+		else {
 			if(shootTimer < System.currentTimeMillis()) {
 				shoot();
 				shootTimer = System.currentTimeMillis() + shootCooldown;
 			}
-			
 		}
 	}
 	
@@ -74,8 +68,5 @@ public class Turret extends Actor {
 		}
 	} 
 	
-	public void shoot() {
-		//Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
-		new Projectile(this.GetWorldPosition(), this.GetTilePosition(), projSpriteType, damage, lookDir);
-	}
+	public void shoot() { new Projectile(this.GetWorldPosition(), this.GetTilePosition(), projSpriteType, damage, lookDir); }
 }
