@@ -1,12 +1,8 @@
 package com.adventurer.utilities;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
-
-import com.adventurer.data.Coordinate;
-import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.Tile;
@@ -15,7 +11,7 @@ public class MazeGeneration {
 	
 	// uses recursive backtracking algorithm, based on Jamis Buck's work.
 	// http://www.jamisbuck.org/presentations/rubyconf2011/index.html#recursive-backtracker-demo
-	public static List<Tile> generateMaze_v3(List<Tile> tiles) {
+	public static List<Tile> generateMaze(List<Tile> tiles) {
 		
 		List<Tile> tiles_ 		 = new ArrayList<Tile>(tiles);  // contains all tiles
 		Stack<Tile> visited 	 = new Stack<Tile>();           // visited tiles

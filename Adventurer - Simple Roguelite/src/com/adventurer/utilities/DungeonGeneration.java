@@ -90,7 +90,7 @@ public class DungeonGeneration {
 		List<Tile> modTiles = fillEmptyWithErrorTiles(allTiles);
 		
 		// generate maze.
-		modTiles = MazeGeneration.generateMaze_v3(modTiles);
+		modTiles = MazeGeneration.generateMaze(modTiles);
 		allTiles.addAll(modTiles);
 		
 		// create doors 
@@ -141,7 +141,13 @@ public class DungeonGeneration {
 				}	
 			}
 			
+			// remove tiles from list.
 			tiles_.removeAll(remove_);
+			
+			// actually remove the tiles.
+			for(Tile t : remove_) t.Remove();
+			
+			// add new tiles to the list.
 			tiles_.addAll(add_);
 			
 			// if there is no dead ends left -> done.
