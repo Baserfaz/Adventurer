@@ -13,7 +13,7 @@ public class VanityItemCreator {
 		return new Coordinate(Util.GetRandomInteger(min, max), Util.GetRandomInteger(min, max));
 	}
 	
-	public static VanityItem CreateVanityItem(Coordinate pos, SpriteType spriteType, boolean setOffset) {
+	/*public static VanityItem CreateVanityItem(Coordinate pos, SpriteType spriteType, boolean setOffset) {
 		return CreateVanityItem(World.instance.GetTileAtPosition(pos), spriteType, setOffset);
 	}
 	
@@ -54,5 +54,5 @@ public class VanityItemCreator {
 		tile.AddVanityItem(vanityItem);
 		
 		return vanityItem;
-	}
+	}*/
 }

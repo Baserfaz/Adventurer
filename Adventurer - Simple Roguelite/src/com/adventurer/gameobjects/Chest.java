@@ -18,24 +18,13 @@ public class Chest extends Item {
 	
 	public Chest(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, ItemType itemType, boolean locked) {
 		super(worldPos, tilePos, spritetype, itemType);
-		
 		this.locked = locked;
 	}
 	
 	public void render(Graphics g) {
-		
-		// TODO: This should perhaps be the Item classes' render version.
-		
 		if(hidden == false) {
-			
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-			
 		} else if(discovered == true && hidden == true) {
-			
-			/*if(tintedSprite == null) {
-				tintedSprite = Util.tint(sprite, true);
-			}*/
-			
 			Renderer.RenderSprite(Util.tint(sprite, true), this.GetWorldPosition(), g);
 		}
 	}
@@ -43,8 +32,8 @@ public class Chest extends Item {
 	public void Open() {
 		// TODO: effects + gold etc.
 		
-		EffectCreator.CreateGibs(this.GetTilePosition(), Util.GetRandomInteger(3, 7), SpriteType.GoldCoin01);
-		VanityItemCreator.CreateVanityItem(this.GetTilePosition(), SpriteType.OpenChest01, false);
+		//EffectCreator.CreateGibs(this.GetTilePosition(), Util.GetRandomInteger(3, 7), SpriteType.GoldCoin01);
+		//VanityItemCreator.CreateVanityItem(this.GetTilePosition(), SpriteType.OpenChest01, false);
 		
 		int amount = Util.GetRandomInteger(0, 5);
 		
@@ -55,18 +44,13 @@ public class Chest extends Item {
 	
 	public void Unlock() {
 		this.locked = false;
-		
 		this.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.Chest01));
-		//this.SetTintedSprite(null);
-		
-		EffectCreator.CreateGibs(this.GetTilePosition(), Util.GetRandomInteger(3, 7), SpriteType.LockedDoor01Gib01);
+		//EffectCreator.CreateGibs(this.GetTilePosition(), Util.GetRandomInteger(3, 7), SpriteType.LockedDoor01Gib01);
 	}
 	
 	public void Lock() {
 		this.locked = true;
-		
 		this.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.LockedChest01));
-		//this.SetTintedSprite(null);
 	}
 	
 	public void tick() {}

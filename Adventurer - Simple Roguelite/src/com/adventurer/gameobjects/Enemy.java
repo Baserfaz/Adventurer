@@ -41,34 +41,9 @@ public class Enemy extends Actor {
 	}
 
 	public void render(Graphics g) {
-		
 		if(hidden == false && discovered) {
-			
-			if(lookDir == Direction.East) {
-				
-				if(flippedSpriteHor == null) {
-					flippedSpriteHor = SpriteCreator.instance.FlipSpriteHorizontally(sprite);
-				}
-				
-				Renderer.RenderSprite(flippedSpriteHor, this.GetWorldPosition(), g);
-				
-			} else if(lookDir == Direction.West) {
-				
-				Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-				
-			} else {
-				
-				// TODO: North & South sprites
-				
-				Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-				
-			}
-			
+			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 			renderDirectionArrow(g);
-			
-		} else if(hidden && discovered){
-			
-			// create ghost image?
 		}
 	}
 	

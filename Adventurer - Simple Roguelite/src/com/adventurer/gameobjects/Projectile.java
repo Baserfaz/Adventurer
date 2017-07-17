@@ -48,20 +48,10 @@ public class Projectile extends Item {
 	
 	public void render(Graphics g) {
 		
-		if(alive && hidden == false) {
-			
+		if(tileDiscovered == false) return;
+		else if(alive && hidden == false) {
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), direction, g);
-			
-		} else if(tileDiscovered == false) { 
-		
-			// dont render 
-			
 		} else if(alive && discovered && hidden) {
-			
-			/*if(tintedSprite == null) {
-				tintedSprite = Util.tint(sprite, true);
-			}*/
-			
 			Renderer.RenderSprite(Util.tint(sprite, true), this.GetWorldPosition(), direction, g);
 		}
 	}
@@ -140,7 +130,7 @@ public class Projectile extends Item {
 		} else {
 			
 			// create effect
-			if(tile.isDiscovered()) EffectCreator.CreateStaticHitEffect(tile);
+			//if(tile.isDiscovered()) EffectCreator.CreateStaticHitEffect(tile);
 			
 			alive = false;
 			Remove();

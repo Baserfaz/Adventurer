@@ -21,7 +21,6 @@ public class Actor extends GameObject {
 	protected int targetx = this.GetWorldPosition().getX(), targety = this.GetWorldPosition().getY(); 
 	protected int movementSpeed = 2;
 	
-	protected BufferedImage flippedSpriteHor = null;
 	protected BufferedImage directionArrow = null;
 	
 	protected Direction lookDir;
@@ -89,48 +88,22 @@ public class Actor extends GameObject {
 	public void OnDeath(Tile tile) {
 		
 		if(this instanceof Enemy) {
-			
-			// which kind of blood/remains are we going to spawn
-			SpriteType remainsSpriteType = null;
-			
+
 			EnemyType enemyType = ((Enemy)this).getEnemyType();
-			
-			switch(enemyType) {
-			case Skeleton:
-				remainsSpriteType = SpriteType.SkeletonRemains01;
-				break;
-			default:
-				remainsSpriteType = SpriteType.Blood01;
-				break;
-			}
-			
-			// create vanity item 
-			VanityItemCreator.CreateVanityItem(tile, remainsSpriteType, true);
 			
 			// remove gameobject
 			Remove();
 			
-			if(enemyType == EnemyType.Maggot) {
-				// TODO: randomize chance of dropping "an exploding egg".
-				this.UseBomb(World.instance.GetTileAtPosition(this.GetTilePosition()));
-			}
+			if(Game.MAGGOTS_SPAWN_EGGS_ON_DEATH)
+			    if(enemyType == EnemyType.Maggot) this.UseBomb(World.instance.GetTileAtPosition(this.GetTilePosition()));
 			
 		} else if(this instanceof Player) {
-			
-			// create vanity item 
-			VanityItemCreator.CreateVanityItem(tile, SpriteType.PlayerRemains01, true);
 			
 			ActorManager.RemovePlayer();
 			World.instance.Remove();
 			new World(PredefinedMaps.GetLobby());
 			
-		} else if(this instanceof Turret) {
-			
-			// create vanity item 
-			VanityItemCreator.CreateVanityItem(tile, SpriteType.PotRemains01, true);
-			
-			Remove();
-		}
+		} else if(this instanceof Turret) Remove();
 	}
 	
 	public void Remove() {
@@ -173,7 +146,8 @@ public class Actor extends GameObject {
 				
 				if(enemy.getEnemyType() == EnemyType.Maggot) {
 					
-					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Egg01, 900, 150, BombType.Gas);
+				    // TODO: bomb --> egg?
+					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Bomb01, 900, 150, BombType.Gas);
 					
 				} else {
 				
@@ -197,11 +171,6 @@ public class Actor extends GameObject {
 				new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), projSpriteType, damage, direction);
 				
 				inv.addProjectiles(-1);
-				
-			} else {
-				
-				// TODO: ERROR EFFECT NO PROJECTILES
-				
 			}
 			
 		} else {

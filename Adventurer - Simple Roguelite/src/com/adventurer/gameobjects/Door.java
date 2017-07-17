@@ -19,7 +19,7 @@ public class Door extends Tile {
 	}
 	
 	public void Open() {
-		World.instance.ReplaceTile(this, TileType.Floor, SpriteType.FloorTile01);
+		World.instance.ReplaceTile(this, TileType.Floor, SpriteType.Floor01);
 	}
 
 	public void Unlock() {

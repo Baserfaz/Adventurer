@@ -42,26 +42,26 @@ public class Bomb extends Item {
 			// add the current tile to the tiles list
 			tiles.add(World.instance.GetTileAtPosition(this.GetTilePosition()));
 			
-			int gibAmount = Util.GetRandomInteger(4, 10);
-			Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
+			//int gibAmount = Util.GetRandomInteger(4, 10);
+			//Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
 			
 			// create gib effect
-			if(bombType == BombType.Normal) {
+			/*if(bombType == BombType.Normal) {
 				EffectCreator.CreateGibs(currentTile, gibAmount, SpriteType.BombGib01);
 			} else if(bombType == BombType.Gas){
 				EffectCreator.CreateGibs(currentTile, gibAmount, SpriteType.GasBarrelGib01);
-			}
+			}*/
 			
 			for(Tile tile : tiles) {
 				
-				int amount = Util.GetRandomInteger(4, 10);
+				//int amount = Util.GetRandomInteger(4, 10);
 				
 				// create smoke effect on tile.
-				if(bombType == BombType.Normal) {
+				/*if(bombType == BombType.Normal) {
 					EffectCreator.CreateSmokeEffect(tile, amount);
 				} else if(bombType == BombType.Gas) {
 					EffectCreator.CreateGasEffect(tile, amount);
-				}
+				}*/
 				
 				// Damage:
 				// 1. destructible tiles
@@ -72,7 +72,7 @@ public class Bomb extends Item {
 					((DestructibleTile)tile).getTileHealth().TakeDamage(this.damage);
 				
 					// effects
-					EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 7), SpriteType.Wall01Gib01);
+					//EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 7), SpriteType.Wall01Gib01);
 					
 				} else if(tile instanceof Door) {
 					
@@ -83,7 +83,7 @@ public class Bomb extends Item {
 					} else {
 						// open door
 						((Door) tile).Open();
-						EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 6), SpriteType.PotGib01);
+						//EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 6), SpriteType.PotGib01);
 					}
 					
 				} else if(tile.GetActor() != null && tile.GetItem() != this && tile.GetItem() == null) {
@@ -93,16 +93,11 @@ public class Bomb extends Item {
 						
 						// TODO: explode the other bomb too!
 						
-					} else {
-						
-						DamageHandler.ActorTakeDamage(tile, damage);
-					}
+					} else DamageHandler.ActorTakeDamage(tile, damage);
 					
 				} else if(tile.GetItem() != null) {
-					
-					if(tile.GetItem() instanceof DestructibleItem) {
+					if(tile.GetItem() instanceof DestructibleItem)
 						DamageHandler.ItemTakeDamage((DestructibleItem)tile.GetItem(), damage);
-					}
 				}
 			}
 			
@@ -112,17 +107,9 @@ public class Bomb extends Item {
 	}
 	
 	public void render(Graphics g) {
-		
 		if(alive && hidden == false) {
-			
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-			
 		} else if(alive && discovered == true && hidden == true) {
-			
-			/*if(tintedSprite == null) {
-				tintedSprite = Util.tint(sprite, true);
-			} */
-			
 			Renderer.RenderSprite(Util.tint(sprite, true), this.GetWorldPosition(), g);
 		}
 	}

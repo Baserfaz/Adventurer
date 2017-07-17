@@ -31,7 +31,7 @@ public class DestructibleItem extends Item {
 			// TODO: create effects and vanity items here 
 			// for all item types.
 			
-			switch(itemType) {
+			/*switch(itemType) {
 			case Pot:
 				VanityItemCreator.CreateVanityItem(this.GetTilePosition(), SpriteType.PotRemains01, true);
 				break;
@@ -40,24 +40,15 @@ public class DestructibleItem extends Item {
 				break;
 			default:
 				VanityItemCreator.CreateVanityItem(this.GetTilePosition(), SpriteType.PotRemains01, true);
-			}
-			
-			
+			}*/
 			this.Remove();
 		}
 	}
 	
 	public void render(Graphics g) {
 		if(alive && hidden == false && discovered) {
-			
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-			
 		} else if(alive && discovered && hidden) {
-			
-			/*if(tintedSprite == null) {
-				tintedSprite = Util.tint(sprite, true);
-			}*/
-			
 			Renderer.RenderSprite(Util.tint(sprite, true), this.GetWorldPosition(), g);	
 		}
 	}

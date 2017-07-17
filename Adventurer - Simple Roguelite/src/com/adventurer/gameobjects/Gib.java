@@ -69,7 +69,7 @@ public class Gib extends Effect {
 				// TODO: check if the tile is wall, different sprite?
 				
 				// create vanity items
-				if(tile != null) VanityItemCreator.CreateVanityItem(tile, spriteType, false);
+				//if(tile != null) VanityItemCreator.CreateVanityItem(tile, spriteType, false);
 				
 				// destroy effect gib
 				isAlive = false;

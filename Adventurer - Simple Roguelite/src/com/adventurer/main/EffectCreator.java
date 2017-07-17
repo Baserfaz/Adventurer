@@ -12,7 +12,7 @@ import com.adventurer.utilities.Util;
 
 public class EffectCreator {
 
-	public static void CreateStaticHitEffect(Tile tile) {
+	/*public static void CreateStaticHitEffect(Tile tile) {
 		new Effect(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Hit01, 100);
 	}
 	
@@ -93,5 +93,5 @@ public class EffectCreator {
 			// create effect.
 			new Effect(pos, tile.GetTilePosition(), SpriteType.Smoke01, randomTTL, true);
 		}
-	}
+	}*/
 }

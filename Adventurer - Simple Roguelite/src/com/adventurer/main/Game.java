@@ -39,6 +39,9 @@ public class Game extends Canvas implements Runnable {
 	// do we create lobby or random dungeon first.
 	public static final boolean START_GAME_WITH_RANDOM_ROOM = true;
 	
+	// use simpler spritesheet layout
+	public static final boolean USE_SIMPLE_SPRITESHEET_LAYOUT = true;
+	
 	// LOS settings
 	public static final boolean CALCULATE_PLAYER_LOS = false;
 	public static final boolean PERMANENTLY_SHOW_TILES = true;
@@ -59,6 +62,9 @@ public class Game extends Canvas implements Runnable {
 	public static final int START_DIAMOND_KEY_COUNT = 0;
 	public static final int START_BOMB_COUNT        = 0;
 	public static final int START_PROJECTILE_COUNT  = 0;
+	
+	// enemy settings
+	public static final boolean MAGGOTS_SPAWN_EGGS_ON_DEATH = false;
 	
 	// world size
 	public static final int WORLDHEIGHT = 30;

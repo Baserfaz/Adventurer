@@ -33,40 +33,19 @@ public class Player extends Actor {
 		if(myHP == null) return;
 		
 		if(myHP.isDead() == false) {
-		
 			UpdatePosition();
-			
-			if(Game.CALCULATE_PLAYER_LOS) {
-				if(losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
-			}
+			if(Game.CALCULATE_PLAYER_LOS && losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
 			
 		} else {
 			
 			currentSession.saveSessionData();
 			currentSession = null;
-			
 			OnDeath(World.instance.GetTileAtPosition(this.GetTilePosition()));
 		}
 	}
 	
 	public void render(Graphics g) {
-		
-		if(lookDir == Direction.East) {
-			
-			if(flippedSpriteHor == null) {
-				flippedSpriteHor = SpriteCreator.instance.FlipSpriteHorizontally(sprite);
-			}
-			
-			Renderer.RenderSprite(flippedSpriteHor, this.GetWorldPosition(), g);
-			
-		} else if(lookDir == Direction.West) {
-			
-			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-			
-		} else {
-			// TODO: render north and south facing sprites.
-			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);	
-		}
+		Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 		renderDirectionArrow(g);
 	}
 	
@@ -110,43 +89,18 @@ public class Player extends Actor {
 			if(door.isLocked() && door.getDoorType() == DoorType.Normal && door.GetTileType() == TileType.LockedDoor) {
 				
 				if(inventory.getKeyCount() > 0) {
-					
 					door.Unlock();
-					
-					// effects
-					EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 7), SpriteType.LockedDoor01Gib01);
-					
 					inventory.addKeys(-1);
-					
-				} else {
-					
-					// TODO EFFECTS
-					//EffectCreator.CreateErrorEffect();
-				
-				}
-				
+				} 
 				
 			} else if(door.isLocked() && door.getDoorType() == DoorType.Diamond) {
 			
 				if(inventory.getDiamondKeyCount() > 0) {
-					
 					door.Unlock();
-					
-					// effects
-					EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 7), SpriteType.LockedDoor01Gib01);
-					
 					inventory.addDiamondKeyCount(-1);
-					
-				} else {
-					
-					// TODO EFFECTS
-					//EffectCreator.CreateErrorEffect();
-				
 				}
 				
-			} else if(door.isLocked() == false) {
-				door.Open();
-			}
+			} else if(door.isLocked() == false) door.Open();
 			
 		} else if(tile.GetActor() != null) {
 			

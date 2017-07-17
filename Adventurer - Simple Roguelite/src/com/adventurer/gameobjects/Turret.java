@@ -23,32 +23,28 @@ public class Turret extends Actor {
 		this.projSpriteType = SpriteType.Arrow01;
 		this.lookDir = Direction.values()[Util.GetRandomInteger(0, 4)];
 		
-		switch(lookDir) {
+		/*switch(lookDir) {
 		case East:
 			this.SetSprite(SpriteCreator.instance.FlipSpriteHorizontally(SpriteCreator.instance.CreateSprite(SpriteType.ArrowTurretWest)));
-			//this.SetTintedSprite(null);
 			break;
 		case North:
 			this.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.ArrowTurretNorth));
-			//this.SetTintedSprite(null);
 			break;
 		case South:
 			this.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.ArrowTurretSouth));
-			//this.SetTintedSprite(null);
 			break;
 		case West:
 			this.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.ArrowTurretWest));
-			//this.SetTintedSprite(null);
 			break;
 		default:
 			System.out.println("NOT VALID DIRECTION!");
 			new Exception().printStackTrace();
 			System.exit(1);
 			break;
-		}
+		}*/
 	}
 	
-	public void tick() {
+	/*public void tick() {
 		if(this.GetHealth().isDead()) OnDeath(World.instance.GetTileAtPosition(this.GetTilePosition()));
 		else {
 			if(shootTimer < System.currentTimeMillis()) {
@@ -68,5 +64,5 @@ public class Turret extends Actor {
 		}
 	} 
 	
-	public void shoot() { new Projectile(this.GetWorldPosition(), this.GetTilePosition(), projSpriteType, damage, lookDir); }
+	public void shoot() { new Projectile(this.GetWorldPosition(), this.GetTilePosition(), projSpriteType, damage, lookDir); }*/
 }

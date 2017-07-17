@@ -28,7 +28,7 @@ public class DestructibleTile extends Tile {
 		
 		// check health
 		if(this.tileHealth.isDead() == true) {
-			World.instance.ReplaceTile(this, TileType.Floor, SpriteType.FloorTile01);
+			World.instance.ReplaceTile(this, TileType.Floor, SpriteType.Floor01);
 		} else {
 			
 			// check if the tile is in the camera's view

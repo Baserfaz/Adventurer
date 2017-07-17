@@ -265,7 +265,7 @@ public class DungeonGeneration {
 					spriteType = SpriteType.Wall01;
 				} else {
 					tileType = TileType.Floor;
-					spriteType = SpriteType.FloorTile01;
+					spriteType = SpriteType.Floor01;
 				}
 				
 				// create tile object

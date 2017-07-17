@@ -46,7 +46,7 @@ public class Trap extends Tile {
 			}
 		}
 		
-		EffectCreator.CreateGasEffectArea(this, Util.GetRandomInteger(3, 7));
+		//EffectCreator.CreateGasEffectArea(this, Util.GetRandomInteger(3, 7));
 	}
 	
 	private void ActivateProjectileTrap() {

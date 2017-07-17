@@ -129,10 +129,10 @@ public class World {
 					tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
 					break;
 				case '.':
-					tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);
+					tile = new Tile(worldPos, tilePos, SpriteType.Floor01, TileType.Floor);
 					break;
 				case '@':
-					tile = new Tile(worldPos, tilePos, SpriteType.FloorTile01, TileType.Floor);
+					tile = new Tile(worldPos, tilePos, SpriteType.Floor01, TileType.Floor);
 					spawnTile = tile;
 					break;
 				case 'W':
@@ -389,7 +389,7 @@ public class World {
 		} else if(newType == TileType.LockedDoor) {
 			newTile = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.LockedDoor01, TileType.Door, true, DoorType.Normal);
 		} else if(newType == TileType.Floor) {
-			newTile = new Tile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.FloorTile01, TileType.Floor);
+			newTile = new Tile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Floor01, TileType.Floor);
 		} else if(newType == TileType.DestructibleTile) {
 			newTile = new DestructibleTile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.DestructibleWall, TileType.DestructibleTile, 300);
 		} else {

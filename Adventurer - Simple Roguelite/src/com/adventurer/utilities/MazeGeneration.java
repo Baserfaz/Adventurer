@@ -117,7 +117,7 @@ public class MazeGeneration {
 		// draw floor
 		for(Tile t : concretePath) {
 			tiles_.remove(t);
-			Tile newt = Util.replaceTile(t, TileType.Floor, SpriteType.FloorTile01);
+			Tile newt = Util.replaceTile(t, TileType.Floor, SpriteType.Floor01);
 			tiles_.add(newt);
 		}
 		

@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.SpriteType;
 
 public class SpriteCreator {
@@ -57,216 +58,16 @@ public class SpriteCreator {
 	}
 	
 	public BufferedImage CreateSprite(SpriteType type) {	
-		int row = 0, column = 0;
+		
+		Coordinate pos = null;
 		BufferedImage sprite = new BufferedImage(Game.SPRITESIZE, Game.SPRITESIZE, BufferedImage.TYPE_INT_ARGB);
 		int[] spritePixelData = new int[sprite.getWidth() * sprite.getHeight()];
 		
-		// get tile position
-		switch(type) {
-		case Player:
-			row = 0;
-			column = 0;
-			break;
-		case FloorTile01:
-			row = 0;
-			column = 1;
-			break;
-		case Wall01:
-			row = 0;
-			column = 2;
-			break;
-		case Door01:
-			row = 0;
-			column = 3;
-			break;
-		case DestructibleWall:
-			row = 0;
-			column = 4;
-			break;
-		case Zombie01:
-			row = 1;
-			column = 0;
-			break;
-		case Blood01:
-			row = 1;
-			column = 1;
-			break;
-		case Hit01:
-			row = 1;
-			column = 2;
-			break;
-		case Arrow01:
-			row = 1;
-			column = 3;
-			break;
-		case Spear01:
-			row = 4;
-			column = 1;
-			break;
-		case Key01:
-			row = 1;
-			column = 5;
-			break;
-		case LockedDoor01:
-			row = 0;
-			column = 6;
-			break;
-		case Maggot01:
-			row = 2;
-			column = 0;
-			break;
-		case Pot01:
-			row = 1;
-			column = 4;
-			break;
-		case Skeleton01:
-			row = 2;
-			column = 1;
-			break;
-		case SkeletonRemains01:
-			row = 2;
-			column = 2;
-			break;
-		case TrapTile01:
-			row = 0;
-			column = 5;
-			break;
-		case PotRemains01:
-			row = 2;
-			column = 3;
-			break;
-		case UnknownActor:
-			row = 2;
-			column = 4;
-			break;
-		case Bomb01:
-			row = 2;
-			column = 5;
-			break;
-		case Smoke01:
-			row = 2;
-			column = 6;
-			break;
-		case SmallBlood01:
-			row = 3;
-			column = 0;
-			break;
-		case Torch01:
-			row = 0;
-			column = 7;
-			break;
-		case SmallSkeletonRemains01:
-			row = 3;
-			column = 1;
-			break;
-		case BloodGib01:
-			row = 3;
-			column = 2;
-			break;
-		case BoneGib01:
-			row = 3;
-			column = 3;
-			break;
-		case PotGib01:
-			row = 3;
-			column = 4;
-			break;
-		case LockedDoor01Gib01:
-			row = 3;
-			column = 5;
-			break;
-		case Wall01Gib01:
-			row = 3;
-			column = 6;
-			break;
-		case PlayerGib01:
-			row = 3;
-			column = 7;
-			break;
-		case PlayerRemains01:
-			row = 4;
-			column = 0;
-			break;
-		case GasCloud01:
-			row = 2;
-			column = 7;
-			break;
-		case ArrowTurretNorth:
-			row = 1;
-			column = 10;
-			break;
-		case ArrowTurretWest:
-			row = 1;
-			column = 9;
-			break;
-		case ArrowTurretSouth:
-			row = 1;
-			column = 11;
-			break;
-		case DirectionArrow:
-			row = 4;
-			column = 2;
-			break;
-		case Portal01:
-			row = 0;
-			column = 10;
-			break;
-		case Portal02:
-			row = 0;
-			column = 11;
-			break;
-		case GoldCoin01:
-			row = 2;
-			column = 8;
-			break;
-		case Error:
-			row = 4;
-			column = 3;
-			break;
-		case Chest01:
-			row = 1;
-			column = 6;
-			break;
-		case LockedChest01:
-			row = 1;
-			column = 8;
-			break;
-		case GasBarrel01:
-			row = 1;
-			column = 7;
-			break;
-		case GasBarrelGib01:
-			row = 3;
-			column = 8;
-			break;
-		case Egg01:
-			row = 4;
-			column = 4;
-			break;
-		case BombGib01:
-			row = 3;
-			column = 9;
-			break;
-		case FloorTorch01:
-			row = 0;
-			column = 8;
-			break;
-		case OpenChest01:
-			row = 1;
-			column = 12;
-			break;
-		case DiamondKey01:
-			row = 1;
-			column = 13;
-			break;
-		case LockedDoorDiamond01:
-			row = 0;
-			column = 12;
-			break;
-		default:
-			System.out.println("SPRITETYPE NOT FOUND: " +  type);
-			break;
-		}
+		if(Game.USE_SIMPLE_SPRITESHEET_LAYOUT) pos = getSpritePosSimplified(type);
+		else pos = getSpritePos(type);
+		
+		int row = pos.getX();
+		int column = pos.getY(); 
 		
 		// the tiles are 16x16
 		// calculate tile's pixel locations.
@@ -293,6 +94,112 @@ public class SpriteCreator {
 		    }
 		}
 		return sprite;
+	}
+	
+	private Coordinate getSpritePosSimplified(SpriteType type) {
+		int row = 0, column = 0;
+		
+		switch(type) {
+		    // actors
+		    case Player: row = 0; column = 0; break;
+		    case Zombie01: row = 0; column = 1; break;
+		    case Skeleton01: row = 0; column = 2; break;
+		    case Maggot01: row = 0; column = 3; break;
+		    
+		    // floor
+		    case Floor01: row = 1; column = 0; break;
+		    case Grass01: row = 1; column = 1; break;
+		    case Water01: row = 1; column = 2; break;
+		    
+		    // walls
+		    case Wall01: row = 3; column = 0; break;
+		    
+		    // doors
+		    case Door01: row = 4; column = 0; break;
+		    case LockedDoor01: row = 5; column = 0; break;
+		    case LockedDoorDiamond01: row = 5; column = 1; break;
+		 
+		    // chests
+		    case Chest01: row = 6; column = 0; break;
+		    case Chest02: row = 6; column = 1; break;
+		    case LockedChest01: row = 7; column = 0; break;
+		    case LockedChest02: row = 7; column = 1; break;
+		    
+		    // portals
+		    case Portal01: row = 8; column = 0; break;
+		    case Portal02: row = 8; column = 1; break;
+		    
+		    // bombs and traps
+		    case Bomb01: row = 9; column = 0; break;
+		    
+		    // projectiles
+		    case Spear01: row = 10; column = 0; break;
+		    
+		    // other
+		    case Error: row = 11; column = 0; break;
+		    
+		    default: System.out.println("NO SPRITE OF TYPE: " + type); break;
+		}
+		return new Coordinate(row, column);
+	}
+	
+	private Coordinate getSpritePos(SpriteType type) {
+		int row = 0, column = 0;
+		switch(type) {
+    		case Player:                 row = 0; column = 0; break;
+    		case Floor01:                row = 0; column = 1; break;
+    		case Wall01:                 row = 0; column = 2; break;
+    		case Door01:                 row = 0; column = 3; break;
+    		case DestructibleWall:       row = 0; column = 4; break;
+    		case Zombie01:               row = 1; column = 0; break;
+            case Arrow01:                row = 1; column = 3; break;
+            case LockedDoor01:           row = 0; column = 6; break;
+            case Maggot01:               row = 2; column = 0; break;
+            case Skeleton01:             row = 2; column = 1; break;
+            case TrapTile01:             row = 0; column = 5; break;
+            case DirectionArrow:         row = 4; column = 2; break;
+            case Portal01:               row = 0; column = 10; break;
+            case Error:                  row = 4; column = 3; break;
+            case Chest01:                row = 1; column = 6; break;
+            case LockedChest01:          row = 1; column = 8; break;
+            default: System.out.println("SPRITETYPE NOT FOUND: " +  type); break;
+            
+    		/*case Blood01:                row = 1; column = 1; break;
+    		case Hit01:                  row = 1; column = 2; break;
+    		case Spear01:                row = 4; column = 1; break;
+    		case Key01:                  row = 1; column = 5; break;
+    		case Pot01:                  row = 1; column = 4; break;
+    		case SkeletonRemains01:      row = 2; column = 2; break;
+    		case PotRemains01:           row = 2; column = 3; break;
+    		case UnknownActor:           row = 2; column = 4; break;
+    		case Bomb01:                 row = 2; column = 5; break;
+    		case Smoke01:                row = 2; column = 6; break;
+    		case SmallBlood01:           row = 3; column = 0; break;
+    		case Torch01:                row = 0; column = 7; break;
+    		case SmallSkeletonRemains01: row = 3; column = 1; break;
+    		case BloodGib01:             row = 3; column = 2; break;
+    		case BoneGib01:              row = 3; column = 3; break;
+    		case PotGib01:               row = 3; column = 4; break;
+    		case LockedDoor01Gib01:      row = 3; column = 5; break;
+    		case Wall01Gib01:            row = 3; column = 6; break;
+    		case PlayerGib01:            row = 3; column = 7; break;
+    		case PlayerRemains01:        row = 4; column = 0; break;
+    		case GasCloud01:             row = 2; column = 7; break;
+    		case ArrowTurretNorth:       row = 1; column = 10; break;
+    		case ArrowTurretWest:        row = 1; column = 9; break;
+    		case ArrowTurretSouth:       row = 1; column = 11; break;
+    		case Portal02:               row = 0; column = 11; break;
+    		case GoldCoin01:             row = 2; column = 8; break;
+    		case GasBarrel01:            row = 1; column = 7; break;
+    		case GasBarrelGib01:         row = 3; column = 8; break;
+    		case Egg01:                  row = 4; column = 4; break;
+    		case BombGib01:              row = 3; column = 9; break;
+    		case FloorTorch01:           row = 0; column = 8; break;
+    		case OpenChest01:            row = 1; column = 12; break;
+    		case DiamondKey01:           row = 1; column = 13; break;
+    		case LockedDoorDiamond01:    row = 0; column = 12; break; */
+		}
+		return new Coordinate(row, column);
 	}
 	
 	public String GetPath() { return this.path; }
