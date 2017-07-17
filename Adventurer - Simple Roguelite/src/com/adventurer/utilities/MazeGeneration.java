@@ -9,6 +9,9 @@ import com.adventurer.gameobjects.Tile;
 
 public class MazeGeneration {
 	
+	// TODO: don't allow diagonal only corners
+	// -----> because player can see diagonally.
+	
 	// uses recursive backtracking algorithm, based on Jamis Buck's work.
 	// http://www.jamisbuck.org/presentations/rubyconf2011/index.html#recursive-backtracker-demo
 	public static List<Tile> generateMaze(List<Tile> tiles) {
@@ -99,9 +102,7 @@ public class MazeGeneration {
 						c = 0;
 						
 					} else { c++; }
-				
 				}
-					
 			} while(c < 20); // TODO: This is bad.
 			
 			// random walker got stuck.

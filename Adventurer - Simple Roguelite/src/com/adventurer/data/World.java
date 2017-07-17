@@ -418,7 +418,7 @@ public class World {
 		oldTile.SetSprite(SpriteCreator.instance.CreateSprite(newSpriteType));
 		
 		// 3. reset tinted sprite
-		oldTile.SetTintedSprite(null);
+		//oldTile.SetTintedSprite(null);
 	}
 	
 	public List<Tile> GetTilesOfType(TileType type) {

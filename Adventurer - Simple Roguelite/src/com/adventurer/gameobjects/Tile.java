@@ -137,22 +137,22 @@ public class Tile extends GameObject {
 		} else if(hidden == true && discovered) {
 			
 			// create tinted version of the sprite and cache it.
-			if(tintedSprite == null) {
+			/*if(tintedSprite == null) {
 				tintedSprite = Util.tint(sprite, true);
-			} else {
-				Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), g);
-			}
+			}*/
+			
+			Renderer.RenderSprite(Util.tint(sprite, true), this.GetWorldPosition(), g);
 			
 			// render vanity items
 			for(GameObject go : vanityItems) {
 				
 				VanityItem vi = (VanityItem) go;
 				
-				if(vi.GetTintedSprite() == null) {
+				/*if(vi.GetTintedSprite() == null) {
 					vi.SetTintedSprite(Util.tint(vi.GetSprite(), true));
-				}
+				}*/
 				
-				Renderer.RenderSprite(vi.GetTintedSprite(), vi.GetWorldPosition(), g);
+				Renderer.RenderSprite(Util.tint(vi.GetSprite(), true), vi.GetWorldPosition(), g);
 			}
 		} else {
 			// We haven't discovered this tile and it's still hidden,

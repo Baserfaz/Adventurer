@@ -32,11 +32,11 @@ public class Chest extends Item {
 			
 		} else if(discovered == true && hidden == true) {
 			
-			if(tintedSprite == null) {
+			/*if(tintedSprite == null) {
 				tintedSprite = Util.tint(sprite, true);
-			}
+			}*/
 			
-			Renderer.RenderSprite(tintedSprite, this.GetWorldPosition(), g);
+			Renderer.RenderSprite(Util.tint(sprite, true), this.GetWorldPosition(), g);
 		}
 	}
 	
@@ -57,7 +57,7 @@ public class Chest extends Item {
 		this.locked = false;
 		
 		this.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.Chest01));
-		this.SetTintedSprite(null);
+		//this.SetTintedSprite(null);
 		
 		EffectCreator.CreateGibs(this.GetTilePosition(), Util.GetRandomInteger(3, 7), SpriteType.LockedDoor01Gib01);
 	}
@@ -66,7 +66,7 @@ public class Chest extends Item {
 		this.locked = true;
 		
 		this.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.LockedChest01));
-		this.SetTintedSprite(null);
+		//this.SetTintedSprite(null);
 	}
 	
 	public void tick() {}

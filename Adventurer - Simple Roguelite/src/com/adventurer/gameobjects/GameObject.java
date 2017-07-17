@@ -17,7 +17,7 @@ public abstract class GameObject {
 	
 	protected SpriteType spriteType;
 	protected BufferedImage sprite;
-	protected BufferedImage tintedSprite = null;
+	//protected BufferedImage tintedSprite = null;
 	
 	public GameObject(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
 		
@@ -51,8 +51,8 @@ public abstract class GameObject {
 	public void Show() { this.hidden = false; }
 	public void Hide() { this.hidden = true; }
 	public boolean isHidden() { return this.hidden; }
-	public BufferedImage GetTintedSprite() { return this.tintedSprite; }
-	public void SetTintedSprite(BufferedImage b) { this.tintedSprite = b; }
+	//public BufferedImage GetTintedSprite() { return this.tintedSprite; }
+	//public void SetTintedSprite(BufferedImage b) { this.tintedSprite = b; }
 	public void SetSprite(BufferedImage i) { this.sprite = i; }
 	public BufferedImage GetSprite() { return this.sprite; }
 	public void SetWorldPosition(int x, int y) { this.worldPosition = new Coordinate(x, y); }
