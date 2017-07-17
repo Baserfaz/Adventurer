@@ -23,11 +23,11 @@ public class Tile extends GameObject {
 	protected boolean inView = false;
 	protected boolean selected = false;
 	protected boolean lit = false;
+	protected boolean walkable = false;
 	
 	protected Item item = null;
 	protected Actor actor = null;
 	protected List<VanityItem> vanityItems = new ArrayList<VanityItem>();
-	
 	protected Node node;
 	
 	// tile falling effect
@@ -35,14 +35,10 @@ public class Tile extends GameObject {
 	protected int fallingSpeed = 1;
 	protected int fallingYOffset = 10;
 	
-	protected boolean walkable = false;
-	
 	public Tile(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type) {
 		super(worldPos, tilePos, spritetype);
-		
 		this.type = type;
 		this.node = new Node();
-		
 		if(this.type == TileType.Floor || this.type == TileType.Trap) walkable = true;
 	}
 	
@@ -68,11 +64,9 @@ public class Tile extends GameObject {
 		if(Game.ANIMATE_TILE_DISCOVERY) UpdatePosition(x, y);
 	}
 	
+	// move the tile
 	protected void UpdatePosition(int x, int y) {
-		// move the tile
-		if(y < targety + fallingSpeed) {
-			if(y < targety) this.SetWorldPosition(x, y + fallingSpeed);
-		}
+		if(y < targety + fallingSpeed && y < targety) this.SetWorldPosition(x, y + fallingSpeed);
 	}
 	
 	public void render(Graphics g) {
@@ -83,25 +77,13 @@ public class Tile extends GameObject {
 		// Tile is selected
 		// -> override fov-rendering.
 		if(selected) {
-			
 			if(hidden == false) {
-				
 				Renderer.RenderSpriteWithBorder(sprite, this.GetWorldPosition(), g, Color.red);
-				
-				for(GameObject vi : vanityItems) {
-					Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
-				}
-				
+				for(GameObject vi : vanityItems) { Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g); }
 			} else {
-				
 				Renderer.RenderSpriteWithBorder(Util.tint(sprite, true), this.GetWorldPosition(), g, Color.red);
-				
-				for(GameObject vi : vanityItems) {
-					Renderer.RenderSprite(Util.tint(vi.GetSprite(), true), vi.GetWorldPosition(), g);
-				}
-				
+				for(GameObject vi : vanityItems) { Renderer.RenderSprite(Util.tint(vi.GetSprite(), true), vi.GetWorldPosition(), g); }
 			}
-			
 			return;
 		} 
 		
@@ -110,13 +92,9 @@ public class Tile extends GameObject {
 			
 			// brighten 
 			if(lit) {
-				
 				Renderer.RenderSprite(Util.tint(sprite, false), this.GetWorldPosition(), g);
-				
-				for(GameObject vi : vanityItems) {
-					Renderer.RenderSprite(Util.tint(vi.GetSprite(), false), vi.GetWorldPosition(), g);
-				}
-				
+				for(GameObject vi : vanityItems) { Renderer.RenderSprite(Util.tint(vi.GetSprite(), false), vi.GetWorldPosition(), g); }
+			
 			// normal
 			} else {
 				
@@ -125,33 +103,16 @@ public class Tile extends GameObject {
 				
 				// render vanity items
 				try {
-					for(GameObject vi : vanityItems) {
-						Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g);
-					}
-				} catch (ConcurrentModificationException e) {
-					e.printStackTrace();
-				}
-				
+					for(GameObject vi : vanityItems) { Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g); }
+				} catch (ConcurrentModificationException e) { e.printStackTrace(); }
 			}
 			
 		} else if(hidden == true && discovered) {
-			
-			// create tinted version of the sprite and cache it.
-			/*if(tintedSprite == null) {
-				tintedSprite = Util.tint(sprite, true);
-			}*/
-			
 			Renderer.RenderSprite(Util.tint(sprite, true), this.GetWorldPosition(), g);
 			
 			// render vanity items
 			for(GameObject go : vanityItems) {
-				
 				VanityItem vi = (VanityItem) go;
-				
-				/*if(vi.GetTintedSprite() == null) {
-					vi.SetTintedSprite(Util.tint(vi.GetSprite(), true));
-				}*/
-				
 				Renderer.RenderSprite(Util.tint(vi.GetSprite(), true), vi.GetWorldPosition(), g);
 			}
 		} else {
@@ -162,33 +123,18 @@ public class Tile extends GameObject {
 	
 	public void Show() {
 		this.hidden = false;
-		
 		if(this.actor != null) this.actor.Show();
 		if(this.item != null) this.item.Show();
-		
 		if(this.vanityItems == null) return;
-		
-		if(this.vanityItems.size() > 0) {
-			for(VanityItem vi : this.vanityItems) {
-				vi.Show();
-			}
-		}
-		
+		if(this.vanityItems.size() > 0) for(VanityItem vi : this.vanityItems) { vi.Show(); }
 	}
 	
 	public void Hide() {
 		this.hidden = true;
-		
 		if(this.actor != null) this.actor.Hide();
 		if(this.item != null) this.item.Hide();
-		
 		if(this.vanityItems == null) return;
-		
-		if(this.vanityItems.size() > 0) {
-			for(VanityItem vi : this.vanityItems) {
-				vi.Hide();
-			}
-		}
+		if(this.vanityItems.size() > 0) for(VanityItem vi : this.vanityItems) { vi.Hide(); }
 	}
 	
 	public void Discover() {
@@ -204,30 +150,14 @@ public class Tile extends GameObject {
 		this.discovered = true;
 		
 		// discover actors and items.
-		if(this.GetActor() != null) {
-			this.GetActor().Discover();
-		}
-		
-		if(this.GetItem() != null) {
-			this.GetItem().Discover();
-		}
-		
-		if(this.vanityItems.size() > 0) {
-			for(VanityItem vi : this.vanityItems) {
-				vi.Discover();
-			}
-		}
+		if(this.GetActor() != null) this.GetActor().Discover();
+		if(this.GetItem() != null) this.GetItem().Discover();
+		if(this.vanityItems.size() > 0) for(VanityItem vi : this.vanityItems) { vi.Discover(); }
 	}
 	
 	public void Remove() {
-		
-		if(this.GetItem() != null) {
-			this.GetItem().Remove();
-		}
-		
-		if(this.GetActor() != null && this.GetActor() instanceof Player == false) {
-			this.GetActor().Remove();
-		}
+		if(this.GetItem() != null) this.GetItem().Remove();
+		if(this.GetActor() != null && this.GetActor() instanceof Player == false) this.GetActor().Remove();
 		
 		if(this.GetVanityItems().size() > 0) {
 			List<VanityItem> temp = new ArrayList<VanityItem>(vanityItems);
@@ -240,7 +170,7 @@ public class Tile extends GameObject {
 	}
 	
 	public void toggleLit() {
-		if(this.lit) this.lit = false;
+		if(this.lit) this.lit = false; 
 		else this.lit = true;
 	}
 	

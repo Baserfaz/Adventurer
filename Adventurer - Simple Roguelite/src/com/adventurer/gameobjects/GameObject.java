@@ -17,7 +17,6 @@ public abstract class GameObject {
 	
 	protected SpriteType spriteType;
 	protected BufferedImage sprite;
-	//protected BufferedImage tintedSprite = null;
 	
 	public GameObject(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
 		
