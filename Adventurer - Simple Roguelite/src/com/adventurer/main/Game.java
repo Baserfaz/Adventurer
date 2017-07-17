@@ -21,12 +21,12 @@ public class Game extends Canvas implements Runnable {
 
 	public static Game instance;
 	
-	public static final int WIDTH              = 1280;			    // viewport width
-	public static final int HEIGHT             = 720;               // viewport height
-	public static final int SPRITESIZE         = 16;                // sprite size in pixels
-	public static final int CAMERAZOOM         = 2;                 // level of zoom
-	public static final double FRAME_CAP       = 60.0;              // cap the framerate to this
-	public static final String SPRITESHEETNAME = "spritesheet.png"; // main spritesheet name
+	public static final int WIDTH              = 1280;			           // viewport width
+	public static final int HEIGHT             = 720;                      // viewport height
+	public static final int SPRITESIZE         = 16;                       // sprite size in pixels
+	public static final int CAMERAZOOM         = 1;                        // level of zoom
+	public static final double FRAME_CAP       = 60.0;                     // cap the framerate to this
+	public static final String SPRITESHEETNAME = "spritesheet_simple.png"; // main spritesheet name
 	
 	//------------------------------
 	// DEBUGGING TOOLS AND GAME SETTINGS
@@ -40,7 +40,8 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean START_GAME_WITH_RANDOM_ROOM = true;
 	
 	// LOS settings
-	public static final boolean CALCULATE_PLAYER_LOS = true;
+	public static final boolean CALCULATE_PLAYER_LOS = false;
+	public static final boolean PERMANENTLY_SHOW_TILES = true;
 	
 	// render settings
 	public static final boolean RENDER_ACTORS_DIRECTION_ARROW = false;
@@ -54,9 +55,9 @@ public class Game extends Canvas implements Runnable {
 	public static final int TILEGAP = 2;
 	
 	// player defaults
-	public static final int START_KEY_COUNT         = 1;
+	public static final int START_KEY_COUNT         = 0;
 	public static final int START_DIAMOND_KEY_COUNT = 0;
-	public static final int START_BOMB_COUNT        = 1;
+	public static final int START_BOMB_COUNT        = 0;
 	public static final int START_PROJECTILE_COUNT  = 0;
 	
 	// world size
@@ -139,7 +140,7 @@ public class Game extends Canvas implements Runnable {
 		} catch (Exception e) { e.printStackTrace(); }
 	}
 	
-	public void run() { GameLoop();}
+	public void run() { GameLoop(); }
 	
 	// Originally taken from Notch's work.
 	// Also applied stuff from https://www.youtube.com/watch?v=rwjZDfcQ7Rc&list=PLEETnX-uPtBXP_B2yupUKlflXBznWIlL5&index=3

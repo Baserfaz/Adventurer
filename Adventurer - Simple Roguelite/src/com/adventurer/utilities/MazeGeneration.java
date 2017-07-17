@@ -47,10 +47,12 @@ public class MazeGeneration {
 						// --> it should not be in walls or floors
 						for(Tile t : Util.getNeighboringTiles(neighbor, tiles_)) {
 							
-							if(		
+							if(
+							
 								concretePath.contains(t) == false &&
 								concreteWalls.contains(t) == false &&
 								visited.contains(t) == false
+								
 							) {
 						
 								concreteWalls.remove(neighbor);
@@ -84,7 +86,7 @@ public class MazeGeneration {
 						// then just continue and don't count this as a failure.
 						if(neighbor.equals(cameFrom)) continue;
 							
-						// other neighbors are walls.
+						// other neighbors are turned into walls.
 						for(Tile t : Util.getNeighboringTiles(current, tiles_)) {
 							if(
 								t != null && 

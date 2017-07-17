@@ -39,7 +39,7 @@ public class Tile extends GameObject {
 		super(worldPos, tilePos, spritetype);
 		this.type = type;
 		this.node = new Node();
-		if(this.type == TileType.Floor || this.type == TileType.Trap) walkable = true;
+		if(this.type == TileType.Floor || this.type == TileType.Trap) walkable = true;		
 	}
 	
 	public void tick() {

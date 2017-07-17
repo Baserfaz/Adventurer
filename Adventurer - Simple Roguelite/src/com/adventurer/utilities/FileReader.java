@@ -41,8 +41,8 @@ public class FileReader {
 		    NodeList root = doc.getElementsByTagName("enemy");
 		    
 		    for(int i = 0; i < root.getLength(); i++) {
-		    	Node n = root.item(i);
 		    	
+		    	Node n = root.item(i);
 		    	if(n.getNodeType() == Node.ELEMENT_NODE) {
 		    		
 		    		Element e = (Element) n;
@@ -65,12 +65,11 @@ public class FileReader {
 		    	}
 		    }
 		    
-		    
 		} catch (ParserConfigurationException | SAXException | IOException e) { e.printStackTrace(); }
-		//System.out.println("filereader:readxml:enemydata: " + myMap.toString());
 		return myMap;
 	}
 	
+	public static String readSaveFile() { return readFile(SaveFile.SAVEFILENAME + ".txt"); }
 	public static String readFile(String filename) {
 		String content = "";
 		try { content = new String(Files.readAllBytes(Paths.get("data/" + filename))); } 
@@ -87,6 +86,4 @@ public class FileReader {
 		} catch (IOException e) { e.printStackTrace(); }
 		return content;
 	}
-	
-	public static String readSaveFile() { return readFile(SaveFile.SAVEFILENAME + ".txt"); }
 }
