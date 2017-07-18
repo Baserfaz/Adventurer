@@ -239,7 +239,7 @@ public class DungeonGeneration {
 			
 			// choose random spots to be doors.
 			List<Tile> chosenSpots = new ArrayList<Tile>();
-			while(doorCount < Math.max(Game.ROOM_DOOR_MAX_COUNT, chosenSpots.size())) {
+			while(doorCount < Math.min(Game.ROOM_DOOR_MAX_COUNT, doorSpotCandidates.size())) {
 				Tile chosen = doorSpotCandidates.get(Util.GetRandomInteger(0, doorSpotCandidates.size()));
 				if(chosenSpots.contains(chosen)) continue;
 				chosenSpots.add(chosen);

@@ -27,7 +27,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int WIDTH              = 1280;			           // viewport width
 	public static final int HEIGHT             = 720;                      // viewport height
 	public static final int SPRITESIZE         = 16;                       // sprite size in pixels
-	public static final int CAMERAZOOM         = 1;                        // level of zoom
+	public static final int CAMERAZOOM         = 3;                        // level of zoom
 	public static final double FRAME_CAP       = 60.0;                     // cap the framerate to this
 	public static final String SPRITESHEETNAME = "spritesheet_simple.png"; // name of the spritesheet 
 	
@@ -46,8 +46,8 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean USE_SIMPLE_SPRITESHEET_LAYOUT = true;
 	
 	// LOS settings
-	public static final boolean CALCULATE_PLAYER_LOS   = false;
-	public static final boolean PERMANENTLY_SHOW_TILES = true;
+	public static final boolean CALCULATE_PLAYER_LOS   = true;
+	public static final boolean PERMANENTLY_SHOW_TILES = false;
 	
 	// render settings
 	public static final boolean RENDER_ACTORS_DIRECTION_ARROW = false;
@@ -70,12 +70,12 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean MAGGOTS_SPAWN_EGGS_ON_DEATH = false;
 	
 	// world size
-	public static final int WORLDHEIGHT = 50;
-	public static final int WORLDWIDTH  = 50;
+	public static final int WORLDHEIGHT = 30; // ~40 max 
+	public static final int WORLDWIDTH  = 30; // ~40 max
 	
 	// room count
 	public static final int ROOM_COUNT                = 20;
-	public static final int ROOM_DOOR_MAX_COUNT       = 2;
+	public static final int ROOM_DOOR_MAX_COUNT       = 4;
     public static final int ROOM_TRY_GENERATION_COUNT = 100;
     
 	// room sizes

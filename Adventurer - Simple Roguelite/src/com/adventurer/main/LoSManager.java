@@ -3,17 +3,17 @@ package com.adventurer.main;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
-
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.*;
+import com.adventurer.utilities.Util;
 
 public class LoSManager {
 	
+    private List<Tile> cachedLos = new ArrayList<Tile>();
+    
 	public LoSManager() {}
-	
-	public boolean calculateLOS = true;
 	
 	// http://tech-algorithm.com/articles/drawing-line-using-bresenham-algorithm/
 	public List<Tile> calculateLine (int x, int y, int x2, int y2) {
@@ -74,31 +74,31 @@ public class LoSManager {
 	}
 	
 	public void CalculateLos(Coordinate position) {
+	    
+        if(World.instance == null) return;
+        World world = World.instance.GetWorld();
+        List<Tile> allTiles = world.GetTiles();
+	    
+        // draw cached FOV.
+        // -> means we don't always update FOV.
+	    if(Util.GetRandomInteger() < 80) {
+	        hideAllTiles(allTiles);
+	        showVisibleTiles(cachedLos);
+	        return;
+	    }
+
+	    // 1. hide all tiles.
+		hideAllTiles(allTiles);
 		
-		if(calculateLOS == false) return;
-		
-		// list of tiles that are visible
-		List<Tile> foundTiles = new ArrayList<Tile>();
-		
-		if(World.instance == null) return;
-		World world = World.instance.GetWorld();
-		
-		// 1. hide everything
-		List<Tile> allTiles = world.GetTiles();
-		for(int i = 0; i < allTiles.size(); i++) {
-			allTiles.get(i).Hide();
-		}
+	    // list of tiles that are visible
+        List<Tile> foundTiles = new ArrayList<Tile>();
 		
 		// 2. calculate FOV
 		// 	  -> using Bresenham's line algorithm
 		// ------------------------
 		try {
-			
-			// copy list to a temp list.
-			// -> if we modify allTiles 
-			// --> no concurrent modidication exception.
+		    
 			List<Tile> tiles_ = new ArrayList<Tile>(allTiles);
-			
 			for(Tile tile : tiles_) {
 			
 				int targetx = tile.GetTilePosition().getX();
@@ -116,9 +116,18 @@ public class LoSManager {
 		
 		// ------------------------
 		// 3. show visible-flagged tiles
-		for(Tile tile : foundTiles) {
-			if(tile.isDiscovered() == false) tile.Discover();
-			tile.Show();
-		}
+		showVisibleTiles(foundTiles);
+		
+		// 4. cache found tiles.
+		cachedLos = foundTiles;
 	}
+	
+	private void showVisibleTiles(List<Tile> foundTiles) { 
+       for(Tile tile : foundTiles) {
+            if(tile.isDiscovered() == false) tile.Discover();
+            tile.Show();
+        }
+	}
+	
+	private void hideAllTiles(List<Tile> allTiles) { for(int i = 0; i < allTiles.size(); i++) { allTiles.get(i).Hide(); } }
 }
