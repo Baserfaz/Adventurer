@@ -70,6 +70,7 @@ public class Renderer {
 		g2d.rotate(-rot, xcenter, ycenter);
 	}
 	
+	// https://stackoverflow.com/questions/4413132/problems-with-newline-in-graphics2d-drawstring
 	public static void renderString(String txt, Coordinate pos, Color color, int fontSize, Graphics2D g2d) {
 	    
         // font
@@ -79,7 +80,13 @@ public class Renderer {
         g2d.setFont(font);
         g2d.setColor(color);
         
+        int y = pos.getY();
+        int x = pos.getX();
+        
         // render
-        g2d.drawString(txt, pos.getX(), pos.getY());
+        for (String line : txt.split("\n")) {
+            y += g2d.getFontMetrics().getHeight();
+            g2d.drawString(line, x, y);
+        }
 	}
 }

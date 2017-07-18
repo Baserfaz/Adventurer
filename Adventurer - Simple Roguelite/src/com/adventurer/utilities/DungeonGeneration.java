@@ -7,6 +7,7 @@ import com.adventurer.data.Coordinate;
 import com.adventurer.data.Room;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.Direction;
+import com.adventurer.enumerations.DungeonGenerationState;
 import com.adventurer.enumerations.RoomType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
@@ -16,6 +17,8 @@ import com.adventurer.main.Game;
 
 public class DungeonGeneration {
 	
+    public static DungeonGenerationState state;
+    
 	/*
 	 * Creates Rooms, world walls and maze, in that order.
 	 * 1. Rooms are inside the world space
@@ -28,6 +31,7 @@ public class DungeonGeneration {
 	public static List<Tile> createDungeon(int roomcount) {
 		
 		long startTime = System.currentTimeMillis();
+		state = DungeonGenerationState.Rooms;
 		
 		System.out.println("Generating dungeon...");
 		
@@ -89,6 +93,8 @@ public class DungeonGeneration {
 		// contains only "empty" i.e. error tiles.
 		// creates a new list of error tiles.
 		List<Tile> modTiles = fillEmptyWithErrorTiles(allTiles);
+	      
+		state = DungeonGenerationState.Maze;
 		
 		// generate maze.
 		modTiles = MazeGeneration.generateMaze(modTiles);
@@ -107,11 +113,16 @@ public class DungeonGeneration {
 		System.out.println("World consists of " + allTiles.size() + " tiles.");
 		System.out.println("World generated in : " + genTime + " seconds.");
 		
+		state = DungeonGenerationState.Finished;
+		
 		// just to be sure that there are no error tiles left in the dungeon.
 		return Util.replaceAllErrorTiles(allTiles);
 	}
 	
 	private static List<Tile> fillDeadEnds(List<Tile> tiles) {
+	    
+	    state = DungeonGenerationState.Deadends; 
+	    
 		List<Tile> tiles_  = new ArrayList<Tile>(tiles); // contains all tiles
 		List<Tile> remove_ = new ArrayList<Tile>();		 // contains all "to be removed"-tiles
 		List<Tile> add_    = new ArrayList<Tile>();		 // contains all "to be added"-tiles
@@ -162,6 +173,9 @@ public class DungeonGeneration {
 	}
 	
 	private static List<Tile> createDoorways(List<Room> rooms, List<Tile> tiles) {
+	    
+	    state = DungeonGenerationState.Doors; 
+	    
 		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
 		
 		// for each room create doors.
@@ -297,6 +311,8 @@ public class DungeonGeneration {
 	
 	private static List<Tile> createWorldWalls(List<Tile> tiles) {
 		
+	    state = DungeonGenerationState.Walls;
+	    
 		// old tiles + new tiles?
 		List<Tile> tiles_ = new ArrayList<Tile>(tiles);
 		
@@ -333,6 +349,8 @@ public class DungeonGeneration {
 	
 	private static List<Tile> fillEmptyWithErrorTiles(List<Tile> tiles) {
 		
+	    state = DungeonGenerationState.Calculations;
+	    
 		List<Tile> tiles_ = new ArrayList<Tile>();
 		
 		for(int y = 0; y < Game.WORLDHEIGHT; y++) {

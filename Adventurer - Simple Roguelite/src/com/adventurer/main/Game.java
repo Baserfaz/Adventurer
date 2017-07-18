@@ -11,8 +11,10 @@ import com.adventurer.data.Coordinate;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.SaveFile;
 import com.adventurer.data.World;
+import com.adventurer.enumerations.DungeonGenerationState;
 import com.adventurer.enumerations.GameState;
 import com.adventurer.gameobjects.Player;
+import com.adventurer.utilities.DungeonGeneration;
 import com.adventurer.utilities.Renderer;
 import com.adventurer.utilities.Window;
 
@@ -229,10 +231,29 @@ public class Game extends Canvas implements Runnable {
 	    Graphics2D g2d = (Graphics2D) g;
         
         // set background
-        Renderer.FillScreen(g, Color.blue);
+        Renderer.FillScreen(g, Color.white);
 	    
-        Renderer.renderString("Generating world..." + System.currentTimeMillis(), 
-                new Coordinate(Game.WIDTH / 2, Game.HEIGHT / 2), Color.black, 24, g2d);
+        // title
+        Renderer.renderString("Adventurer - Roguelike",
+                new Coordinate(Game.WIDTH / 3, 100), Color.black, 36, g2d);
+        
+        // creator info
+        Renderer.renderString("by Heikki Heiskanen",
+                new Coordinate(Game.WIDTH / 3, 150), Color.gray, 21, g2d);
+        
+        // generation phase
+        Renderer.renderString(">> Generating " + DungeonGeneration.state, 
+                new Coordinate(Game.WIDTH / 3, 300), Color.black, 32, g2d);
+        
+        // dungeon settings
+        Renderer.renderString("Dungeon size: " + Game.WORLDWIDTH + "x" + Game.WORLDHEIGHT, 
+                new Coordinate(Game.WIDTH / 3, 350), Color.black, 18, g2d);
+        
+        // print finished 
+        if(DungeonGeneration.state == DungeonGenerationState.Finished) {
+            Renderer.renderString(">> Finished <<", 
+                    new Coordinate(Game.WIDTH / 3, 400), Color.black, 18, g2d);
+        }
         
 	}
 	
