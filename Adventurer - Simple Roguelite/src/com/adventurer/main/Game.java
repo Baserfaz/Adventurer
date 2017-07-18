@@ -11,6 +11,7 @@ import com.adventurer.data.Coordinate;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.SaveFile;
 import com.adventurer.data.World;
+import com.adventurer.enumerations.GameState;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.utilities.Renderer;
 import com.adventurer.utilities.Window;
@@ -26,7 +27,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int SPRITESIZE         = 16;                       // sprite size in pixels
 	public static final int CAMERAZOOM         = 1;                        // level of zoom
 	public static final double FRAME_CAP       = 60.0;                     // cap the framerate to this
-	public static final String SPRITESHEETNAME = "spritesheet_simple.png"; // main spritesheet name
+	public static final String SPRITESHEETNAME = "spritesheet_simple.png"; // name of the spritesheet 
 	
 	//------------------------------
 	// DEBUGGING TOOLS AND GAME SETTINGS
@@ -71,7 +72,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int WORLDWIDTH  = 30;
 	
 	// room count
-	public static final int ROOM_COUNT          = 20;
+	public static final int ROOM_COUNT          = 10;
 	public static final int ROOM_DOOR_MAX_COUNT = 2;
 	
 	// room sizes
@@ -91,12 +92,15 @@ public class Game extends Canvas implements Runnable {
 	private Window window;
 	
 	private SaveFile currentSaveFile;
+	private GameState gameState;
 	
 	public Game() {
 		
 		if(instance != null) return;
 		
 		Game.instance = this;
+		
+		gameState = GameState.MainMenu;
 		
 		// create object handler
 		new Handler();
@@ -151,6 +155,7 @@ public class Game extends Canvas implements Runnable {
 	// Originally taken from Notch's work.
 	// Also applied stuff from https://www.youtube.com/watch?v=rwjZDfcQ7Rc&list=PLEETnX-uPtBXP_B2yupUKlflXBznWIlL5&index=3
 	private void GameLoop() {
+	    
 		long lastTime = System.nanoTime();
 		double unprocessedTime = 0;
 		
@@ -160,12 +165,15 @@ public class Game extends Canvas implements Runnable {
 		final double frameTime = 1 / FRAME_CAP;
 		final long SECOND = 1000000000L;
 		
+		boolean render = false;
+		long now = 0l, passedTime = 0l;
+		
 		while(isRunning) {
+		    
+			render = false;
 			
-			boolean render = false;
-			
-			long now = System.nanoTime();
-			long passedTime = now - lastTime;
+			now = System.nanoTime();
+			passedTime = now - lastTime;
 			lastTime = now;
 			
 			unprocessedTime += passedTime / (double) SECOND;
@@ -176,7 +184,8 @@ public class Game extends Canvas implements Runnable {
 				render = true;
 				unprocessedTime -= frameTime;
 				
-				tick();
+				// update gameobjects only when we are in game.
+				if(gameState == GameState.InGame) tick();
 				
 				if(frameCounter >= SECOND) {
 					window.SetCustomTitle("FPS: " + frames);
@@ -249,7 +258,12 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void tick() { Handler.instance.tick(); }
+
 	public static void main(String args[]) { new Game(); }
+	
+	public GameState getGameState() { return this.gameState; }
+	public void setGameState(GameState state) { this.gameState = state; }
+	
 	public SaveFile getCurrentSaveFile() { return currentSaveFile; }
 	public void setCurrentSaveFile(SaveFile currentSaveFile) { this.currentSaveFile = currentSaveFile; }
 }

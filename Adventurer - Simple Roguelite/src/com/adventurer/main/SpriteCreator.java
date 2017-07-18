@@ -63,6 +63,7 @@ public class SpriteCreator {
 		BufferedImage sprite = new BufferedImage(Game.SPRITESIZE, Game.SPRITESIZE, BufferedImage.TYPE_INT_ARGB);
 		int[] spritePixelData = new int[sprite.getWidth() * sprite.getHeight()];
 		
+		// choose layout
 		if(Game.USE_SIMPLE_SPRITESHEET_LAYOUT) pos = getSpritePosSimplified(type);
 		else pos = getSpritePos(type);
 		
@@ -110,9 +111,12 @@ public class SpriteCreator {
 		    case Floor01: row = 1; column = 0; break;
 		    case Grass01: row = 1; column = 1; break;
 		    case Water01: row = 1; column = 2; break;
+		    case Sand01: row = 1; column = 3; break;
+		    case TreasuryFloor01: row = 1; column = 4; break;
 		    
 		    // walls
 		    case Wall01: row = 3; column = 0; break;
+		    case DestructibleWall01: row = 3; column = 1; break;
 		    
 		    // doors
 		    case Door01: row = 4; column = 0; break;
@@ -134,6 +138,7 @@ public class SpriteCreator {
 		    
 		    // projectiles
 		    case Spear01: row = 10; column = 0; break;
+		    case Arrow01: row = 10; column = 1; break;
 		    
 		    // other
 		    case Error: row = 11; column = 0; break;
@@ -150,7 +155,7 @@ public class SpriteCreator {
     		case Floor01:                row = 0; column = 1; break;
     		case Wall01:                 row = 0; column = 2; break;
     		case Door01:                 row = 0; column = 3; break;
-    		case DestructibleWall:       row = 0; column = 4; break;
+    		case DestructibleWall01:     row = 0; column = 4; break;
     		case Zombie01:               row = 1; column = 0; break;
             case Arrow01:                row = 1; column = 3; break;
             case LockedDoor01:           row = 0; column = 6; break;

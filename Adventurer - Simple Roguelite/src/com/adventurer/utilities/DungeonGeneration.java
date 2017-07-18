@@ -36,6 +36,7 @@ public class DungeonGeneration {
 		
 		for(int i = 0; i < roomcount; i++) {
 			
+		    // TODO: not every room has the same chance
 			RoomType randType = RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)];
 			
 			int width, height, tryCount = 0;
@@ -57,8 +58,8 @@ public class DungeonGeneration {
 				tryCount += 1;
 				
 				if(tryCount >= Game.ROOM_TRY_GENERATION_COUNT) {
-					failure = true;
-					break;
+				    failure = true; 
+				    break;
 				}
 				
 				// the room should not be inside other rooms 
@@ -258,14 +259,25 @@ public class DungeonGeneration {
 				TileType tileType = null;
 				SpriteType spriteType = null;
 				
-				// decide tiletype
-				// TODO: room types
+				// decide tiletype & spritetype
 				if(y == 0 || x == 0 || y == height + 1 || x == width + 1) {
+				    
 					tileType = TileType.OuterWall;
 					spriteType = SpriteType.Wall01;
+					
 				} else {
+				    
 					tileType = TileType.Floor;
-					spriteType = SpriteType.Floor01;
+					
+					switch(roomtype) {
+					    case Normal: spriteType = SpriteType.Floor01; break;
+					    case Sand: spriteType = SpriteType.Sand01; break;
+					    case Water: spriteType = SpriteType.Water01; break;
+					    case Grass: spriteType = SpriteType.Grass01; break;
+					    case Treasure: spriteType = SpriteType.TreasuryFloor01; break;
+					    default: System.out.println("Roomtype not found: " + roomtype); break;
+					}
+					
 				}
 				
 				// create tile object

@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
-import com.adventurer.enumerations.RoomType;
+import com.adventurer.enumerations.GameState;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.enumerations.TrapType;
@@ -25,69 +25,20 @@ public class World {
 
 	private int worldHeight;
 	private int worldWidth;
-	
 	private List<Tile> tiles;
 	private List<Room> rooms;
-	
 	public static World instance;
+	
+	// ------ Constructors --------
 	
 	// creates a predefined map
 	public World(char[][] map) {
-		
-		//if(ActorManager.GetPlayerInstance() != null) ActorManager.GetPlayerInstance().getLosManager().calculateLOS = false;
-		
 		initiation();
-		
 		this.tiles = new ArrayList<Tile>();
-		
 		Tile spawnTile = CreatePredefinedMap(map);
-		
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
 		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
-		
-		//ActorManager.GetPlayerInstance().getLosManager().calculateLOS = true;
-	}
-	
-	// picks a random room from predefined rooms that has a specific room type
-	public World(RoomType roomType) {
-		
-		//if(ActorManager.GetPlayerInstance() != null) ActorManager.GetPlayerInstance().getLosManager().calculateLOS = false;
-		
-		initiation();
-		
-		this.tiles = new ArrayList<Tile>();
-		
-		Tile spawnTile = CreatePredefinedMap(PredefinedMaps.GetRandomRoomOfType(roomType));
-		
-		// randomize enemy count 
-		int minEnemyCount = 0, maxEnemyCount = 1;
-		switch(roomType) {
-		case Large:
-			minEnemyCount = 10;
-			maxEnemyCount = 20;
-			break;
-		case Normal:
-			minEnemyCount = 5;
-			maxEnemyCount = 10;
-			break;
-		case Small:
-			minEnemyCount = 2;
-			maxEnemyCount = 5;
-			break;
-		case Treasure:
-			minEnemyCount = 0;
-			maxEnemyCount = 1;
-			break;
-		}
-		
-		// create enemies
-		ActorManager.CreateEnemies(Util.GetRandomInteger(minEnemyCount, maxEnemyCount), tiles);
-		
-		// create player
-		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
-		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
-		
-		//ActorManager.GetPlayerInstance().getLosManager().calculateLOS = true;
+		Game.instance.setGameState(GameState.InGame);
 	}
 	
 	// create a randomized dungeon level
@@ -95,7 +46,10 @@ public class World {
 		initiation();
 		this.tiles = DungeonGeneration.createDungeon(roomcount);
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100);
+		Game.instance.setGameState(GameState.InGame);
 	}
+	
+	// ---------------------------
 	
 	private void initiation() {
 		if(instance != null) {
@@ -104,6 +58,7 @@ public class World {
 			System.exit(1);
 		}
 		World.instance = this;
+		Game.instance.setGameState(GameState.Loading);
 	}
 	
 	private Tile CreatePredefinedMap(char[][] map) {
@@ -391,7 +346,7 @@ public class World {
 		} else if(newType == TileType.Floor) {
 			newTile = new Tile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Floor01, TileType.Floor);
 		} else if(newType == TileType.DestructibleTile) {
-			newTile = new DestructibleTile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.DestructibleWall, TileType.DestructibleTile, 300);
+			newTile = new DestructibleTile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.DestructibleWall01, TileType.DestructibleTile, 300);
 		} else {
 			System.out.println("WORLD.REPLACETILE: TILETYPE NOT YET IMPLEMENTED!");
 			new Exception().printStackTrace();

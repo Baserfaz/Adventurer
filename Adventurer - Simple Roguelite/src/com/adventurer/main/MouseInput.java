@@ -8,12 +8,15 @@ import java.awt.event.MouseMotionListener;
 
 import com.adventurer.data.Camera;
 import com.adventurer.data.World;
+import com.adventurer.enumerations.GameState;
 import com.adventurer.gameobjects.Tile;
 
 public class MouseInput implements MouseMotionListener, MouseListener {
 	
 	public void mousePressed(MouseEvent e) {
 		
+	    if(Game.instance.getGameState() == GameState.Loading) return;
+	    
 		if(e.getButton() == MouseEvent.BUTTON1) {
 			
 			int mouseX = e.getX();

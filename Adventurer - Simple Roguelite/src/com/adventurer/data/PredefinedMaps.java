@@ -1,11 +1,5 @@
 package com.adventurer.data;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.adventurer.enumerations.RoomType;
-import com.adventurer.utilities.Util;
-
 public class PredefinedMaps {
 
 	/*	Char to GameObject-map  
@@ -18,12 +12,6 @@ public class PredefinedMaps {
 	 *  L -> locked door
 	 *  P -> portal to dungeon
 	 *  E -> exit from dungeon
-	 *  ---------------------------------
-	 * Room sizes:
-	 * 	small -> 7x7
-	 * 	normal -> 13x13
-	 * 	large -> 17x17
-	 * 	treasure -> 6x6
 	 */
 	
 	private static final char[][] lobbyMap = new char[][] {
@@ -41,111 +29,6 @@ public class PredefinedMaps {
 		{ '#', '.', '.', '.', 'W', '.', '.', '.', 'W', '.', '.', '.', '#' },
 		{ '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
 	};
-	
-	private static final char[][] small01 = new char[][] {
-		{ '#', '#', '#', '#', '#', '#', '#' },
-		{ '#', '@', '.', 'd', '.', '.', '#' },
-		{ '#', '.', '.', 'W', '.', '.', '#' },
-		{ '#', 'W', 'd', 'W', 'd', 'W', '#' },
-		{ '#', '.', '.', 'W', '.', '.', '#' },
-		{ '#', '.', '.', 'W', '.', 'P', '#' },
-		{ '#', '#', '#', '#', '#', '#', '#' },
-	};
-	
-	private static final char[][] small02 = new char[][] {
-		{ '#', '#', '#', '#', '#', '#', '#' },
-		{ '#', 'P', 'W', '.', '.', '@', '#' },
-		{ '#', '.', 'W', '.', '.', '.', '#' },
-		{ '#', 'd', 'W', 'W', 'd', 'W', '#' },
-		{ '#', '.', '.', 'W', '.', '.', '#' },
-		{ '#', '.', '.', 'd', '.', '.', '#' },
-		{ '#', '#', '#', '#', '#', '#', '#' },
-	};
-	
-	private static final char[][] normal01 = new char[][] {
-		{ '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
-		{ '#', '.', '.', '.', 'W', '.', '.', '.', 'W', '.', '.', '.', '#' },
-		{ '#', '.', '.', '.', 'W', '.', '@', '.', 'W', '.', '.', '.', '#' },
-		{ '#', '.', '.', '.', 'W', '.', '.', '.', 'W', '.', '.', '.', '#' },
-		{ '#', 'd', 'W', 'd', 'W', 'W', 'd', 'W', 'W', 'd', 'W', 'd', '#' },
-		{ '#', '.', 'W', '.', '.', 'W', '.', 'W', '.', '.', 'W', '.', '#' },
-		{ '#', '.', 'W', '.', '.', 'W', 'd', 'W', '.', '.', 'W', '.', '#' },
-		{ '#', '.', 'W', '.', '.', '.', '.', '.', '.', '.', 'W', '.', '#' },
-		{ '#', '.', 'W', '.', '.', '.', '.', '.', '.', '.', 'W', '.', '#' },
-		{ '#', 'd', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'd', '#' },
-		{ '#', '.', '.', '.', 'd', '.', '.', '.', 'd', '.', '.', '.', '#' },
-		{ '#', '.', '.', '.', 'W', '.', 'P', '.', 'W', '.', '.', '.', '#' },
-		{ '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
-	};
-	
-	private static final char[][] large01 = new char[][] {
-		{ '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
-		{ '#', '.', 'd', '.', 'd', '.', '.', '.', 'd', '.', '.', '.', '.', 'W', '.', '.', '#' },
-		{ '#', '.', 'W', 'W', 'W', '.', '@', '.', 'W', '.', '.', '.', '.', 'd', '.', '.', '#' },
-		{ '#', '.', '.', '.', 'W', '.', '.', '.', 'W', '.', '.', '.', '.', 'W', '.', '.', '#' },
-		{ '#', '.', '.', '.', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'd', 'W', '#' },
-		{ '#', '.', '.', '.', '.', 'W', '.', 'd', '.', '.', 'W', '.', '.', '.', '.', '.', '#' },
-		{ '#', '.', '.', '.', '.', 'W', '.', 'W', '.', '.', 'W', '.', '.', '.', '.', '.', '#' },
-		{ '#', '.', '.', '.', '.', 'W', '.', 'W', '.', '.', 'd', '.', '.', '.', '.', '.', '#' },
-		{ '#', '.', '.', '.', '.', 'W', '.', 'W', '.', '.', 'W', '.', '.', '.', '.', '.', '#' },
-		{ '#', 'W', 'W', 'W', '.', 'W', '.', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', '#' },
-		{ '#', '.', '.', 'd', '.', 'W', '.', '.', '.', '.', '.', '.', 'W', '.', '.', '.', '#' },
-		{ '#', '.', '.', 'W', '.', 'W', '.', '.', '.', '.', '.', '.', 'd', '.', '.', '.', '#' },
-		{ '#', 'W', 'd', 'W', 'W', 'W', 'W', 'W', 'W', '.', '.', '.', 'W', '.', '.', '.', '#' },
-		{ '#', '.', '.', '.', '.', '.', '.', '.', 'W', '.', '.', '.', 'W', 'W', 'W', 'd', '#' },
-		{ '#', '.', '.', '.', '.', '.', '.', '.', 'd', '.', '.', '.', 'd', '.', 'W', '.', '#' },
-		{ '#', '.', '.', '.', '.', '.', '.', '.', 'W', '.', '.', '.', 'W', '.', 'd', 'P', '#' },
-		{ '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' }
-	};
-	
-	private static final char[][] treasure01 = new char[][] {
-		{ '#', '#', '#', '#', '#', '#' },
-		{ '#', '@', '.', '.', '.', '#' },
-		{ '#', '.', '.', '.', '.', '#' },
-		{ '#', '.', '.', '.', '.', '#' },
-		{ '#', '.', '.', '.', 'P', '#' },
-		{ '#', '#', '#', '#', '#', '#' },
-	};
-	
-	public static char[][] GetRandomRoomOfType(RoomType roomType) {
-		
-		char[][] map = null;
-		
-		if(roomType == RoomType.Normal) {
-			
-			List<char[][]> normalRooms = new ArrayList<char[][]>();
-			normalRooms.add(normal01);	
-			
-			map = normalRooms.get(Util.GetRandomInteger(0, normalRooms.size()));
-			
-		} else if(roomType == RoomType.Small) {
-			
-			List<char[][]> smallRooms = new ArrayList<char[][]>();
-			smallRooms.add(small01);
-			smallRooms.add(small02);
-			
-			map = smallRooms.get(Util.GetRandomInteger(0, smallRooms.size()));
-			
-		} else if(roomType == RoomType.Large) {
-			
-			List<char[][]> largeRooms = new ArrayList<char[][]>();
-			largeRooms.add(large01);
-			
-			map = largeRooms.get(Util.GetRandomInteger(0, largeRooms.size()));
-			
-		} else if(roomType == RoomType.Treasure) {
-			
-			List<char[][]> treasureRooms = new ArrayList<char[][]>();
-			treasureRooms.add(treasure01);
-			
-			map = treasureRooms.get(Util.GetRandomInteger(0, treasureRooms.size()));
-			
-		} else {
-			System.out.println("ROOMTYPE NOT YET IMPLEMENTED!");
-			System.exit(1);
-		}
-		return map;
-	}
-	
+
 	public static char[][] GetLobby() { return lobbyMap; }
 }
