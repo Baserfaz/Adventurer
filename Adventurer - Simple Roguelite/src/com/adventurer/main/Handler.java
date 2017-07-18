@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.adventurer.data.Camera;
+import com.adventurer.data.Coordinate;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Effect;
 import com.adventurer.gameobjects.GameObject;
@@ -16,6 +17,7 @@ import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.VanityItem;
+import com.adventurer.utilities.Renderer;
 
 public class Handler {
 
@@ -96,24 +98,25 @@ public class Handler {
 		
 		// get player
 		Player player = ActorManager.GetPlayerInstance();
+		
 		if(Camera.instance == null || player == null) return;
 		
 		// get camera
 		Rectangle cam = Camera.instance.getCameraBounds();
 		Graphics2D g2d = (Graphics2D) g;
 		
-		// change color
-		Color fontCol = new Color(128, 0, 0);
-		g2d.setColor(fontCol);
-		
-		// font settings
-		Font font = new Font("Consolas", Font.PLAIN, 8);
-		g2d.setFont(font);
-		
 		// ------------ DRAW GUI --------------
 		
+		Renderer.renderString("HP: " + player.GetHealth().GetCurrentHealth(), 
+		        new Coordinate((int) cam.getMinX() + 5, (int)cam.getMaxY() - 5),
+		        Color.red, 8, g2d);
+		
+	    Renderer.renderString("Keys: " + player.getInventory().getKeyCount(),
+	            new Coordinate((int) cam.getMinX() + 50, (int) cam.getMaxY() - 5),
+	            Color.red, 8, g2d);
+		
 		// draw health
-		g2d.drawString("HP: " + player.GetHealth().GetCurrentHealth(),
+		/*g2d.drawString("HP: " + player.GetHealth().GetCurrentHealth(),
 				(int) cam.getMinX() + 5,
 				(int) cam.getMaxY() - 5);
 		
@@ -129,13 +132,13 @@ public class Handler {
 				(int) cam.getMaxY() - 5);
 		
 		// draw bomb count
-		/*g2d.drawString("Bombs: " + player.getInventory().getBombCount(),
+		g2d.drawString("Bombs: " + player.getInventory().getBombCount(),
 				(int) cam.getMinX() + 180,
 				(int) cam.getMaxY() - 5
-				);*/
+				);
 		
 		// draw projectile count
-		/*g2d.drawString("Projectiles: " + player.getInventory().getProjectileCount(),
+		g2d.drawString("Projectiles: " + player.getInventory().getProjectileCount(),
 				(int) cam.getMinX() + 230,
 				(int) cam.getMaxY() - 5
 				);*/

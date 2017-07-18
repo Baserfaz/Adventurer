@@ -3,6 +3,7 @@ package com.adventurer.main;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import com.adventurer.enumerations.Direction;
+import com.adventurer.enumerations.GameState;
 import com.adventurer.gameobjects.Player;
 
 public class KeyInput extends KeyAdapter {
@@ -11,6 +12,8 @@ public class KeyInput extends KeyAdapter {
 	
 	public void keyPressed(KeyEvent e) {
 		
+	    if(Game.instance.getGameState() == GameState.Loading) return;
+	    
 		// get the pressed key 
 		int key = e.getKeyCode();
 		

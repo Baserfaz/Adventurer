@@ -44,7 +44,7 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean USE_SIMPLE_SPRITESHEET_LAYOUT = true;
 	
 	// LOS settings
-	public static final boolean CALCULATE_PLAYER_LOS = false;
+	public static final boolean CALCULATE_PLAYER_LOS   = false;
 	public static final boolean PERMANENTLY_SHOW_TILES = true;
 	
 	// render settings
@@ -68,22 +68,19 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean MAGGOTS_SPAWN_EGGS_ON_DEATH = false;
 	
 	// world size
-	public static final int WORLDHEIGHT = 30;
-	public static final int WORLDWIDTH  = 30;
+	public static final int WORLDHEIGHT = 50;
+	public static final int WORLDWIDTH  = 50;
 	
 	// room count
-	public static final int ROOM_COUNT          = 10;
-	public static final int ROOM_DOOR_MAX_COUNT = 2;
-	
+	public static final int ROOM_COUNT                = 20;
+	public static final int ROOM_DOOR_MAX_COUNT       = 2;
+    public static final int ROOM_TRY_GENERATION_COUNT = 100;
+    
 	// room sizes
 	public static final int ROOM_MAX_WIDTH  = 10;
 	public static final int ROOM_MIN_WIDHT  = 2;
 	public static final int ROOM_MAX_HEIGHT = 10;
 	public static final int ROOM_MIN_HEIGHT = 2;
-	
-	// how many times the room generation 
-	// algorithm tries to fit a room to the world.
-	public static final int ROOM_TRY_GENERATION_COUNT = 10;
 	
 	//------------------------------
 	
@@ -213,50 +210,76 @@ public class Game extends Canvas implements Runnable {
 		
 		// graphics and graphics 2d
 		Graphics g = bs.getDrawGraphics();
-		Graphics2D g2d = (Graphics2D) g;
 		
 		//-------------------------------------------
 		// DRAW GRAPHICS HERE
 		
-		// set background
-		Renderer.FillScreen(g, Color.black);
+		if(gameState == GameState.InGame) renderInGame(g);
+		else if(gameState == GameState.Loading) renderLoading(g);
 		
-		// zoom
-		g2d.scale(CAMERAZOOM, CAMERAZOOM);
-		
-		// camera follow
-		// TODO: camera shouldn't be in render().
-		Player player = ActorManager.GetPlayerInstance();
-		if(player != null) {
-			
-			int targetx = ((-player.GetWorldPosition().getX() * CAMERAZOOM) - (SPRITESIZE - WIDTH / 2)) / CAMERAZOOM;
-			int targety = ((-player.GetWorldPosition().getY() * CAMERAZOOM) - (SPRITESIZE - HEIGHT / 2)) / CAMERAZOOM;
-			
-			// translate
-			g.translate(targetx, targety);
-			
-			// update camera's position
-			Camera.instance.Update(new Coordinate(-targetx, -targety), 1273 / CAMERAZOOM, 690 / CAMERAZOOM);
-		
-			if(DRAW_CAMERA) {
-				g.setColor(Color.red);
-				g.drawRect((int) Camera.instance.getCameraBounds().getX(), 
-						(int) Camera.instance.getCameraBounds().getY(),
-						(int) Camera.instance.getCameraBounds().getWidth(),
-						(int) Camera.instance.getCameraBounds().getHeight());
-			}
-			
-		} else Renderer.FillScreen(g, Color.black);
-		
-		// render objects
-		// uses simplistic rendering queue
-		Handler.instance.render(g);
-		
+		// END DRAW
 		//-------------------------------------------
+		
 		g.dispose();
 		bs.show();
 	}
 
+	private void renderLoading(Graphics g) {
+	    
+	    Graphics2D g2d = (Graphics2D) g;
+        
+        // set background
+        Renderer.FillScreen(g, Color.blue);
+	    
+        Renderer.renderString("Generating world..." + System.currentTimeMillis(), 
+                new Coordinate(Game.WIDTH / 2, Game.HEIGHT / 2), Color.black, 24, g2d);
+        
+	}
+	
+	private void renderInGame(Graphics g) {
+	    
+	    Graphics2D g2d = (Graphics2D) g;
+	    
+        // set background
+        Renderer.FillScreen(g, Color.black);
+        
+        // zoom
+        g2d.scale(CAMERAZOOM, CAMERAZOOM);
+        
+        // camera follow
+        Player player = ActorManager.GetPlayerInstance();
+        if(player != null) {
+    
+            Coordinate pos = calculateCameraPos(player);
+            int x = pos.getX(); 
+            int y = pos.getY();
+            
+            // translate
+            g.translate(x, y);
+            
+            // update camera's position
+            Camera.instance.Update(new Coordinate(-x, -y), 1273 / CAMERAZOOM, 690 / CAMERAZOOM);
+        
+            if(DRAW_CAMERA) {
+                g.setColor(Color.red);
+                g.drawRect((int) Camera.instance.getCameraBounds().getX(), 
+                        (int) Camera.instance.getCameraBounds().getY(),
+                        (int) Camera.instance.getCameraBounds().getWidth(),
+                        (int) Camera.instance.getCameraBounds().getHeight());
+            }
+            
+        } else Renderer.FillScreen(g, Color.black);
+        
+        // render objects
+        Handler.instance.render(g);   
+	}
+	
+	private Coordinate calculateCameraPos(Player player) {
+        int x = ((-player.GetWorldPosition().getX() * CAMERAZOOM) - (SPRITESIZE - WIDTH / 2)) / CAMERAZOOM;
+        int y = ((-player.GetWorldPosition().getY() * CAMERAZOOM) - (SPRITESIZE - HEIGHT / 2)) / CAMERAZOOM;
+	    return new Coordinate(x, y);
+	}
+	
 	private void tick() { Handler.instance.tick(); }
 
 	public static void main(String args[]) { new Game(); }

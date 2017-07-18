@@ -1,6 +1,7 @@
 package com.adventurer.utilities;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -67,5 +68,18 @@ public class Renderer {
 		g2d.rotate(rot, xcenter, ycenter);
 		g.drawImage(sprite, x, y, Game.SPRITESIZE, Game.SPRITESIZE, null);
 		g2d.rotate(-rot, xcenter, ycenter);
+	}
+	
+	public static void renderString(String txt, Coordinate pos, Color color, int fontSize, Graphics2D g2d) {
+	    
+        // font
+        Font font = new Font("Consolas", Font.PLAIN, fontSize);
+        
+        // font settings
+        g2d.setFont(font);
+        g2d.setColor(color);
+        
+        // render
+        g2d.drawString(txt, pos.getX(), pos.getY());
 	}
 }
