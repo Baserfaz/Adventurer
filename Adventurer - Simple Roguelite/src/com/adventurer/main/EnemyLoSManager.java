@@ -75,7 +75,9 @@ public class EnemyLoSManager {
 		
 		World world = World.instance.GetWorld();
 		
-		for(Tile tile : world.GetTiles()) {
+		List<Tile> tiles_ = new ArrayList<Tile>(world.GetTiles());
+		
+		for(Tile tile : tiles_) {
 			
 			int targetx = tile.GetTilePosition().getX();
 			int targety = tile.GetTilePosition().getY();
