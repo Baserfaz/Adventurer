@@ -113,6 +113,10 @@ public class SpriteCreator {
 		    case Water01: row = 1; column = 2; break;
 		    case Sand01: row = 1; column = 3; break;
 		    case TreasuryFloor01: row = 1; column = 4; break;
+		    case DeepWater01: row = 1; column = 5; break;
+		    case Jungle01: row = 1; column = 6; break;
+		    case MagicFloor01: row = 1; column = 7; break;
+		    case NormalFloor01: row = 1; column = 8; break;
 		    
 		    // walls
 		    case Wall01: row = 3; column = 0; break;

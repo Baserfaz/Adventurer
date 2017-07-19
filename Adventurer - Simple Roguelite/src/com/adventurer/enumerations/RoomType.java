@@ -5,5 +5,8 @@ public enum RoomType {
 	Treasure(),
 	Grass(),
 	Water(),
+	DeepWater(),
+	Jungle(),
+	Magic(),
 	Sand();
 }

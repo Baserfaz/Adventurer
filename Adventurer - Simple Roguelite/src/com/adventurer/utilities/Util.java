@@ -47,7 +47,7 @@ public class Util {
 				Color tintedColor = null;
 				
 				// make the pixel's color darker.
-				if(darker) tintedColor = color.darker().darker();
+				if(darker) tintedColor = color.darker().darker().darker();
 				else tintedColor = color.brighter();
 					
 				// apply color to new image.

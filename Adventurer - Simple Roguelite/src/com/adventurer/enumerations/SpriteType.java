@@ -7,10 +7,14 @@ public enum SpriteType {
     Skeleton01(),
     
 	Floor01(),
+	NormalFloor01(),
 	Grass01(),
+	Jungle01(),
 	Water01(),
+	DeepWater01(),
 	Sand01(),
 	TreasuryFloor01(),
+	MagicFloor01(),
 	
 	TrapTile01(),
 	

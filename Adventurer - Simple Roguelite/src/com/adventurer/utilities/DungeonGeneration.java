@@ -284,11 +284,14 @@ public class DungeonGeneration {
 					tileType = TileType.Floor;
 					
 					switch(roomtype) {
-					    case Normal: spriteType = SpriteType.Floor01; break;
+					    case Normal: spriteType = SpriteType.NormalFloor01; break;
 					    case Sand: spriteType = SpriteType.Sand01; break;
 					    case Water: spriteType = SpriteType.Water01; break;
 					    case Grass: spriteType = SpriteType.Grass01; break;
 					    case Treasure: spriteType = SpriteType.TreasuryFloor01; break;
+					    case Jungle: spriteType = SpriteType.Jungle01; break;
+					    case DeepWater: spriteType = SpriteType.DeepWater01; break;
+					    case Magic: spriteType = SpriteType.MagicFloor01; break;
 					    default: System.out.println("Roomtype not found: " + roomtype); break;
 					}
 					
