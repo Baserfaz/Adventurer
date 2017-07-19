@@ -13,7 +13,6 @@ import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;
 import com.adventurer.utilities.Renderer;
-import com.adventurer.utilities.Util;
 
 public class Player extends Actor {
 	
@@ -29,17 +28,21 @@ public class Player extends Actor {
 	}
 	
 	public void tick() {
-		
 		if(myHP == null) return;
-		
 		if(myHP.isDead() == false) {
+		    
 			UpdatePosition();
 			if(Game.CALCULATE_PLAYER_LOS && losmanager != null) losmanager.CalculateLos(this.GetTilePosition());
 			
 		} else {
+		    
+		    // save current session data.
+			if(currentSession != null) {
+			    currentSession.saveSessionData();
+			    currentSession = null;
+			} else System.out.println("No currentSession (Player.Tick).");
 			
-			currentSession.saveSessionData();
-			currentSession = null;
+			// die...
 			OnDeath(World.instance.GetTileAtPosition(this.GetTilePosition()));
 		}
 	}
@@ -129,24 +132,32 @@ public class Player extends Actor {
 			
 			Portal portal = (Portal) tile;
 			
-			// TODO: shop every 10th floor?
-			// atm. session is over.
-			
-			if(portal.isExit() || currentSession.getDungeonLevel() == 10) {
+			// TODO: perhaps we shouldn't check 
+			// dungeon level in here.
+			if(portal.isExit()) {
 				
-				currentSession.saveSessionData();
-				currentSession = null;
-				
-				World.instance.Remove();
-				new World(PredefinedMaps.GetLobby());
+			    // end run & session
+			    if(currentSession.getDungeonLevel() >= 10) {
+	                
+			        // save session
+			        currentSession.saveSessionData();
+	                currentSession = null;
+	                
+	                // delete current world
+	                World.instance.Remove();
+	                
+	                // create lobby.
+	                new World(PredefinedMaps.GetLobby());
+			    
+			    } else {
+			        System.out.println("EXIT PORTAL ERROR: Player.move()");
+			        System.exit(1);
+			    }
 				
 			} else {
 				
-				if(currentSession == null) {
-					currentSession = new Session("session_" + System.currentTimeMillis());
-				} else {
-					currentSession.addDungeonLevel(1);
-				}
+				if(currentSession == null) currentSession = new Session("session_" + System.currentTimeMillis());
+				else currentSession.addDungeonLevel(1);
 				
 				World.instance.Remove();
 				new World(Game.ROOM_COUNT);

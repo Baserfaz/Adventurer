@@ -13,6 +13,7 @@ import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Tile;
+import com.adventurer.main.ActorManager;
 import com.adventurer.main.Game;
 
 public class DungeonGeneration {
@@ -105,6 +106,9 @@ public class DungeonGeneration {
 		
 		// fill in the maze's dead-ends.
 		allTiles = fillDeadEnds(allTiles);
+		
+		// save created rooms in world instance.
+		World.instance.addAllToRooms(allRooms);
 		
 		// ----------- END OF GENERATION ------------------
 		

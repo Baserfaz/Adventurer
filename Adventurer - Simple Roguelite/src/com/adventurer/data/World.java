@@ -45,6 +45,13 @@ public class World {
 	public World(int roomcount) {
 		initiation();
 		this.tiles = DungeonGeneration.createDungeon(roomcount);
+		
+		for(Room room : rooms) {
+		    // TODO: handle rooms here
+		    // create enemies.
+		    ActorManager.CreateEnemies(5, room.getTiles());
+		}
+		
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100);
 		Game.instance.setGameState(GameState.InGame);
 	}
@@ -58,6 +65,7 @@ public class World {
 			System.exit(1);
 		}
 		World.instance = this;
+		this.rooms = new ArrayList<Room>();
 		Game.instance.setGameState(GameState.Loading);
 	}
 	
@@ -244,15 +252,20 @@ public class World {
 		return tile;
 	}
 	
-	public int[] GetFreePosition(List<Tile> _tiles) {
+	public int[] GetFreePosition(List<Tile> tiles_) {
 		
 		List<Tile> possibleTiles = new ArrayList<Tile>();
 		int[] position = new int[4];
 		
 		// get all possible tiles
-		for(int i = 0; i < _tiles.size(); i++) {
-			Tile tile = _tiles.get(i);
+		for(Tile tile : tiles_) {
 			if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) possibleTiles.add(tile);
+		}
+		
+		if(possibleTiles.isEmpty()) {
+		    System.out.println("possibleTiles is empty (World.GetFreePosition()).");
+		    new Exception().printStackTrace();
+		    System.exit(1);
 		}
 		
 		// get a random number
@@ -433,6 +446,7 @@ public class World {
 	public List<Tile> GetTilesInCardinalDirection(Tile tile) { return GetTilesInCardinalDirection(tile.GetTilePosition().getX(), tile.GetTilePosition().getY()); }
 	public List<Tile> GetTilesInCardinalDirection(Coordinate pos) { return GetTilesInCardinalDirection(pos.getX(), pos.getY()); }
 	public void addToRooms(Room room) { this.rooms.add(room); }
+	public void addAllToRooms(List<Room> rooms) { this.rooms.addAll(rooms); }
 	public void AddToTiles(Tile t) { this.tiles.add(t); }
 	public void RemoveTiles(Tile t) { if(tiles.contains(t)) this.tiles.remove(t); }
 	public List<Tile> GetTiles() { return this.tiles; }

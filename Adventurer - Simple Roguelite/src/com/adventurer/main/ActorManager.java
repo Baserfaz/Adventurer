@@ -80,8 +80,10 @@ public class ActorManager {
 	}
 	
 	public static void CreateEnemies(int count, List<Tile> tiles) {
+	    
+	    count = Math.min(count, Game.ROOM_MIN_HEIGHT * Game.ROOM_MIN_WIDHT);
 		for(int i = 0; i < count; i++) {
-			
+		    
 			EnemyType randomType = EnemyType.values()[Util.GetRandomInteger(0, EnemyType.values().length)];
 			
 			int damage = 0;
@@ -99,7 +101,6 @@ public class ActorManager {
 				else if(key == "health") health = Integer.parseInt(val);
 				else if(key == "name") name = val;
 				else if(key == "isRanged") isRanged = Boolean.parseBoolean(val);
-				//else System.out.println("Not yet implemented: " + key);
 				
 			}
 			CreateEnemy(name, health, damage, randomType, tiles, isRanged);
@@ -107,10 +108,10 @@ public class ActorManager {
 	}
 	
 	public static Enemy CreateEnemy(String name, int maxHP, int damage,
-		EnemyType enemyType, List<Tile> roomTiles, boolean isRanged) {
-		
+		EnemyType enemyType, List<Tile> tiles_, boolean isRanged) {
+	    
 		// get position
-		int[] pos = World.instance.GetFreePosition(roomTiles);
+		int[] pos = World.instance.GetFreePosition(tiles_);
 		
 		SpriteType spriteType = null;
 		
