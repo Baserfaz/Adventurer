@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import com.adventurer.data.Coordinate;
+import com.adventurer.data.Room;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.SpriteType;
@@ -132,6 +133,27 @@ public class Util {
 	}
 	
 	// ------------------------ DUNGEON SPESIFIC
+	
+	public static Tile getRandomTileFromRandomRoom(List<Room> rooms_) {
+	    List<Tile> tiles_ = new ArrayList<Tile>();
+	    for(Tile t: rooms_.get(Util.GetRandomInteger(0, rooms_.size())).getTiles()) { tiles_.add(t); }
+	    return getRandomTile(tiles_);
+	}
+	
+	public static Tile getRandomTile(List<Tile> tiles_) {
+	    
+	    List<Tile> candidates = new ArrayList<Tile>();
+	    Tile chosen = null;
+	    
+	    for(Tile t : tiles_) { if(isTileValid(t)) candidates.add(t); }
+	    chosen = candidates.get(Util.GetRandomInteger(0, candidates.size()));
+	    return chosen;
+	}
+	
+	public static boolean isTileValid(Tile tile) { 
+	    if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) return true; 
+	    else return false;
+	}
 	
 	public static Tile getTileAt(Coordinate pos, List<Tile> tiles) {
 		Tile tile = null;

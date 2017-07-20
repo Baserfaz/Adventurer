@@ -68,6 +68,7 @@ public class World {
 		
 		// create player
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100);
+		else ActorManager.ForceMoveActor(Util.getRandomTileFromRandomRoom(rooms), ActorManager.GetPlayerInstance());
 		
 		// set state
 		Game.instance.setGameState(GameState.InGame);
@@ -261,7 +262,7 @@ public class World {
 		
 		// get all possible tiles
 		for(Tile tile : tiles_) {
-			if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) possibleTiles.add(tile);
+			if(Util.isTileValid(tile)) possibleTiles.add(tile);
 		}
 		
 		if(possibleTiles.isEmpty()) {
@@ -295,26 +296,9 @@ public class World {
 	}
 	
 	public int[] GetFreePosition() {
-		
-		List<Tile> possibleTiles = new ArrayList<Tile>();
 		int[] position = new int[4];
 		
-		// get all possible tiles
-		/*for(Tile tile : tiles) {
-			if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) possibleTiles.add(tile);
-		}*/
-		
-		
-		for(Room room : rooms) {
-		    for(Tile tile : room.getTiles()) {
-		        if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) possibleTiles.add(tile);
-		    }
-		}
-		
-		// get a random tile from possible tiles.
-		Tile randomTile = possibleTiles.get(Util.GetRandomInteger(0, possibleTiles.size()));
-		
-		System.out.println("spawn tile: " + randomTile.GetInfo());
+		Tile randomTile = Util.getRandomTileFromRandomRoom(rooms);
 		
 		// get the position of random tile.
 		Coordinate randTilePos = randomTile.GetTilePosition();

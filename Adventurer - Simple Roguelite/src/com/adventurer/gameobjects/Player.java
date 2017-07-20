@@ -14,6 +14,7 @@ import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;
 import com.adventurer.utilities.Renderer;
+import com.adventurer.utilities.Util;
 
 public class Player extends Actor {
 	
@@ -64,7 +65,7 @@ public class Player extends Actor {
 			return;
 		}
 		
-		if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) {
+		if(Util.isTileValid(tile)) {
 			
 			// we are no longer on the last tile
 			Tile lastTile = World.instance.GetTileAtPosition(this.GetTilePosition());
@@ -108,9 +109,7 @@ public class Player extends Actor {
 			
 		} else if(tile.GetActor() != null) {
 			
-			if(tile.GetActor() instanceof Enemy || tile.GetActor() instanceof Turret) {
-				Attack(tile);
-			}
+			if(tile.GetActor() instanceof Enemy || tile.GetActor() instanceof Turret) Attack(tile);
 			
 		} else if(tile.GetItem() != null) {
 			

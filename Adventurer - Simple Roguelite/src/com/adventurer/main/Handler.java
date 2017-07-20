@@ -114,7 +114,7 @@ public class Handler {
 		Renderer.renderString(
 	        "HP: " + player.GetHealth().GetCurrentHealth() + "\n" +
 	        "Keys: " + player.getInventory().getKeyCount(), 
-	        coord, Color.red, 14, g2d
+	        coord, new Color(150, 150, 150), 12, g2d
 		);
 	}
 	
