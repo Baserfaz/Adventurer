@@ -9,6 +9,7 @@ import com.adventurer.data.Session;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
+import com.adventurer.enumerations.GameState;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;
@@ -135,6 +136,9 @@ public class Player extends Actor {
 			if(portal.isExit()) {
 	        
 			    // exit dungeon -> return to lobby.
+			    
+			    // set game state to loading immediately.
+			    Game.instance.setGameState(GameState.Loading);
 			    
 		        // save session
 		        currentSession.saveSessionData();

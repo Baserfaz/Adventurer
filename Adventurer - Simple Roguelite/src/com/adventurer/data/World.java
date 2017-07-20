@@ -300,15 +300,21 @@ public class World {
 		int[] position = new int[4];
 		
 		// get all possible tiles
-		for(Tile tile : tiles) {
+		/*for(Tile tile : tiles) {
 			if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) possibleTiles.add(tile);
+		}*/
+		
+		
+		for(Room room : rooms) {
+		    for(Tile tile : room.getTiles()) {
+		        if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) possibleTiles.add(tile);
+		    }
 		}
 		
-		// get a random number
-		int random = Util.GetRandomInteger(0, possibleTiles.size());
-		
 		// get a random tile from possible tiles.
-		Tile randomTile = possibleTiles.get(random);
+		Tile randomTile = possibleTiles.get(Util.GetRandomInteger(0, possibleTiles.size()));
+		
+		System.out.println("spawn tile: " + randomTile.GetInfo());
 		
 		// get the position of random tile.
 		Coordinate randTilePos = randomTile.GetTilePosition();
@@ -377,7 +383,7 @@ public class World {
 	}
 	
 	// Changes tiletype and spritetype of OLD tile.
-	// doesnt remove tiles.
+	// Doesnt remove tiles.
 	public void ChangeTile(Tile oldTile, TileType newTileType, SpriteType newSpriteType) {
 		
 		// 1. change the data of old tile.
@@ -385,9 +391,6 @@ public class World {
 		
 		// 2. change the graphics of old tile.
 		oldTile.SetSprite(SpriteCreator.instance.CreateSprite(newSpriteType));
-		
-		// 3. reset tinted sprite
-		//oldTile.SetTintedSprite(null);
 	}
 	
 	public List<Tile> GetTilesOfType(TileType type) {
