@@ -78,7 +78,7 @@ public class Game extends Canvas implements Runnable {
 	// room count
 	public static final int ROOM_COUNT                = 20;
 	public static final int ROOM_DOOR_MAX_COUNT       = 4;
-    public static final int ROOM_TRY_GENERATION_COUNT = 100;
+    public static final int ROOM_TRY_GENERATION_COUNT = 500;
     
 	// room sizes
 	public static final int ROOM_MAX_WIDTH  = 10;

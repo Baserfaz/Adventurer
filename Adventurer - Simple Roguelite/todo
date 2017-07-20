@@ -1,0 +1,26 @@
+	
+		ADVENTURER - ROGUELIKE
+		TODO LIST
+		1.  forbid enemy spawning on the room where player spawned.
+		2.  killing enemies, opening chests gives score.
+		3.  death screen GUI.
+		4.  main menu GUI.
+		5.  chest spawning in rooms + locked chests in treasure rooms.
+		6.  enemies drop items
+		7.  stats-system (str, int, dex, HP) 
+			   -> str: melee damage
+			   -> int: magic damage
+			   -> dex: ranged damage
+			   -> HP: more health obviously.
+		8.  simple "inventory/equipment"-system, where player can only wield one weapon and few pieces of equipment.
+		9.  picking up items from the floor.
+		10. golden key spawning/dropping randomly
+		11. create xml-parser for items
+		12. create xml-file for items.
+		13. health shrines -> 10% and 100% ones. Full health shrine located at lobby.
+		14. simple storage system for items in lobby.
+		15. diamond keys drop from bosses?? (diamond keys open up new dungeons or can be exchanged for goods in lobby)
+		16. ---> bosses???
+		
+		 
+		   
