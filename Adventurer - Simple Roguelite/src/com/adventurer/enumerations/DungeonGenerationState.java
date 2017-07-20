@@ -9,5 +9,4 @@ public enum DungeonGenerationState {
     Calculations,
     Deadends,
     Finished;
-    
 }

@@ -130,5 +130,8 @@ public class LoSManager {
         }
 	}
 	
-	private void hideAllTiles(List<Tile> allTiles) { for(Tile tile : allTiles) { tile.Hide(); } }
+	private void hideAllTiles(List<Tile> allTiles) {
+	    List<Tile> tiles_ = new ArrayList<Tile>(allTiles);
+	    for(Tile tile : tiles_) { tile.Hide(); } 
+	}
 }

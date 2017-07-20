@@ -11,11 +11,18 @@ public class KeyInput extends KeyAdapter {
 	public KeyInput() {}
 	
 	public void keyPressed(KeyEvent e) {
-		
+	    
+	    // when game is loading, don't allow key presses.
 	    if(Game.instance.getGameState() == GameState.Loading) return;
 	    
 		// get the pressed key 
 		int key = e.getKeyCode();
+		
+		// when loading is finished, wait for player input to start game.
+		if(Game.instance.getGameState() == GameState.Ready && key != KeyEvent.CHAR_UNDEFINED) {
+		    Game.instance.setGameState(GameState.InGame);
+		    return;
+		}
 		
 		Player player = ActorManager.GetPlayerInstance();
 		

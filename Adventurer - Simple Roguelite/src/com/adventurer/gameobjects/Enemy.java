@@ -177,7 +177,7 @@ public class Enemy extends Actor {
 		// update facing
 		lookDir = dir;
 		
-		if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) {
+		if(Util.isTileValid(tile)) {
 			
 			// tile is our new tile
 			world.GetTileAtPosition(this.GetTilePosition()).SetActor(null);

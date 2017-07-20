@@ -144,8 +144,6 @@ public class DungeonGeneration {
 	    Portal portal = Util.replaceTileWithPortal(chosen, true);
 	    tiles_.add(portal);
 	    
-	    System.out.println("Created exit portal at: " + portal.GetInfo());
-	    
 	    return tiles_;
 	}
 	

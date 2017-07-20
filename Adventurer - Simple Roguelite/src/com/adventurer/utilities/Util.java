@@ -132,7 +132,7 @@ public class Util {
 		 return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 	}
 	
-	// ------------------------ DUNGEON SPESIFIC
+	// ------------------------ DUNGEON/TILE FUNCTIONS ---------------------
 	
 	public static Tile getRandomTileFromRandomRoom(List<Room> rooms_) {
 	    List<Tile> tiles_ = new ArrayList<Tile>();

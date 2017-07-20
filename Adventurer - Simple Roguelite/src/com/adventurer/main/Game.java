@@ -10,9 +10,11 @@ import com.adventurer.data.Camera;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.SaveFile;
+import com.adventurer.data.Session;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.DungeonGenerationState;
 import com.adventurer.enumerations.GameState;
+import com.adventurer.enumerations.WorldType;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.utilities.DungeonGeneration;
 import com.adventurer.utilities.Renderer;
@@ -91,6 +93,7 @@ public class Game extends Canvas implements Runnable {
 	private Window window;
 	
 	private SaveFile currentSaveFile;
+    private Session currentSession;
 	private GameState gameState;
 	
 	public Game() {
@@ -133,7 +136,7 @@ public class Game extends Canvas implements Runnable {
 		
 		// create lobby
 		if(START_GAME_WITH_RANDOM_ROOM) new World(ROOM_COUNT);
-		else new World(PredefinedMaps.GetLobby());
+		else createLobby();
 	}
 	
 	public synchronized void Start() {
@@ -217,7 +220,7 @@ public class Game extends Canvas implements Runnable {
 		// DRAW GRAPHICS HERE
 		
 		if(gameState == GameState.InGame) renderInGame(g);
-		else if(gameState == GameState.Loading) renderLoading(g);
+		else if(gameState == GameState.Loading || gameState == GameState.Ready) renderLoading(g);
 		
 		// END DRAW
 		//-------------------------------------------
@@ -241,20 +244,32 @@ public class Game extends Canvas implements Runnable {
         Renderer.renderString("by Heikki Heiskanen",
                 new Coordinate(Game.WIDTH / 3, 150), Color.gray, 21, g2d);
         
-        // generation phase
-        Renderer.renderString(">> Generating " + DungeonGeneration.state, 
-                new Coordinate(Game.WIDTH / 3, 300), Color.black, 32, g2d);
-        
-        // dungeon settings
-        Renderer.renderString("Dungeon size: " + Game.WORLDWIDTH + "x" + Game.WORLDHEIGHT, 
-                new Coordinate(Game.WIDTH / 3, 350), Color.black, 18, g2d);
-        
-        // print finished 
-        if(DungeonGeneration.state == DungeonGenerationState.Finished) {
-            Renderer.renderString(">> Finished <<", 
-                    new Coordinate(Game.WIDTH / 3, 400), Color.black, 18, g2d);
+        // dungeon generation states
+        if(World.instance.getWorldType() == WorldType.Random) {
+            
+            Renderer.renderString(">> Generating " + DungeonGeneration.state, 
+                    new Coordinate(Game.WIDTH / 3, 300), Color.black, 32, g2d);
+            
+            // dungeon settings
+            Renderer.renderString("Dungeon size: " + Game.WORLDWIDTH + "x" + Game.WORLDHEIGHT, 
+                    new Coordinate(Game.WIDTH / 3, 350), Color.black, 18, g2d);
+            
+        } else if(World.instance.getWorldType() == WorldType.Predefined) {
+            
+            if(gameState == GameState.Loading) {
+                Renderer.renderString("Creating world...", new Coordinate(Game.WIDTH / 3, 300), Color.black, 32, g2d);
+            } else if(gameState == GameState.Ready) {
+                // TODO: the name of the world/predefined should not be hard coded.
+                Renderer.renderString("World created. \n>>Lobby", new Coordinate(Game.WIDTH / 3, 300), Color.black, 32, g2d);
+            }
+            
         }
         
+        // print finished 
+        if(gameState == GameState.Ready) {
+            Renderer.renderString("Press any key to continue...", 
+                    new Coordinate(Game.WIDTH / 3, 400), Color.black, 18, g2d);
+        }
 	}
 	
 	private void renderInGame(Graphics g) {
@@ -301,8 +316,12 @@ public class Game extends Canvas implements Runnable {
 	    return new Coordinate(x, y);
 	}
 	
+	private void createLobby() {
+	    // TODO: cache info about lobby..
+	    new World(PredefinedMaps.GetLobby());
+	}
+	
 	private void tick() { Handler.instance.tick(); }
-
 	public static void main(String args[]) { new Game(); }
 	
 	public GameState getGameState() { return this.gameState; }
@@ -310,4 +329,12 @@ public class Game extends Canvas implements Runnable {
 	
 	public SaveFile getCurrentSaveFile() { return currentSaveFile; }
 	public void setCurrentSaveFile(SaveFile currentSaveFile) { this.currentSaveFile = currentSaveFile; }
+
+    public Session getCurrentSession() {
+        return currentSession;
+    }
+
+    public void setCurrentSession(Session currentSession) {
+        this.currentSession = currentSession;
+    }
 }

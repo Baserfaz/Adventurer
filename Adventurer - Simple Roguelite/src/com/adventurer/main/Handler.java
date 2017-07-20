@@ -10,6 +10,8 @@ import java.util.List;
 
 import com.adventurer.data.Camera;
 import com.adventurer.data.Coordinate;
+import com.adventurer.data.World;
+import com.adventurer.enumerations.WorldType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Effect;
 import com.adventurer.gameobjects.GameObject;
@@ -107,15 +109,49 @@ public class Handler {
 		
 		// ------------ DRAW GUI --------------
 		
-		int yPos = (int) cam.getMaxY() - 75;
-		int xPos = (int) cam.getMinX() + 50;
-		Coordinate coord = new Coordinate(xPos, yPos);
+		int stats_yPos = (int) cam.getMaxY() - 75;
+		int stats_xPos = (int) cam.getMinX() + 50;
+		Coordinate stats_coord = new Coordinate(stats_xPos, stats_yPos);
 		
+		int dungeoninfo_yPos = (int) cam.getMinY() + 25;
+		int dungeoninfo_xPos = (int) cam.getMinX() + 50;
+		Coordinate dungeonInfo_coord = new Coordinate(dungeoninfo_xPos, dungeoninfo_yPos);
+		
+	    int charinfo_yPos = (int) cam.getMaxY() - 75;
+	    int charinfo_xPos = (int) cam.getMinX() + 200;
+	    Coordinate chainfo_coord = new Coordinate(charinfo_xPos, charinfo_yPos);
+	
+	    // TODO: update GUI 
+	    
+        // render dungeon name and level
+	    if(World.instance.getWorldType() == WorldType.Predefined) {
+	        
+            Renderer.renderString(
+                "Location: Chilly lobby",
+                dungeonInfo_coord, new Color(150, 150, 150), 10, g2d
+            );
+            
+	    } else if(World.instance.getWorldType() == WorldType.Random) {
+	        
+            Renderer.renderString(
+                "Location: Dungeon (lvl "+ Game.instance.getCurrentSession().getDungeonLevel() + ")",
+                dungeonInfo_coord, new Color(150, 150, 150), 10, g2d
+            );
+	        
+	    }
+	    
+		// render stats (HP etc.)
 		Renderer.renderString(
 	        "HP: " + player.GetHealth().GetCurrentHealth() + "\n" +
 	        "Keys: " + player.getInventory().getKeyCount(), 
-	        coord, new Color(150, 150, 150), 12, g2d
+	        stats_coord, new Color(150, 150, 150), 12, g2d
 		);
+		
+		// render character info
+        Renderer.renderString(
+            "str: 5 int: 5, dex: 5",
+            chainfo_coord, new Color(150, 150, 150), 12, g2d
+        );
 	}
 	
 	public void AddObject(GameObject go) { this.getObjects().add(go); }	

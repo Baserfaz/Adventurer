@@ -10,6 +10,7 @@ import com.adventurer.enumerations.GameState;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.enumerations.TrapType;
+import com.adventurer.enumerations.WorldType;
 import com.adventurer.gameobjects.DestructibleTile;
 import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Portal;
@@ -27,6 +28,7 @@ public class World {
 	private int worldWidth;
 	private List<Tile> tiles;
 	private List<Room> rooms;
+	private WorldType worldType;
 	public static World instance;
 	
 	// ------ Constructors --------
@@ -37,6 +39,8 @@ public class World {
 	    // init world
 		initiation();
 		
+		worldType = WorldType.Predefined;
+		
 		// generate dungeon + return player spawn tile
 		Tile spawnTile = CreatePredefinedMap(map);
 		
@@ -45,7 +49,7 @@ public class World {
 		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
 		
 		// set state.
-		Game.instance.setGameState(GameState.InGame);
+		Game.instance.setGameState(GameState.Ready);
 	}
 	
 	// create a randomized dungeon level
@@ -53,6 +57,8 @@ public class World {
 	    
 	    // init world
 		initiation();
+		
+		worldType = WorldType.Random;
 		
 		// generate dungeon
 		this.tiles = DungeonGeneration.createDungeon(roomcount);
@@ -71,7 +77,7 @@ public class World {
 		else ActorManager.ForceMoveActor(Util.getRandomTileFromRandomRoom(rooms), ActorManager.GetPlayerInstance());
 		
 		// set state
-		Game.instance.setGameState(GameState.InGame);
+		Game.instance.setGameState(GameState.Ready);
 	}
 	
 	// ---------------------------
@@ -437,6 +443,7 @@ public class World {
 	public void addAllToRooms(List<Room> rooms) { this.rooms.addAll(rooms); }
 	public void AddToTiles(Tile t) { this.tiles.add(t); }
 	public void RemoveTiles(Tile t) { if(tiles.contains(t)) this.tiles.remove(t); }
+	public WorldType getWorldType() { return this.worldType; }
 	public List<Tile> GetTiles() { return this.tiles; }
 	public World GetWorld() { return this; }
 	public int GetHeight() { return this.worldHeight; }

@@ -20,7 +20,6 @@ public class Player extends Actor {
 	
 	private LoSManager losmanager;
 	private Inventory inventory;
-	private Session currentSession;
 	
 	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int damage) {
 		super(worldPos, tilePos, spritetype, maxHP, damage, "Player");
@@ -39,9 +38,9 @@ public class Player extends Actor {
 		} else {
 		    
 		    // save current session data.
-			if(currentSession != null) {
-			    currentSession.saveSessionData();
-			    currentSession = null;
+			if(Game.instance.getCurrentSession() != null) {
+			    Game.instance.getCurrentSession().saveSessionData();
+			    Game.instance.setCurrentSession(null);
 			} else System.out.println("No currentSession (Player.Tick).");
 			
 			// die...
@@ -140,8 +139,8 @@ public class Player extends Actor {
 			    Game.instance.setGameState(GameState.Loading);
 			    
 		        // save session
-		        currentSession.saveSessionData();
-                currentSession = null;
+			    Game.instance.getCurrentSession().saveSessionData();
+			    Game.instance.setCurrentSession(null);
                 
                 // delete current world
                 World.instance.Remove();
@@ -151,8 +150,9 @@ public class Player extends Actor {
 				
 			} else {
 				
-				if(currentSession == null) currentSession = new Session("session_" + System.currentTimeMillis());
-				else currentSession.addDungeonLevel(1);
+				if(Game.instance.getCurrentSession() == null) { 
+				    Game.instance.setCurrentSession(new Session("session_" + System.currentTimeMillis()));
+				} else Game.instance.getCurrentSession().addDungeonLevel(1);
 				
 				World.instance.Remove();
 				new World(Game.ROOM_COUNT);
@@ -162,8 +162,6 @@ public class Player extends Actor {
 			// TODO: interaction with destructible tiles.
 		}
 	}
-	
-	public Session getSession() { return this.currentSession; }
 	public LoSManager getLosManager() { return this.losmanager; }
 	public Inventory getInventory() { return this.inventory; }
 }
