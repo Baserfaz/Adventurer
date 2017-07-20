@@ -27,7 +27,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int WIDTH              = 1280;			           // viewport width
 	public static final int HEIGHT             = 720;                      // viewport height
 	public static final int SPRITESIZE         = 16;                       // sprite size in pixels
-	public static final int CAMERAZOOM         = 3;                        // level of zoom
+	public static final int CAMERAZOOM         = 2;                        // level of zoom
 	public static final double FRAME_CAP       = 60.0;                     // cap the framerate to this
 	public static final String SPRITESHEETNAME = "spritesheet_simple.png"; // name of the spritesheet 
 	
@@ -40,7 +40,7 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean DRAW_ENEMY_PATH = false; 			// works correctly only with one enemy
 	
 	// do we create lobby or random dungeon first.
-	public static final boolean START_GAME_WITH_RANDOM_ROOM = true;
+	public static final boolean START_GAME_WITH_RANDOM_ROOM = false;
 	
 	// use simpler spritesheet layout
 	public static final boolean USE_SIMPLE_SPRITESHEET_LAYOUT = true;

@@ -107,41 +107,15 @@ public class Handler {
 		
 		// ------------ DRAW GUI --------------
 		
-		Renderer.renderString("HP: " + player.GetHealth().GetCurrentHealth(), 
-		        new Coordinate((int) cam.getMinX() + 5, (int)cam.getMaxY() - 5),
-		        Color.red, 8, g2d);
+		int yPos = (int) cam.getMaxY() - 75;
+		int xPos = (int) cam.getMinX() + 50;
+		Coordinate coord = new Coordinate(xPos, yPos);
 		
-	    Renderer.renderString("Keys: " + player.getInventory().getKeyCount(),
-	            new Coordinate((int) cam.getMinX() + 50, (int) cam.getMaxY() - 5),
-	            Color.red, 8, g2d);
-		
-		// draw health
-		/*g2d.drawString("HP: " + player.GetHealth().GetCurrentHealth(),
-				(int) cam.getMinX() + 5,
-				(int) cam.getMaxY() - 5);
-		
-		// draw key count
-		g2d.drawString("Keys: " + player.getInventory().getKeyCount(),
-				(int) cam.getMinX() + 50, 
-				(int) cam.getMaxY() - 5
-				);
-		
-		// draw diamond key count
-		g2d.drawString("DiamondKeys: " + player.getInventory().getDiamondKeyCount(), 
-				(int) cam.getMinX() + 100, 
-				(int) cam.getMaxY() - 5);
-		
-		// draw bomb count
-		g2d.drawString("Bombs: " + player.getInventory().getBombCount(),
-				(int) cam.getMinX() + 180,
-				(int) cam.getMaxY() - 5
-				);
-		
-		// draw projectile count
-		g2d.drawString("Projectiles: " + player.getInventory().getProjectileCount(),
-				(int) cam.getMinX() + 230,
-				(int) cam.getMaxY() - 5
-				);*/
+		Renderer.renderString(
+	        "HP: " + player.GetHealth().GetCurrentHealth() + "\n" +
+	        "Keys: " + player.getInventory().getKeyCount(), 
+	        coord, Color.red, 14, g2d
+		);
 	}
 	
 	public void AddObject(GameObject go) { this.getObjects().add(go); }	

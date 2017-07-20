@@ -81,7 +81,7 @@ public class LoSManager {
 	    
         // draw cached FOV.
         // -> means we don't always update FOV.
-	    if(Util.GetRandomInteger() < 80) {
+	    if(Util.GetRandomInteger() < 50) {
 	        hideAllTiles(allTiles);
 	        showVisibleTiles(cachedLos);
 	        return;

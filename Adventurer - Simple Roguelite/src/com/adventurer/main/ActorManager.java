@@ -73,23 +73,23 @@ public class ActorManager {
 		Coordinate playerWorldPos = new Coordinate(pos[0], pos[1]);
 		Coordinate playerTilePos = new Coordinate(pos[2], pos[3]);
 		
-		// create player and add it to our handler.
+		// create player
 		playerInstance = new Player(playerWorldPos, playerTilePos, SpriteType.Player, maxHP, damage);
 		
 		return playerInstance;
 	}
 	
 	public static void CreateEnemies(int count, List<Tile> tiles) {
-	    
+
 	    count = Math.min(count, Game.ROOM_MIN_HEIGHT * Game.ROOM_MIN_WIDHT);
 		for(int i = 0; i < count; i++) {
 		    
 			EnemyType randomType = EnemyType.values()[Util.GetRandomInteger(0, EnemyType.values().length)];
 			
-			int damage = 0;
-			int health = 0;
-			String name = "";
-			boolean isRanged = false;
+	        int damage = 0;
+	        int health = 0;
+	        String name = "";
+	        boolean isRanged = false;
 			
 			// read enemy data
 			Map<String, String> retval = FileReader.readXMLGameData(randomType.toString());

@@ -33,39 +33,64 @@ public class World {
 	
 	// creates a predefined map
 	public World(char[][] map) {
+	    
+	    // init world
 		initiation();
-		this.tiles = new ArrayList<Tile>();
+		
+		// generate dungeon + return player spawn tile
 		Tile spawnTile = CreatePredefinedMap(map);
+		
+		// create/move player
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
 		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
+		
+		// set state.
 		Game.instance.setGameState(GameState.InGame);
 	}
 	
 	// create a randomized dungeon level
 	public World(int roomcount) {
+	    
+	    // init world
 		initiation();
+		
+		// generate dungeon
 		this.tiles = DungeonGeneration.createDungeon(roomcount);
 		
+		// fill dungeon with stuff.
 		for(Room room : rooms) {
-		    // TODO: handle rooms here
+		    
 		    // create enemies.
-		    ActorManager.CreateEnemies(5, room.getTiles());
+		    ActorManager.CreateEnemies(Util.GetRandomInteger(0, 5), room.getTiles());
+		    
+		    // TODO: create chests etc.
 		}
 		
+		// create player
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100);
+		
+		// set state
 		Game.instance.setGameState(GameState.InGame);
 	}
 	
 	// ---------------------------
 	
 	private void initiation() {
+	    
 		if(instance != null) {
 			System.out.println("WORLD ALREADY EXISTS!");
 			new Exception().printStackTrace();
 			System.exit(1);
 		}
+		
+		// set instance
 		World.instance = this;
+		
+		// instantiate lists
 		this.rooms = new ArrayList<Room>();
+		this.tiles = new ArrayList<Tile>();
+		
+		// set state
 		Game.instance.setGameState(GameState.Loading);
 	}
 	
@@ -88,39 +113,16 @@ public class World {
 				char mapChar = map[y][x];
 				
 				switch(mapChar) {
-				case '#':
-					tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall);
-					break;
-				case '.':
-					tile = new Tile(worldPos, tilePos, SpriteType.Floor01, TileType.Floor);
-					break;
-				case '@':
-					tile = new Tile(worldPos, tilePos, SpriteType.Floor01, TileType.Floor);
-					spawnTile = tile;
-					break;
-				case 'W':
-					tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.Wall);
-					break;
-				case 'd':
-					tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false, DoorType.Normal);
-					break;
-				case 'L':
-					tile = new Door(worldPos, tilePos, SpriteType.LockedDoor01, TileType.LockedDoor, true, DoorType.Normal);
-					break;
-				case 'P':
-					tile = new Portal(worldPos, tilePos, SpriteType.Portal01, TileType.Portal, false);
-					break;
-				case 'E':
-					tile = new Portal(worldPos, tilePos, SpriteType.Portal02, TileType.Portal, true);
-					break;
-				case 'D':
-					tile = new Door(worldPos, tilePos, SpriteType.LockedDoorDiamond01, TileType.LockedDoor, true, DoorType.Diamond);
-					break;
-				default:
-					System.out.println("INVALID CHARACTER AT CreatePredefinedMap.");
-					new Exception().printStackTrace();
-					System.exit(1);
-					break;
+    				case '#': tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall); break;
+    				case '.': tile = new Tile(worldPos, tilePos, SpriteType.Floor01, TileType.Floor); break;
+    				case '@': tile = new Tile(worldPos, tilePos, SpriteType.SpawnTile01, TileType.Floor); spawnTile = tile; break;
+    				case 'W': tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.Wall); break;
+    				case 'd': tile = new Door(worldPos, tilePos, SpriteType.Door01, TileType.Door, false, DoorType.Normal); break;
+    				case 'L': tile = new Door(worldPos, tilePos, SpriteType.LockedDoor01, TileType.LockedDoor, true, DoorType.Normal); break;
+    				case 'P': tile = new Portal(worldPos, tilePos, SpriteType.Portal02, TileType.Portal, false); break;
+    				case 'E': tile = new Portal(worldPos, tilePos, SpriteType.Portal02, TileType.Portal, true); break;
+    				case 'D': tile = new Door(worldPos, tilePos, SpriteType.LockedDoorDiamond01, TileType.LockedDoor, true, DoorType.Diamond); break;
+    				default: System.out.println("INVALID CHARACTER AT CreatePredefinedMap."); new Exception().printStackTrace(); System.exit(1); break;
 				}
 				
 				tiles.add(tile);
@@ -298,9 +300,8 @@ public class World {
 		int[] position = new int[4];
 		
 		// get all possible tiles
-		for(int i = 0; i < tiles.size(); i++) {
-			Tile tile = tiles.get(i);
-			if(tile.GetTileType() == TileType.Floor && tile.GetActor() == null && tile.GetItem() == null) possibleTiles.add(tile);
+		for(Tile tile : tiles) {
+			if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) possibleTiles.add(tile);
 		}
 		
 		// get a random number

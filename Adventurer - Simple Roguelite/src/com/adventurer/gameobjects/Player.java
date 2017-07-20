@@ -132,27 +132,19 @@ public class Player extends Actor {
 			
 			Portal portal = (Portal) tile;
 			
-			// TODO: perhaps we shouldn't check 
-			// dungeon level in here.
 			if(portal.isExit()) {
-				
-			    // end run & session
-			    if(currentSession.getDungeonLevel() >= 10) {
-	                
-			        // save session
-			        currentSession.saveSessionData();
-	                currentSession = null;
-	                
-	                // delete current world
-	                World.instance.Remove();
-	                
-	                // create lobby.
-	                new World(PredefinedMaps.GetLobby());
+	        
+			    // exit dungeon -> return to lobby.
 			    
-			    } else {
-			        System.out.println("EXIT PORTAL ERROR: Player.move()");
-			        System.exit(1);
-			    }
+		        // save session
+		        currentSession.saveSessionData();
+                currentSession = null;
+                
+                // delete current world
+                World.instance.Remove();
+                
+                // create lobby.
+                new World(PredefinedMaps.GetLobby());
 				
 			} else {
 				

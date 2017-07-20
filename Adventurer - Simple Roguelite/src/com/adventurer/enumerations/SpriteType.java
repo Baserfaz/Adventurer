@@ -15,6 +15,7 @@ public enum SpriteType {
 	Sand01(),
 	TreasuryFloor01(),
 	MagicFloor01(),
+	SpawnTile01(),
 	
 	TrapTile01(),
 	

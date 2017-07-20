@@ -117,6 +117,7 @@ public class SpriteCreator {
 		    case Jungle01: row = 1; column = 6; break;
 		    case MagicFloor01: row = 1; column = 7; break;
 		    case NormalFloor01: row = 1; column = 8; break;
+		    case SpawnTile01: row = 1; column = 9; break;
 		    
 		    // walls
 		    case Wall01: row = 3; column = 0; break;

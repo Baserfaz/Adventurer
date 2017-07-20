@@ -14,6 +14,7 @@ import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.Door;
+import com.adventurer.gameobjects.Portal;
 import com.adventurer.gameobjects.Tile;
 
 public class Util {
@@ -186,6 +187,12 @@ public class Util {
 		Door door = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Door01, type_, locked, DoorType.Normal);
 		old.Remove();
 		return door;
+	}
+	
+	public static Portal replaceTileWithPortal(Tile old, boolean isExit) {
+	    Portal portal = new Portal(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Portal02, TileType.Portal, isExit);
+	    old.Remove();
+	    return portal;
 	}
 	
 	public static Tile getRandomNeighboringTile(Tile tile, List<Tile> tiles) {

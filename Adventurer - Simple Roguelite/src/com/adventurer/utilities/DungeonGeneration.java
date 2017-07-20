@@ -12,6 +12,7 @@ import com.adventurer.enumerations.RoomType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.Door;
+import com.adventurer.gameobjects.Portal;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.main.ActorManager;
 import com.adventurer.main.Game;
@@ -107,6 +108,9 @@ public class DungeonGeneration {
 		// fill in the maze's dead-ends.
 		allTiles = fillDeadEnds(allTiles);
 		
+		// create exit portal
+        allTiles = createExitPortal(allRooms, allTiles);
+		
 		// save created rooms in world instance.
 		World.instance.addAllToRooms(allRooms);
 		
@@ -121,6 +125,28 @@ public class DungeonGeneration {
 		
 		// just to be sure that there are no error tiles left in the dungeon.
 		return Util.replaceAllErrorTiles(allTiles);
+	}
+	
+	private static List<Tile> createExitPortal(List<Room> rooms, List<Tile> tiles) {
+	    
+	    List<Tile> tiles_ = new ArrayList<Tile>(tiles);
+	    
+	    // TODO: portal can't be placed next to a door.
+	    
+	    Room room = rooms.get(Util.GetRandomInteger(0, rooms.size()));
+	    Tile chosen = null;
+	    List<Tile> tileCandidates = new ArrayList<Tile>();
+	    
+	    for(Tile tile : room.getTiles()) { if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) tileCandidates.add(tile); }
+	    chosen = tileCandidates.get(Util.GetRandomInteger(0, tileCandidates.size()));
+	    
+	    tiles_.remove(chosen);
+	    Portal portal = Util.replaceTileWithPortal(chosen, true);
+	    tiles_.add(portal);
+	    
+	    System.out.println("Created exit portal at: " + portal.GetInfo());
+	    
+	    return tiles_;
 	}
 	
 	private static List<Tile> fillDeadEnds(List<Tile> tiles) {
