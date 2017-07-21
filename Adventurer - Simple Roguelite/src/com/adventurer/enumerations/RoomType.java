@@ -2,6 +2,7 @@ package com.adventurer.enumerations;
 
 public enum RoomType {
 	Normal(),
+	PlayerStartRoom(),
 	Treasure(),
 	Grass(),
 	Water(),

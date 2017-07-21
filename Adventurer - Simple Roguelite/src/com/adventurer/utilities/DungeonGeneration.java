@@ -42,9 +42,14 @@ public class DungeonGeneration {
 		
 		for(int i = 0; i < roomcount; i++) {
 			
-		    // TODO: not every room has the same chance
-			RoomType randType = RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)];
-			
+		    RoomType roomType = null;
+		    
+		    if(i == 0) roomType = RoomType.PlayerStartRoom;
+		    else {
+		        // TODO: chances 
+		        roomType = RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)];
+		    }
+		        
 			int width, height, tryCount = 0;
 			Coordinate startTilePos;
 			boolean failure = false;
@@ -77,7 +82,7 @@ public class DungeonGeneration {
 			if(failure) continue;
 			
 			// create room
-			Room room = createRoom(width, height, randType, startTilePos);
+			Room room = createRoom(width, height, roomType, startTilePos);
 			
 			// save room to all rooms
 			allRooms.add(room);
@@ -313,6 +318,7 @@ public class DungeonGeneration {
 					
 					switch(roomtype) {
 					    case Normal: spriteType = SpriteType.NormalFloor01; break;
+					    case PlayerStartRoom: spriteType = SpriteType.NormalFloor01; break;
 					    case Sand: spriteType = SpriteType.Sand01; break;
 					    case Water: spriteType = SpriteType.Water01; break;
 					    case Grass: spriteType = SpriteType.Grass01; break;
@@ -322,7 +328,6 @@ public class DungeonGeneration {
 					    case Magic: spriteType = SpriteType.MagicFloor01; break;
 					    default: System.out.println("Roomtype not found: " + roomtype); break;
 					}
-					
 				}
 				
 				// create tile object

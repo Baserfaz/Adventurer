@@ -29,12 +29,9 @@ public class ItemCreator {
 		
 		// randomize sprite offset on the tile.
 		Coordinate pos = CalculatePositionWithOffset(tile, setOffset);
-		
 		SpriteType st = null;
-		
-		if(locked) st = SpriteType.LockedChest01;
-		else st = SpriteType.Chest01;
-		
+		if(locked) st = SpriteType.LockedChest02;
+		else st = SpriteType.Chest02;
 		return new Chest(pos, tile.GetTilePosition(), st, ItemType.Chest, locked);
 	}
 	

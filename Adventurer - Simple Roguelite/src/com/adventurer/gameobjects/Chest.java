@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
+import com.adventurer.main.Game;
 import com.adventurer.main.SpriteCreator;
 import com.adventurer.utilities.Renderer;
 import com.adventurer.utilities.Util;
@@ -26,17 +27,14 @@ public class Chest extends Item {
 	}
 	
 	public void Open() {
-		
-		int amount = Util.GetRandomInteger(0, 5);
-		
-		// TODO add score to the current session?
-		
+		// Add score to the current session.
+		Game.instance.getCurrentSession().addScore(Util.GetRandomInteger(0, 5));
 		this.Remove();	
 	}
 	
 	public void Unlock() {
 		this.locked = false;
-		this.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.Chest01));
+		this.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.Chest02));
 	}
 	
 	public void Lock() {

@@ -7,6 +7,7 @@ import java.util.List;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.GameState;
+import com.adventurer.enumerations.RoomType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.enumerations.TrapType;
@@ -18,6 +19,7 @@ import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Trap;
 import com.adventurer.main.ActorManager;
 import com.adventurer.main.Game;
+import com.adventurer.main.ItemCreator;
 import com.adventurer.main.SpriteCreator;
 import com.adventurer.utilities.DungeonGeneration;
 import com.adventurer.utilities.Util;
@@ -66,15 +68,43 @@ public class World {
 		// fill dungeon with stuff.
 		for(Room room : rooms) {
 		    
-		    // create enemies.
-		    ActorManager.CreateEnemies(Util.GetRandomInteger(0, 5), room.getTiles());
+		    // actors
+		    if(room.getRoomType() == RoomType.PlayerStartRoom) {
+		        
+		        // ----------------------- Player spawn room ------------------
+		        
+		        Tile tile = Util.getRandomTile(room.getTiles());
+		        
+		        // create/move player
+		        if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, tile);
+		        else ActorManager.ForceMoveActor(Util.getRandomTileFromRandomRoom(rooms), ActorManager.GetPlayerInstance());
 		    
-		    // TODO: create chests etc.
+		        // Do not randomize anything.
+		        continue;
+		        
+		        // -----------------------------------------------------------
+		        
+		    } else {
+		        
+		        // create enemies.
+	            ActorManager.CreateEnemies(Util.GetRandomInteger(0, 5), room.getTiles());
+		    
+		    }
+		    
+	        // create chests in treasure rooms.
+            if(room.getRoomType() == RoomType.Treasure) {
+                for(int i = 0; i < Util.GetRandomInteger(1, 3);  i++) {
+                    
+                    // get randomized & valid tile
+                    Tile tile = null;
+                    do { tile = Util.getRandomTile(room.getTiles()); } while(Util.isTileValid(tile) == false);
+                        
+                    // create chest
+                    ItemCreator.CreateChest(tile, false, true);
+                }
+            }
+		    
 		}
-		
-		// create player
-		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100);
-		else ActorManager.ForceMoveActor(Util.getRandomTileFromRandomRoom(rooms), ActorManager.GetPlayerInstance());
 		
 		// set state
 		Game.instance.setGameState(GameState.Ready);

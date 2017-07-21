@@ -62,7 +62,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int TILEGAP = 2;
 	
 	// player defaults
-	public static final int START_KEY_COUNT         = 0;
+	public static final int START_KEY_COUNT         = 1;
 	public static final int START_DIAMOND_KEY_COUNT = 0;
 	public static final int START_BOMB_COUNT        = 0;
 	public static final int START_PROJECTILE_COUNT  = 0;
@@ -243,14 +243,17 @@ public class Game extends Canvas implements Runnable {
         Renderer.renderString("by Heikki Heiskanen",
                 new Coordinate(Game.WIDTH / 3, 150), Color.gray, 21, g2d);
         
-        // dungeon generation states
+        // information about the dungeon
         if(World.instance.getWorldType() == WorldType.Random) {
             
+            // dungeon generation states
             Renderer.renderString(">> Generating " + DungeonGeneration.state, 
                     new Coordinate(Game.WIDTH / 3, 300), Color.black, 32, g2d);
             
             // dungeon settings
-            Renderer.renderString("Dungeon size: " + Game.WORLDWIDTH + "x" + Game.WORLDHEIGHT, 
+            Renderer.renderString("Dungeon size: " + Game.WORLDWIDTH + "x" + Game.WORLDHEIGHT +
+                    "\nRoom count: " + Game.ROOM_COUNT +
+                    "\nMax doors per room: " + Game.ROOM_DOOR_MAX_COUNT,
                     new Coordinate(Game.WIDTH / 3, 350), Color.black, 18, g2d);
             
         } else if(World.instance.getWorldType() == WorldType.Predefined) {
@@ -267,7 +270,7 @@ public class Game extends Canvas implements Runnable {
         // print finished 
         if(gameState == GameState.Ready) {
             Renderer.renderString("Press any key to continue...", 
-                    new Coordinate(Game.WIDTH / 3, 400), Color.black, 18, g2d);
+                    new Coordinate(Game.WIDTH / 3, 500), Color.black, 18, g2d);
         }
 	}
 	
