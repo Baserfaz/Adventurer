@@ -78,7 +78,9 @@ public class World {
 		        // create/move player
 		        if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, tile);
 		        else ActorManager.ForceMoveActor(Util.getRandomTileFromRandomRoom(rooms), ActorManager.GetPlayerInstance());
-		    
+		        
+		        // TODO: create health shrine?
+		        
 		        // Do not randomize anything.
 		        continue;
 		        

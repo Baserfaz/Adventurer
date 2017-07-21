@@ -24,5 +24,7 @@
 		17. ---> bosses?
 		18. session points do what exactly??? Think something cool.
 		
-		 
+		KNOWN BUGS:
+		1. all tiles flash visible sometimes when attacking enemy
+		2. problem with portal and enemy los. (skeleton throws spear in wrong dir and still hits player.)
 		   
