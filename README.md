@@ -50,7 +50,7 @@ See contributing.md for more info, but in short you can submit new ideas and fea
 * Heikki Heiskanen (Baserfaz) - Initial work
 
 ## Info and Contact
-* [Heikki Heiskanen](www.heiskanenheikki.fi)
+* [Heikki Heiskanen](http://www.heiskanenheikki.fi)
 * [Baserfaz projects](http://baserfaz.github.io/Projects/)
 * [Twitter](https://twitter.com/Baserfaz)
 
