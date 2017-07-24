@@ -42,17 +42,21 @@ public class DungeonGeneration {
 		
 		for(int i = 0; i < roomcount; i++) {
 			
+			// cached vars
 		    RoomType roomType = null;
-		    
-		    if(i == 0) roomType = RoomType.PlayerStartRoom;
-		    else {
-		        // TODO: chances 
-		        roomType = RoomType.values()[Util.GetRandomInteger(0, RoomType.values().length)];
-		    }
-		        
 			int width, height, tryCount = 0;
 			Coordinate startTilePos;
 			boolean failure = false;
+			
+		    // randomize room type, except the first room is 
+		    // always going to be player spawner.
+		    if(i == 0) roomType = RoomType.PlayerStartRoom;
+		    else if(i == 1) roomType = RoomType.DungeonExitRoom;
+		    else {
+		    	List<RoomType> types = new ArrayList<RoomType>();
+		    	types.add(RoomType.PlayerStartRoom);
+		    	roomType = Util.getRandomRoomTypeNotIn(types);
+		    }
 			
 			// This loop tries to fit different sized rooms 
 			// to the dungeon. For every room it tries this multiple times.
@@ -134,21 +138,61 @@ public class DungeonGeneration {
 	
 	private static List<Tile> createExitPortal(List<Room> rooms, List<Tile> tiles) {
 	    
+		// create new list of tiles.
 	    List<Tile> tiles_ = new ArrayList<Tile>(tiles);
 	    
-	    // TODO: portal can't be placed next to a door.
-	    
-	    Room room = rooms.get(Util.GetRandomInteger(0, rooms.size()));
-	    Tile chosen = null;
+	    // valid tiles 
 	    List<Tile> tileCandidates = new ArrayList<Tile>();
 	    
-	    for(Tile tile : room.getTiles()) { if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) tileCandidates.add(tile); }
-	    chosen = tileCandidates.get(Util.GetRandomInteger(0, tileCandidates.size()));
+	    // vars ...
+	    boolean foundRoom = false;
+	    Tile chosen = null;
 	    
+	    // check if we have exit room.
+	    // -> add all room tiles to candidates list.
+	    for(Room room : rooms) {
+	    	if(room.getRoomType() == RoomType.DungeonExitRoom) {
+	    		tileCandidates.addAll(room.getTiles());
+	    		foundRoom = true;
+	    		break;
+	    	}
+	    }
+	    
+	    // Generator somehow failed to create an exit room.
+	    // -> create exit at random... np.
+	    if(foundRoom == false) {
+	    	
+	    	// room types we do not want!
+	    	List<RoomType> types = new ArrayList<RoomType>();
+	    	types.add(RoomType.PlayerStartRoom);
+	    	types.add(RoomType.DungeonExitRoom);
+		    
+	    	List<Room> randRooms = new ArrayList<Room>();
+	    	
+		    for(Room room : rooms) {
+		    	if(types.contains(room.getRoomType()) == false) {
+		    		randRooms.add(room);
+		    	}
+		    }
+		    
+		    Room randRoom = randRooms.get(Util.GetRandomInteger(0, randRooms.size()));
+		    
+		    // populate valid tiles list.
+		    for(Tile tile : randRoom.getTiles()) { if(Util.isTileValid(tile)) tileCandidates.add(tile); }
+		    
+		    // get a random valid tile.
+		    chosen = tileCandidates.get(Util.GetRandomInteger(0, tileCandidates.size()));
+		    
+	    } else {
+	    	chosen = Util.getRandomTile(tileCandidates);
+	    }
+	    
+	    // replace tile...
 	    tiles_.remove(chosen);
 	    Portal portal = Util.replaceTileWithPortal(chosen, true);
 	    tiles_.add(portal);
 	    
+	    // return our modified list.
 	    return tiles_;
 	}
 	
@@ -296,15 +340,15 @@ public class DungeonGeneration {
 		for(int y = 0; y < height + 2; y++) {
 			for(int x = 0; x < width + 2; x++) {
 				
+				// variables etc.
+				TileType tileType = null;
+				SpriteType spriteType = null;
+				
 				// calculate tile position
 				Coordinate tilePos = new Coordinate(x + startTilePos.getX(), y + startTilePos.getY());
 				
 				// calculate world position
 				Coordinate worldPos = World.instance.ConvertTilePositionToWorld(tilePos);
-				
-				// variables etc.
-				TileType tileType = null;
-				SpriteType spriteType = null;
 				
 				// decide tiletype & spritetype
 				if(y == 0 || x == 0 || y == height + 1 || x == width + 1) {
@@ -319,6 +363,7 @@ public class DungeonGeneration {
 					switch(roomtype) {
 					    case Normal: spriteType = SpriteType.NormalFloor01; break;
 					    case PlayerStartRoom: spriteType = SpriteType.NormalFloor01; break;
+					    case DungeonExitRoom: spriteType = SpriteType.NormalFloor01; break;
 					    case Sand: spriteType = SpriteType.Sand01; break;
 					    case Water: spriteType = SpriteType.Water01; break;
 					    case Grass: spriteType = SpriteType.Grass01; break;

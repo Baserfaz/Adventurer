@@ -75,9 +75,12 @@ public class World {
 		        
 		        Tile tile = Util.getRandomTile(room.getTiles());
 		        
+		        // change tile sprite
+		        tile.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.SpawnTile01));
+		        
 		        // create/move player
 		        if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, tile);
-		        else ActorManager.ForceMoveActor(Util.getRandomTileFromRandomRoom(rooms), ActorManager.GetPlayerInstance());
+		        else ActorManager.ForceMoveActor(tile, ActorManager.GetPlayerInstance());
 		        
 		        // TODO: create health shrine?
 		        
@@ -86,6 +89,11 @@ public class World {
 		        
 		        // -----------------------------------------------------------
 		        
+		    } else if(room.getRoomType() == RoomType.DungeonExitRoom) {
+		    
+		    	// don't spawn anything!
+		    	continue;
+		    	
 		    } else {
 		        
 		        // create enemies.

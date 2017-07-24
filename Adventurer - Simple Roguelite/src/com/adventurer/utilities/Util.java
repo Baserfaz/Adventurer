@@ -12,6 +12,7 @@ import com.adventurer.data.Coordinate;
 import com.adventurer.data.Room;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
+import com.adventurer.enumerations.RoomType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.Door;
@@ -284,5 +285,27 @@ public class Util {
 			}
 		}
 		return tiles_;
+	}
+	
+	public static RoomType getRandomRoomTypeNotIn(List<RoomType> types) {
+		
+		RoomType rtype = null;
+		
+		// 1. create a list of types
+		// 2. shuffle that list
+		List<RoomType> randomizedTypes = new ArrayList<RoomType>();
+		for(int i = 0; i < RoomType.values().length; i++) { randomizedTypes.add(RoomType.values()[i]); }
+		Collections.shuffle(randomizedTypes);
+		
+		// loop through that list
+		// and get first item that is not in
+		// types list.
+		for(RoomType type : randomizedTypes) {
+			if(types.contains(type) == false) {
+				rtype = type;
+				break;
+			}
+		}
+		return rtype;
 	}
 }
