@@ -4,7 +4,7 @@ import com.adventurer.main.Game;
 
 public class Inventory {
 
-	private int keyCount = 0, diamondKeyCount = 0, bombCount = 0, projectileCount = 0;
+	private int keyCount, diamondKeyCount, bombCount, projectileCount;
 	
 	public Inventory(int keys, int bombs, int projectiles) {
 		this.setKeyCount(keys);
@@ -12,6 +12,8 @@ public class Inventory {
 		this.setBombCount(bombs);
 		this.setProjectileCount(projectiles);
 	}
+	
+	// TODO: equipment?
 	
 	public void addDiamondKeyCount(int a) {
 		this.diamondKeyCount += a;
@@ -21,6 +23,7 @@ public class Inventory {
 	public void addKeys(int a) { this.keyCount += a; }
 	public void addBombs(int b) { this.bombCount += b; }
 	public void addProjectiles(int p) { this.projectileCount += p; }
+	
 	public void setKeyCount(int keyCount) { this.keyCount = keyCount; }
 	public void setBombCount(int bombCount) { this.bombCount = bombCount; }
 	public void setProjectileCount(int projectileCount) { this.projectileCount = projectileCount; }

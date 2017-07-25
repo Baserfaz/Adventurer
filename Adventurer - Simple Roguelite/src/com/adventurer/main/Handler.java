@@ -149,7 +149,7 @@ public class Handler {
 		
 		// render character info
         Renderer.renderString(
-            "str: 5 int: 5, dex: 5",
+            String.format("str: %d int: %d dex: %d", player.getStats().getStrength(), player.getStats().getIntelligence(), player.getStats().getDexterity()),
             chainfo_coord, new Color(150, 150, 150), 12, g2d
         );
 	}

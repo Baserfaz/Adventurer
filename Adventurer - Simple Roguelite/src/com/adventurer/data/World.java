@@ -68,7 +68,7 @@ public class World {
 		// fill dungeon with stuff.
 		for(Room room : rooms) {
 		    
-		    // actors
+		    // actors and exit
 		    if(room.getRoomType() == RoomType.PlayerStartRoom) {
 		        
 		        // ----------------------- Player spawn room ------------------

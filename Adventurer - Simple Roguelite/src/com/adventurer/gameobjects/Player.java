@@ -6,6 +6,7 @@ import com.adventurer.data.Coordinate;
 import com.adventurer.data.Inventory;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.Session;
+import com.adventurer.data.Stats;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
@@ -20,12 +21,14 @@ public class Player extends Actor {
 	
 	private LoSManager losmanager;
 	private Inventory inventory;
+	private Stats stats;
 	
 	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int damage) {
 		super(worldPos, tilePos, spritetype, maxHP, damage, "Player");
 		
 		this.losmanager = new LoSManager();
 		this.inventory = new Inventory(Game.START_KEY_COUNT, Game.START_BOMB_COUNT, Game.START_PROJECTILE_COUNT);
+		this.stats = new Stats();
 	}
 	
 	public void tick() {
@@ -164,4 +167,5 @@ public class Player extends Actor {
 	}
 	public LoSManager getLosManager() { return this.losmanager; }
 	public Inventory getInventory() { return this.inventory; }
+	public Stats getStats() { return this.stats; }
 }
