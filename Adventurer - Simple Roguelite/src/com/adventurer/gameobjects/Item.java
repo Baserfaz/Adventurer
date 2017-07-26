@@ -11,12 +11,14 @@ import com.adventurer.main.Handler;
 
 public class Item extends GameObject {
 
+	protected String itemName;
 	protected ItemType itemType;
 	
 	public Item(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, ItemType itemType) {
 		super(worldPos, tilePos, spritetype);
 		
 		this.itemType = itemType;
+		this.itemName = "";
 		
 		// register to tile
 		World.instance.GetTileAtPosition(tilePos).SetItem(this);
@@ -40,4 +42,8 @@ public class Item extends GameObject {
 	public void tick() {}
 	public void render(Graphics g) {}
 	public Rectangle GetBounds() { return null; }
+
+	public String toString() {
+		return this.itemName + ", " + this.itemType;
+	}
 }

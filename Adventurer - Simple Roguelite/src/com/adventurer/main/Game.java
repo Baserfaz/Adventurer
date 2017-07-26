@@ -308,7 +308,7 @@ public class Game extends Canvas implements Runnable {
             
         } else Renderer.FillScreen(g, Color.black);
         
-        // render objects
+        // render objects and GUI
         Handler.instance.render(g);   
 	}
 	

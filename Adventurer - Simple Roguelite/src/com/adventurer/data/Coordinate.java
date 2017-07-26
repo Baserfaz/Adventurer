@@ -12,4 +12,5 @@ public class Coordinate {
 	
 	public int getX() { return x; }
 	public int getY() { return y; }
+	public String toString() { return x + ", " + y; }
 }

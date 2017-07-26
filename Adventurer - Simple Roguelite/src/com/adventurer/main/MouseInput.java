@@ -95,8 +95,12 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 						hoveringTile = tile;
 						tile.Select();
 						
-						// TODO: update GUI here...
-						System.out.println(tile.GetInfo());
+						// we straight set the handler's chosentile var to be hovertingTile.
+						// TODO: this is fishy as balls.
+						Handler.instance.setHoverTile(hoveringTile);
+					
+						// debug some info.
+						//System.out.println(tile.GetInfo());
 					}
 				}
 			}
@@ -105,7 +109,10 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 		// if we didn't hover on anything 
 		// e.g. non-discovered tile
 		// just deselect our selection.
-		if(notHoveringAnywhere) if(hoveringTile != null) hoveringTile.Deselect();
+		if(notHoveringAnywhere) {
+			if(hoveringTile != null) hoveringTile.Deselect();
+			Handler.instance.setHoverTile(null);
+		}
 	}
 	
 	public void mouseEntered(MouseEvent e) {}

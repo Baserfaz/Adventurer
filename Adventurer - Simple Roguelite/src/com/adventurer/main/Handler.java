@@ -1,7 +1,6 @@
 package com.adventurer.main;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -24,6 +23,10 @@ import com.adventurer.utilities.Renderer;
 public class Handler {
 
 	private List<GameObject> objects = new ArrayList<GameObject>();
+	
+	// TODO: this is bad.
+	private Tile hoverTile = null;
+	
 	public static Handler instance;
 	
 	public Handler() {
@@ -109,19 +112,27 @@ public class Handler {
 		
 		// ------------ DRAW GUI --------------
 		
+		// calculate all positions
+		
+		// stats pos
 		int stats_yPos = (int) cam.getMaxY() - 75;
 		int stats_xPos = (int) cam.getMinX() + 50;
 		Coordinate stats_coord = new Coordinate(stats_xPos, stats_yPos);
 		
+		// dungeon info i.e. name 
 		int dungeoninfo_yPos = (int) cam.getMinY() + 25;
 		int dungeoninfo_xPos = (int) cam.getMinX() + 50;
 		Coordinate dungeonInfo_coord = new Coordinate(dungeoninfo_xPos, dungeoninfo_yPos);
 		
+		// player info
 	    int charinfo_yPos = (int) cam.getMaxY() - 75;
 	    int charinfo_xPos = (int) cam.getMinX() + 200;
 	    Coordinate chainfo_coord = new Coordinate(charinfo_xPos, charinfo_yPos);
 	
-	    // TODO: update GUI 
+	    // hover tile info
+	    int tileinfo_yPos = (int) cam.getMaxY() - 200;
+	    int tileinfo_xPos = (int) cam.getMaxX() - 200;
+	    Coordinate tileinfo_coord = new Coordinate(tileinfo_xPos, tileinfo_yPos);
 	    
         // render dungeon name and level
 	    if(World.instance.getWorldType() == WorldType.Predefined) {
@@ -137,7 +148,7 @@ public class Handler {
                 "Location: Dungeon (lvl "+ Game.instance.getCurrentSession().getDungeonLevel() + ")",
                 dungeonInfo_coord, new Color(150, 150, 150), 10, g2d
             );
-	        
+            
 	    }
 	    
 		// render stats (HP etc.)
@@ -149,13 +160,38 @@ public class Handler {
 		
 		// render character info
         Renderer.renderString(
-            String.format("str: %d int: %d dex: %d", player.getStats().getStrength(), player.getStats().getIntelligence(), player.getStats().getDexterity()),
+            String.format("str: %d int: %d dex: %d", 
+            player.getStats().getStrength(), player.getStats().getIntelligence(), player.getStats().getDexterity()),
             chainfo_coord, new Color(150, 150, 150), 12, g2d
         );
+        
+        if(hoverTile != null) {
+        	
+        	// cache tile
+        	Tile cachedTile = hoverTile;
+        	
+        	String actorinfo = "-";
+        	String iteminfo = "-";
+        	
+        	if(cachedTile.GetActor() != null) actorinfo = cachedTile.GetActor().toString();
+        	if(cachedTile.GetItem() != null) iteminfo = cachedTile.GetItem().toString();
+        	
+        	String txt = String.format("Pos: %s\nType: %s\nActor: %s\nItem: %s", 
+        					cachedTile.GetTilePosition().toString(), 
+        					cachedTile.GetTileType().toString(), 
+							actorinfo,
+							iteminfo);
+        	
+        	Renderer.renderString(txt, tileinfo_coord, new Color(150, 150, 150), 10, g2d);
+        	
+        } else Renderer.renderString("", tileinfo_coord, new Color(150, 150, 150), 10, g2d);
 	}
 	
 	public void AddObject(GameObject go) { this.getObjects().add(go); }	
 	public void RemoveObject(GameObject go) { this.getObjects().remove(go); }
 	public List<GameObject> getObjects() { return objects; }
 	public void setObjects(List<GameObject> objects) { this.objects = objects; }
+
+	public Tile getHoverTile() { return hoverTile; }
+	public void setHoverTile(Tile hoverTile) { this.hoverTile = hoverTile; }
 }

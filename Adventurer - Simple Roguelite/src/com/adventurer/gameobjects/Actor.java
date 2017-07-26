@@ -240,14 +240,21 @@ public class Actor extends GameObject {
 	public void tick() {}
 	public void Move(Direction dir) {}
 	
-	public String getName() { return this.name; }
+	public String toString() {
+		return this.name;// + ", HP:" + this.GetHealth().GetCurrentHealth() + ", DMG:" + this.damage;
+	}
+	
 	public Direction GetLookDirection() { return this.lookDir; }
 	public void SetLookDirection(Direction dir) { this.lookDir = dir; }	
-	public void DecreaseDamage(int a) { this.damage -= a; }
+	
 	public void AddDamage(int a) { this.damage += a; }	
+	public void DecreaseDamage(int a) { this.damage -= a; }
 	public void SetDamage(int a) { this.damage = a;}
+	
+	public String getName() { return this.name; }
 	public int GetDamage() { return this.damage; }
 	public Health GetHealth() { return this.myHP; }
+	
 	public Rectangle GetBounds() {
 		return new Rectangle(this.GetWorldPosition().getX(), this.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE);
 	}
