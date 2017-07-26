@@ -188,6 +188,7 @@ public class Tile extends GameObject {
 	public void Select() { this.selected = true; }
 	public void Deselect() { this.selected = false; }
 	
+	public boolean isSelected( ) { return this.selected; }
 	public boolean isLit() { return this.lit; }
 	public boolean isWalkable() { return this.walkable; }
 	public boolean isInView() { return this.inView; }

@@ -98,7 +98,6 @@ public class World {
 		        
 		        // create enemies.
 	            ActorManager.CreateEnemies(Util.GetRandomInteger(0, 5), room.getTiles());
-		    
 		    }
 		    
 	        // create chests in treasure rooms.

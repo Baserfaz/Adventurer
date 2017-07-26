@@ -189,7 +189,7 @@ public class DungeonGeneration {
 	    
 	    // replace tile...
 	    tiles_.remove(chosen);
-	    Portal portal = Util.replaceTileWithPortal(chosen, true);
+	    Portal portal = Util.replaceTileWithPortal(chosen, false); // TODO: change this to true somehow
 	    tiles_.add(portal);
 	    
 	    // return our modified list.
@@ -311,7 +311,8 @@ public class DungeonGeneration {
 			// debug/error information ---->
 			if(doorSpotCandidates.isEmpty()) {
 				System.out.println("ERROR: EntrySpots is empty!");
-				continue;
+				new Exception().printStackTrace();
+				System.exit(1);
 			} // <----
 			
 			// choose random spots to be doors.
