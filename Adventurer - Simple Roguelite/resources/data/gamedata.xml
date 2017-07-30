@@ -5,28 +5,56 @@
 	
 		<enemy>
 			<name>Skeleton warrior</name>
-			<enemyType>Skeleton</enemyType>
-			<health>200</health>
-			<damage>50</damage>
-			<isRanged>true</isRanged>
-		</enemy>
+			<enemyType>Undead</enemyType>
+			<health>25</health>
+			<damage>15</damage>
+			<isRanged>false</isRanged>
+			<movementSpeed>2</movementSpeed>
+			<movementCooldownBase>1000</movementCooldownBase></enemy>
 		
 		<enemy>
 			<name>Zombie walker</name>
-			<enemyType>Zombie</enemyType>
-			<health>100</health>
-			<damage>50</damage>
+			<enemyType>Undead</enemyType>
+			<health>20</health>
+			<damage>10</damage>
 			<isRanged>false</isRanged>
-		</enemy>
+			<movementSpeed>2</movementSpeed>
+			<movementCooldownBase>1500</movementCooldownBase></enemy>
 		
 		<enemy>
 			<name>Maggot</name>
-			<enemyType>Maggot</enemyType>
-			<health>100</health>
-			<damage>25</damage>
+			<enemyType>Beast</enemyType>
+			<health>10</health>
+			<damage>3</damage>
 			<isRanged>false</isRanged>
+			<movementSpeed>1</movementSpeed>
+			<movementCooldownBase>1750</movementCooldownBase>
 		</enemy>
-		
+		<enemy>
+			<name>Ghoul Archer</name>
+			<enemyType>Undead</enemyType>
+			<health>15</health>
+			<damage>15</damage>
+			<isRanged>true</isRanged>
+			<movementSpeed>2</movementSpeed>
+			<movementCooldownBase>1000</movementCooldownBase></enemy>
+		<enemy>
+			<name>Wraith</name>
+			<enemyType>Otherworldly</enemyType>
+			<health>10</health>
+			<damage>5</damage>
+			<isRanged>false</isRanged>
+			<movementSpeed>3</movementSpeed>
+			<movementCooldownBase>500</movementCooldownBase></enemy>
+		<enemy>
+			<name>Orc</name>
+			<enemyType>Humanoid</enemyType>
+			<health>100</health>
+			<damage>20</damage>
+			<isRanged>false</isRanged>
+			<movementSpeed>1</movementSpeed>
+			<movementCooldownBase>1000</movementCooldownBase></enemy>
+
 	</enemies>
 	
 </gamedata>

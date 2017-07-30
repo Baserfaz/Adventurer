@@ -54,13 +54,16 @@ public class FileReader {
 		    			String health = e.getElementsByTagName("health").item(0).getTextContent();
 		    			String damage = e.getElementsByTagName("damage").item(0).getTextContent();
 		    			String isRanged = e.getElementsByTagName("isRanged").item(0).getTextContent();
+		    			String movementSpeed = e.getElementsByTagName("movementSpeed").item(0).getTextContent();
+		    			String movementCooldownBase = e.getElementsByTagName("movementCooldownBase").item(0).getTextContent();
 		    			
 		    			myMap.put("name", name);
 		    			myMap.put("enemyType", enemyType);
 		    			myMap.put("health", health);
 		    			myMap.put("damage", damage);
 		    			myMap.put("isRanged", isRanged);
-		    			
+		    			myMap.put("movementSpeed", movementSpeed);
+		    			myMap.put("movementCooldownBase", movementCooldownBase);
 		    		}
 		    	}
 		    }

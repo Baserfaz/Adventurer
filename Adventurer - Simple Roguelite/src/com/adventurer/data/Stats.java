@@ -1,20 +1,23 @@
 package com.adventurer.data;
 
+import com.adventurer.main.Game;
+
 public class Stats {
 	
-	private int strength, intelligence, dexterity;
+	private int strength, intelligence, dexterity, vitality;
 	
-	// TODO: set default values from some constant?
 	public Stats() {
-		this.strength = 5;
-		this.intelligence = 5;
-		this.dexterity = 5;
+		this.strength     = Game.DEFAULT_STRENGTH_PLAYER;
+		this.intelligence = Game.DEFAULT_INTELLIGENCE_PLAYER;
+		this.dexterity 	  = Game.DEFAULT_DEXTERITY_PLAYER;
+		this.vitality     = Game.DEFAULT_VITALITY_PLAYER;
 	}
 	
-	public Stats(int str_, int int_, int dex_) {
-		this.strength = str_;
+	public Stats(int str_, int int_, int dex_, int vit_) {
+		this.strength     = str_;
 		this.intelligence = int_;
-		this.dexterity = dex_;
+		this.dexterity    = dex_;
+		this.vitality     = vit_;
 	}
 	
 	public int getStrength() { return strength; }
@@ -28,4 +31,8 @@ public class Stats {
 	public int getDexterity() { return dexterity; }
 	public void setDexterity(int dexterity) { this.dexterity = dexterity; }
 	public void addDexterity(int a) { this.dexterity += a; }
+
+	public int getVitality() { return vitality; }
+	public void setVitality(int vitality) { this.vitality = vitality; }
+	public void addVitality(int a) { this.vitality += a; }
 }

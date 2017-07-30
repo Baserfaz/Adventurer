@@ -13,6 +13,7 @@ import com.adventurer.data.World;
 import com.adventurer.enumerations.WorldType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Effect;
+import com.adventurer.gameobjects.Enemy;
 import com.adventurer.gameobjects.GameObject;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
@@ -165,6 +166,8 @@ public class Handler {
             chainfo_coord, new Color(150, 150, 150), 12, g2d
         );
         
+        // render hover tile information.
+        // ---------------------------------------------------
         if(hoverTile != null) {
         	
         	// cache tile
@@ -173,7 +176,17 @@ public class Handler {
         	String actorinfo = "-";
         	String iteminfo = "-";
         	
-        	if(cachedTile.GetActor() != null) actorinfo = cachedTile.GetActor().toString();
+        	if(cachedTile.GetActor() != null) {
+        		
+        		Actor actor = cachedTile.GetActor();
+        		
+        		if(actor instanceof Enemy) {
+        			actorinfo = ((Enemy)actor).toString();
+        		} else {
+        			actorinfo = actor.toString();
+        		}
+        		
+        	}
         	if(cachedTile.GetItem() != null) iteminfo = cachedTile.GetItem().toString();
         	
         	String txt = String.format("Pos: %s\nType: %s\nActor: %s\nItem: %s", 
@@ -185,6 +198,8 @@ public class Handler {
         	Renderer.renderString(txt, tileinfo_coord, new Color(150, 150, 150), 10, g2d);
         	
         } else Renderer.renderString("", tileinfo_coord, new Color(150, 150, 150), 10, g2d);
+        
+        // ---------------------------------------------------
 	}
 	
 	public void AddObject(GameObject go) { this.getObjects().add(go); }	

@@ -106,6 +106,7 @@ public class SpriteCreator {
 		    case Zombie01: row = 0; column = 1; break;
 		    case Skeleton01: row = 0; column = 2; break;
 		    case Maggot01: row = 0; column = 3; break;
+		    case GenericEnemy: row = 0; column = 4; break;
 		    
 		    // floor
 		    case Floor01: row = 1; column = 0; break;

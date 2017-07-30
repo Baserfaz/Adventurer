@@ -19,7 +19,6 @@ import com.adventurer.utilities.Renderer;
 public class Actor extends GameObject {
 	
 	protected int targetx = this.GetWorldPosition().getX(), targety = this.GetWorldPosition().getY(); 
-	protected int movementSpeed = 2;
 	
 	protected BufferedImage directionArrow = null;
 	
@@ -28,15 +27,26 @@ public class Actor extends GameObject {
 	
 	protected boolean canMove = true;
 	protected Health myHP;
-	protected int damage = 100;
-	protected String name = "";
 	
-	public Actor(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int damage, String name) {
+	protected int meleeDamage = 0, rangedDamage = 0, magicDamage = 0;
+	
+	protected String name = "";
+	protected int movementSpeed = 2; // how fast is the animation between tiles
+	
+	public Actor(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int meleeDamage, int rangedDamage, int magicDamage, String name, int movementSpeed) {
 		super(worldPos, tilePos, spritetype);
 		
+		// set stuff here
 		this.lookDir = Direction.West;
-		this.damage = damage;
+
+		// set damage types
+		this.meleeDamage = meleeDamage;
+		this.rangedDamage = rangedDamage;
+		this.magicDamage = magicDamage;
+		
+		// set other stuff
 		this.name = name;
+		this.movementSpeed = movementSpeed;
 		this.myHP = new Health(maxHP);
 		
 		// register to tile
@@ -94,8 +104,7 @@ public class Actor extends GameObject {
 			// remove gameobject
 			Remove();
 			
-			if(Game.MAGGOTS_SPAWN_EGGS_ON_DEATH)
-			    if(enemyType == EnemyType.Maggot) this.UseBomb(World.instance.GetTileAtPosition(this.GetTilePosition()));
+			//if(Game.MAGGOTS_SPAWN_EGGS_ON_DEATH) if(enemyType == EnemyType.Maggot) this.UseBomb(World.instance.GetTileAtPosition(this.GetTilePosition()));
 			
 		} else if(this instanceof Player) {
 			
@@ -144,7 +153,7 @@ public class Actor extends GameObject {
 				
 				Enemy enemy = (Enemy) this;
 				
-				if(enemy.getEnemyType() == EnemyType.Maggot) {
+				/*if(enemy.getEnemyType() == EnemyType.Maggot) {
 					
 				    // TODO: bomb --> egg?
 					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Bomb01, 900, 150, BombType.Gas);
@@ -153,7 +162,7 @@ public class Actor extends GameObject {
 				
 					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Bomb01, 1500, 300, BombType.Normal);
 					
-				}
+				}*/
 			}
 		}
 	}
@@ -168,7 +177,7 @@ public class Actor extends GameObject {
 			if(inv.getProjectileCount() > 0) {
 				
 				Tile projStartTile = World.instance.GetTileAtPosition(originTilePos);
-				new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), projSpriteType, damage, direction);
+				new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), projSpriteType, rangedDamage, direction);
 				
 				inv.addProjectiles(-1);
 			}
@@ -177,7 +186,7 @@ public class Actor extends GameObject {
 			
 			// enemies who can shoot dont lose projectiles.
 			Tile projStartTile = World.instance.GetTileAtPosition(originTilePos);
-			new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), projSpriteType, damage, direction);
+			new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), projSpriteType, rangedDamage, direction);
 			
 		}
 	}
@@ -197,13 +206,13 @@ public class Actor extends GameObject {
 			if(object instanceof DestructibleItem) {
 				
 				// 4. object takes damage
-				DamageHandler.ItemTakeDamage((DestructibleItem) object, damage);
+				DamageHandler.ItemTakeDamage((DestructibleItem) object, meleeDamage);
 			}
 			
 		} else {
 			
 			// 5. actor takes damage
-			DamageHandler.ActorTakeDamage(tile, damage);
+			DamageHandler.ActorTakeDamage(tile, meleeDamage);
 			
 		}
 	}
@@ -240,19 +249,25 @@ public class Actor extends GameObject {
 	public void tick() {}
 	public void Move(Direction dir) {}
 	
-	public String toString() {
-		return this.name;// + ", HP:" + this.GetHealth().GetCurrentHealth() + ", DMG:" + this.damage;
-	}
+	public String toString() { return this.name; }
 	
 	public Direction GetLookDirection() { return this.lookDir; }
 	public void SetLookDirection(Direction dir) { this.lookDir = dir; }	
 	
-	public void AddDamage(int a) { this.damage += a; }	
-	public void DecreaseDamage(int a) { this.damage -= a; }
-	public void SetDamage(int a) { this.damage = a;}
+	public void AddRangedDamage(int a) { this.rangedDamage += a; }
+	public void SetRangedDamage(int a) { this.rangedDamage = a; }
+	
+	public void AddMagicDamage(int a) { this.magicDamage += a; }
+	public void SetMagicDamage(int a) { this.magicDamage = a; }
+	
+	public void AddMeleeDamage(int a) { this.meleeDamage += a; }	
+	public void SetMeleeDamage(int a) { this.meleeDamage = a;}
+	
+	public int GetMeleeDamage() { return this.meleeDamage; }
+	public int GetRangedDamage() { return this.rangedDamage; }
+	public int GetMagicDamage() { return this.magicDamage; }
 	
 	public String getName() { return this.name; }
-	public int GetDamage() { return this.damage; }
 	public Health GetHealth() { return this.myHP; }
 	
 	public Rectangle GetBounds() {

@@ -1,7 +1,11 @@
 package com.adventurer.enumerations;
 
 public enum EnemyType {
-	Skeleton(),
+	
+	Undead, Humanoid, Beast, Otherworldly;
+	
+	
+	/*Skeleton(),
 	Zombie(), 
-	Maggot();
+	Maggot();*/
 }

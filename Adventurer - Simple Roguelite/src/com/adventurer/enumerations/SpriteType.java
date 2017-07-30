@@ -1,45 +1,46 @@
 package com.adventurer.enumerations;
 
 public enum SpriteType {
-	Player(),
-	Zombie01(),
-    Maggot01(),
-    Skeleton01(),
+	Player,
+	Zombie01,
+    Maggot01,
+    Skeleton01,
+    GenericEnemy,
     
-	Floor01(),
-	NormalFloor01(),
-	Grass01(),
-	Jungle01(),
-	Water01(),
-	DeepWater01(),
-	Sand01(),
-	TreasuryFloor01(),
-	MagicFloor01(),
-	SpawnTile01(),
+	Floor01,
+	NormalFloor01,
+	Grass01,
+	Jungle01,
+	Water01,
+	DeepWater01,
+	Sand01,
+	TreasuryFloor01,
+	MagicFloor01,
+	SpawnTile01,
 	
-	TrapTile01(),
+	TrapTile01,
 	
-	Wall01(),
-    DestructibleWall01(),
+	Wall01,
+    DestructibleWall01,
     
-	Door01(),
-    LockedDoor01(),
-    LockedDoorDiamond01(),
+	Door01,
+    LockedDoor01,
+    LockedDoorDiamond01,
     
-    Portal01(),
-    Portal02(),
+    Portal01,
+    Portal02,
     
-    Chest01(),
-    Chest02(),
-    LockedChest01(),
-    LockedChest02(),
+    Chest01,
+    Chest02,
+    LockedChest01,
+    LockedChest02,
     
-    Bomb01(),
-    Spear01(),
-    Arrow01(),
+    Bomb01,
+    Spear01,
+    Arrow01,
     
-    DirectionArrow(),
-    Error();
+    DirectionArrow,
+    Error;
     
 	/*Blood01(),
 	SmallBlood01(), 

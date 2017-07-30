@@ -23,12 +23,17 @@ public class Player extends Actor {
 	private Inventory inventory;
 	private Stats stats;
 	
-	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int damage) {
-		super(worldPos, tilePos, spritetype, maxHP, damage, "Player");
+	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
+		// default dmg to 1.
+		// TODO: refactor...
+		super(worldPos, tilePos, spritetype, Game.PLAYER_START_BASE_HEALTH, 1, 1, 1, "Player", 2);
 		
 		this.losmanager = new LoSManager();
 		this.inventory = new Inventory(Game.START_KEY_COUNT, Game.START_BOMB_COUNT, Game.START_PROJECTILE_COUNT);
 		this.stats = new Stats();
+		
+		// calculate health and damage from stats
+		updateStats();
 	}
 	
 	public void tick() {
@@ -165,6 +170,23 @@ public class Player extends Actor {
 			// TODO: interaction with destructible tiles.
 		}
 	}
+	
+	public void updateStats() {
+		
+		// calculate health + dmg from stats
+		int health = Util.calcHealth(stats.getVitality());
+		int meleeDmg = Util.calcMeleeDamage(stats.getStrength());
+		int rangedDmg = Util.calcRangedDamage(stats.getDexterity());
+		int magicDmg = Util.calcMagicDamage(stats.getIntelligence());
+		
+		// update them
+		this.SetMeleeDamage(meleeDmg);
+		this.SetRangedDamage(rangedDmg);
+		this.SetMagicDamage(magicDmg);
+		this.GetHealth().setCurrentHP(health);
+		
+	}
+	
 	public LoSManager getLosManager() { return this.losmanager; }
 	public Inventory getInventory() { return this.inventory; }
 	public Stats getStats() { return this.stats; }

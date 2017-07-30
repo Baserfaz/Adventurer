@@ -16,7 +16,7 @@ public class ActorManager {
 	private static Player playerInstance = null;
 	private static Enemy[] enemyInstances = null;
 	
-	public static Player CreatePlayerInstance(int maxHp, int damage, Tile tile) {
+	public static Player CreatePlayerInstance(Tile tile) {
 		
 		if(playerInstance != null) {
 			System.out.println("Player is already instantiated!");
@@ -25,7 +25,7 @@ public class ActorManager {
 		}
 		
 		// create player and add it to our handler.
-		playerInstance = new Player(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Player, maxHp, damage);
+		playerInstance = new Player(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Player);
 		
 		return playerInstance;
 	}
@@ -56,7 +56,7 @@ public class ActorManager {
 		playerInstance.forceMove(playerWorldPos, playerTilePos);
 	}
 	
-	public static Player CreatePlayerInstance(int maxHP, int damage) {
+	public static Player CreatePlayerInstance() {
 		
 		if(playerInstance != null) {
 			System.out.println("Player is already instantiated!");
@@ -74,7 +74,7 @@ public class ActorManager {
 		Coordinate playerTilePos = new Coordinate(pos[2], pos[3]);
 		
 		// create player
-		playerInstance = new Player(playerWorldPos, playerTilePos, SpriteType.Player, maxHP, damage);
+		playerInstance = new Player(playerWorldPos, playerTilePos, SpriteType.Player);
 		
 		return playerInstance;
 	}
@@ -86,11 +86,10 @@ public class ActorManager {
 		    
 			EnemyType randomType = EnemyType.values()[Util.GetRandomInteger(0, EnemyType.values().length)];
 			
-	        int damage = 0;
-	        int health = 0;
+	        int damage = 0, health = 0, movementSpeed = 0, movementCooldownBase = 0;
 	        String name = "";
 	        boolean isRanged = false;
-			
+	        
 			// read enemy data
 			Map<String, String> retval = FileReader.readXMLGameData(randomType.toString());
 			for(Map.Entry<String, String> entry : retval.entrySet()) {
@@ -101,21 +100,22 @@ public class ActorManager {
 				else if(key == "health") health = Integer.parseInt(val);
 				else if(key == "name") name = val;
 				else if(key == "isRanged") isRanged = Boolean.parseBoolean(val);
-				
+				else if(key == "movementSpeed") movementSpeed = Integer.parseInt(val);
+				else if(key == "movementCooldownBase") movementCooldownBase = Integer.parseInt(val);
 			}
-			CreateEnemy(name, health, damage, randomType, tiles, isRanged);
+			CreateEnemy(name, health, damage, randomType, tiles, isRanged, movementSpeed, movementCooldownBase);
 		}
 	}
 	
 	public static Enemy CreateEnemy(String name, int maxHP, int damage,
-		EnemyType enemyType, List<Tile> tiles_, boolean isRanged) {
+		EnemyType enemyType, List<Tile> tiles_, boolean isRanged, int movementSpeed, int movementCooldownBase) {
 	    
 		// get position
 		int[] pos = World.instance.GetFreePosition(tiles_);
 		
 		SpriteType spriteType = null;
 		
-		switch(enemyType) {
+		/*switch(enemyType) {
 		case Skeleton:
 			spriteType = SpriteType.Skeleton01;
 			break;
@@ -128,13 +128,18 @@ public class ActorManager {
 		default:
 			System.out.println("SPRITETYPE NOT FOUND FOR ENEMYTYPE: " + enemyType);
 			break;
-		}
+		}*/
+		
+		// TODO: switch cases for all different enemies.
+		// ---> now every enemy is shown as generic.
+		spriteType = SpriteType.GenericEnemy;
 		
 		Coordinate enemyWorldPos = new Coordinate(pos[0], pos[1]);
 		Coordinate enemyTilePos = new Coordinate(pos[2], pos[3]);
 		
 		// create enemy object
-		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, maxHP, damage, name, isRanged);
+		// TODO: refactor melee, ranged and magic damage...
+		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, maxHP, damage, damage, damage, name, isRanged, movementSpeed, movementCooldownBase);
 	}
 	
 	public static Enemy[] GetEnemyInstances() { return enemyInstances; }

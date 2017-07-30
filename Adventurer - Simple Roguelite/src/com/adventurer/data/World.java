@@ -47,8 +47,7 @@ public class World {
 		Tile spawnTile = CreatePredefinedMap(map);
 		
 		// create/move player
-		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, spawnTile);
-		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
+		createPlayer(spawnTile);
 		
 		// set state.
 		Game.instance.setGameState(GameState.Ready);
@@ -79,8 +78,7 @@ public class World {
 		        tile.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.SpawnTile01));
 		        
 		        // create/move player
-		        if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(300, 100, tile);
-		        else ActorManager.ForceMoveActor(tile, ActorManager.GetPlayerInstance());
+		        createPlayer(tile);
 		        
 		        // TODO: create health shrine?
 		        
@@ -120,6 +118,11 @@ public class World {
 	}
 	
 	// ---------------------------
+	
+	private void createPlayer(Tile spawnTile) {
+		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(spawnTile);
+		else ActorManager.ForceMoveActor(spawnTile, ActorManager.GetPlayerInstance());
+	}
 	
 	private void initiation() {
 	    

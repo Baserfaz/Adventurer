@@ -16,24 +16,30 @@ import com.adventurer.utilities.Util;
 
 public class Enemy extends Actor {
 
-	private int moveCooldownBase = 1000;
-	private long moveTimer = 0;
-	private Tile lastPlayerPosition = null;
 	private EnemyType enemyType;
-	private boolean hasRangedAttack = false;
 	private SpriteType projectileType;
 	private EnemyLoSManager losManager;
 	
+	private boolean hasRangedAttack = false;
+	
+	private int moveCooldownBase = 1000;
+	private long moveTimer = 0;
+	
+	private Tile lastPlayerPosition = null;
+	
 	public Enemy(Coordinate worldPos, Coordinate tilePos,
 			EnemyType enemytype, SpriteType spritetype,
-			int maxHP, int damage, String name, boolean isRanged) {
-		super(worldPos, tilePos, spritetype, maxHP, damage, name);
+			int maxHP, int meleeDmg, int rangedDmg, int magicDmg, String name, boolean isRanged, int movementSpeed, int moveCooldownBase) {
+		super(worldPos, tilePos, spritetype, maxHP, meleeDmg, rangedDmg, magicDmg, name, movementSpeed);
 		
 		// declare ranged units here
 		this.hasRangedAttack = isRanged;
 		
+		// how fast the enemy can do actions.
+		this.moveCooldownBase = moveCooldownBase;
+		
 		// TODO: different projectiles?
-		this.projectileType = SpriteType.Spear01;
+		this.projectileType = SpriteType.Arrow01;
 		
 		this.setEnemyType(enemytype);
 		this.losManager = new EnemyLoSManager();
@@ -217,6 +223,11 @@ public class Enemy extends Actor {
 		}
 	}
 
+	public String toString() {
+		String info = super.toString();
+		return "(" + this.enemyType + ") " + info + ", HP:" + this.GetHealth().GetCurrentHealth();
+	}
+	
 	public EnemyType getEnemyType() { return enemyType; }
 	public void setEnemyType(EnemyType enemyType) { this.enemyType = enemyType; }
 }

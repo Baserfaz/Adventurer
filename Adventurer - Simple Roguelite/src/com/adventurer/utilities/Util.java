@@ -18,6 +18,7 @@ import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Portal;
 import com.adventurer.gameobjects.Tile;
+import com.adventurer.main.Game;
 
 public class Util {
 	
@@ -133,6 +134,24 @@ public class Util {
 		 return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 	}
 	
+	// ------------------------ STAT CALCULATIONS ---------------------
+	
+	public static int calcHealth(int vitPoints) {
+		return Game.PLAYER_START_BASE_HEALTH + (vitPoints * Game.VITALITY_TO_HEALTH_MULTIPLIER);
+	}
+	
+	public static int calcMeleeDamage(int strPoints) {
+		return strPoints * Game.STRENGTH_TO_MELEE_DAMAGE_MULTIPLIER;
+	}
+	
+	public static int calcRangedDamage(int dexPoints) {
+		return dexPoints * Game.DEXTERITY_TO_RANGED_DAMAGE_MULTIPLIER;
+	}
+	
+	public static int calcMagicDamage(int intPoints) {
+		return intPoints * Game.INTELLIGENCE_TO_MAGIC_DAMAGE_MULTIPLIER;
+	}
+	
 	// ------------------------ DUNGEON/TILE FUNCTIONS ---------------------
 	
 	public static Tile getRandomTileFromRandomRoom(List<Room> rooms_) {
@@ -147,6 +166,10 @@ public class Util {
 	    Tile chosen = null;
 	    
 	    for(Tile t : tiles_) { if(isTileValid(t)) candidates.add(t); }
+	    
+	    // if we dont have any candidates...
+	    //if(candidates.size() == 0) return null;
+	    
 	    chosen = candidates.get(Util.GetRandomInteger(0, candidates.size()));
 	    return chosen;
 	}

@@ -21,7 +21,13 @@ public class Health {
 		return this.dead;
 	}
 	
+	public void healDamage(int a) {
+		this.currentHP += a;
+		if(this.currentHP > this.maxHP) this.currentHP = this.maxHP;
+	}
+	
 	public boolean isDead() { return this.dead; }
 	public int GetCurrentHealth() { return this.currentHP; }
+	public void setCurrentHP(int a) { this.currentHP = a; }
 	public int GetMaxHP() { return this.maxHP; }
 }
