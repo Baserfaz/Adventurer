@@ -104,10 +104,14 @@ public class World {
                     
                     // get randomized & valid tile
                     Tile tile = null;
-                    do { tile = Util.getRandomTile(room.getTiles()); } while(Util.isTileValid(tile) == false);
-                        
+                    do { 
+                    	tile = Util.getRandomTile(room.getTiles()); 
+                    	if(tile == null) break;
+                    } while(Util.isTileValid(tile) == false);
+                    
                     // create chest
-                    ItemCreator.CreateChest(tile, false, true);
+                    if(tile != null) ItemCreator.CreateChest(tile, false, true);
+                    else System.out.println("Failed to create chest: no free tile available!");
                 }
             }
 		    

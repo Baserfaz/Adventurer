@@ -168,13 +168,13 @@ public class Util {
 	    for(Tile t : tiles_) { if(isTileValid(t)) candidates.add(t); }
 	    
 	    // if we dont have any candidates...
-	    //if(candidates.size() == 0) return null;
+	    if(candidates.size() == 0) return null;
 	    
 	    chosen = candidates.get(Util.GetRandomInteger(0, candidates.size()));
 	    return chosen;
 	}
 	
-	public static boolean isTileValid(Tile tile) { 
+	public static boolean isTileValid(Tile tile) {
 	    if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) return true; 
 	    else return false;
 	}

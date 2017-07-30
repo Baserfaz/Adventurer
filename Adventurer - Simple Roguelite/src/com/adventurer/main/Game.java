@@ -246,11 +246,11 @@ public class Game extends Canvas implements Runnable {
 	    Graphics2D g2d = (Graphics2D) g;
         
         // set background
-        Renderer.FillScreen(g, Color.white);
+        Renderer.FillScreen(g, Color.black);
 	    
         // title
         Renderer.renderString("Adventurer - Roguelike",
-                new Coordinate(Game.WIDTH / 3, 100), Color.black, 36, g2d);
+                new Coordinate(Game.WIDTH / 3, 100), Color.white, 36, g2d);
         
         // creator info
         Renderer.renderString("by Heikki Heiskanen",
@@ -261,21 +261,21 @@ public class Game extends Canvas implements Runnable {
             
             // dungeon generation states
             Renderer.renderString(">> Generating " + DungeonGeneration.state, 
-                    new Coordinate(Game.WIDTH / 3, 300), Color.black, 32, g2d);
+                    new Coordinate(Game.WIDTH / 3, 300), Color.white, 32, g2d);
             
             // dungeon settings
             Renderer.renderString("Dungeon size: " + Game.WORLDWIDTH + "x" + Game.WORLDHEIGHT +
                     "\nRoom count: " + Game.ROOM_COUNT +
                     "\nMax doors per room: " + Game.ROOM_DOOR_MAX_COUNT,
-                    new Coordinate(Game.WIDTH / 3, 350), Color.black, 18, g2d);
+                    new Coordinate(Game.WIDTH / 3, 350), Color.white, 18, g2d);
             
         } else if(World.instance.getWorldType() == WorldType.Predefined) {
             
             if(gameState == GameState.Loading) {
-                Renderer.renderString("Creating world...", new Coordinate(Game.WIDTH / 3, 300), Color.black, 32, g2d);
+                Renderer.renderString("Creating world...", new Coordinate(Game.WIDTH / 3, 300), Color.white, 32, g2d);
             } else if(gameState == GameState.Ready) {
                 // TODO: the name of the world/predefined should not be hard coded.
-                Renderer.renderString("World created. \n>>Lobby", new Coordinate(Game.WIDTH / 3, 300), Color.black, 32, g2d);
+                Renderer.renderString("World created. \n>>Lobby", new Coordinate(Game.WIDTH / 3, 300), Color.white, 32, g2d);
             }
             
         }
@@ -283,7 +283,7 @@ public class Game extends Canvas implements Runnable {
         // print finished 
         if(gameState == GameState.Ready) {
             Renderer.renderString("Press any key to continue...", 
-                    new Coordinate(Game.WIDTH / 3, 500), Color.black, 18, g2d);
+                    new Coordinate(Game.WIDTH / 3, 500), Color.white, 18, g2d);
         }
 	}
 	
