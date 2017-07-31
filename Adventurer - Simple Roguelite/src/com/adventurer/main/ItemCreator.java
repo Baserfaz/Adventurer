@@ -12,19 +12,6 @@ import com.adventurer.utilities.Util;
 
 public class ItemCreator {
 
-	public static Item CreateItem(Coordinate pos, SpriteType spriteType, boolean setOffset, ItemType itemType) {
-		return CreateItem(World.instance.GetTileAtPosition(pos), spriteType, setOffset, itemType);
-	}
-	
-	public static Item CreateItem(Tile tile, SpriteType spriteType, boolean setOffset, ItemType itemType) {
-		
-		// randomize sprite offset on the tile.
-		Coordinate pos = CalculatePositionWithOffset(tile, setOffset);
-		
-		// create vanity item
-		return new Item(pos, tile.GetTilePosition(), spriteType, itemType);
-	}
-	
 	public static Chest CreateChest(Tile tile, boolean setOffset, boolean locked) {
 		
 		// randomize sprite offset on the tile.
@@ -33,14 +20,6 @@ public class ItemCreator {
 		if(locked) st = SpriteType.LockedChest02;
 		else st = SpriteType.Chest02;
 		return new Chest(pos, tile.GetTilePosition(), st, ItemType.Chest, locked);
-	}
-	
-	public static LightSource CreateLightSource(Tile tile, SpriteType spriteType, boolean setOffset) {
-		// randomize sprite offset on the tile.
-		Coordinate pos = CalculatePositionWithOffset(tile, setOffset);
-		
-		// create vanity item
-		return new LightSource(pos, tile.GetTilePosition(), spriteType, ItemType.Torch);
 	}
 	
 	private static Coordinate CalculatePositionWithOffset(Tile tile, boolean setOffset) {
@@ -60,4 +39,17 @@ public class ItemCreator {
 	private static Coordinate GetOffsets(int max, int min) {
 		return new Coordinate(Util.GetRandomInteger(min, max), Util.GetRandomInteger(min, max));
 	}
+	
+	/*public static Item CreateItem(Tile tile, SpriteType spriteType, boolean setOffset, ItemType itemType) {
+		
+		// randomize sprite offset on the tile.
+		Coordinate pos = CalculatePositionWithOffset(tile, setOffset);
+		
+		// create vanity item
+		return new Item(pos, tile.GetTilePosition(), spriteType, itemType);
+	}*/
+	
+	/*public static Item CreateItem(Coordinate pos, SpriteType spriteType, boolean setOffset, ItemType itemType) {
+		return CreateItem(World.instance.GetTileAtPosition(pos), spriteType, setOffset, itemType);
+	} */
 }

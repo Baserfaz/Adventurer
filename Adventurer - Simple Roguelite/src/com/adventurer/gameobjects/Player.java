@@ -24,8 +24,7 @@ public class Player extends Actor {
 	private Stats stats;
 	
 	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
-		// default dmg to 1.
-		// TODO: refactor...
+		// TODO: refactor damage... 
 		super(worldPos, tilePos, spritetype, Game.PLAYER_START_BASE_HEALTH, 1, 1, 1, "Player", 2);
 		
 		this.losmanager = new LoSManager();

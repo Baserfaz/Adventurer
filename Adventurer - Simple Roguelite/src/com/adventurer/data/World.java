@@ -114,7 +114,6 @@ public class World {
                     else System.out.println("Failed to create chest: no free tile available!");
                 }
             }
-		    
 		}
 		
 		// set state
