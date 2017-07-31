@@ -173,6 +173,8 @@ public class Player extends Actor {
 		this.GetHealth().setCurrentHP(health);
 	}
 	
+	public String toString() { return "You, our hero."; }
+	
 	public LoSManager getLosManager() { return this.losmanager; }
 	public Inventory getInventory() { return this.inventory; }
 	public Stats getStats() { return this.stats; }

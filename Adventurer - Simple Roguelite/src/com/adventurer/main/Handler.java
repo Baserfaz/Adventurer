@@ -17,6 +17,7 @@ import com.adventurer.gameobjects.Enemy;
 import com.adventurer.gameobjects.GameObject;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
+import com.adventurer.gameobjects.Shrine;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.VanityItem;
 import com.adventurer.utilities.Renderer;
@@ -139,6 +140,9 @@ public class Handler {
         // render dungeon name and level
 	    if(World.instance.getWorldType() == WorldType.Predefined) {
 	        
+	    	// TODO: all predefined maps are now rendered as chilly lobbies.
+	    	// ---> somehow decide which map we are currently at.
+	    	
             Renderer.renderString(
                 "Location: Chilly lobby",
                 dungeonInfo_coord, new Color(150, 150, 150), 10, g2d
@@ -147,7 +151,7 @@ public class Handler {
 	    } else if(World.instance.getWorldType() == WorldType.Random) {
 	        
             Renderer.renderString(
-                "Location: Dungeon (lvl "+ Game.instance.getCurrentSession().getDungeonLevel() + ")",
+                "Location: Dungeon (lvl. "+ Game.instance.getCurrentSession().getDungeonLevel() + ")",
                 dungeonInfo_coord, new Color(150, 150, 150), 10, g2d
             );
             
@@ -176,18 +180,25 @@ public class Handler {
         	
         	String actorinfo = "-";
         	String iteminfo = "-";
+        	String tileinfo = cachedTile.GetTileType().toString();
         	
+        	// get actor info
         	if(cachedTile.GetActor() != null) {
         		Actor actor = cachedTile.GetActor();
         		if(actor instanceof Enemy) actorinfo = ((Enemy)actor).toString();
-        		else actorinfo = actor.toString();
+        		else if(actor instanceof Player) actorinfo = ((Player)actor).toString();
         	}
         	
+        	// get items info
         	if(cachedTile.GetItems().isEmpty() == false) iteminfo = cachedTile.getItemsInfo();
         	
-        	String txt = String.format("Pos: %s\nType: %s\nActor: %s\nItem: %s", 
+        	// get shrine info
+        	if(cachedTile instanceof Shrine) tileinfo = ((Shrine)cachedTile).toString();
+        	
+        	// format our complete string
+        	String txt = String.format("Pos: %s\nTile: %s\nActor: %s\nItem: %s", 
         					cachedTile.GetTilePosition().toString(), 
-        					cachedTile.GetTileType().toString(), 
+        					tileinfo, 
 							actorinfo,
 							iteminfo);
         	

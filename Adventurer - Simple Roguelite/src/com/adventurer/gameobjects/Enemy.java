@@ -225,7 +225,7 @@ public class Enemy extends Actor {
 
 	public String toString() {
 		String info = super.toString();
-		return "(" + this.enemyType + ") " + info + ", HP:" + this.GetHealth().GetCurrentHealth();
+		return info + " (" + this.enemyType + ")" + ", HP:" + this.GetHealth().GetCurrentHealth();
 	}
 	
 	public EnemyType getEnemyType() { return enemyType; }

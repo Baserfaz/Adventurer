@@ -265,7 +265,7 @@ public class Game extends Canvas implements Runnable {
             
             // dungeon settings
             Renderer.renderString("Dungeon size: " + Game.WORLDWIDTH + "x" + Game.WORLDHEIGHT +
-                    "\nRoom count: " + Game.ROOM_COUNT +
+                    "\nMax room count: " + Game.ROOM_COUNT +
                     "\nMax doors per room: " + Game.ROOM_DOOR_MAX_COUNT,
                     new Coordinate(Game.WIDTH / 3, 350), Color.white, 18, g2d);
             

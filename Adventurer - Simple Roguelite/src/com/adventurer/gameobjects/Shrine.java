@@ -42,6 +42,14 @@ public class Shrine extends Tile {
 		}
 	}
 	
+	public String toString() { 
+		if(used == false) {
+			return this.getShrineType() + " " + this.GetTileType().toString() + " (" + this.amount + ")"; 
+		} else {
+			return this.getShrineType() + " " + this.GetTileType().toString() + " (used)"; 
+		}
+	}
+	
 	public int getAmount() { return amount; }
 	public void setAmount(int amount) { this.amount = amount; }
 
