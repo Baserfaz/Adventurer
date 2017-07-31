@@ -21,7 +21,7 @@ public class Item extends GameObject {
 		this.itemName = "";
 		
 		// register to tile
-		World.instance.GetTileAtPosition(tilePos).SetItem(this);
+		World.instance.GetTileAtPosition(tilePos).AddItem(this);
 	}
 	
 	public void Remove() {
@@ -29,7 +29,7 @@ public class Item extends GameObject {
 		// get tile
 		Tile tile = World.instance.GetTileAtPosition(this.GetTilePosition());
 		
-		tile.SetItem(null);
+		tile.RemoveItem(this);
 		
 		// remove this object from handler
 		// -> no longer ticks

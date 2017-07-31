@@ -88,11 +88,11 @@ public class Projectile extends Item {
 			
 		Tile tile = World.instance.GetTileFromDirection(this.GetTilePosition(), this.direction);
 		
-		if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) {
+		if(Util.isTileValid(tile)) {
 			
 			// we are no longer on the last tile
 			Tile lastTile = World.instance.GetTileAtPosition(this.GetTilePosition());
-			lastTile.SetItem(null);
+			lastTile.RemoveItem(this);
 			
 			int x = tile.GetTilePosition().getX();
 			int y = tile.GetTilePosition().getY();
@@ -105,24 +105,11 @@ public class Projectile extends Item {
 			this.targety = tile.GetWorldPosition().getY();
 			
 			// set the tile's actor to be this.
-			tile.SetItem(this);
+			tile.AddItem(this);
 			
 		} else if(tile.GetActor() != null) {
 			
 			DamageHandler.ActorTakeDamage(tile, damage);
-			
-			alive = false;
-			Remove();
-			
-		} else if(tile.GetItem() != null) {
-			
-			Item item = tile.GetItem();
-			
-			if(item instanceof DestructibleItem) {
-				DamageHandler.ItemTakeDamage((DestructibleItem) item, damage);
-			} else if(tile.GetItem() instanceof Projectile) {
-				tile.GetItem().Remove();
-			}
 			
 			alive = false;
 			Remove();

@@ -15,6 +15,7 @@ import com.adventurer.enumerations.EnemyType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.*;
 import com.adventurer.utilities.Renderer;
+import com.adventurer.utilities.Util;
 
 public class Actor extends GameObject {
 	
@@ -134,8 +135,7 @@ public class Actor extends GameObject {
 	
 	public void UseBomb(Tile tile) {
 		
-		if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) {
-			
+		if(Util.isTileValid(tile)) {
 			
 			if(this instanceof Player) {
 				
@@ -196,9 +196,11 @@ public class Actor extends GameObject {
 		// 1. try get actor
 		GameObject object = tile.GetActor();
 		
+		if(object != null) DamageHandler.ActorTakeDamage(tile, meleeDamage);
+		
 		// 2. if actor is null 
 		//    try get item
-		if(object == null) {
+		/*if(object == null) {
 			
 			object = tile.GetItem();
 			
@@ -214,7 +216,7 @@ public class Actor extends GameObject {
 			// 5. actor takes damage
 			DamageHandler.ActorTakeDamage(tile, meleeDamage);
 			
-		}
+		}*/
 	}
 	
 	protected void UpdatePosition() {

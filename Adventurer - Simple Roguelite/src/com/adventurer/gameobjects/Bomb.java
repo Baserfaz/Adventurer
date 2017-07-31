@@ -86,19 +86,8 @@ public class Bomb extends Item {
 						//EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 6), SpriteType.PotGib01);
 					}
 					
-				} else if(tile.GetActor() != null && tile.GetItem() != this && tile.GetItem() == null) {
-					
-					// if there is another bomb in the radius
-					if(tile.GetItem() instanceof Bomb) {
-						
-						// TODO: explode the other bomb too!
-						
-					} else DamageHandler.ActorTakeDamage(tile, damage);
-					
-				} else if(tile.GetItem() != null) {
-					if(tile.GetItem() instanceof DestructibleItem)
-						DamageHandler.ItemTakeDamage((DestructibleItem)tile.GetItem(), damage);
-				}
+				} else if(tile.GetActor() != null) DamageHandler.ActorTakeDamage(tile, damage);
+				
 			}
 			
 			// destroy this object

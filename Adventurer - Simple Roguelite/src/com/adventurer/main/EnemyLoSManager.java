@@ -50,7 +50,6 @@ public class EnemyLoSManager {
 						tile.GetTileType() == TileType.DestructibleTile || tile.GetTileType() == TileType.Door ||
 						tile.GetTileType() == TileType.LockedDoor || 
 						tile.GetTileType() == TileType.Portal ||
-						tile.GetItem() != null && tile.GetItem() instanceof Projectile == false || 
 						tile.GetActor() != null && tile.GetActor() instanceof Enemy == false
 				) break;
 			}

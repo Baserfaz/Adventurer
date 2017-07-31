@@ -177,17 +177,12 @@ public class Handler {
         	String iteminfo = "-";
         	
         	if(cachedTile.GetActor() != null) {
-        		
         		Actor actor = cachedTile.GetActor();
-        		
-        		if(actor instanceof Enemy) {
-        			actorinfo = ((Enemy)actor).toString();
-        		} else {
-        			actorinfo = actor.toString();
-        		}
-        		
+        		if(actor instanceof Enemy) actorinfo = ((Enemy)actor).toString();
+        		else actorinfo = actor.toString();
         	}
-        	if(cachedTile.GetItem() != null) iteminfo = cachedTile.GetItem().toString();
+        	
+        	if(cachedTile.GetItems().isEmpty() == false) iteminfo = cachedTile.getItemsInfo();
         	
         	String txt = String.format("Pos: %s\nType: %s\nActor: %s\nItem: %s", 
         					cachedTile.GetTilePosition().toString(), 

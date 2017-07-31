@@ -175,7 +175,7 @@ public class Util {
 	}
 	
 	public static boolean isTileValid(Tile tile) {
-	    if(tile.isWalkable() && tile.GetActor() == null && tile.GetItem() == null) return true; 
+	    if(tile.isWalkable() && tile.GetActor() == null) return true;
 	    else return false;
 	}
 	

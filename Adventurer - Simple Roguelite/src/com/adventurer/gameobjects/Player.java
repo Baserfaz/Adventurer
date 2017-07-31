@@ -94,6 +94,8 @@ public class Player extends Actor {
 			// set off trap
 			if(tile instanceof Trap) ((Trap)tile).Activate();
 			
+			// TODO: open chests?
+			
 		} else if(tile instanceof Door) {
 			
 			Door door = (Door) tile;
@@ -103,7 +105,7 @@ public class Player extends Actor {
 				if(inventory.getKeyCount() > 0) {
 					door.Unlock();
 					inventory.addKeys(-1);
-				} 
+				}
 				
 			} else if(door.isLocked() && door.getDoorType() == DoorType.Diamond) {
 			
@@ -117,23 +119,6 @@ public class Player extends Actor {
 		} else if(tile.GetActor() != null) {
 			
 			if(tile.GetActor() instanceof Enemy || tile.GetActor() instanceof Turret) Attack(tile);
-			
-		} else if(tile.GetItem() != null) {
-			
-			if(tile.GetItem() instanceof DestructibleItem) {
-				
-				Attack(tile);
-				
-			} else if(tile.GetItem() instanceof Chest) {
-				
-				Chest chest = (Chest) tile.GetItem();
-				
-				if(chest.isLocked() && inventory.getKeyCount() > 0) {
-					chest.Unlock();
-					inventory.addKeys(-1);
-				}
-				else if(chest.isLocked() == false) chest.Open();	
-			}
 			
 		} else if(tile instanceof Portal) {
 			
@@ -184,7 +169,6 @@ public class Player extends Actor {
 		this.SetRangedDamage(rangedDmg);
 		this.SetMagicDamage(magicDmg);
 		this.GetHealth().setCurrentHP(health);
-		
 	}
 	
 	public LoSManager getLosManager() { return this.losmanager; }

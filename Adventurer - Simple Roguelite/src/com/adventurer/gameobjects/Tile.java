@@ -25,7 +25,7 @@ public class Tile extends GameObject {
 	protected boolean lit = false;
 	protected boolean walkable = false;
 	
-	protected Item item = null;
+	protected List<Item> items = null;
 	protected Actor actor = null;
 	protected List<VanityItem> vanityItems = new ArrayList<VanityItem>();
 	protected Node node;
@@ -39,6 +39,7 @@ public class Tile extends GameObject {
 		super(worldPos, tilePos, spritetype);
 		this.type = type;
 		this.node = new Node();
+		items = new ArrayList<Item>();
 		if(this.type == TileType.Floor || this.type == TileType.Trap) walkable = true;		
 	}
 	
@@ -124,7 +125,11 @@ public class Tile extends GameObject {
 	public void Show() {
 		this.hidden = false;
 		if(this.actor != null) this.actor.Show();
-		if(this.item != null) this.item.Show();
+		
+		if(this.items.isEmpty() == false) {
+			for(Item item : this.items) item.Show();
+		}
+			
 		if(this.vanityItems == null) return;
 		if(this.vanityItems.size() > 0) for(VanityItem vi : this.vanityItems) { vi.Show(); }
 	}
@@ -132,7 +137,9 @@ public class Tile extends GameObject {
 	public void Hide() {
 		this.hidden = true;
 		if(this.actor != null) this.actor.Hide();
-		if(this.item != null) this.item.Hide();
+		if(this.items.isEmpty() == false) {
+			for(Item item : this.items) item.Hide();
+		}
 		if(this.vanityItems == null) return;
 		if(this.vanityItems.size() > 0) for(VanityItem vi : this.vanityItems) { vi.Hide(); }
 	}
@@ -151,12 +158,12 @@ public class Tile extends GameObject {
 		
 		// discover actors and items.
 		if(this.GetActor() != null) this.GetActor().Discover();
-		if(this.GetItem() != null) this.GetItem().Discover();
+		if(this.items.isEmpty() == false) for(Item item : this.items) item.Discover();
 		if(this.vanityItems.size() > 0) for(VanityItem vi : this.vanityItems) { vi.Discover(); }
 	}
 	
 	public void Remove() {
-		if(this.GetItem() != null) this.GetItem().Remove();
+		if(this.items.isEmpty() == false) for(Item item : this.items) item.Remove();
 		if(this.GetActor() != null && this.GetActor() instanceof Player == false) this.GetActor().Remove();
 		
 		if(this.GetVanityItems().size() > 0) {
@@ -180,11 +187,19 @@ public class Tile extends GameObject {
 	}
 
 	public String GetInfo() {
-		String s = super.GetInfo();
-		s += ", tiletype: " + this.GetTileType() + ", Item: " + this.GetItem() + ", Actor: " + this.GetActor();
+		String s = super.GetInfo();			// tile info
+		String itemsInfo = getItemsInfo();	// items info
+		
+		s += ", tiletype: " + this.GetTileType() + ", Items: " + itemsInfo + ", Actor: " + this.GetActor();
 		return s;
 	}
 
+	public String getItemsInfo() {
+		String itemsInfo = "";
+		for(Item item : this.items) itemsInfo += item.itemName  + ", ";
+		return itemsInfo;
+	}
+	
 	public void Select() { this.selected = true; }
 	public void Deselect() { this.selected = false; }
 	
@@ -194,13 +209,14 @@ public class Tile extends GameObject {
 	public boolean isInView() { return this.inView; }
 	
 	public TileType GetTileType() { return this.type; }
-	public Item GetItem() { return item; }
+	public List<Item> GetItems() { return items; }
 	public Actor GetActor() { return this.actor; }
 	public Node getNode() { return this.node; }
 	
 	public void SetActor(Actor actor) { this.actor = actor; }
 	public void SetTileType(TileType t) { this.type = t; }
-	public void SetItem(Item item) { this.item = item; }
+	public void AddItem(Item item) { this.items.add(item); }
+	public void RemoveItem(Item item) { this.items.remove(item); }
 	
 	public void RemoveVanityItem(GameObject i) { this.vanityItems.remove(i); }
 	public void AddVanityItem(VanityItem i) { this.vanityItems.add(i); }
