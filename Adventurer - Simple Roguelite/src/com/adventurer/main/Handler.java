@@ -12,6 +12,7 @@ import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.WorldType;
 import com.adventurer.gameobjects.Actor;
+import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Effect;
 import com.adventurer.gameobjects.Enemy;
 import com.adventurer.gameobjects.GameObject;
@@ -133,7 +134,7 @@ public class Handler {
 	    Coordinate chainfo_coord = new Coordinate(charinfo_xPos, charinfo_yPos);
 	
 	    // hover tile info
-	    int tileinfo_yPos = mousePosition.getY() + 5; //(int) cam.getMaxY() - 200;
+	    int tileinfo_yPos = mousePosition.getY() - 10; //(int) cam.getMaxY() - 200;
 	    int tileinfo_xPos = mousePosition.getX() + 20; //(int) cam.getMaxX() - 200;
 	    Coordinate tileinfo_coord = new Coordinate(tileinfo_xPos, tileinfo_yPos);
 	    
@@ -192,8 +193,9 @@ public class Handler {
         	// get items info
         	if(cachedTile.GetItems().isEmpty() == false) iteminfo = cachedTile.getItemsInfo();
         	
-        	// get shrine info
+        	// get tile info
         	if(cachedTile instanceof Shrine) tileinfo = ((Shrine)cachedTile).toString();
+        	else if(cachedTile instanceof Door) tileinfo = ((Door)cachedTile).toString();
         	
         	// format our complete string
         	String txt = String.format("Pos: %s\nTile: %s\nActor: %s\nItem: %s", 

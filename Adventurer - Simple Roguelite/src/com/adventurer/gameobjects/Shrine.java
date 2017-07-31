@@ -1,9 +1,5 @@
 package com.adventurer.gameobjects;
-
-import java.util.List;
-
 import com.adventurer.data.Coordinate;
-import com.adventurer.data.World;
 import com.adventurer.enumerations.ShrineType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
@@ -23,6 +19,7 @@ public class Shrine extends Tile {
 	}
 	
 	public void activate() {
+		
 		if(used == false) {
 			
 			if(shrineType == ShrineType.healing) {
@@ -38,6 +35,7 @@ public class Shrine extends Tile {
 			// change sprite.
 			this.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.UsedShrine));
 			
+			// change flag
 			used = true;
 		}
 	}

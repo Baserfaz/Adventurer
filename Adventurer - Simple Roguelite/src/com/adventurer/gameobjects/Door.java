@@ -32,6 +32,8 @@ public class Door extends Tile {
 		World.instance.ChangeTile(this, TileType.LockedDoor, SpriteType.LockedDoor01);
 	}
 	
+	public String toString() { return this.doorType + " " + this.GetTileType(); }
+	
 	public DoorType getDoorType() { return this.doorType; }
 	public boolean isLocked() { return this.locked; }
 }
