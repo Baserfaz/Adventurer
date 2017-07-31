@@ -208,7 +208,7 @@ public class Enemy extends Actor {
 			
 			// set off trap
 			if(tile instanceof Trap) {
-				((Trap)tile).Activate();
+				((Trap)tile).activate();
 			}
 			
 		} else if(tile instanceof Door) {

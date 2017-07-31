@@ -30,6 +30,9 @@ public enum SpriteType {
     Portal01,
     Portal02,
     
+    HealthShrine_01,
+    UsedShrine,
+    
     Chest01,
     Chest02,
     LockedChest01,

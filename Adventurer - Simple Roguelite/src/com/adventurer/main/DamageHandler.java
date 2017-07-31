@@ -5,6 +5,16 @@ import com.adventurer.gameobjects.Tile;
 
 public class DamageHandler {
 
-	public static void ActorTakeDamage(Actor actor, int damage) { actor.GetHealth().TakeDamage(damage); }
 	public static void ActorTakeDamage(Tile tile, int damage) { ActorTakeDamage(tile.GetActor(), damage); }
+	public static void ActorTakeDamage(Actor actor, int damage) { 
+		
+		// do damage
+		actor.GetHealth().TakeDamage(damage); 
+		
+		// play effects
+		
+		
+		
+	}
+	
 }

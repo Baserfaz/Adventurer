@@ -104,9 +104,7 @@ public class Actor extends GameObject {
 			
 			// remove gameobject
 			Remove();
-			
-			//if(Game.MAGGOTS_SPAWN_EGGS_ON_DEATH) if(enemyType == EnemyType.Maggot) this.UseBomb(World.instance.GetTileAtPosition(this.GetTilePosition()));
-			
+						
 		} else if(this instanceof Player) {
 			
 			ActorManager.RemovePlayer();
@@ -151,9 +149,9 @@ public class Actor extends GameObject {
 				
 			} else if(this instanceof Enemy) {
 				
-				Enemy enemy = (Enemy) this;
+				/*Enemy enemy = (Enemy) this;
 				
-				/*if(enemy.getEnemyType() == EnemyType.Maggot) {
+				if(enemy.getEnemyType() == EnemyType.Maggot) {
 					
 				    // TODO: bomb --> egg?
 					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Bomb01, 900, 150, BombType.Gas);
@@ -193,30 +191,13 @@ public class Actor extends GameObject {
 	
 	public void Attack(Tile tile) {
 		
-		// 1. try get actor
+		// ----- this is melee attack ------
+		
+		// get actor
 		GameObject object = tile.GetActor();
 		
+		// do damage
 		if(object != null) DamageHandler.ActorTakeDamage(tile, meleeDamage);
-		
-		// 2. if actor is null 
-		//    try get item
-		/*if(object == null) {
-			
-			object = tile.GetItem();
-			
-			// 3. if the item is destructible
-			if(object instanceof DestructibleItem) {
-				
-				// 4. object takes damage
-				DamageHandler.ItemTakeDamage((DestructibleItem) object, meleeDamage);
-			}
-			
-		} else {
-			
-			// 5. actor takes damage
-			DamageHandler.ActorTakeDamage(tile, meleeDamage);
-			
-		}*/
 	}
 	
 	protected void UpdatePosition() {

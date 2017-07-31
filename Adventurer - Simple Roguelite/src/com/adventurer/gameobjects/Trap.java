@@ -23,7 +23,7 @@ public class Trap extends Tile {
 		this.trapType = traptype;
 	}
 
-	public void Activate() {
+	public void activate() {
 		
 		switch(this.trapType) {
 		case Projectile:

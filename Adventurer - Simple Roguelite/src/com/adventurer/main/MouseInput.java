@@ -95,10 +95,10 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 						hoveringTile = tile;
 						tile.Select();
 						
-						// we straight set the handler's chosentile var to be hovertingTile.
 						// TODO: this is fishy as balls.
 						Handler.instance.setHoverTile(hoveringTile);
-					
+						Handler.instance.setMousePosition(pos);
+						
 						// debug some info.
 						//System.out.println(tile.GetInfo());
 					}

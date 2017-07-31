@@ -139,6 +139,10 @@ public class SpriteCreator {
 		    case Portal01: row = 8; column = 0; break;
 		    case Portal02: row = 8; column = 1; break;
 		    
+		    // shrines
+		    case HealthShrine_01: row = 12; column = 0; break;
+		    case UsedShrine: row = 12; column = 1; break;
+		    
 		    // bombs and traps
 		    case Bomb01: row = 9; column = 0; break;
 		    

@@ -25,8 +25,9 @@ public class Handler {
 
 	private List<GameObject> objects = new ArrayList<GameObject>();
 	
-	// TODO: this is bad.
+	// TODO: mouse hover --- > this is bad.
 	private Tile hoverTile = null;
+	private Coordinate mousePosition = new Coordinate(0, 0);
 	
 	public static Handler instance;
 	
@@ -131,8 +132,8 @@ public class Handler {
 	    Coordinate chainfo_coord = new Coordinate(charinfo_xPos, charinfo_yPos);
 	
 	    // hover tile info
-	    int tileinfo_yPos = (int) cam.getMaxY() - 200;
-	    int tileinfo_xPos = (int) cam.getMaxX() - 200;
+	    int tileinfo_yPos = mousePosition.getY() + 5; //(int) cam.getMaxY() - 200;
+	    int tileinfo_xPos = mousePosition.getX() + 20; //(int) cam.getMaxX() - 200;
 	    Coordinate tileinfo_coord = new Coordinate(tileinfo_xPos, tileinfo_yPos);
 	    
         // render dungeon name and level
@@ -204,4 +205,7 @@ public class Handler {
 
 	public Tile getHoverTile() { return hoverTile; }
 	public void setHoverTile(Tile hoverTile) { this.hoverTile = hoverTile; }
+
+	public Coordinate getMousePosition() { return mousePosition; }
+	public void setMousePosition(Coordinate mousePosition) { this.mousePosition = mousePosition; }
 }

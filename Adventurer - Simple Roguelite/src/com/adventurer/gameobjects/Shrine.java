@@ -7,6 +7,7 @@ import com.adventurer.data.World;
 import com.adventurer.enumerations.ShrineType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
+import com.adventurer.main.SpriteCreator;
 
 public class Shrine extends Tile {
 
@@ -24,20 +25,18 @@ public class Shrine extends Tile {
 	public void activate() {
 		if(used == false) {
 			
-			// do 8 tile AOE
 			if(shrineType == ShrineType.healing) {
 				
-				List<Tile> tiles = World.instance.GetSurroundingTiles(this.GetTilePosition());
-				
-				for(Tile tile : tiles) {
-					if(tile.GetActor() != null) tile.actor.GetHealth().healDamage(this.amount);
-				}
-				
+				if(this.actor != null) this.actor.GetHealth().healDamage(amount);
+				System.out.println("Healed " + this.actor.toString() + " for " + amount + ".");
 				
 			} else {
 				System.out.print("NOT YET IMPLEMENTED SHRINETYPE.");
 				return;
 			}
+			
+			// change sprite.
+			this.SetSprite(SpriteCreator.instance.CreateSprite(SpriteType.UsedShrine));
 			
 			used = true;
 		}

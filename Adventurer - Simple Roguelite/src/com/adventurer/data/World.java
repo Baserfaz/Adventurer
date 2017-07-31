@@ -8,6 +8,7 @@ import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.GameState;
 import com.adventurer.enumerations.RoomType;
+import com.adventurer.enumerations.ShrineType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.enumerations.TrapType;
@@ -15,6 +16,7 @@ import com.adventurer.enumerations.WorldType;
 import com.adventurer.gameobjects.DestructibleTile;
 import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Portal;
+import com.adventurer.gameobjects.Shrine;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Trap;
 import com.adventurer.main.ActorManager;
@@ -80,7 +82,8 @@ public class World {
 		        // create/move player
 		        createPlayer(tile);
 		        
-		        // TODO: create health shrine?
+		        // create health shrine
+		        createHealthShrine(room.getTiles());
 		        
 		        // Do not randomize anything.
 		        continue;
@@ -121,6 +124,27 @@ public class World {
 	}
 	
 	// ---------------------------
+	
+	private void createHealthShrine(List<Tile> tiles) {
+		
+		// get random valid tile
+		Tile tile = Util.getRandomTile(tiles);
+		
+		// creates new shrine tile
+		Shrine shrine = new Shrine(
+				tile.GetWorldPosition(), 
+				tile.GetTilePosition(),
+				SpriteType.HealthShrine_01, 
+				TileType.Shrine, 
+				ShrineType.healing, 
+				Util.GetRandomInteger(10, 25));
+		
+		// add to tiles
+		World.instance.AddToTiles(shrine);
+		
+		// removes the old tile
+		tile.Remove();
+	}
 	
 	private void createPlayer(Tile spawnTile) {
 		if(ActorManager.GetPlayerInstance() == null) ActorManager.CreatePlayerInstance(spawnTile);

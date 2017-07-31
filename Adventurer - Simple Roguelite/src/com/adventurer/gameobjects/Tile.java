@@ -40,7 +40,7 @@ public class Tile extends GameObject {
 		this.type = type;
 		this.node = new Node();
 		items = new ArrayList<Item>();
-		if(this.type == TileType.Floor || this.type == TileType.Trap) walkable = true;		
+		if(this.type == TileType.Floor || this.type == TileType.Trap || this.type == TileType.Shrine) walkable = true;		
 	}
 	
 	public void tick() {

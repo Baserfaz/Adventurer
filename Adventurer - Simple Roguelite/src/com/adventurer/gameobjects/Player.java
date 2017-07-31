@@ -91,7 +91,10 @@ public class Player extends Actor {
 			tile.SetActor(this);
 			
 			// set off trap
-			if(tile instanceof Trap) ((Trap)tile).Activate();
+			if(tile instanceof Trap) ((Trap)tile).activate();
+			
+			// set off shrine
+			if(tile instanceof Shrine) ((Shrine)tile).activate();
 			
 			// TODO: open chests?
 			
@@ -117,7 +120,7 @@ public class Player extends Actor {
 			
 		} else if(tile.GetActor() != null) {
 			
-			if(tile.GetActor() instanceof Enemy || tile.GetActor() instanceof Turret) Attack(tile);
+			if(tile.GetActor() instanceof Enemy) Attack(tile);
 			
 		} else if(tile instanceof Portal) {
 			
