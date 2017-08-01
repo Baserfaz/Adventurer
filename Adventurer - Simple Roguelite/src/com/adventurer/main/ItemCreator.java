@@ -11,7 +11,7 @@ public class ItemCreator {
 		SpriteType st = null;
 		if(locked) st = SpriteType.LockedChest02;
 		else st = SpriteType.Chest02;
-		return new Chest(tile.GetWorldPosition(), tile.GetTilePosition(), st, locked);
+		return new Chest(tile, st, locked);
 	}
 	
 	public static Gold createGold(Tile tile, int amount) {

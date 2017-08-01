@@ -119,7 +119,6 @@ public class Handler {
 		// ------------ DRAW GUI --------------
 		
 		// calculate all positions
-		
 		// stats pos
 		int stats_yPos = (int) cam.getMaxY() - 75;
 		int stats_xPos = (int) cam.getMinX() + 50;
@@ -144,6 +143,7 @@ public class Handler {
 	    int inventory_yPos = (int) cam.getMinY() + 25;
 	    int inventory_xPos = (int) cam.getMaxX() - 100;
 	    Coordinate inventory_coord = new Coordinate(inventory_xPos, inventory_yPos);
+	    // end calc
 	    
         // render dungeon name and level
 	    if(World.instance.getWorldType() == WorldType.Predefined) {
@@ -181,14 +181,15 @@ public class Handler {
         
         // -------------------- INVENTORY START----------------------
         
-        // get inventory items as string
         String invItems = "";
         int currentInvSpaces = player.getInventory().getInventoryItems().size();
         int maxinvSpaces = player.getInventory().getMaxSize();
+        
+        // populate inv items string
         if(player.getInventory().getInventoryItems().isEmpty()) {
         	
         	// add '-' to fill the empty spaces.
-        	for(int i = 0; i < maxinvSpaces; i++) { invItems += "- \n"; }
+        	for(int i = 0; i < maxinvSpaces; i++) { invItems += "-\n"; }
         	
         } else {
         	
@@ -197,7 +198,7 @@ public class Handler {
         	
         	// then add '-' to fill the empty spaces.
         	int count = maxinvSpaces - currentInvSpaces;
-        	for(int i = 0; i < count; i++) { invItems += "- \n"; }
+        	for(int i = 0; i < count; i++) { invItems += "-\n"; }
         }
         
         // render inventory tag

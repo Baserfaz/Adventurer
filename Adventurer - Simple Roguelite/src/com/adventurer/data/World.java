@@ -197,6 +197,7 @@ public class World {
 				// read map and create a tile
 				char mapChar = map[y][x];
 				
+				// first creates tiles
 				switch(mapChar) {
     				case '#': tile = new Tile(worldPos, tilePos, SpriteType.Wall01, TileType.OuterWall); break;
     				case '.': tile = new Tile(worldPos, tilePos, SpriteType.Floor01, TileType.Floor); break;
@@ -207,13 +208,23 @@ public class World {
     				case 'P': tile = new Portal(worldPos, tilePos, SpriteType.Portal02, TileType.Portal, false); break;
     				case 'E': tile = new Portal(worldPos, tilePos, SpriteType.Portal02, TileType.Portal, true); break;
     				case 'D': tile = new Door(worldPos, tilePos, SpriteType.LockedDoorDiamond01, TileType.LockedDoor, true, DoorType.Diamond); break;
+    				case 'c': tile = new Tile(worldPos, tilePos, SpriteType.Floor01, TileType.Floor); break;
     				default: System.out.println("INVALID CHARACTER AT CreatePredefinedMap."); new Exception().printStackTrace(); System.exit(1); break;
 				}
 				
+				// secondly creates items on top of tiles
+				switch(mapChar) {
+					case 'c': tile.AddItem(ItemCreator.CreateChest(tile, false)); break;
+				}
+				
+				// add tile to tiles list.
 				tiles.add(tile);
 				
+				// increment offset
 				offsetX += Game.TILEGAP;
 			}
+			
+			// increment and reset offsets.
 			offsetX = 0;
 			offsetY += Game.TILEGAP;
 		}
