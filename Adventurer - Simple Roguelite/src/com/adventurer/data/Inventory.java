@@ -25,6 +25,8 @@ public class Inventory {
 		else System.out.println("Inventory is full!");
 	}
 	
+	public void removeItemFromInventory(Item item) { this.inventory.remove(item); }
+	
 	public void addDiamondKeyCount(int a) {
 		this.diamondKeyCount += a;
 		Game.instance.getCurrentSaveFile().addDiamondKeyCount(a);

@@ -1,6 +1,7 @@
 package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.adventurer.data.Coordinate;
@@ -103,7 +104,7 @@ public class Player extends Actor {
 			// pickup items
 			// TODO: now automatically picks up items.
 			if(tile.GetItems().isEmpty() == false) {
-				List<Item> temp = tile.GetItems();
+				List<Item> temp = new ArrayList<Item>(tile.GetItems());
 				for(Item i : temp) pickUpItem(i);
 			}
 			
@@ -115,7 +116,6 @@ public class Player extends Actor {
 			if(chest.isLocked()) {
 			
 				if(this.getInventory().getKeyCount() > 0) {
-					
 					chest.Unlock();
 					this.getInventory().addKeys(-1);
 				}
@@ -186,17 +186,24 @@ public class Player extends Actor {
 		}
 	}
 	
-	private void pickUpItem(Item item) {
-		
-		// add the item to inventory
-		// --> checks automatically inventory size.
+	public void pickUpItem(Item item) {
 		this.inventory.addToInventory(item);
+		item.Remove();
+	}
+	
+	public void dropItem() {
+		// TODO: correct implementation
+		// ---> now has debug item dropping
 		
-		Handler.instance.RemoveObject(this);
-		Hide();
+		int size = this.inventory.getInventoryItems().size();
 		
-		// hide the item and remove it from "tick".
-		//item.Remove();
+		if(size > 0) {
+			// drops the last item on the list.
+			Item item = this.inventory.getInventoryItems().get(size - 1);
+			item.moveItemTo(World.instance.GetTileAtPosition(this.GetTilePosition()));
+			this.inventory.removeItemFromInventory(item);
+			Handler.instance.AddObject(item);
+		}
 	}
 	
 	public void updateStats() {

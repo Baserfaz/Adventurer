@@ -28,26 +28,30 @@ public class KeyInput extends KeyAdapter {
 		
 		if(player.GetHealth().isDead()) return;
 		
+		// -------------- HANDLE INPUTS ------------------
+		
 		// movement
 		if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) {
 			
-			if(player.GetLookDirection() == Direction.North || Game.MOVEMENT_ROTATE_FIRST == false) player.Move(Direction.North);
-			else player.SetLookDirection(Direction.North);
+			player.Move(Direction.North);
 				
 		} else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) {
 			
-			if(player.GetLookDirection() == Direction.South || Game.MOVEMENT_ROTATE_FIRST == false) player.Move(Direction.South);
-			else player.SetLookDirection(Direction.South);
+			player.Move(Direction.South);
 			
 		} else if(key == KeyEvent.VK_A || key == KeyEvent.VK_NUMPAD4) {
 			
-			if(player.GetLookDirection() == Direction.West || Game.MOVEMENT_ROTATE_FIRST == false) player.Move(Direction.West);
-			else player.SetLookDirection(Direction.West);
+			player.Move(Direction.West);
 			
 		} else if(key == KeyEvent.VK_D || key == KeyEvent.VK_NUMPAD6) {
 			
-			if(player.GetLookDirection() == Direction.East || Game.MOVEMENT_ROTATE_FIRST == false) player.Move(Direction.East);
-			else player.SetLookDirection(Direction.East);
+			player.Move(Direction.East);
+
+		}
+		
+		// drop item
+		if(key == KeyEvent.VK_R) {
+			player.dropItem();
 		}
 		
 		// bomb
