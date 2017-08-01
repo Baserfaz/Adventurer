@@ -1,5 +1,8 @@
 package com.adventurer.data;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import com.adventurer.gameobjects.Item;
 
 public class Equipment {
@@ -26,6 +29,22 @@ public class Equipment {
 		this.feet = feet;
 		this.amulet = amulet;
 		this.ring = ring;
+	}
+	
+	public Map<String, Item> getAllEquipment() {
+		
+		Map<String, Item> eq = new LinkedHashMap<String, Item>();
+		
+		eq.put("MainHand", mainHand);
+		eq.put("OffHand", offHand);
+		eq.put("Head", head);
+		eq.put("Chest", chest);
+		eq.put("Legs", legs);
+		eq.put("Feet", feet);
+		eq.put("Amulet", amulet);
+		eq.put("Ring", ring);
+		
+		return eq;
 	}
 	
 	public Item getMainHand() { return mainHand; }

@@ -9,7 +9,7 @@ public class DamageHandler {
 	public static void ActorTakeDamage(Actor actor, int damage) { 
 		
 		// do damage
-		actor.GetHealth().TakeDamage(damage); 
+		actor.getHealth().TakeDamage(damage); 
 		
 		// play effects
 		

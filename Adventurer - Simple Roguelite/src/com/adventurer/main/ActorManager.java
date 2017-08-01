@@ -139,7 +139,7 @@ public class ActorManager {
 		
 		// create enemy object
 		// TODO: refactor melee, ranged and magic damage...
-		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, maxHP, damage, damage, damage, name, isRanged, movementSpeed, movementCooldownBase);
+		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, maxHP, 0, damage, damage, damage, name, isRanged, movementSpeed, movementCooldownBase);
 	}
 	
 	public static Enemy[] GetEnemyInstances() { return enemyInstances; }

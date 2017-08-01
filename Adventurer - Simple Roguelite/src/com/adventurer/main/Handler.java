@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import com.adventurer.data.Camera;
 import com.adventurer.data.Coordinate;
@@ -131,7 +132,7 @@ public class Handler {
 		
 		// player info
 	    int charinfo_yPos = (int) cam.getMaxY() - 75;
-	    int charinfo_xPos = (int) cam.getMinX() + 200;
+	    int charinfo_xPos = (int) cam.getMinX() + 125;
 	    Coordinate chainfo_coord = new Coordinate(charinfo_xPos, charinfo_yPos);
 	
 	    // hover tile info
@@ -143,43 +144,65 @@ public class Handler {
 	    int inventory_yPos = (int) cam.getMinY() + 25;
 	    int inventory_xPos = (int) cam.getMaxX() - 100;
 	    Coordinate inventory_coord = new Coordinate(inventory_xPos, inventory_yPos);
+	    
+	    // equipment position
+	    int equipment_yPos = (int) cam.getMinY() + 25;
+	    int equipment_xPos = (int) cam.getMaxX() - 210;
+	    Coordinate equipment_coord = new Coordinate(equipment_xPos, equipment_yPos);
+	    
 	    // end calc
+	    
+	    
+	    // -------------- LOCATION ---------------------
+	    // render location tag.
+	    Renderer.renderString("Location: ", dungeonInfo_coord, Color.white, 8, g2d);
 	    
         // render dungeon name and level
 	    if(World.instance.getWorldType() == WorldType.Predefined) {
-	        
-	    	// TODO: all predefined maps are now rendered as chilly lobbies.
-	    	// ---> somehow decide which map we are currently at.
 	    	
             Renderer.renderString(
-                "Location: Chilly lobby",
-                dungeonInfo_coord, new Color(150, 150, 150), 10, g2d
+                "Chilly lobby",
+                new Coordinate(dungeonInfo_coord.getX() + 50, dungeonInfo_coord.getY()), 
+                Color.gray, 8, g2d
             );
             
 	    } else if(World.instance.getWorldType() == WorldType.Random) {
 	        
             Renderer.renderString(
-                "Location: Dungeon (lvl. "+ Game.instance.getCurrentSession().getDungeonLevel() + ")",
-                dungeonInfo_coord, new Color(150, 150, 150), 10, g2d
+                "Dungeon (lvl. "+ Game.instance.getCurrentSession().getDungeonLevel() + ")",
+                new Coordinate(dungeonInfo_coord.getX() + 50, dungeonInfo_coord.getY()),
+                Color.gray, 8, g2d
             );
             
 	    }
 	    
+	    // ---------------------- STATS -------------------------
+	    
+	    // render stats tag
+	    Renderer.renderString("Vitals", stats_coord, Color.white, 8, g2d);
+	    
 		// render stats (HP etc.)
 		Renderer.renderString(
-	        "HP: " + player.GetHealth().GetCurrentHealth() + "\n" +
-	        "Keys: " + player.getInventory().getKeyCount(), 
-	        stats_coord, new Color(150, 150, 150), 12, g2d
+	        "\nHP: " + player.getHealth().GetCurrentHealth() + "/" + player.getHealth().GetMaxHP() + "\n" +
+	        "MP: " + player.getMana().GetCurrentMana() + "/" + player.getMana().GetMaxMP() + "\n",
+	        stats_coord,
+	        Color.gray, 8, g2d
 		);
+		
+		// render character info tag
+		Renderer.renderString("Stats", chainfo_coord, Color.white, 8, g2d);
 		
 		// render character info
         Renderer.renderString(
-            String.format("str: %d int: %d dex: %d", 
-            player.getStats().getStrength(), player.getStats().getIntelligence(), player.getStats().getDexterity()),
-            chainfo_coord, new Color(150, 150, 150), 12, g2d
+            String.format("\nSTR: %d \nVIT: %d \nINT: %d \nDEX: %d", 
+            		player.getStats().getStrength(), 
+            	player.getStats().getVitality(), 
+            	player.getStats().getIntelligence(), 
+            	player.getStats().getDexterity()
+            ), chainfo_coord, Color.gray, 8, g2d
         );
         
-        // -------------------- INVENTORY START----------------------
+        // -------------------- INVENTORY ----------------------
         
         String invItems = "";
         int currentInvSpaces = player.getInventory().getInventoryItems().size();
@@ -210,15 +233,23 @@ public class Handler {
         // render inventory items.
         Renderer.renderString("\n" + invItems, inventory_coord, Color.gray, 8, g2d);
         
-        // -------------------- INVENTORY END -----------------------
+        // -------------------- EQUIPMENT ---------------------
         
-        // -------------------- EQUIPMENT START ---------------------
+        String equipmentInfo = "";
+        for(Entry<String, Item> eq: player.getEquipment().getAllEquipment().entrySet()) {
+        	
+        	equipmentInfo += "- " + eq.getKey() + ": ";
+        	
+        	Item i = eq.getValue();
+        	if(i != null) equipmentInfo += eq.getValue().getName() + "\n";
+        	else equipmentInfo += "None\n";
+        }
         
+        // render equipment tag.
+        Renderer.renderString("Equipment", equipment_coord, Color.white, 8, g2d);
         
-        // TODO: render equipment somewhere.
-        
-        
-        // -------------------- EQUIPMENT END -----------------------
+        // render equipment info.
+        Renderer.renderString("\n" + equipmentInfo, equipment_coord, Color.gray, 8, g2d);
         
         // -------------------- MOUSE HOVER -------------------------
         if(hoverTile != null) {
@@ -246,16 +277,11 @@ public class Handler {
         	
         	// format our complete string
         	String txt = String.format("Pos: %s\nTile: %s\nActor: %s\nItem: %s", 
-        					cachedTile.GetTilePosition().toString(), 
-        					tileinfo, 
-							actorinfo,
-							iteminfo);
+        					cachedTile.GetTilePosition().toString(), tileinfo, actorinfo, iteminfo);
         	
-        	Renderer.renderString(txt, tileinfo_coord, new Color(150, 150, 150), 10, g2d);
+        	Renderer.renderString(txt, tileinfo_coord, Color.gray, 10, g2d);
         	
-        } else Renderer.renderString("", tileinfo_coord, new Color(150, 150, 150), 10, g2d);
-        
-        // ------------------ MOUSE HOVER END ---------------------
+        } else Renderer.renderString("", tileinfo_coord, Color.gray, 10, g2d);
 	}
 	
 	public void AddObject(GameObject go) { this.getObjects().add(go); }	

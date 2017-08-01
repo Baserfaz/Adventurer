@@ -24,7 +24,7 @@ public class Shrine extends Tile {
 			
 			if(shrineType == ShrineType.healing) {
 				
-				if(this.actor != null) this.actor.GetHealth().healDamage(amount);
+				if(this.actor != null) this.actor.getHealth().healDamage(amount);
 				System.out.println("Healed " + this.actor.toString() + " for " + amount + ".");
 				
 			} else {

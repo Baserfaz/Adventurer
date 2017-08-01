@@ -215,6 +215,7 @@ public class World {
 				// secondly creates items on top of tiles
 				switch(mapChar) {
 					case 'c': tile.AddItem(ItemCreator.CreateChest(tile, false)); break;
+					default: break;
 				}
 				
 				// add tile to tiles list.

@@ -142,6 +142,10 @@ public class Util {
 		return Game.PLAYER_START_BASE_HEALTH + (vitPoints * Game.VITALITY_TO_HEALTH_MULTIPLIER);
 	}
 	
+	public static int calcMana(int intPoints) {
+		return Game.PLAYER_START_BASE_MANA + (intPoints * Game.INTELLIGENCE_TO_MANA_MULTIPLIER);
+	}
+	
 	public static int calcMeleeDamage(int strPoints) {
 		return strPoints * Game.STRENGTH_TO_MELEE_DAMAGE_MULTIPLIER;
 	}

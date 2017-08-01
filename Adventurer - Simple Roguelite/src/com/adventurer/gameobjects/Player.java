@@ -29,7 +29,7 @@ public class Player extends Actor {
 	
 	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
 		// TODO: refactor damage... 
-		super(worldPos, tilePos, spritetype, Game.PLAYER_START_BASE_HEALTH, 1, 1, 1, "Player", 2);
+		super(worldPos, tilePos, spritetype, Game.PLAYER_START_BASE_HEALTH, Game.PLAYER_START_BASE_MANA, 1, 1, 1, "Player", 2);
 		
 		this.stats = new Stats();
 		this.losmanager = new LoSManager();
@@ -210,6 +210,8 @@ public class Player extends Actor {
 		
 		// calculate health + dmg from stats
 		int health = Util.calcHealth(stats.getVitality());
+		int mana = Util.calcMana(stats.getIntelligence());
+		
 		int meleeDmg = Util.calcMeleeDamage(stats.getStrength());
 		int rangedDmg = Util.calcRangedDamage(stats.getDexterity());
 		int magicDmg = Util.calcMagicDamage(stats.getIntelligence());
@@ -218,7 +220,13 @@ public class Player extends Actor {
 		this.SetMeleeDamage(meleeDmg);
 		this.SetRangedDamage(rangedDmg);
 		this.SetMagicDamage(magicDmg);
-		this.GetHealth().setCurrentHP(health);
+		
+		this.getHealth().setMaxHP(health);
+		this.getMana().setMaxMP(mana);
+	
+		// TODO: do we want to max out our current hp/mp?
+		// this.getHealth().setCurrentHP(health);
+		// this.getMana().setCurrentMP(mana);
 	}
 	
 	public String toString() { return "You, our hero."; }
@@ -226,4 +234,5 @@ public class Player extends Actor {
 	public LoSManager getLosManager() { return this.losmanager; }
 	public Inventory getInventory() { return this.inventory; }
 	public Stats getStats() { return this.stats; }
+	public Equipment getEquipment() { return equipment; }
 }

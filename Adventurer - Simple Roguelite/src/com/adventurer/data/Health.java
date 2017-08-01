@@ -28,6 +28,8 @@ public class Health {
 	
 	public boolean isDead() { return this.dead; }
 	public int GetCurrentHealth() { return this.currentHP; }
-	public void setCurrentHP(int a) { this.currentHP = a; }
 	public int GetMaxHP() { return this.maxHP; }
+	
+	public void setCurrentHP(int a) { this.currentHP = a; }
+	public void setMaxHP(int a) { this.maxHP = a; }
 }

@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Health;
 import com.adventurer.data.Inventory;
+import com.adventurer.data.Mana;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.BombType;
@@ -28,13 +29,14 @@ public class Actor extends GameObject {
 	
 	protected boolean canMove = true;
 	protected Health myHP;
+	protected Mana myMP;
 	
 	protected int meleeDamage = 0, rangedDamage = 0, magicDamage = 0;
 	
 	protected String name = "";
 	protected int movementSpeed = 2; // how fast is the animation between tiles
 	
-	public Actor(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int meleeDamage, int rangedDamage, int magicDamage, String name, int movementSpeed) {
+	public Actor(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int maxMP, int meleeDamage, int rangedDamage, int magicDamage, String name, int movementSpeed) {
 		super(worldPos, tilePos, spritetype);
 		
 		// set stuff here
@@ -49,6 +51,7 @@ public class Actor extends GameObject {
 		this.name = name;
 		this.movementSpeed = movementSpeed;
 		this.myHP = new Health(maxHP);
+		this.myMP = new Mana(maxMP);
 		
 		// register to tile
 		World.instance.GetTileAtPosition(tilePos).SetActor(this);
@@ -111,7 +114,7 @@ public class Actor extends GameObject {
 			World.instance.Remove();
 			new World(PredefinedMaps.GetLobby());
 			
-		} else if(this instanceof Turret) Remove();
+		}
 	}
 	
 	public void Remove() {
@@ -251,7 +254,8 @@ public class Actor extends GameObject {
 	public int GetMagicDamage() { return this.magicDamage; }
 	
 	public String getName() { return this.name; }
-	public Health GetHealth() { return this.myHP; }
+	public Health getHealth() { return this.myHP; }
+	public Mana getMana() { return this.myMP; }
 	
 	public Rectangle GetBounds() {
 		return new Rectangle(this.GetWorldPosition().getX(), this.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE);

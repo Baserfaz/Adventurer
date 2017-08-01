@@ -63,6 +63,7 @@ public class Game extends Canvas implements Runnable {
 	
 	// player defaults
 	public static final int PLAYER_START_BASE_HEALTH	= 90;
+	public static final int PLAYER_START_BASE_MANA		= 10;
 	
 	// player stat defaults
 	public static final int DEFAULT_VITALITY_PLAYER 	= 5;
@@ -72,6 +73,8 @@ public class Game extends Canvas implements Runnable {
 	
 	// stats multipliers
 	public static final int VITALITY_TO_HEALTH_MULTIPLIER 			= 2;
+	public static final int INTELLIGENCE_TO_MANA_MULTIPLIER 		= 2;
+	
 	public static final int STRENGTH_TO_MELEE_DAMAGE_MULTIPLIER 	= 2;
 	public static final int DEXTERITY_TO_RANGED_DAMAGE_MULTIPLIER 	= 2;
 	public static final int INTELLIGENCE_TO_MAGIC_DAMAGE_MULTIPLIER = 2;

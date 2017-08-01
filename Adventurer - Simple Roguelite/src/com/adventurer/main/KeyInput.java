@@ -26,7 +26,7 @@ public class KeyInput extends KeyAdapter {
 		
 		Player player = ActorManager.GetPlayerInstance();
 		
-		if(player.GetHealth().isDead()) return;
+		if(player.getHealth().isDead()) return;
 		
 		// -------------- HANDLE INPUTS ------------------
 		

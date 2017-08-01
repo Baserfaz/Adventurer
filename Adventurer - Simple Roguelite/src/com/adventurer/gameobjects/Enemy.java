@@ -29,8 +29,8 @@ public class Enemy extends Actor {
 	
 	public Enemy(Coordinate worldPos, Coordinate tilePos,
 			EnemyType enemytype, SpriteType spritetype,
-			int maxHP, int meleeDmg, int rangedDmg, int magicDmg, String name, boolean isRanged, int movementSpeed, int moveCooldownBase) {
-		super(worldPos, tilePos, spritetype, maxHP, meleeDmg, rangedDmg, magicDmg, name, movementSpeed);
+			int maxHP, int maxMP, int meleeDmg, int rangedDmg, int magicDmg, String name, boolean isRanged, int movementSpeed, int moveCooldownBase) {
+		super(worldPos, tilePos, spritetype, maxHP, maxMP, meleeDmg, rangedDmg, magicDmg, name, movementSpeed);
 		
 		// declare ranged units here
 		this.hasRangedAttack = isRanged;
@@ -225,7 +225,7 @@ public class Enemy extends Actor {
 
 	public String toString() {
 		String info = super.toString();
-		return info + " (" + this.enemyType + ")" + ", HP:" + this.GetHealth().GetCurrentHealth();
+		return info + " (" + this.enemyType + ")" + ", HP:" + this.getHealth().GetCurrentHealth();
 	}
 	
 	public EnemyType getEnemyType() { return enemyType; }
