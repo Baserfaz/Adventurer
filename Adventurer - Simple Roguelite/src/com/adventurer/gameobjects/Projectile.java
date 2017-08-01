@@ -6,7 +6,6 @@ import java.awt.Rectangle;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.Direction;
-import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.*;
 import com.adventurer.utilities.Renderer;
@@ -27,7 +26,7 @@ public class Projectile extends Item {
 	private boolean canMove = true;
 	
 	public Projectile(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int damage, Direction dir) {
-		super(worldPos, tilePos, spritetype, ItemType.Projectile);
+		super(worldPos, tilePos, spritetype);
 		this.direction = dir;
 		this.damage = damage;
 	}

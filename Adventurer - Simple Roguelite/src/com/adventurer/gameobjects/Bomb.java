@@ -7,7 +7,6 @@ import java.util.List;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.BombType;
-import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;
@@ -22,7 +21,7 @@ public class Bomb extends Item {
 	private boolean alive = false;
 	
 	public Bomb(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int liveTime, int damage, BombType btype) {
-		super(worldPos, tilePos, spritetype, ItemType.Bomb);
+		super(worldPos, tilePos, spritetype);
 		this.alive = true;
 		this.damage = damage;
 		this.liveTimer = System.currentTimeMillis() + liveTime;

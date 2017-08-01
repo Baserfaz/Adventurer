@@ -4,7 +4,6 @@ import java.awt.Graphics;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Health;
-import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.VanityItemCreator;
 import com.adventurer.utilities.Renderer;
@@ -15,8 +14,8 @@ public class DestructibleItem extends Item {
 	private Health health;
 	private boolean alive = true;
 	
-	public DestructibleItem(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int health, ItemType itemType) {
-		super(worldPos, tilePos, spritetype, itemType);
+	public DestructibleItem(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int health) {
+		super(worldPos, tilePos, spritetype);
 		
 		this.setHealth(new Health(health));
 	}

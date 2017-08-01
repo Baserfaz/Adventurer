@@ -2,7 +2,6 @@ package com.adventurer.main;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
-import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.Item;
@@ -19,7 +18,7 @@ public class ItemCreator {
 		SpriteType st = null;
 		if(locked) st = SpriteType.LockedChest02;
 		else st = SpriteType.Chest02;
-		return new Chest(pos, tile.GetTilePosition(), st, ItemType.Chest, locked);
+		return new Chest(pos, tile.GetTilePosition(), st, locked);
 	}
 	
 	private static Coordinate CalculatePositionWithOffset(Tile tile, boolean setOffset) {

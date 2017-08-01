@@ -1,13 +1,12 @@
 package com.adventurer.gameobjects;
 
 import com.adventurer.data.Coordinate;
-import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
 
 public class LightSource extends DestructibleItem {
 	
-	public LightSource(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, ItemType itemType) {
-		super(worldPos, tilePos, spritetype, 100, itemType);
+	public LightSource(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
+		super(worldPos, tilePos, spritetype, 100);
 	}
 
 	public void tick() {

@@ -2,7 +2,6 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 import com.adventurer.data.Coordinate;
-import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Game;
 import com.adventurer.main.SpriteCreator;
@@ -13,8 +12,8 @@ public class Chest extends Item {
 
 	private boolean locked = false;
 	
-	public Chest(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, ItemType itemType, boolean locked) {
-		super(worldPos, tilePos, spritetype, itemType);
+	public Chest(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, boolean locked) {
+		super(worldPos, tilePos, spritetype);
 		this.locked = locked;
 	}
 	

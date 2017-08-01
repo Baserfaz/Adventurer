@@ -5,19 +5,16 @@ import java.awt.Rectangle;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
-import com.adventurer.enumerations.ItemType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Handler;
 
 public class Item extends GameObject {
 
 	protected String itemName;
-	protected ItemType itemType;
 	
-	public Item(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, ItemType itemType) {
+	public Item(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
 		super(worldPos, tilePos, spritetype);
 		
-		this.itemType = itemType;
 		this.itemName = "";
 		
 		// register to tile
@@ -42,8 +39,4 @@ public class Item extends GameObject {
 	public void tick() {}
 	public void render(Graphics g) {}
 	public Rectangle GetBounds() { return null; }
-
-	public String toString() {
-		return this.itemName + ", " + this.itemType;
-	}
 }
