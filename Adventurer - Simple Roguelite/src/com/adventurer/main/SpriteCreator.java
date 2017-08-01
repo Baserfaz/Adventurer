@@ -135,6 +135,9 @@ public class SpriteCreator {
 		    case LockedChest01: row = 7; column = 0; break;
 		    case LockedChest02: row = 7; column = 1; break;
 		    
+		    // items
+		    case GenericItem: row = 13; column = 0; break;
+		    
 		    // portals
 		    case Portal01: row = 8; column = 0; break;
 		    case Portal02: row = 8; column = 1; break;

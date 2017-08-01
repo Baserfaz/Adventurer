@@ -174,6 +174,11 @@ public class Util {
 	    return chosen;
 	}
 	
+	public static boolean isTileWalkable(TileType type) {
+		if(type == TileType.Floor || type == TileType.Trap || type == TileType.Shrine) return true;
+		else return false;
+	}
+	
 	public static boolean isTileValid(Tile tile) {
 	    if(tile.isWalkable() && tile.GetActor() == null) return true;
 	    else return false;

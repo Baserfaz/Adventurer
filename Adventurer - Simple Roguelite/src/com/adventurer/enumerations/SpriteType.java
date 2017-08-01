@@ -38,6 +38,8 @@ public enum SpriteType {
     LockedChest01,
     LockedChest02,
     
+    GenericItem,
+    
     Bomb01,
     Spear01,
     Arrow01,

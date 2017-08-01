@@ -54,6 +54,14 @@
 			<isRanged>false</isRanged>
 			<movementSpeed>1</movementSpeed>
 			<movementCooldownBase>1000</movementCooldownBase></enemy>
+		<enemy>
+			<name>Bat</name>
+			<enemyType>Beast</enemyType>
+			<health>10</health>
+			<damage>5</damage>
+			<isRanged>false</isRanged>
+			<movementSpeed>2</movementSpeed>
+			<movementCooldownBase>400</movementCooldownBase></enemy>
 
 	</enemies>
 	

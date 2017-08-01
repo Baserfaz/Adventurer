@@ -3,6 +3,7 @@ package com.adventurer.gameobjects;
 import java.awt.Graphics;
 
 import com.adventurer.data.Coordinate;
+import com.adventurer.data.Equipment;
 import com.adventurer.data.Inventory;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.Session;
@@ -21,15 +22,17 @@ public class Player extends Actor {
 	
 	private LoSManager losmanager;
 	private Inventory inventory;
+	private Equipment equipment;
 	private Stats stats;
 	
 	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
 		// TODO: refactor damage... 
 		super(worldPos, tilePos, spritetype, Game.PLAYER_START_BASE_HEALTH, 1, 1, 1, "Player", 2);
 		
+		this.stats = new Stats();
 		this.losmanager = new LoSManager();
 		this.inventory = new Inventory(Game.START_KEY_COUNT, Game.START_BOMB_COUNT, Game.START_PROJECTILE_COUNT);
-		this.stats = new Stats();
+		this.equipment = new Equipment();
 		
 		// calculate health and damage from stats
 		updateStats();

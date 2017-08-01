@@ -63,10 +63,6 @@ public class Game extends Canvas implements Runnable {
 	
 	// player defaults
 	public static final int PLAYER_START_BASE_HEALTH	= 90;
-	public static final int START_KEY_COUNT         	= 1;
-	public static final int START_DIAMOND_KEY_COUNT	 	= 0;
-	public static final int START_BOMB_COUNT        	= 0;
-	public static final int START_PROJECTILE_COUNT  	= 0;
 	
 	// player stat defaults
 	public static final int DEFAULT_VITALITY_PLAYER 	= 5;
@@ -79,6 +75,13 @@ public class Game extends Canvas implements Runnable {
 	public static final int STRENGTH_TO_MELEE_DAMAGE_MULTIPLIER 	= 2;
 	public static final int DEXTERITY_TO_RANGED_DAMAGE_MULTIPLIER 	= 2;
 	public static final int INTELLIGENCE_TO_MAGIC_DAMAGE_MULTIPLIER = 2;
+	
+	// player inventory settings
+	public static final int DEFAULT_INVENTORY_MAX_SIZE = 12; 
+	public static final int START_KEY_COUNT         	= 1;
+	public static final int START_DIAMOND_KEY_COUNT	 	= 0;
+	public static final int START_BOMB_COUNT        	= 0;
+	public static final int START_PROJECTILE_COUNT  	= 0;
 	
 	// enemy settings
 	public static final boolean MAGGOTS_SPAWN_EGGS_ON_DEATH = false;

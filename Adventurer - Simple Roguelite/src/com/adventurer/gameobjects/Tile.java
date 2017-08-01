@@ -20,19 +20,19 @@ import com.adventurer.utilities.Util;
 public class Tile extends GameObject {
 
 	protected TileType type;
-	protected boolean inView = false;
+	protected boolean inView   = false;
 	protected boolean selected = false;
-	protected boolean lit = false;
+	protected boolean lit      = false;
 	protected boolean walkable = false;
 	
 	protected List<Item> items = null;
-	protected Actor actor = null;
+	protected Actor actor      = null;
 	protected List<VanityItem> vanityItems = new ArrayList<VanityItem>();
 	protected Node node;
 	
 	// tile falling effect
-	protected int targety = 0;
-	protected int fallingSpeed = 1;
+	protected int targety        = 0;
+	protected int fallingSpeed   = 1;
 	protected int fallingYOffset = 10;
 	
 	public Tile(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type) {
@@ -40,7 +40,7 @@ public class Tile extends GameObject {
 		this.type = type;
 		this.node = new Node();
 		items = new ArrayList<Item>();
-		if(this.type == TileType.Floor || this.type == TileType.Trap || this.type == TileType.Shrine) walkable = true;		
+		this.walkable = Util.isTileWalkable(this.type);	
 	}
 	
 	public void tick() {

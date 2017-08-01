@@ -1,19 +1,29 @@
 package com.adventurer.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.adventurer.gameobjects.Item;
 import com.adventurer.main.Game;
 
 public class Inventory {
 
-	private int keyCount, diamondKeyCount, bombCount, projectileCount;
+	private int keyCount, diamondKeyCount, bombCount, projectileCount, maxInventorySpace;
+	private List<Item> inventory = new ArrayList<Item>();
 	
 	public Inventory(int keys, int bombs, int projectiles) {
 		this.setKeyCount(keys);
 		this.setDiamondKeyCount(Game.instance.getCurrentSaveFile().getDiamondKeyCount()); 
 		this.setBombCount(bombs);
 		this.setProjectileCount(projectiles);
+		
+		this.maxInventorySpace = Game.DEFAULT_INVENTORY_MAX_SIZE;
 	}
 	
-	// TODO: equipment?
+	public void addToInventory(Item item) {
+		if(this.inventory.size() < this.maxInventorySpace) this.inventory.add(item);
+		else System.out.println("Inventory is full!");
+	}
 	
 	public void addDiamondKeyCount(int a) {
 		this.diamondKeyCount += a;
