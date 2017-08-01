@@ -21,7 +21,7 @@ public class Bomb extends Item {
 	private boolean alive = false;
 	
 	public Bomb(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int liveTime, int damage, BombType btype) {
-		super(worldPos, tilePos, spritetype);
+		super(worldPos, tilePos, spritetype, "Bomb");
 		this.alive = true;
 		this.damage = damage;
 		this.liveTimer = System.currentTimeMillis() + liveTime;
@@ -41,26 +41,7 @@ public class Bomb extends Item {
 			// add the current tile to the tiles list
 			tiles.add(World.instance.GetTileAtPosition(this.GetTilePosition()));
 			
-			//int gibAmount = Util.GetRandomInteger(4, 10);
-			//Tile currentTile = World.instance.GetTileAtPosition(this.GetTilePosition());
-			
-			// create gib effect
-			/*if(bombType == BombType.Normal) {
-				EffectCreator.CreateGibs(currentTile, gibAmount, SpriteType.BombGib01);
-			} else if(bombType == BombType.Gas){
-				EffectCreator.CreateGibs(currentTile, gibAmount, SpriteType.GasBarrelGib01);
-			}*/
-			
 			for(Tile tile : tiles) {
-				
-				//int amount = Util.GetRandomInteger(4, 10);
-				
-				// create smoke effect on tile.
-				/*if(bombType == BombType.Normal) {
-					EffectCreator.CreateSmokeEffect(tile, amount);
-				} else if(bombType == BombType.Gas) {
-					EffectCreator.CreateGasEffect(tile, amount);
-				}*/
 				
 				// Damage:
 				// 1. destructible tiles
@@ -69,9 +50,6 @@ public class Bomb extends Item {
 				if(tile instanceof DestructibleTile) {
 					
 					((DestructibleTile)tile).getTileHealth().TakeDamage(this.damage);
-				
-					// effects
-					//EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 7), SpriteType.Wall01Gib01);
 					
 				} else if(tile instanceof Door) {
 					
@@ -80,9 +58,8 @@ public class Bomb extends Item {
 						// dont do anything.
 						
 					} else {
-						// open door
+						
 						((Door) tile).Open();
-						//EffectCreator.CreateGibs(tile, Util.GetRandomInteger(3, 6), SpriteType.PotGib01);
 					}
 					
 				} else if(tile.GetActor() != null) DamageHandler.ActorTakeDamage(tile, damage);

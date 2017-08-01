@@ -83,7 +83,12 @@ public class World {
 		        createPlayer(tile);
 		        
 		        // create health shrine
-		        createHealthShrine(room.getTiles());
+		        Tile[] mods = createHealthShrine(room.getTiles());
+		        
+		        // mods[0] == shrine tile
+		        // mods[1] == removed tile
+		        room.getTiles().remove(mods[1]);
+		        room.getTiles().add(mods[0]);
 		        
 		        // Do not randomize anything.
 		        continue;
@@ -113,7 +118,7 @@ public class World {
                     } while(Util.isTileValid(tile) == false);
                     
                     // create chest
-                    if(tile != null) ItemCreator.CreateChest(tile, false, true);
+                    if(tile != null) ItemCreator.CreateChest(tile, true);
                     else System.out.println("Failed to create chest: no free tile available!");
                 }
             }
@@ -125,7 +130,7 @@ public class World {
 	
 	// ---------------------------
 	
-	private void createHealthShrine(List<Tile> tiles) {
+	private Tile[] createHealthShrine(List<Tile> tiles) {
 		
 		// get random valid tile
 		Tile tile = Util.getRandomTile(tiles);
@@ -144,6 +149,10 @@ public class World {
 		
 		// removes the old tile
 		tile.Remove();
+		
+		Tile[] modTiles = new Tile[] { shrine, tile };
+		
+		return modTiles;
 	}
 	
 	private void createPlayer(Tile spawnTile) {

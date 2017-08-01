@@ -105,6 +105,8 @@ public class Handler {
 
 	private void renderGUI(Graphics g) {
 		
+		// ---------------------- RENDERS INGAME GUI! ---------------------------
+		
 		// get player
 		Player player = ActorManager.GetPlayerInstance();
 		
@@ -137,6 +139,11 @@ public class Handler {
 	    int tileinfo_yPos = mousePosition.getY() - 10; //(int) cam.getMaxY() - 200;
 	    int tileinfo_xPos = mousePosition.getX() + 20; //(int) cam.getMaxX() - 200;
 	    Coordinate tileinfo_coord = new Coordinate(tileinfo_xPos, tileinfo_yPos);
+	    
+	    // inventory position
+	    int inventory_yPos = (int) cam.getMinY() + 25;
+	    int inventory_xPos = (int) cam.getMaxX() - 100;
+	    Coordinate inventory_coord = new Coordinate(inventory_xPos, inventory_yPos);
 	    
         // render dungeon name and level
 	    if(World.instance.getWorldType() == WorldType.Predefined) {
@@ -172,8 +179,47 @@ public class Handler {
             chainfo_coord, new Color(150, 150, 150), 12, g2d
         );
         
-        // render hover tile information.
-        // ---------------------------------------------------
+        // -------------------- INVENTORY START----------------------
+        
+        // get inventory items as string
+        String invItems = "";
+        int currentInvSpaces = player.getInventory().getInventoryItems().size();
+        int maxinvSpaces = player.getInventory().getMaxSize();
+        if(player.getInventory().getInventoryItems().isEmpty()) {
+        	
+        	// add '-' to fill the empty spaces.
+        	for(int i = 0; i < maxinvSpaces; i++) { invItems += "- \n"; }
+        	
+        } else {
+        	
+        	// first add the items into the list.
+        	for(Item item : player.getInventory().getInventoryItems()) { invItems += item.getName() + "\n"; }
+        	
+        	// then add '-' to fill the empty spaces.
+        	int count = maxinvSpaces - currentInvSpaces;
+        	for(int i = 0; i < count; i++) { invItems += "- \n"; }
+        }
+        
+        // render inventory tag
+        Renderer.renderString(
+        		"Inventory " + "(" + currentInvSpaces + "/" + player.getInventory().getMaxSize() + ")",
+        		inventory_coord, Color.white, 8, g2d
+        );
+        
+        // render inventory items.
+        Renderer.renderString("\n" + invItems, inventory_coord, Color.gray, 8, g2d);
+        
+        // -------------------- INVENTORY END -----------------------
+        
+        // -------------------- EQUIPMENT START ---------------------
+        
+        
+        // TODO: render equipment somewhere.
+        
+        
+        // -------------------- EQUIPMENT END -----------------------
+        
+        // -------------------- MOUSE HOVER -------------------------
         if(hoverTile != null) {
         	
         	// cache tile
@@ -208,7 +254,7 @@ public class Handler {
         	
         } else Renderer.renderString("", tileinfo_coord, new Color(150, 150, 150), 10, g2d);
         
-        // ---------------------------------------------------
+        // ------------------ MOUSE HOVER END ---------------------
 	}
 	
 	public void AddObject(GameObject go) { this.getObjects().add(go); }	

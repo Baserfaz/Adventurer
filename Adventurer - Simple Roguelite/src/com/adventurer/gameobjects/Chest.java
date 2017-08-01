@@ -1,9 +1,14 @@
 package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.adventurer.data.Coordinate;
+import com.adventurer.data.World;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Game;
+import com.adventurer.main.ItemCreator;
 import com.adventurer.main.SpriteCreator;
 import com.adventurer.utilities.Renderer;
 import com.adventurer.utilities.Util;
@@ -12,9 +17,21 @@ public class Chest extends Item {
 
 	private boolean locked = false;
 	
+	private List<Item> itemsInside = new ArrayList<Item>();
+	
 	public Chest(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, boolean locked) {
-		super(worldPos, tilePos, spritetype);
+		super(worldPos, tilePos, spritetype, "Chest");
 		this.locked = locked;
+		
+		// get current tile
+		Tile tile = World.instance.GetTileAtPosition(tilePos);
+		
+		// put item(s) inside the chest.
+		// TODO: now hardcoded to have one gold piece.
+		itemsInside.add(ItemCreator.createGold(tile, 1));
+		
+		// register to tile
+		World.instance.GetTileAtPosition(tilePos).AddItem(this);
 	}
 	
 	public void render(Graphics g) {
@@ -26,8 +43,20 @@ public class Chest extends Item {
 	}
 	
 	public void Open() {
+		
 		// Add score to the current session.
-		Game.instance.getCurrentSession().addScore(Util.GetRandomInteger(0, 5));
+		Game.instance.getCurrentSession().addScore(5);
+		
+		// get tile
+		Tile tile = World.instance.GetTileAtPosition(this.GetTilePosition());
+		
+		// dump all items onto ground
+		for(Item t : this.itemsInside) { t.moveItemTo(tile); }
+		
+		// empty the list of items.
+		this.itemsInside.clear();
+		
+		// remove chest
 		this.Remove();	
 	}
 	

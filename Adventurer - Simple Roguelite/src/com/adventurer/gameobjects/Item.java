@@ -7,18 +7,16 @@ import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Handler;
+import com.adventurer.utilities.Renderer;
+import com.adventurer.utilities.Util;
 
 public class Item extends GameObject {
 
 	protected String itemName;
 	
-	public Item(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
+	public Item(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, String name) {
 		super(worldPos, tilePos, spritetype);
-		
-		this.itemName = "";
-		
-		// register to tile
-		World.instance.GetTileAtPosition(tilePos).AddItem(this);
+		this.itemName = name;
 	}
 	
 	public void Remove() {
@@ -36,7 +34,22 @@ public class Item extends GameObject {
 		Hide();
 	}
 
+	public String getName() { return this.itemName; }
+	
+	public void moveItemTo(Tile tile) {
+		this.SetTilePosition(tile.GetTilePosition()); 
+		this.SetWorldPosition(tile.GetWorldPosition());
+		tile.AddItem(this);
+	}
+	
+	public void render(Graphics g) {
+		if(hidden == false) {
+			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
+		} else if(discovered == true && hidden == true) {
+			Renderer.RenderSprite(Util.tint(sprite, true), this.GetWorldPosition(), g);
+		}
+	}
+	
 	public void tick() {}
-	public void render(Graphics g) {}
 	public Rectangle GetBounds() { return null; }
 }

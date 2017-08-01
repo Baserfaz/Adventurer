@@ -1,6 +1,7 @@
 package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
+import java.util.List;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Equipment;
@@ -99,7 +100,31 @@ public class Player extends Actor {
 			// set off shrine
 			if(tile instanceof Shrine) ((Shrine)tile).activate();
 			
-			// TODO: open chests?
+			// pickup items
+			// TODO: now automatically picks up items.
+			if(tile.GetItems().isEmpty() == false) {
+				List<Item> temp = tile.GetItems();
+				for(Item i : temp) pickUpItem(i);
+			}
+			
+		} else if(Util.doesTileHaveChest(tile)) {
+		
+			// if there is chest on the tile.
+			Chest chest = Util.getChest(tile);
+			
+			if(chest.isLocked()) {
+			
+				if(this.getInventory().getKeyCount() > 0) {
+					
+					chest.Unlock();
+					this.getInventory().addKeys(-1);
+				}
+				
+			} else {
+				
+				chest.Open();
+				
+			}
 			
 		} else if(tile instanceof Door) {
 			
@@ -159,6 +184,19 @@ public class Player extends Actor {
 		} else if(tile.GetTileType() == TileType.DestructibleTile) {
 			// TODO: interaction with destructible tiles.
 		}
+	}
+	
+	private void pickUpItem(Item item) {
+		
+		// add the item to inventory
+		// --> checks automatically inventory size.
+		this.inventory.addToInventory(item);
+		
+		Handler.instance.RemoveObject(this);
+		Hide();
+		
+		// hide the item and remove it from "tick".
+		//item.Remove();
 	}
 	
 	public void updateStats() {

@@ -39,6 +39,8 @@ public class Inventory {
 	public void setProjectileCount(int projectileCount) { this.projectileCount = projectileCount; }
 	public void setDiamondKeyCount(int diamondKeyCount) { this.diamondKeyCount = diamondKeyCount; }
 	
+	public int getMaxSize() { return this.maxInventorySpace; }
+	public List<Item> getInventoryItems() { return this.inventory; }
 	public int getKeyCount() { return keyCount; }
 	public int getBombCount() { return bombCount; }
 	public int getProjectileCount() { return projectileCount; }

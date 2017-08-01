@@ -15,7 +15,9 @@ import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.RoomType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
+import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.Door;
+import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Portal;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.main.Game;
@@ -179,8 +181,25 @@ public class Util {
 		else return false;
 	}
 	
+	public static boolean doesTileHaveChest(Tile tile) {
+		if(tile.GetItems().isEmpty()) return false;
+		for(Item item : tile.GetItems()) { if(item instanceof Chest) return true; }
+		return false;
+	}
+	
+	public static Chest getChest(Tile tile) {
+		Chest chest = null;
+		for(Item item : tile.GetItems()) { 
+			if(item instanceof Chest) {
+				chest = (Chest) item;
+				break;
+			}
+		}
+		return chest;
+	}
+	
 	public static boolean isTileValid(Tile tile) {
-	    if(tile.isWalkable() && tile.GetActor() == null) return true;
+	    if(tile.isWalkable() && tile.GetActor() == null && doesTileHaveChest(tile) == false) return true;
 	    else return false;
 	}
 	
