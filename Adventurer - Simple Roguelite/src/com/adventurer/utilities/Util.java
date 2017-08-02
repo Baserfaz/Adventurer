@@ -18,6 +18,7 @@ import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Item;
+import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Portal;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.main.Game;
@@ -134,6 +135,12 @@ public class Util {
 		 boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
 		 WritableRaster raster = bi.copyData(null);
 		 return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+	}
+	
+	public static Coordinate calculateCameraPos(Player player) {
+        int x = ((-player.GetWorldPosition().getX() * Game.CAMERAZOOM) - (Game.SPRITESIZE - Game.WIDTH / 2)) / Game.CAMERAZOOM;
+        int y = ((-player.GetWorldPosition().getY() * Game.CAMERAZOOM) - (Game.SPRITESIZE - Game.HEIGHT / 2)) / Game.CAMERAZOOM;
+	    return new Coordinate(x, y);
 	}
 	
 	// ------------------------ STAT CALCULATIONS ---------------------

@@ -11,10 +11,7 @@ public class KeyInput extends KeyAdapter {
 	public KeyInput() {}
 	
 	public void keyPressed(KeyEvent e) {
-	    
 		GameState currentState = Game.instance.getGameState();
-		
-		// ---------------- AWESOME KEY SCRIPTS ------------------
 	    if(currentState == GameState.InGame || currentState == GameState.Ready) inGameKeys(e);
 	}
 	
@@ -23,40 +20,24 @@ public class KeyInput extends KeyAdapter {
 		int key = e.getKeyCode();
 		
 		// when loading is finished, wait for player input to start game.
-		if(Game.instance.getGameState() == GameState.Ready && key != KeyEvent.CHAR_UNDEFINED) {
+		if(Game.instance.getGameState() == GameState.Ready) {
 		    Game.instance.setGameState(GameState.InGame);
 		    return;
 		}
 		
 		Player player = ActorManager.GetPlayerInstance();
-		
 		if(player.getHealth().isDead()) return;
 		
 		// -------------- HANDLE INPUTS ------------------
 		
 		// movement
-		if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) {
-			
-			player.Move(Direction.North);
-				
-		} else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) {
-			
-			player.Move(Direction.South);
-			
-		} else if(key == KeyEvent.VK_A || key == KeyEvent.VK_NUMPAD4) {
-			
-			player.Move(Direction.West);
-			
-		} else if(key == KeyEvent.VK_D || key == KeyEvent.VK_NUMPAD6) {
-			
-			player.Move(Direction.East);
-
-		}
+		if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) player.Move(Direction.North);
+		else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) player.Move(Direction.South);
+		else if(key == KeyEvent.VK_A || key == KeyEvent.VK_NUMPAD4) player.Move(Direction.West);
+		else if(key == KeyEvent.VK_D || key == KeyEvent.VK_NUMPAD6) player.Move(Direction.East);
 		
 		// drop item
-		if(key == KeyEvent.VK_R) {
-			player.dropItem();
-		}
+		if(key == KeyEvent.VK_R) player.dropItem();
 		
 		// bomb
 		/*if(key == KeyEvent.VK_SPACE) {
@@ -65,8 +46,7 @@ public class KeyInput extends KeyAdapter {
 		}*/
 		
 		// shoot
-		/*
-		if(key == KeyEvent.VK_SHIFT) {
+		/*if(key == KeyEvent.VK_SHIFT) {
 			player.Shoot(player.GetTilePosition(), player.GetLookDirection(), SpriteType.Arrow01);
 		}*/
 	}
