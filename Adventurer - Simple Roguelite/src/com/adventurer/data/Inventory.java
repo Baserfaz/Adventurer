@@ -6,6 +6,7 @@ import java.util.List;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Item;
+import com.adventurer.gameobjects.Key;
 import com.adventurer.main.Game;
 import com.adventurer.main.ItemCreator;
 
@@ -26,6 +27,17 @@ public class Inventory {
 	public void addToInventory(Item item) {
 		if(this.inventory.size() < this.maxInventorySpace) this.inventory.add(item);
 		else System.out.println("Inventory is full!");
+	}
+	
+	public Key getKey(KeyType keyType) {
+		Key key = null;
+		for(Item item : inventory) {
+			if(item instanceof Key && ((Key)item).getKeyType() == keyType) {
+				key = (Key) item;
+				break;
+			}
+		}
+		return key;
 	}
 	
 	public void removeItemFromInventory(Item item) { this.inventory.remove(item); }

@@ -14,6 +14,7 @@ import com.adventurer.data.World;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.GameState;
+import com.adventurer.enumerations.KeyType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;
@@ -115,12 +116,13 @@ public class Player extends Actor {
 			
 			if(chest.isLocked()) {
 			
-				/*if(this.getInventory().getKeyCount() > 0) {
-					chest.Unlock();
-					this.getInventory().addKeys(-1);
-				}*/
+				Key key = inventory.getKey(KeyType.Normal);
 				
-				chest.Unlock();
+				if(key != null) {
+					chest.Unlock();
+					inventory.removeItemFromInventory(key);
+					key.Remove();
+				}
 				
 			} else {
 				
@@ -134,21 +136,23 @@ public class Player extends Actor {
 			
 			if(door.isLocked() && door.getDoorType() == DoorType.Normal && door.GetTileType() == TileType.LockedDoor) {
 				
-				/*if(inventory.getKeyCount() > 0) {
-					door.Unlock();
-					inventory.addKeys(-1);
-				}*/
+				Key key = inventory.getKey(KeyType.Normal);
 				
-				door.Unlock();
+				if(key != null) {
+					door.Unlock();
+					inventory.removeItemFromInventory(key);
+					key.Remove();
+				}
 				
 			} else if(door.isLocked() && door.getDoorType() == DoorType.Diamond) {
 			
-				/*if(inventory.getDiamondKeyCount() > 0) {
-					door.Unlock();
-					inventory.addDiamondKeyCount(-1);
-				}*/
+				Key key = inventory.getKey(KeyType.Diamond);
 				
-				door.Unlock();
+				if(key != null) {
+					door.Unlock();
+					inventory.removeItemFromInventory(key);
+					key.Remove();
+				}
 				
 			} else if(door.isLocked() == false) door.Open();
 			
