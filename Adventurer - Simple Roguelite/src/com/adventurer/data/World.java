@@ -209,12 +209,14 @@ public class World {
     				case 'E': tile = new Portal(worldPos, tilePos, SpriteType.Portal02, TileType.Portal, true); break;
     				case 'D': tile = new Door(worldPos, tilePos, SpriteType.LockedDoorDiamond01, TileType.LockedDoor, true, DoorType.Diamond); break;
     				case 'c': tile = new Tile(worldPos, tilePos, SpriteType.Floor01, TileType.Floor); break;
+    				case 'l': tile = new Tile(worldPos, tilePos, SpriteType.Floor01, TileType.Floor); break;
     				default: System.out.println("INVALID CHARACTER AT CreatePredefinedMap."); new Exception().printStackTrace(); System.exit(1); break;
 				}
 				
 				// secondly creates items on top of tiles
 				switch(mapChar) {
-					case 'c': tile.AddItem(ItemCreator.CreateChest(tile, false)); break;
+					case 'c': ItemCreator.CreateChest(tile, false); break;
+					case 'l': ItemCreator.CreateChest(tile, true); break;
 					default: break;
 				}
 				

@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Game;
