@@ -55,6 +55,8 @@ public class Handler {
 	// 5. effects
 	// 6. GUI
 	
+	// TODO: move some of these to Renderer, mainly renderGUI() ?
+	
 	public void render(Graphics g) {
 		renderTiles(g);
 		renderVanityItems(g);
@@ -151,7 +153,6 @@ public class Handler {
 	    Coordinate equipment_coord = new Coordinate(equipment_xPos, equipment_yPos);
 	    
 	    // end calc
-	    
 	    
 	    // -------------- LOCATION ---------------------
 	    // render location tag.
@@ -279,9 +280,9 @@ public class Handler {
         	String txt = String.format("Pos: %s\nTile: %s\nActor: %s\nItem: %s", 
         					cachedTile.GetTilePosition().toString(), tileinfo, actorinfo, iteminfo);
         	
-        	Renderer.renderString(txt, tileinfo_coord, Color.gray, 10, g2d);
+        	Renderer.renderString(txt, tileinfo_coord, Color.white, 8, g2d);
         	
-        } else Renderer.renderString("", tileinfo_coord, Color.gray, 10, g2d);
+        } else Renderer.renderString("", tileinfo_coord, Color.white, 8, g2d);
 	}
 	
 	public void AddObject(GameObject go) { this.getObjects().add(go); }	

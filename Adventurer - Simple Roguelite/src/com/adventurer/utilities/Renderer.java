@@ -116,6 +116,7 @@ public class Renderer {
         // zoom
         g2d.scale(Game.CAMERAZOOM, Game.CAMERAZOOM);
         
+        // TODO: CAMERA STUFF SHOULD NOT BE HERE!
         // camera follow
         Player player = ActorManager.GetPlayerInstance();
         if(player != null) {
@@ -144,7 +145,6 @@ public class Renderer {
         Handler.instance.render(g); 
 	}
 	
-	
 	// https://stackoverflow.com/questions/11367324/how-do-i-scale-a-bufferedimage
 	private static BufferedImage getScaledImage(BufferedImage sprite, int w, int h){
 	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
@@ -159,9 +159,7 @@ public class Renderer {
 		g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 	}
 	
-	public static void FillScreenWithImage(Graphics g, Image img) {
-		g.drawImage(img, 0, 0, Game.WIDTH, Game.HEIGHT, null);
-	}
+	public static void FillScreenWithImage(Graphics g, Image img) { g.drawImage(img, 0, 0, Game.WIDTH, Game.HEIGHT, null);}
 	
 	public static void RenderSpriteWithBorder(BufferedImage sprite, Coordinate pos, Graphics g, Color borderColor) {
 		BufferedImage img = Util.highlightTileBorders(sprite, borderColor);
@@ -174,7 +172,7 @@ public class Renderer {
 	}
 	
 	// render without rotation
-	public static void RenderSprite(BufferedImage sprite, Coordinate pos, Graphics g) {
+	public static void RenderSprite(BufferedImage sprite, Coordinate pos, Graphics g) { 
 		g.drawImage(sprite, pos.getX(), pos.getY(), Game.SPRITESIZE, Game.SPRITESIZE, null);
 	}
 	
@@ -207,7 +205,8 @@ public class Renderer {
 		g2d.rotate(-rot, xcenter, ycenter);
 	}
 	
-	public static void renderButton(String txt, Coordinate pos, Coordinate size, Color fontCol, Color rectColor, int fontSize, boolean fill, Graphics2D g2d) {
+	public static void renderButton(String txt, Coordinate pos, 
+			Coordinate size, Color fontCol, Color rectColor, int fontSize, boolean fill, Graphics2D g2d) {
 		
 		// font
         Font font = new Font("Consolas", Font.PLAIN, fontSize);
