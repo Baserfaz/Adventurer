@@ -163,7 +163,11 @@ public class Tile extends GameObject {
 	}
 	
 	public void Remove() {
-		if(this.items.isEmpty() == false) for(Item item : this.items) item.Remove();
+		if(this.items.isEmpty() == false) {
+			List<Item> temp = new ArrayList<Item>(this.items);
+			for(Item item : temp) item.Remove();
+		}
+		
 		if(this.GetActor() != null && this.GetActor() instanceof Player == false) this.GetActor().Remove();
 		
 		if(this.GetVanityItems().size() > 0) {
