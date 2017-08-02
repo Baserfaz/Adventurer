@@ -2,7 +2,6 @@ package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
 
-import com.adventurer.data.Coordinate;
 import com.adventurer.data.Health;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.utilities.Renderer;
@@ -13,8 +12,8 @@ public class DestructibleItem extends Item {
 	private Health health;
 	private boolean alive = true;
 	
-	public DestructibleItem(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int health) {
-		super(worldPos, tilePos, spritetype, "Destructible Item");
+	public DestructibleItem(Tile tile, SpriteType spritetype, int health) {
+		super(tile, spritetype, "Destructible Item");
 		this.setHealth(new Health(health));
 	}
 

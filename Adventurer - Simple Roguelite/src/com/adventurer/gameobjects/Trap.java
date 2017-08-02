@@ -16,8 +16,8 @@ public class Trap extends Tile {
 	private int damage = 0;
 	private TrapType trapType;
 	
-	public Trap(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType tiletype, TrapType traptype, int damage) {
-		super(worldPos, tilePos, spritetype, tiletype);
+	public Trap(Tile tile, SpriteType spritetype, TileType tiletype, TrapType traptype, int damage) {
+		super(tile.GetWorldPosition(), tile.GetTilePosition(), spritetype, tiletype);
 		
 		this.setDamage(damage);
 		this.trapType = traptype;
@@ -100,7 +100,7 @@ public class Trap extends Tile {
 		else if(randomDir == Direction.West) projectileDir = Direction.East;
 		
 		// 2.2 shoot an arrow
-		new Projectile(current.GetWorldPosition(), current.GetTilePosition(), SpriteType.Arrow01, this.damage, projectileDir);
+		new Projectile(current, SpriteType.Arrow01, this.damage, projectileDir);
 	}
 	
 	public int getDamage() { return damage; }

@@ -434,10 +434,10 @@ public class World {
 			
 			switch(randTrapType) {
 			case Projectile:
-				newTile = new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.Trap, TrapType.Projectile, 100);
+				newTile = new Trap(old, SpriteType.TrapTile01, TileType.Trap, TrapType.Projectile, 100);
 				break;
 			case Gas:
-				newTile = new Trap(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.TrapTile01, TileType.Trap, TrapType.Gas, 25);
+				newTile = new Trap(old, SpriteType.TrapTile01, TileType.Trap, TrapType.Gas, 25);
 				break;
 			}
 		

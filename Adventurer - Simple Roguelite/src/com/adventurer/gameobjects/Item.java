@@ -3,7 +3,6 @@ package com.adventurer.gameobjects;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Handler;
@@ -14,8 +13,8 @@ public class Item extends GameObject {
 
 	protected String itemName;
 	
-	public Item(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, String name) {
-		super(worldPos, tilePos, spritetype);
+	public Item(Tile tile, SpriteType spritetype, String name) {
+		super(tile.GetWorldPosition(), tile.GetTilePosition(), spritetype);
 		this.itemName = name;
 	}
 	

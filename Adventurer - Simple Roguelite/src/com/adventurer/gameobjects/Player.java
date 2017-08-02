@@ -33,7 +33,7 @@ public class Player extends Actor {
 		
 		this.stats = new Stats();
 		this.losmanager = new LoSManager();
-		this.inventory = new Inventory(Game.START_KEY_COUNT, Game.START_BOMB_COUNT, Game.START_PROJECTILE_COUNT);
+		this.inventory = new Inventory(this);
 		this.equipment = new Equipment();
 		
 		// calculate health and damage from stats
@@ -115,10 +115,12 @@ public class Player extends Actor {
 			
 			if(chest.isLocked()) {
 			
-				if(this.getInventory().getKeyCount() > 0) {
+				/*if(this.getInventory().getKeyCount() > 0) {
 					chest.Unlock();
 					this.getInventory().addKeys(-1);
-				}
+				}*/
+				
+				chest.Unlock();
 				
 			} else {
 				
@@ -132,17 +134,21 @@ public class Player extends Actor {
 			
 			if(door.isLocked() && door.getDoorType() == DoorType.Normal && door.GetTileType() == TileType.LockedDoor) {
 				
-				if(inventory.getKeyCount() > 0) {
+				/*if(inventory.getKeyCount() > 0) {
 					door.Unlock();
 					inventory.addKeys(-1);
-				}
+				}*/
+				
+				door.Unlock();
 				
 			} else if(door.isLocked() && door.getDoorType() == DoorType.Diamond) {
 			
-				if(inventory.getDiamondKeyCount() > 0) {
+				/*if(inventory.getDiamondKeyCount() > 0) {
 					door.Unlock();
 					inventory.addDiamondKeyCount(-1);
-				}
+				}*/
+				
+				door.Unlock();
 				
 			} else if(door.isLocked() == false) door.Open();
 			

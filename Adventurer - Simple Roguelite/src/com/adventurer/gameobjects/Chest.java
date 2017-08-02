@@ -19,7 +19,7 @@ public class Chest extends Item {
 	private List<Item> itemsInside = new ArrayList<Item>();
 	
 	public Chest(Tile tile, SpriteType spritetype, boolean locked) {
-		super(tile.GetWorldPosition(), tile.GetTilePosition(), spritetype, "Chest");
+		super(tile, spritetype, "Chest");
 		this.locked = locked;
 		
 		// put item(s) inside the chest.

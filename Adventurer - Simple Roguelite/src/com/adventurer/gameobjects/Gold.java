@@ -1,14 +1,13 @@
 package com.adventurer.gameobjects;
 
-import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.SpriteType;
 
 public class Gold extends Item {
 
 	private int amount = 0;
 	
-	public Gold(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int amount) {
-		super(worldPos, tilePos, spritetype, "Gold");
+	public Gold(Tile tile, SpriteType spritetype, int amount) {
+		super(tile, spritetype, "Gold");
 		this.amount = amount;
 	}
 

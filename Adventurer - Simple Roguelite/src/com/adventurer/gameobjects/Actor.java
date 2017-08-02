@@ -140,15 +140,11 @@ public class Actor extends GameObject {
 			
 			if(this instanceof Player) {
 				
-				Player player = (Player) this;
-				Inventory inv = player.getInventory();
+				/*Player player = (Player) this;
+				Inventory inv = player.getInventory();*/
 				
-				if(inv.getBombCount() > 0) {
-					new Bomb(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Bomb01, 1500, 300, BombType.Normal);
-					inv.addBombs(-1);
-				} else {
-					// TODO: ERROR EFFECT FOR NO BOMBS!
-				}
+				// TODO: bombs?
+				
 				
 			} else if(this instanceof Enemy) {
 				
@@ -172,7 +168,9 @@ public class Actor extends GameObject {
 		
 		if(this instanceof Player) {
 			
-			Player player = (Player) this;
+			// TODO: player shoot 
+			
+			/*Player player = (Player) this;
 			Inventory inv = player.getInventory();
 			
 			if(inv.getProjectileCount() > 0) {
@@ -181,13 +179,13 @@ public class Actor extends GameObject {
 				new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), projSpriteType, rangedDamage, direction);
 				
 				inv.addProjectiles(-1);
-			}
+			}*/
 			
 		} else {
 			
 			// enemies who can shoot dont lose projectiles.
 			Tile projStartTile = World.instance.GetTileAtPosition(originTilePos);
-			new Projectile(projStartTile.GetWorldPosition(), projStartTile.GetTilePosition(), projSpriteType, rangedDamage, direction);
+			new Projectile(projStartTile, projSpriteType, rangedDamage, direction);
 			
 		}
 	}
@@ -236,6 +234,8 @@ public class Actor extends GameObject {
 	public void Move(Direction dir) {}
 	
 	public String toString() { return this.name; }
+	
+	public Tile getCurrentTile() { return World.instance.GetTileAtPosition(this.GetTilePosition()); }
 	
 	public Direction GetLookDirection() { return this.lookDir; }
 	public void SetLookDirection(Direction dir) { this.lookDir = dir; }	

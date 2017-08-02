@@ -20,8 +20,8 @@ public class Bomb extends Item {
 	private long liveTimer = 0;
 	private boolean alive = false;
 	
-	public Bomb(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int liveTime, int damage, BombType btype) {
-		super(worldPos, tilePos, spritetype, "Bomb");
+	public Bomb(Tile tile, SpriteType spritetype, int liveTime, int damage, BombType btype) {
+		super(tile, spritetype, "Bomb");
 		this.alive = true;
 		this.damage = damage;
 		this.liveTimer = System.currentTimeMillis() + liveTime;
