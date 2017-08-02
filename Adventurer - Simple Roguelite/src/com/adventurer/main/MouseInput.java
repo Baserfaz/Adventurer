@@ -20,6 +20,25 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 	
 	private Tile hoveringTile = null;
 	
+	public void mousePressed(MouseEvent e) {
+	    if(Game.instance.getGameState() == GameState.MainMenu && e.getButton() == MouseEvent.BUTTON1) mousePressedInMainMenu(e);
+	}
+	
+	public void mouseMoved(MouseEvent e) {
+		GameState currentState = Game.instance.getGameState();
+		if(currentState == GameState.InGame) mouseHoverInGame(e);
+		else if(currentState == GameState.MainMenu) mouseHoverInMainMenu(e);
+	}
+	
+	// not used mouse stuff...
+	public void mouseEntered(MouseEvent e) {}
+	public void mouseDragged(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {}
+	
+	// ------------------------ HELPER FUNCTIONS -------------------------------
+	
 	private Coordinate calculateMousePosition(MouseEvent e) {
 		
 		int mouseX = e.getX();
@@ -36,56 +55,39 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 		return new Coordinate(x, y);
 	}
 	
-	public void mousePressed(MouseEvent e) {
-		
-		// run this only when the mainmenu is open.
-	    if(Game.instance.getGameState() == GameState.MainMenu) {
-	    	
-	    	// calculate mouse position.
-	    	Coordinate pos = new Coordinate(e.getX(), e.getY());
-	    	
-	    	// play-button
-	    	Coordinate play_pos = new Coordinate(Game.WIDTH/5, 250);
-	    	Coordinate play_size = new Coordinate(200, 50);
-	    	Rectangle playRect = new Rectangle(play_pos.getX(), play_pos.getY(), play_size.getX(), play_size.getY());
-	    	
-	    	// exit-button
-	    	Coordinate exit_pos = new Coordinate(Game.WIDTH/5, 350);
-	    	Coordinate exit_size = new Coordinate(200, 50);
-	    	Rectangle exitRect = new Rectangle(exit_pos.getX(), exit_pos.getY(), exit_size.getX(), exit_size.getY());
-	    	
-	    	// create mouse point
-	    	Point mousepoint = new Point(pos.getX(), pos.getY());
-	    	
-	    	// check if we pressed play or exit buttons.
-	    	if(playRect.contains(mousepoint)) {
-	    		
-	    		// start the game, hooray!
-	    		Game.instance.startGame();
-	    		
-	        	// set cursor to default.
-	        	Game.instance.getWindow().getFrame().setCursor(Cursor.DEFAULT_CURSOR);
-	    		
-	    	} else if(exitRect.contains(mousepoint)) System.exit(0);
-	    }
-	}
-	
-	public void mouseMoved(MouseEvent e) {
-	
-		GameState currentState = Game.instance.getGameState();
-		
-		// ---------------- AWESOME MOUSE HOVER SCRIPTS ------------------
-		if(currentState == GameState.InGame) mouseHoverInGame(e);
-		else if(currentState == GameState.MainMenu) mouseHoverInMainMenu(e);
+	private void mousePressedInMainMenu(MouseEvent e) {
+
+    	// calculate mouse position.
+    	Coordinate pos = new Coordinate(e.getX(), e.getY());
+    	
+    	// play-button
+    	Coordinate play_pos = new Coordinate(Game.WIDTH/5, 250);
+    	Coordinate play_size = new Coordinate(200, 50);
+    	Rectangle playRect = new Rectangle(play_pos.getX(), play_pos.getY(), play_size.getX(), play_size.getY());
+    	
+    	// exit-button
+    	Coordinate exit_pos = new Coordinate(Game.WIDTH/5, 350);
+    	Coordinate exit_size = new Coordinate(200, 50);
+    	Rectangle exitRect = new Rectangle(exit_pos.getX(), exit_pos.getY(), exit_size.getX(), exit_size.getY());
+    	
+    	// create mouse point
+    	Point mousepoint = new Point(pos.getX(), pos.getY());
+    	
+    	// check if we pressed play or exit buttons.
+    	if(playRect.contains(mousepoint)) {
+    		
+    		// start the game, hooray!
+    		Game.instance.startGame();
+    		
+        	// set cursor to default.
+        	Game.instance.getWindow().getFrame().setCursor(Cursor.DEFAULT_CURSOR);
+    		
+    	} else if(exitRect.contains(mousepoint)) System.exit(0);
 	}
 	
 	private void mouseHoverInMainMenu(MouseEvent e) {
 		
-		// 1. Change the cursor to pointer when hovering over buttons.
-		// 2. ????
-		// 3. Profit.
-		
-		// TODO: refactor -> uses same code as mousePressed()
+		// Change the cursor to pointer when hovering over buttons.
 		
 		// calculate mouse position.
     	Coordinate pos = new Coordinate(e.getX(), e.getY());
@@ -163,11 +165,4 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 			Handler.instance.setHoverTile(null);
 		}
 	}
-	
-	// not used mouse stuff...
-	public void mouseEntered(MouseEvent e) {}
-	public void mouseDragged(MouseEvent e) {}
-	public void mouseClicked(MouseEvent e) {}
-	public void mouseReleased(MouseEvent e) {}
-	public void mouseExited(MouseEvent e) {}
 }
