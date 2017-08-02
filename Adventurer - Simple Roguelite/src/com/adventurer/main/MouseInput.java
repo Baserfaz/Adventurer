@@ -23,10 +23,10 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 		int mouseY = e.getY();
 		
 		if(Camera.instance == null) return null;
-			
+		
 		Rectangle camera = Camera.instance.getCameraBounds();
 		
-		// works fine with all camerazoom!
+		// calculate position
 		int x = (mouseX / Game.CAMERAZOOM + camera.x);
 		int y = (mouseY / Game.CAMERAZOOM + camera.y);
 		
@@ -35,31 +35,37 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 	
 	public void mousePressed(MouseEvent e) {
 		
-	    /*if(Game.instance.getGameState() == GameState.Loading) return;
-	    
-		if(e.getButton() == MouseEvent.BUTTON1) {
-			
-			Coordinate pos = calculateMousePosition(e);
-			
-			for(Tile tile : World.instance.GetTiles()) {
-				if(tile.isInView()) {
-					if(Game.CALCULATE_PLAYER_LOS == false || tile.isDiscovered()) {
-						if(tile.GetBounds().contains(new Point(pos.getX(), pos.getY()))) {
-							tile.toggleSelect();
-							System.out.println(tile.GetInfo());
-						}
-					}
-				}
-			}
-		}*/
+		// run this only when the mainmenu is open.
+	    if(Game.instance.getGameState() == GameState.MainMenu) {
+	    	
+	    	// calculate mouse position.
+	    	Coordinate pos = new Coordinate(e.getX(), e.getY());
+	    	
+	    	// play-button
+	    	Coordinate play_pos = new Coordinate(Game.WIDTH/5, 250);
+	    	Coordinate play_size = new Coordinate(200, 50);
+	    	Rectangle playRect = new Rectangle(play_pos.getX(), play_pos.getY(), play_size.getX(), play_size.getY());
+	    	
+	    	// exit-button
+	    	Coordinate exit_pos = new Coordinate(Game.WIDTH/5, 350);
+	    	Coordinate exit_size = new Coordinate(200, 50);
+	    	Rectangle exitRect = new Rectangle(exit_pos.getX(), exit_pos.getY(), exit_size.getX(), exit_size.getY());
+	    	
+	    	// create mouse point
+	    	Point mousepoint = new Point(pos.getX(), pos.getY());
+	    	
+	    	// check if we pressed play or exit buttons.
+	    	if(playRect.contains(mousepoint)) Game.instance.startGame();
+	    	else if(exitRect.contains(mousepoint)) System.exit(0);
+	    }
 	}
 	
 	public void mouseMoved(MouseEvent e) {
 	
-		// AWESOME MOUSE HOVER SCRIPT
+		// ---------------- AWESOME MOUSE HOVER SCRIPT ------------------
 		
 		// only allow hover when in game.
-		if(Game.instance.getGameState() == GameState.Loading) return;
+		if(Game.instance.getGameState() != GameState.InGame) return;
 		
 		// get the mouse position in correct coordinates.
 		Coordinate pos = calculateMousePosition(e);

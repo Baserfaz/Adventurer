@@ -101,7 +101,7 @@ public class Renderer {
         if(fill) { g2d.fillRect(x, y, width, height); }
         
         // calculate text position inside the button
-        Coordinate txtpos = new Coordinate(x, y);
+        Coordinate txtpos = new Coordinate(x + width/2 - 25, y + height/2 - 20);
         
         // render string
         Renderer.renderString(txt, txtpos, fontCol, fontSize, g2d);

@@ -132,6 +132,7 @@ public class Game extends Canvas implements Runnable {
 		// create object handler
 		new Handler();
 		
+		// create new keyInput.
 		KeyInput keyInput = new KeyInput();
 		
 		// create key listener for inputs.
@@ -158,15 +159,13 @@ public class Game extends Canvas implements Runnable {
 		// reads the actual permanent save file and
 		// which has the data.
 		setCurrentSaveFile(new SaveFile());
-		
-		// TODO: draw main menu
-		
+
+		// --> we render main menu 
+		// and when play is pressed
+		// run Game.instance.startGame().
 	}
 	
-	private void startGame() {
-		
-		
-		// create lobby
+	public void startGame() {
 		if(START_GAME_WITH_RANDOM_ROOM) new World(ROOM_COUNT);
 		else createLobby();
 	}
@@ -275,21 +274,25 @@ public class Game extends Canvas implements Runnable {
 	    // render bg image
 		Renderer.FillScreenWithImage(g, backgroundImage);
 	    
+		// the position of all GUI elements
+		// --> cleaner look.
+		int xPos = Game.WIDTH / 5;
+		
         // title
         Renderer.renderString(
         		"Adventurer - Roguelike",
-                new Coordinate(Game.WIDTH / 3, 100), Color.black, 36, g2d);
+                new Coordinate(xPos, 100), Color.white, 36, g2d);
         
         // creator info
         Renderer.renderString(
         		"by Heikki Heiskanen",
-                new Coordinate(Game.WIDTH / 3, 150), Color.gray, 21, g2d);
+                new Coordinate(xPos, 150), Color.white, 21, g2d);
         
         // draw play button
-        Renderer.renderButton("Play", new Coordinate(Game.WIDTH / 3, 250), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
+        Renderer.renderButton("Play", new Coordinate(xPos, 250), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
         
         // draw exit button
-        Renderer.renderButton("Exit", new Coordinate(Game.WIDTH / 3, 350), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
+        Renderer.renderButton("Exit", new Coordinate(xPos, 350), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
 	}
 	
 	private void renderLoading(Graphics g) {
