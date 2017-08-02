@@ -48,5 +48,6 @@ public class Window extends Canvas {
 		game.Start();
 	}
 	
+	public JFrame getFrame() { return this.frame; }
 	public void SetCustomTitle(String text) { frame.setTitle(title + ", " + text); }
 }

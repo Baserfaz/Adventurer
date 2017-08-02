@@ -393,17 +393,14 @@ public class Game extends Canvas implements Runnable {
 	private void tick() { Handler.instance.tick(); }
 	public static void main(String args[]) { new Game(); }
 	
+	public Window getWindow() { return this.window; }
+	
 	public GameState getGameState() { return this.gameState; }
 	public void setGameState(GameState state) { this.gameState = state; }
 	
 	public SaveFile getCurrentSaveFile() { return currentSaveFile; }
 	public void setCurrentSaveFile(SaveFile currentSaveFile) { this.currentSaveFile = currentSaveFile; }
 
-    public Session getCurrentSession() {
-        return currentSession;
-    }
-
-    public void setCurrentSession(Session currentSession) {
-        this.currentSession = currentSession;
-    }
+    public Session getCurrentSession() { return currentSession; }
+    public void setCurrentSession(Session currentSession) { this.currentSession = currentSession; }
 }

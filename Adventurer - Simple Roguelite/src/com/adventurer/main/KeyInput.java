@@ -12,9 +12,13 @@ public class KeyInput extends KeyAdapter {
 	
 	public void keyPressed(KeyEvent e) {
 	    
-	    // when game is loading, don't allow key presses.
-	    if(Game.instance.getGameState() == GameState.Loading) return;
-	    
+		GameState currentState = Game.instance.getGameState();
+		
+		// ---------------- AWESOME KEY SCRIPTS ------------------
+	    if(currentState == GameState.InGame || currentState == GameState.Ready) inGameKeys(e);
+	}
+	
+	private void inGameKeys(KeyEvent e) {
 		// get the pressed key 
 		int key = e.getKeyCode();
 		
