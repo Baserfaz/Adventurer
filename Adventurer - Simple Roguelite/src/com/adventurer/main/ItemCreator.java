@@ -19,15 +19,23 @@ public class ItemCreator {
 	public static Key createKey(Tile tile, KeyType keyType) {
 		
 		String name = "";
+		SpriteType type = null;
 		
-		if(keyType == KeyType.Normal) name = "Key";
-		else if (keyType == KeyType.Diamond) name = "Diamond key";
-		else name = "???? KEY ????";
+		if(keyType == KeyType.Normal) {
+			name = "Normal Key";
+			type = SpriteType.Key;
+		} else if (keyType == KeyType.Diamond) {
+			name = "Diamond key";
+			type = SpriteType.DiamondKey;
+		} else {
+			name = "???? KEY ????";
+			type = SpriteType.Key;
+		}
 		
-		return new Key(tile, SpriteType.GenericItem, name, keyType);
+		return new Key(tile, type, name, keyType);
 	}
 	
 	public static Gold createGold(Tile tile, int amount) {
-		return new Gold(tile, SpriteType.GenericItem, amount);
+		return new Gold(tile, SpriteType.Gold01, amount);
 	}
 }

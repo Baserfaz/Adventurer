@@ -39,6 +39,9 @@ public enum SpriteType {
     LockedChest02,
     
     GenericItem,
+    Gold01,
+    Key,
+    DiamondKey,
     
     Bomb01,
     Spear01,
@@ -46,38 +49,4 @@ public enum SpriteType {
     
     DirectionArrow,
     Error;
-    
-	/*Blood01(),
-	SmallBlood01(), 
-	Hit01(), 
-	Pot01(),
-	Key01(),
-	SkeletonRemains01(),
-	PotRemains01(),
-	UnknownActor(), 
-	Bomb01(),
-	Smoke01(),
-	Torch01(),
-	SmallSkeletonRemains01(),
-	BloodGib01(),
-	BoneGib01(),
-    PotGib01(),
-	PlayerGib01(),
-	Wall01Gib01(), 
-	LockedDoor01Gib01(), 
-	PlayerRemains01(), 
-	GasCloud01(), 
-	Spear01(),
-	ArrowTurretWest(),
-	ArrowTurretNorth(),
-	ArrowTurretSouth(),
-	Portal02();
-	GasBarrel01(),
-	GasBarrelGib01(),
-	GoldCoin01(),
-	Egg01(), 
-	BombGib01(), 
-	FloorTorch01(),
-	OpenChest01(),
-	DiamondKey01(); */
 }
