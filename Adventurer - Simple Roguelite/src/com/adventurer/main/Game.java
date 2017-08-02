@@ -4,7 +4,11 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import com.adventurer.data.Camera;
 import com.adventurer.data.Coordinate;
@@ -30,7 +34,8 @@ public class Game extends Canvas implements Runnable {
 	public static final int SPRITESIZE         = 16;                       // sprite size in pixels
 	public static final int CAMERAZOOM         = 2;                        // level of zoom
 	public static final double FRAME_CAP       = 60.0;                     // cap the framerate to this
-	public static final String SPRITESHEETNAME = "spritesheet_simple.png"; // name of the spritesheet 
+	public static final String SPRITESHEETNAME = "spritesheet_simple.png"; // name of the spritesheet
+	public static final String BACKGROUNDNAME  = "background.jpg";		   // name of the main menu background
 	
 	//------------------------------
 	// DEBUGGING TOOLS AND GAME SETTINGS
@@ -114,6 +119,8 @@ public class Game extends Canvas implements Runnable {
     private Session currentSession;
 	private GameState gameState;
 	
+	private Image backgroundImage = null;
+	
 	public Game() {
 		
 		if(instance != null) return;
@@ -151,6 +158,13 @@ public class Game extends Canvas implements Runnable {
 		// reads the actual permanent save file and
 		// which has the data.
 		setCurrentSaveFile(new SaveFile());
+		
+		// TODO: draw main menu
+		
+	}
+	
+	private void startGame() {
+		
 		
 		// create lobby
 		if(START_GAME_WITH_RANDOM_ROOM) new World(ROOM_COUNT);
@@ -239,6 +253,7 @@ public class Game extends Canvas implements Runnable {
 		
 		if(gameState == GameState.InGame) renderInGame(g);
 		else if(gameState == GameState.Loading || gameState == GameState.Ready) renderLoading(g);
+		else if(gameState == GameState.MainMenu) renderMainMenu(g);
 		
 		// END DRAW
 		//-------------------------------------------
@@ -247,6 +262,36 @@ public class Game extends Canvas implements Runnable {
 		bs.show();
 	}
 
+	private void renderMainMenu(Graphics g) {
+		
+	    Graphics2D g2d = (Graphics2D) g;
+	    
+	    // get background image..
+	    if(backgroundImage == null) {
+	    	try { backgroundImage = ImageIO.read(Renderer.class.getClass().getResourceAsStream("/" + Game.BACKGROUNDNAME)); }
+			catch (IOException e) { e.printStackTrace(); }
+	    }
+	    
+	    // render bg image
+		Renderer.FillScreenWithImage(g, backgroundImage);
+	    
+        // title
+        Renderer.renderString(
+        		"Adventurer - Roguelike",
+                new Coordinate(Game.WIDTH / 3, 100), Color.black, 36, g2d);
+        
+        // creator info
+        Renderer.renderString(
+        		"by Heikki Heiskanen",
+                new Coordinate(Game.WIDTH / 3, 150), Color.gray, 21, g2d);
+        
+        // draw play button
+        Renderer.renderButton("Play", new Coordinate(Game.WIDTH / 3, 250), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
+        
+        // draw exit button
+        Renderer.renderButton("Exit", new Coordinate(Game.WIDTH / 3, 350), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
+	}
+	
 	private void renderLoading(Graphics g) {
 	    
 	    Graphics2D g2d = (Graphics2D) g;
