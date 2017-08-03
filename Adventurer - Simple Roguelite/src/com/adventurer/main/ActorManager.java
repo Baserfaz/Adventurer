@@ -6,6 +6,7 @@ import java.util.Map;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.EnemyType;
+import com.adventurer.enumerations.RootElement;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.gameobjects.*;
 import com.adventurer.utilities.FileReader;
@@ -91,7 +92,7 @@ public class ActorManager {
 	        boolean isRanged = false;
 	        
 			// read enemy data
-			Map<String, String> retval = FileReader.readXMLGameData(randomType.toString());
+			Map<String, String> retval = FileReader.readXMLGameData(randomType.toString(), RootElement.enemy);
 			for(Map.Entry<String, String> entry : retval.entrySet()) {
 				String key = entry.getKey();
 				String val = entry.getValue();

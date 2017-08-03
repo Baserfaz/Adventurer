@@ -42,6 +42,7 @@ public class Inventory {
 	
 	public void removeItemFromInventory(Item item) { this.inventory.remove(item); }
 	
+	public boolean isFull() { if(this.inventory.size() >= this.maxInventorySpace) return true; else return false; }
 	public int getMaxSize() { return this.maxInventorySpace; }
 	public List<Item> getInventoryItems() { return this.inventory; }
 }

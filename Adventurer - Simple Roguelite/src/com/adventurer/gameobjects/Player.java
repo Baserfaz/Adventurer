@@ -216,6 +216,12 @@ public class Player extends Actor {
 		}
 	}
 	
+	public void dropItem(Item item) {
+		item.moveItemTo(World.instance.GetTileAtPosition(this.GetTilePosition()));
+		this.inventory.removeItemFromInventory(item);
+		Handler.instance.AddObject(item);
+	}
+	
 	public void updateStats() {
 		
 		// calculate health + dmg from stats

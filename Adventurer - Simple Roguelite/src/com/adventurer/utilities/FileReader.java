@@ -16,13 +16,14 @@ import javax.xml.parsers.*;
 import java.io.*;
 
 import com.adventurer.data.SaveFile;
+import com.adventurer.enumerations.RootElement;
 
 public class FileReader {
 	
-	public static Map<String, String> readXMLGameData(String key) { return readXML("resources/data/gamedata.xml", key); }
+	public static Map<String, String> readXMLGameData(String key, RootElement rootElement) { return readXML("resources/data/gamedata.xml", key, rootElement); }
 	
 	// https://stackoverflow.com/questions/428073/what-is-the-best-simplest-way-to-read-in-an-xml-file-in-java-application
-	public static Map<String, String> readXML(String filename, String key) {
+	public static Map<String, String> readXML(String filename, String key, RootElement rootElement) {
 		
 		Map<String, String> myMap = new HashMap<String, String>();	
 		
@@ -38,7 +39,7 @@ public class FileReader {
 		    
 		    // TODO: are we looking for enemies/items etc. 
 		    // NOW HARDCODED TO ONLY SEARCH FOR ENEMY DATA!
-		    NodeList root = doc.getElementsByTagName("enemy");
+		    NodeList root = doc.getElementsByTagName(rootElement.toString());
 		    
 		    for(int i = 0; i < root.getLength(); i++) {
 		    	

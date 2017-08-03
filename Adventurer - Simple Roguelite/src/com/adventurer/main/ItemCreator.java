@@ -2,13 +2,25 @@ package com.adventurer.main;
 
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.enumerations.SpriteType;
+import com.adventurer.gameobjects.Armor;
 import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.Gold;
 import com.adventurer.gameobjects.Key;
 import com.adventurer.gameobjects.Tile;
+import com.adventurer.gameobjects.Weapon;
 
 public class ItemCreator {
 
+	public static Armor createArmor(Tile tile, String itemName) {
+		// TODO: parse xml-file and find item that has name.
+		return null;
+	}
+	
+	public static Weapon createWeapon(Tile tile, String itemName) {
+		// TODO: parse xml-file and find item that has name.
+		return null;
+	}
+	
 	public static Chest CreateChest(Tile tile, boolean locked) {
 		SpriteType st = null;
 		if(locked) st = SpriteType.LockedChest02;
