@@ -12,10 +12,12 @@ import com.adventurer.utilities.Util;
 public class Item extends GameObject {
 
 	protected String itemName;
+	protected int value;
 	
-	public Item(Tile tile, SpriteType spritetype, String name) {
+	public Item(Tile tile, SpriteType spritetype, String name, int value) {
 		super(tile.GetWorldPosition(), tile.GetTilePosition(), spritetype);
 		this.itemName = name;
+		this.value = value;
 	}
 	
 	public void Remove() {
@@ -48,6 +50,8 @@ public class Item extends GameObject {
 			Renderer.RenderSprite(Util.tint(sprite, true), this.GetWorldPosition(), g);
 		}
 	}
+	
+	public int getValue() { return this.value; }
 	
 	public void tick() {}
 	public Rectangle GetBounds() { return null; }

@@ -7,7 +7,7 @@ public class Gold extends Item {
 	private int amount = 0;
 	
 	public Gold(Tile tile, SpriteType spritetype, int amount) {
-		super(tile, spritetype, "Gold");
+		super(tile, spritetype, "Gold", amount);
 		this.amount = amount;
 	}
 

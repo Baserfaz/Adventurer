@@ -26,7 +26,7 @@ public class Projectile extends Item {
 	private boolean canMove = true;
 	
 	public Projectile(Tile tile, SpriteType spritetype, int damage, Direction dir) {
-		super(tile, spritetype, "Projectile");
+		super(tile, spritetype, "Projectile", 0);
 		this.direction = dir;
 		this.damage = damage;
 	}

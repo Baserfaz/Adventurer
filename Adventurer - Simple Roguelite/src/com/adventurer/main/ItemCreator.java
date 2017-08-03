@@ -20,6 +20,7 @@ public class ItemCreator {
 		
 		String name = "";
 		SpriteType type = null;
+		int value = 0;
 		
 		if(keyType == KeyType.Normal) {
 			name = "Normal Key";
@@ -32,7 +33,7 @@ public class ItemCreator {
 			type = SpriteType.Key;
 		}
 		
-		return new Key(tile, type, name, keyType);
+		return new Key(tile, type, name, keyType, value);
 	}
 	
 	public static Gold createGold(Tile tile, int amount) {
