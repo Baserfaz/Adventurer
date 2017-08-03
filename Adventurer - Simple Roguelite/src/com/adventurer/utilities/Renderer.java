@@ -42,13 +42,13 @@ public class Renderer {
 		
         // title
         Renderer.renderString(
-        		"Adventurer - Roguelike",
+        		"Adventurer",
                 new Coordinate(xPos, 100), Color.white, 36, g2d);
         
         // creator info
         Renderer.renderString(
         		"by Heikki Heiskanen",
-                new Coordinate(xPos, 150), Color.white, 21, g2d);
+                new Coordinate(xPos, 150), Color.gray, 21, g2d);
         
         // draw play button
         Renderer.renderButton("Play", new Coordinate(xPos, 250), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
@@ -68,12 +68,10 @@ public class Renderer {
         Renderer.FillScreen(g, Color.black);
 	    
         // title
-        Renderer.renderString("Adventurer - Roguelike",
-                new Coordinate(Game.WIDTH / 3, 100), Color.white, 36, g2d);
+        Renderer.renderString("Adventurer", new Coordinate(Game.WIDTH / 3, 100), Color.white, 36, g2d);
         
         // creator info
-        Renderer.renderString("by Heikki Heiskanen",
-                new Coordinate(Game.WIDTH / 3, 150), Color.gray, 21, g2d);
+        //Renderer.renderString("by Heikki Heiskanen", new Coordinate(Game.WIDTH / 3, 150), Color.gray, 21, g2d);
         
         // information about the dungeon
         if(World.instance.getWorldType() == WorldType.Random) {
