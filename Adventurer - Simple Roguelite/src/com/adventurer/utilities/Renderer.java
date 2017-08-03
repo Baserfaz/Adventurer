@@ -39,16 +39,24 @@ public class Renderer {
 		// the position of all GUI elements
 		// --> cleaner look.
 		int xPos = Game.WIDTH / 5;
+		int xPos_offset = xPos + 35;
 		
         // title
         Renderer.renderString(
         		"Adventurer",
-                new Coordinate(xPos, 100), Color.white, 36, g2d);
+                new Coordinate(xPos, 125), Color.white, 36, g2d);
         
         // creator info
         Renderer.renderString(
-        		"by Heikki Heiskanen",
-                new Coordinate(xPos, 150), Color.gray, 21, g2d);
+        		"Wanna be roguelike.",
+                new Coordinate(xPos + 20, 170), Color.gray, 18, g2d);
+        
+        // version info
+        Renderer.renderString("Version: early", new Coordinate(xPos_offset, 550), Color.gray, 16, g2d);
+        
+        // INFO:
+        // IF YOU CHANGE THE BUTTON COORDINATES 
+        // REMEMBER TO CHANGE THEM IN MOUSE HOVER TOO!
         
         // draw play button
         Renderer.renderButton("Play", new Coordinate(xPos, 250), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
