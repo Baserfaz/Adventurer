@@ -23,8 +23,8 @@ public class Chest extends Item {
 		this.locked = locked;
 		
 		// put item(s) inside the chest.
-		// TODO: now hardcoded to have one gold piece.
 		itemsInside.add(ItemCreator.createGold(tile, 1));
+		itemsInside.add(ItemCreator.createArmor(tile, "Padded armor"));
 		
 		// register to tile
 		tile.AddItem(this);

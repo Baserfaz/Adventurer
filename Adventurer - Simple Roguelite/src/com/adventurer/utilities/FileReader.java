@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 // XML
@@ -20,12 +20,14 @@ import com.adventurer.enumerations.RootElement;
 
 public class FileReader {
 	
-	public static Map<String, String> readXMLGameData(String key, RootElement rootElement) { return readXML("resources/data/gamedata.xml", key, rootElement); }
+	public static Map<String, String> readXMLGameData(String key, RootElement rootElement) { 
+		return readXML("resources/data/gamedata.xml", key, rootElement); 
+	}
 	
 	// https://stackoverflow.com/questions/428073/what-is-the-best-simplest-way-to-read-in-an-xml-file-in-java-application
 	public static Map<String, String> readXML(String filename, String key, RootElement rootElement) {
 		
-		Map<String, String> myMap = new HashMap<String, String>();	
+		Map<String, String> myMap = new LinkedHashMap<String, String>();	
 		
 		try {
 			
@@ -37,35 +39,90 @@ public class FileReader {
 		    doc.getDocumentElement().normalize();
 			// ---------
 		    
-		    // TODO: are we looking for enemies/items etc. 
-		    // NOW HARDCODED TO ONLY SEARCH FOR ENEMY DATA!
+		    // TODO: accurate enemy search i.e. by name
+		    // 1. enemies are searched by EnemyType (used to get a random enemy of type)
+		    // 2. items are searched by item's name.
+		    
 		    NodeList root = doc.getElementsByTagName(rootElement.toString());
 		    
 		    for(int i = 0; i < root.getLength(); i++) {
 		    	
 		    	Node n = root.item(i);
-		    	if(n.getNodeType() == Node.ELEMENT_NODE) {
+		    	
+		    	if(rootElement == RootElement.enemy) {
+		    	
+			    	if(n.getNodeType() == Node.ELEMENT_NODE) {
+			    		
+			    		Element e = (Element) n;
+			    		
+			    		if(e.getElementsByTagName("enemyType").item(0).getTextContent().equals(key)) {
+			    		
+			    			String name = e.getElementsByTagName("name").item(0).getTextContent(); 
+			    			String enemyType = e.getElementsByTagName("enemyType").item(0).getTextContent(); 
+			    			String health = e.getElementsByTagName("health").item(0).getTextContent();
+			    			String damage = e.getElementsByTagName("damage").item(0).getTextContent();
+			    			String isRanged = e.getElementsByTagName("isRanged").item(0).getTextContent();
+			    			String movementSpeed = e.getElementsByTagName("movementSpeed").item(0).getTextContent();
+			    			String movementCooldownBase = e.getElementsByTagName("movementCooldownBase").item(0).getTextContent();
+			    			
+			    			myMap.put("name", name);
+			    			myMap.put("enemyType", enemyType);
+			    			myMap.put("health", health);
+			    			myMap.put("damage", damage);
+			    			myMap.put("isRanged", isRanged);
+			    			myMap.put("movementSpeed", movementSpeed);
+			    			myMap.put("movementCooldownBase", movementCooldownBase);
+			    			
+			    			break;
+			    		}
+			    	}
+			    	
+		    	} else if(rootElement == RootElement.armor) {
 		    		
-		    		Element e = (Element) n;
+			    	if(n.getNodeType() == Node.ELEMENT_NODE) {
+			    		
+			    		Element e = (Element) n;
+			    		
+			    		if(e.getElementsByTagName("name").item(0).getTextContent().equals(key)) {
+			    			
+			    			String name = e.getElementsByTagName("name").item(0).getTextContent();
+			    			String value = e.getElementsByTagName("value").item(0).getTextContent();
+			    			String armorSlot = e.getElementsByTagName("armorSlot").item(0).getTextContent();
+			    			
+			    			myMap.put("name", name);
+			    			myMap.put("value", value);
+			    			myMap.put("armorSlot", armorSlot);
+			    			
+			    			NodeList list = e.getElementsByTagName("defenseValues").item(0).getChildNodes();
+			    			
+			    			// TODO: for some reason list contains node's NAME and CONTENT individually.
+			    			// get defense values
+			    			for(int j = 0; j < list.getLength(); j ++) {
+			    				
+			    				Node currentNode = list.item(j);
+			    				
+			    				String content = currentNode.getTextContent();
+			    				String nodeName = "";
+			    				
+			    				if(j == 0) nodeName = "Physical";
+			    				else if(j == 2) nodeName = "Fire";
+			    				else if(j == 4) nodeName = "Frost";
+			    				else if(j == 6) nodeName = "Shock";
+			    				else if(j == 8) nodeName = "Holy";
+			    				
+			    				System.out.println(nodeName + ": " + content);
+			    				
+			    				myMap.put(nodeName, content);
+			    			}
+			    			
+			    			break;
+			    		}
+			    	}
+			    	
+		    	} else if(rootElement == RootElement.weapon) {
 		    		
-		    		if(e.getElementsByTagName("enemyType").item(0).getTextContent().equals(key)) {
+		    		// TODO: weapon search
 		    		
-		    			String name = e.getElementsByTagName("name").item(0).getTextContent(); 
-		    			String enemyType = e.getElementsByTagName("enemyType").item(0).getTextContent(); 
-		    			String health = e.getElementsByTagName("health").item(0).getTextContent();
-		    			String damage = e.getElementsByTagName("damage").item(0).getTextContent();
-		    			String isRanged = e.getElementsByTagName("isRanged").item(0).getTextContent();
-		    			String movementSpeed = e.getElementsByTagName("movementSpeed").item(0).getTextContent();
-		    			String movementCooldownBase = e.getElementsByTagName("movementCooldownBase").item(0).getTextContent();
-		    			
-		    			myMap.put("name", name);
-		    			myMap.put("enemyType", enemyType);
-		    			myMap.put("health", health);
-		    			myMap.put("damage", damage);
-		    			myMap.put("isRanged", isRanged);
-		    			myMap.put("movementSpeed", movementSpeed);
-		    			myMap.put("movementCooldownBase", movementCooldownBase);
-		    		}
 		    	}
 		    }
 		    

@@ -66,5 +66,13 @@
 	</enemies>
 	
 	<items>
-		<item>
-			<name></name></item></items></gamedata>
+		<armor>
+			<name>Padded armor</name>
+			<value>2</value><armorSlot>chest</armorSlot>
+			<defenseValues>
+				<Physical>1</Physical>
+				<Fire>2</Fire>
+				<Frost>3</Frost>
+				<Shock>4</Shock>
+				<Holy>5</Holy></defenseValues>
+			</armor></items></gamedata>
