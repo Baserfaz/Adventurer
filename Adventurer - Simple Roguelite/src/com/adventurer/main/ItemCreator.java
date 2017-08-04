@@ -17,6 +17,7 @@ import com.adventurer.gameobjects.Key;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Weapon;
 import com.adventurer.utilities.FileReader;
+import com.adventurer.utilities.Util;
 
 public class ItemCreator {
 
@@ -48,7 +49,7 @@ public class ItemCreator {
 				
 				//System.out.println(key + ": " + val);
 				
-				if(key.equals("NAME")) name = val;
+				if(key.equals("NAME")) name = Util.Capitalize(val);
 				else if(key.equals("VALUE")) value = Integer.parseInt(val);
 				else if(key.equals("ARMORSLOT")) {
 					
@@ -110,7 +111,7 @@ public class ItemCreator {
 				
 				//System.out.println(key + ": " + val);
 				
-				if(key.equals("NAME")) name = val;
+				if(key.equals("NAME")) name = Util.Capitalize(val);
 				else if(key.equals("VALUE")) value = Integer.parseInt(val);
 				else if(key.equals("WEAPONSLOT")) {
 					

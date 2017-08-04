@@ -137,6 +137,12 @@ public class Util {
 		 return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 	}
 	
+	public static String Capitalize(String s) {
+		String a = s.substring(0, 1).toUpperCase();
+		String b = s.substring(1, s.length()).toLowerCase();
+		return a + b;
+	}
+	
 	public static Coordinate calculateCameraPos(Player player) {
         int x = ((-player.GetWorldPosition().getX() * Game.CAMERAZOOM) - (Game.SPRITESIZE - Game.WIDTH / 2)) / Game.CAMERAZOOM;
         int y = ((-player.GetWorldPosition().getY() * Game.CAMERAZOOM) - (Game.SPRITESIZE - Game.HEIGHT / 2)) / Game.CAMERAZOOM;

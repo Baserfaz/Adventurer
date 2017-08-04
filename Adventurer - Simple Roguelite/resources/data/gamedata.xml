@@ -71,10 +71,10 @@
 			<value>2</value><armorSlot>chest</armorSlot>
 			<defenseValues>
 				<Physical>1</Physical>
-				<Fire>2</Fire>
-				<Frost>3</Frost>
-				<Shock>4</Shock>
-				<Holy>5</Holy>
+				<Fire>0</Fire>
+				<Frost>0</Frost>
+				<Shock>0</Shock>
+				<Holy>0</Holy>
 			</defenseValues>
 		</armor>
 		<armor>
@@ -96,10 +96,10 @@
 			<weaponSlot>mainhand</weaponSlot>
 			<damageValues>
 				<Physical>1</Physical>
-				<Fire>2</Fire>
-				<Frost>3</Frost>
-				<Shock>4</Shock>
-				<Holy>5</Holy>
+				<Fire>0</Fire>
+				<Frost>0</Frost>
+				<Shock>0</Shock>
+				<Holy>0</Holy>
 			</damageValues>
 		</weapon>
 	</items>
