@@ -25,6 +25,7 @@ public class Chest extends Item {
 		// put item(s) inside the chest.
 		itemsInside.add(ItemCreator.createGold(tile, 1));
 		itemsInside.add(ItemCreator.createArmor(tile, "Padded armor"));
+		itemsInside.add(ItemCreator.createWeapon(tile, "Battleaxe"));
 		
 		// register to tile
 		tile.AddItem(this);

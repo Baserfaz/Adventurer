@@ -74,5 +74,33 @@
 				<Fire>2</Fire>
 				<Frost>3</Frost>
 				<Shock>4</Shock>
-				<Holy>5</Holy></defenseValues>
-			</armor></items></gamedata>
+				<Holy>5</Holy>
+			</defenseValues>
+		</armor>
+		<armor>
+			<name>Leather armor</name>
+			<value>10</value>
+			<armorSlot>chest</armorSlot>
+			<defenseValues>
+				<Physical>2</Physical>
+				<Fire>0</Fire>
+				<Frost>0</Frost>
+				<Shock>0</Shock>
+				<Holy>0</Holy>
+			</defenseValues>
+		</armor>
+		<weapon>
+			<name>Battleaxe</name>
+			<value>10</value>
+			<weaponType>melee</weaponType>
+			<weaponSlot>mainhand</weaponSlot>
+			<damageValues>
+				<Physical>1</Physical>
+				<Fire>2</Fire>
+				<Frost>3</Frost>
+				<Shock>4</Shock>
+				<Holy>5</Holy>
+			</damageValues>
+		</weapon>
+	</items>
+</gamedata>

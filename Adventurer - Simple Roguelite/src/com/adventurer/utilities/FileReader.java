@@ -95,22 +95,18 @@ public class FileReader {
 			    			
 			    			NodeList list = e.getElementsByTagName("defenseValues").item(0).getChildNodes();
 			    			
-			    			// TODO: for some reason list contains node's NAME and CONTENT individually.
 			    			// get defense values
 			    			for(int j = 0; j < list.getLength(); j ++) {
 			    				
+			    				// get node
 			    				Node currentNode = list.item(j);
+			    				if(currentNode.getNodeType() != Node.ELEMENT_NODE) continue;
 			    				
-			    				String content = currentNode.getTextContent();
-			    				String nodeName = "";
+			    				// cast node to element.
+			    				Element currentElement = (Element) currentNode;
 			    				
-			    				if(j == 0) nodeName = "Physical";
-			    				else if(j == 2) nodeName = "Fire";
-			    				else if(j == 4) nodeName = "Frost";
-			    				else if(j == 6) nodeName = "Shock";
-			    				else if(j == 8) nodeName = "Holy";
-			    				
-			    				System.out.println(nodeName + ": " + content);
+			    				String nodeName = currentElement.getNodeName();
+			    				String content = currentElement.getTextContent();
 			    				
 			    				myMap.put(nodeName, content);
 			    			}
@@ -121,8 +117,43 @@ public class FileReader {
 			    	
 		    	} else if(rootElement == RootElement.weapon) {
 		    		
-		    		// TODO: weapon search
-		    		
+			    	if(n.getNodeType() == Node.ELEMENT_NODE) {
+			    		
+			    		Element e = (Element) n;
+			    		
+			    		if(e.getElementsByTagName("name").item(0).getTextContent().equals(key)) {
+			    			
+			    			String name = e.getElementsByTagName("name").item(0).getTextContent();
+			    			String value = e.getElementsByTagName("value").item(0).getTextContent();
+			    			String weaponSlot = e.getElementsByTagName("weaponSlot").item(0).getTextContent();
+			    			String weaponType = e.getElementsByTagName("weaponType").item(0).getTextContent();
+			    			
+			    			myMap.put("name", name);
+			    			myMap.put("value", value);
+			    			myMap.put("weaponSlot", weaponSlot);
+			    			myMap.put("weaponType", weaponType);
+			    			
+			    			NodeList list = e.getElementsByTagName("damageValues").item(0).getChildNodes();
+			    			
+			    			// get damage values
+			    			for(int j = 0; j < list.getLength(); j ++) {
+			    				
+			    				// get node
+			    				Node currentNode = list.item(j);
+			    				if(currentNode.getNodeType() != Node.ELEMENT_NODE) continue;
+			    				
+			    				// cast node to element.
+			    				Element currentElement = (Element) currentNode;
+			    				
+			    				String nodeName = currentElement.getNodeName();
+			    				String content = currentElement.getTextContent();
+			    				
+			    				myMap.put(nodeName, content);
+			    			}
+			    			
+			    			break;
+			    		}
+			    	}
 		    	}
 		    }
 		    
