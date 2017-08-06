@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.GameState;
 import com.adventurer.enumerations.GuiState;
+import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
 
 public class KeyInput extends KeyAdapter {
@@ -46,14 +47,27 @@ public class KeyInput extends KeyAdapter {
 		
 		} else if(guiState == GuiState.Inventory) {
 			
+			boolean success = false;
+			
 			// move cursor in inventory
 			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) Handler.instance.moveInvCursorUp();
 			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) Handler.instance.moveInvCursorDown();
 			
+			// escape from inventory mode
+			if(key == KeyEvent.VK_ESCAPE) Game.instance.setGuiState(GuiState.None);
+			
+			// drop item
+			if(key == KeyEvent.VK_R) {
+				// get the item that is selected i.e. cursor position
+				Item item = player.getInventory().getItemOnPosition(Handler.instance.getInventoryCursorPos());
+				if(item != null) player.dropItem(item);
+				success = true;
+			}
+			
+			
+			if(Game.AUTOMATICALLY_ESCAPE_FROM_INV_MODE_AFTER_SUCCESS && success) Game.instance.setGuiState(GuiState.None);
+			
 		}
-		
-		// drop item
-		if(key == KeyEvent.VK_R) player.dropItem();
 		
 		// Toggle inventory state
 		if(key == KeyEvent.VK_I) {

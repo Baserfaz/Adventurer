@@ -208,10 +208,8 @@ public class Player extends Actor {
 		item.Remove();
 	}
 	
+	// drops the last item from inventory.
 	public void dropItem() {
-		// TODO: correct implementation
-		// ---> now has debug item dropping
-		
 		int size = this.inventory.getInventoryItems().size();
 		
 		if(size > 0) {
@@ -223,10 +221,15 @@ public class Player extends Actor {
 		}
 	}
 	
-	public void dropItem(Item item) {
-		item.moveItemTo(World.instance.GetTileAtPosition(this.GetTilePosition()));
-		this.inventory.removeItemFromInventory(item);
-		Handler.instance.AddObject(item);
+	public boolean dropItem(Item item) {
+		boolean success = false;
+		if(this.inventory.getInventoryItems().contains(item)) {
+			item.moveItemTo(World.instance.GetTileAtPosition(this.GetTilePosition()));
+			this.inventory.removeItemFromInventory(item);
+			Handler.instance.AddObject(item);
+			success = true;
+		}
+		return success;
 	}
 	
 	public void updateStats() {

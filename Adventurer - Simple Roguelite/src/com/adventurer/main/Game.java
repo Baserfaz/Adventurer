@@ -40,6 +40,9 @@ public class Game extends Canvas implements Runnable {
 	// do we create lobby or random dungeon first.
 	public static final boolean START_GAME_WITH_RANDOM_ROOM = false;
 	
+	// GUI SETTINGS
+	public static final boolean AUTOMATICALLY_ESCAPE_FROM_INV_MODE_AFTER_SUCCESS = true;
+	
 	// LOS settings
 	public static final boolean CALCULATE_PLAYER_LOS   = true;
 	public static final boolean PERMANENTLY_SHOW_TILES = false;

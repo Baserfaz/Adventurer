@@ -3,7 +3,6 @@ package com.adventurer.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.adventurer.enumerations.BombType;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Gold;
@@ -24,18 +23,6 @@ public class Inventory {
 		for(int i = 0; i < Game.START_KEY_COUNT; i++) {
 			this.addToInventory(ItemCreator.createKey(actor.getCurrentTile(), KeyType.Normal));
 		}
-		
-		/*for(int i = 0; i < Game.START_DIAMOND_KEY_COUNT; i++) {
-			
-		}*/
-		
-		/*for(int i = 0; i < Game.START_BOMB_COUNT; i++) {
-			this.addToInventory(ItemCreator.createBomb(actor.getCurrentTile(), BombType.Normal));
-		}
-		
-		for(int i = 0; i < Game.START_PROJECTILE_COUNT; i++) {
-			//this.addToInventory(ItemCreator.createProjectile());
-		}*/
 		
 	}
 	
@@ -81,4 +68,16 @@ public class Inventory {
 	public boolean isFull() { if(this.inventory.size() >= this.maxInventorySpace) return true; else return false; }
 	public int getMaxSize() { return this.maxInventorySpace; }
 	public List<Item> getInventoryItems() { return this.inventory; }
+	
+	public Item getItemOnPosition(int index) {
+		Item item = null;
+		if(index > this.maxInventorySpace || index < 0 || index > inventory.size() - 1) {
+			// fail return null
+		} else {
+			// index is between 0 - maxInvSpace
+			item = inventory.get(index);
+		}
+		return item;
+	}
+	
 }
