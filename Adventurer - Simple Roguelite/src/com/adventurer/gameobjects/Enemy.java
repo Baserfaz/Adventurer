@@ -49,7 +49,6 @@ public class Enemy extends Actor {
 	public void render(Graphics g) {
 		if(hidden == false && discovered) {
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-			renderDirectionArrow(g);
 		}
 	}
 	

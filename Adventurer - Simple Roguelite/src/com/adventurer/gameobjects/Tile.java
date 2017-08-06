@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import com.adventurer.data.Camera;
@@ -22,12 +21,10 @@ public class Tile extends GameObject {
 	protected TileType type;
 	protected boolean inView   = false;
 	protected boolean selected = false;
-	protected boolean lit      = false;
 	protected boolean walkable = false;
 	
 	protected List<Item> items = null;
 	protected Actor actor      = null;
-	protected List<VanityItem> vanityItems = new ArrayList<VanityItem>();
 	protected Node node;
 	
 	// tile falling effect
@@ -91,31 +88,13 @@ public class Tile extends GameObject {
 		// fov-rendering
 		if(hidden == false && discovered) {
 			
-			// brighten 
-			if(lit) {
-				Renderer.RenderSprite(Util.tint(sprite, false), this.GetWorldPosition(), g);
-				for(GameObject vi : vanityItems) { Renderer.RenderSprite(Util.tint(vi.GetSprite(), false), vi.GetWorldPosition(), g); }
-			
-			// normal
-			} else {
-				
-				// render tile
-				Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-				
-				// render vanity items
-				try {
-					for(GameObject vi : vanityItems) { Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g); }
-				} catch (ConcurrentModificationException e) { e.printStackTrace(); }
-			}
+			// render tile
+			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 		} else if(hidden == true && discovered) {
+			
 			Renderer.RenderSprite(Util.tint(sprite, true), this.GetWorldPosition(), g);
 			
-			// render vanity items
-			for(GameObject go : vanityItems) {
-				VanityItem vi = (VanityItem) go;
-				Renderer.RenderSprite(Util.tint(vi.GetSprite(), true), vi.GetWorldPosition(), g);
-			}
 		} else {
 			// We haven't discovered this tile and it's still hidden,
 			// therefore we don't want to render it at this point.
@@ -129,19 +108,15 @@ public class Tile extends GameObject {
 		if(this.items.isEmpty() == false) {
 			for(Item item : this.items) item.Show();
 		}
-			
-		if(this.vanityItems == null) return;
-		if(this.vanityItems.size() > 0) for(VanityItem vi : this.vanityItems) { vi.Show(); }
 	}
 	
 	public void Hide() {
 		this.hidden = true;
 		if(this.actor != null) this.actor.Hide();
+		
 		if(this.items.isEmpty() == false) {
 			for(Item item : this.items) item.Hide();
 		}
-		if(this.vanityItems == null) return;
-		if(this.vanityItems.size() > 0) for(VanityItem vi : this.vanityItems) { vi.Hide(); }
 	}
 	
 	public void Discover() {
@@ -159,7 +134,6 @@ public class Tile extends GameObject {
 		// discover actors and items.
 		if(this.GetActor() != null) this.GetActor().Discover();
 		if(this.items.isEmpty() == false) for(Item item : this.items) item.Discover();
-		if(this.vanityItems.size() > 0) for(VanityItem vi : this.vanityItems) { vi.Discover(); }
 	}
 	
 	public void Remove() {
@@ -171,19 +145,9 @@ public class Tile extends GameObject {
 		
 		if(this.GetActor() != null && this.GetActor() instanceof Player == false) this.GetActor().Remove();
 		
-		if(this.GetVanityItems().size() > 0) {
-			List<VanityItem> temp = new ArrayList<VanityItem>(vanityItems);
-			for(VanityItem vi : temp) vi.Remove();
-		}
-		
 		if(World.instance != null && World.instance.GetTiles() != null) World.instance.RemoveTiles(this);
 		Handler.instance.RemoveObject(this);
 		Hide();
-	}
-	
-	public void toggleLit() {
-		if(this.lit) this.lit = false; 
-		else this.lit = true;
 	}
 	
 	public void toggleSelect() {
@@ -209,7 +173,6 @@ public class Tile extends GameObject {
 	public void Deselect() { this.selected = false; }
 	
 	public boolean isSelected( ) { return this.selected; }
-	public boolean isLit() { return this.lit; }
 	public boolean isWalkable() { return this.walkable; }
 	public boolean isInView() { return this.inView; }
 	
@@ -222,10 +185,6 @@ public class Tile extends GameObject {
 	public void SetTileType(TileType t) { this.type = t; }
 	public void AddItem(Item item) { this.items.add(item); }
 	public void RemoveItem(Item item) { this.items.remove(item); }
-	
-	public void RemoveVanityItem(GameObject i) { this.vanityItems.remove(i); }
-	public void AddVanityItem(VanityItem i) { this.vanityItems.add(i); }
-	public List<VanityItem> GetVanityItems() { return this.vanityItems; }
 	
 	public Rectangle GetBounds() {
 		return new Rectangle(this.GetWorldPosition().getX(), this.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE);

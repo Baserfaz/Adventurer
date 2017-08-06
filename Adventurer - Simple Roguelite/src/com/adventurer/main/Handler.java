@@ -21,7 +21,6 @@ import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Shrine;
 import com.adventurer.gameobjects.Tile;
-import com.adventurer.gameobjects.VanityItem;
 import com.adventurer.utilities.Renderer;
 
 public class Handler {
@@ -59,7 +58,6 @@ public class Handler {
 	
 	public void render(Graphics g) {
 		renderTiles(g);
-		renderVanityItems(g);
 		renderItems(g);
 		renderActors(g);
 		renderEffects(g);
@@ -71,14 +69,6 @@ public class Handler {
 			GameObject current = getObjects().get(i);
 			if(current == null) continue;
 			if(current instanceof Tile) current.render(g);
-		}
-	}
-	
-	private void renderVanityItems(Graphics g) {
-		for(int i = 0; i < getObjects().size(); i++) {
-			GameObject current = getObjects().get(i);
-			if(current == null) continue;
-			if(current instanceof VanityItem) current.render(g);
 		}
 	}
 	

@@ -1,12 +1,15 @@
 package com.adventurer.enumerations;
 
 public enum SpriteType {
+	
+	// actors
 	Player,
 	Zombie01,
     Maggot01,
     Skeleton01,
     GenericEnemy,
     
+    // floor tiles
 	Floor01,
 	NormalFloor01,
 	Grass01,
@@ -18,35 +21,44 @@ public enum SpriteType {
 	MagicFloor01,
 	SpawnTile01,
 	
+	// traps
 	TrapTile01,
 	
+	// walls
 	Wall01,
     DestructibleWall01,
     
+    // doors
 	Door01,
     LockedDoor01,
     LockedDoorDiamond01,
     
+    // portals
     Portal01,
     Portal02,
     
+    // shrines
     HealthShrine_01,
     UsedShrine,
     
+    // chests
     Chest01,
     Chest02,
     LockedChest01,
     LockedChest02,
     
+    // items
     GenericItem,
     Gold01,
     Key,
     DiamondKey,
     
+    // projectiles
     Bomb01,
     Spear01,
     Arrow01,
     
-    DirectionArrow,
+    // other
+    Hit01,
     Error;
 }
