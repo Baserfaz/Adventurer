@@ -1,10 +1,12 @@
 package com.adventurer.main;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
+import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.EnemyType;
 import com.adventurer.enumerations.RootElement;
 import com.adventurer.enumerations.SpriteType;
@@ -64,15 +66,21 @@ public class ActorManager {
 		    
 			EnemyType randomType = EnemyType.values()[Util.GetRandomInteger(0, EnemyType.values().length)];
 			
+			// vars
 	        int damage = 0, health = 0, movementSpeed = 0, movementCooldownBase = 0;
 	        String name = "";
 	        boolean isRanged = false;
+	        Map<DamageType, Integer> resistances = new LinkedHashMap<DamageType, Integer>();
 	        
 			// read enemy data
 			Map<String, String> retval = FileReader.readXMLGameData(randomType.toString(), RootElement.enemy);
+			
+			// go through the data and set stuff
 			for(Map.Entry<String, String> entry : retval.entrySet()) {
 				String key = entry.getKey();
 				String val = entry.getValue();
+				
+				//System.out.println(key + " : " + val);
 				
 				if(key == "damage") damage = Integer.parseInt(val);
 				else if(key == "health") health = Integer.parseInt(val);
@@ -80,13 +88,18 @@ public class ActorManager {
 				else if(key == "isRanged") isRanged = Boolean.parseBoolean(val);
 				else if(key == "movementSpeed") movementSpeed = Integer.parseInt(val);
 				else if(key == "movementCooldownBase") movementCooldownBase = Integer.parseInt(val);
+				else if(key == "physicalRes") resistances.put(DamageType.Physical, Integer.parseInt(val));
+				else if(key == "fireRes") resistances.put(DamageType.Fire, Integer.parseInt(val));
+				else if(key == "frostRes") resistances.put(DamageType.Frost, Integer.parseInt(val));
+				else if(key == "shockRes") resistances.put(DamageType.Shock, Integer.parseInt(val));
+				else if(key == "holyRes") resistances.put(DamageType.Holy, Integer.parseInt(val));
 			}
-			CreateEnemy(name, health, damage, randomType, tiles, isRanged, movementSpeed, movementCooldownBase);
+			CreateEnemy(name, health, damage, randomType, tiles, isRanged, movementSpeed, resistances, movementCooldownBase);
 		}
 	}
 	
 	public static Enemy CreateEnemy(String name, int maxHP, int damage,
-		EnemyType enemyType, List<Tile> tiles_, boolean isRanged, int movementSpeed, int movementCooldownBase) {
+		EnemyType enemyType, List<Tile> tiles_, boolean isRanged, int movementSpeed, Map<DamageType, Integer> resistances, int movementCooldownBase) {
 	    
 		// get position
 		int[] pos = World.instance.GetFreePosition(tiles_);
@@ -101,7 +114,7 @@ public class ActorManager {
 		
 		// create enemy object
 		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, 
-				maxHP, 0, damage, damage, damage, name, isRanged, movementSpeed, null, movementCooldownBase);
+				maxHP, 0, damage, damage, damage, name, isRanged, movementSpeed, resistances, movementCooldownBase);
 	}
 	
 	public static Enemy[] GetEnemyInstances() { return enemyInstances; }

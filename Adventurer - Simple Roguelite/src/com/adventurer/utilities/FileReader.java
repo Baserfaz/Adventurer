@@ -73,6 +73,25 @@ public class FileReader {
 			    			myMap.put("movementSpeed", movementSpeed);
 			    			myMap.put("movementCooldownBase", movementCooldownBase);
 			    			
+			    			// resistances
+			    			NodeList list = e.getElementsByTagName("resistances").item(0).getChildNodes();
+			    			
+			    			// get defense values
+			    			for(int j = 0; j < list.getLength(); j ++) {
+			    				
+			    				// get node
+			    				Node currentNode = list.item(j);
+			    				if(currentNode.getNodeType() != Node.ELEMENT_NODE) continue;
+			    				
+			    				// cast node to element.
+			    				Element currentElement = (Element) currentNode;
+			    				
+			    				String nodeName = currentElement.getNodeName();
+			    				String content = currentElement.getTextContent();
+			    				
+			    				myMap.put(nodeName, content);
+			    			}
+			    			
 			    			break;
 			    		}
 			    	}
