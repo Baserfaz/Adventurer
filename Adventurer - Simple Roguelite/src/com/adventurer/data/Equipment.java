@@ -2,8 +2,10 @@ package com.adventurer.data;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.adventurer.enumerations.ArmorSlot;
+import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.WeaponSlot;
 import com.adventurer.gameobjects.Armor;
 import com.adventurer.gameobjects.Item;
@@ -42,9 +44,57 @@ public class Equipment {
 		return eq;
 	}
 	
-	public void updateStats(Item item) {
+	public void updateStats(Item item, boolean isAddition) {
 		
+		Player player = ActorManager.GetPlayerInstance();
+		Stats stats = player.getStats();
+		Resistances res = player.getResistances();
 		
+		// TODO: read + parse + set XML itembonuses when creating item.
+		ItemBonus ib = item.getBonuses();
+		
+		// TODO: update item's bonuses
+		
+		if(item instanceof Armor) {
+			
+			Armor armor = (Armor) item;
+			
+			// update resistances
+			for(Entry<DamageType, Integer> d : armor.getDefenseValues().entrySet()) {
+				
+				DamageType key = d.getKey();
+				int val = d.getValue();
+				
+				if(isAddition) {
+				
+					switch(key) {
+						case Fire: res.addFireResistance(val); break;
+						case Frost: res.addFireResistance(val); break;
+						case Holy: res.addHolyResistance(val); break;
+						case Physical: res.addPhysicalResistance(val); break;
+						case Shock: res.addShockResistance(val); break;
+						default: break;
+					}
+					
+				} else {
+					
+					switch(key) {
+						case Fire: res.addFireResistance(-val); break;
+						case Frost: res.addFireResistance(-val); break;
+						case Holy: res.addHolyResistance(-val); break;
+						case Physical: res.addPhysicalResistance(-val); break;
+						case Shock: res.addShockResistance(-val); break;
+						default: break;
+					}
+					
+				}
+			}
+			
+		} else if(item instanceof Weapon) {
+			
+			// TODO: update damage?
+			
+		}
 		
 	}
 	
@@ -97,9 +147,7 @@ public class Equipment {
 		} else System.out.println("Item cannot be equipped!");
 		
 		// update stats
-		if(success) {
-			
-		}
+		if(success) updateStats(item, true);
 	}
 	
 	public void unequipSlot(WeaponSlot slot) {
@@ -148,9 +196,9 @@ public class Equipment {
 				inv.addToInventory(item);
 			}
 			
-			// TODO: update stats
+			// update stats here
+			updateStats(item, false);
 		}
-		
 	}
 	
 	public Item getMainHand() { return mainHand; }

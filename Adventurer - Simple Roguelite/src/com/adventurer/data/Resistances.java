@@ -47,13 +47,22 @@ public class Resistances {
 
 	public int getFireResistance() { return fireResistance; }
 	public void setFireResistance(int fireResistance) { this.fireResistance = fireResistance; }
+	public void addFireResistance(int a) { this.fireResistance += a; }
+	
 	public int getFrostResistance() { return frostResistance; }
 	public void setFrostResistance(int frostResistance) { this.frostResistance = frostResistance; }
+	public void addFrostResistances(int a) { this.frostResistance += a; }
+	
 	public int getShockResistance() { return shockResistance; }
 	public void setShockResistance(int shockResistance) { this.shockResistance = shockResistance; }
+	public void addShockResistance(int a) { this.shockResistance += a; }
+	
 	public int getHolyResistance() { return holyResistance; }
 	public void setHolyResistance(int holyResistance) { this.holyResistance = holyResistance; }
+	public void addHolyResistance(int a) { this.holyResistance += a; }
+	
 	public int getPhysicalResistance() { return physicalResistance; }
 	public void setPhysicalResistance(int physicalResistance) { this.physicalResistance = physicalResistance; }
+	public void addPhysicalResistance(int a) { this.physicalResistance += a; }
 	
 }

@@ -57,6 +57,7 @@ public class Item extends GameObject {
 	}
 	
 	public int getValue() { return this.value; }
+	public ItemBonus getBonuses() { return this.bonus; }
 	
 	public void tick() {}
 	public Rectangle GetBounds() { return null; }

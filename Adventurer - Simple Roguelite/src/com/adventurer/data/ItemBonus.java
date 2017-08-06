@@ -15,6 +15,7 @@ public class ItemBonus {
 	public ItemBonus() {
 		this.bonusDamage = new LinkedHashMap<DamageType, Integer>();
 		this.bonusResistance = new LinkedHashMap<DamageType, Integer>();
+		
 		this.strBonus = 0;
 		this.dexBonus = 0;
 		this.intBonus = 0;
