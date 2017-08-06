@@ -26,11 +26,11 @@ public class ActorManager {
 		}
 		
 		// create player and add it to our handler.
-		playerInstance = new Player(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Player);
+		playerInstance = new Player(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Player, null);
 		
 		return playerInstance;
 	}
-	
+
 	public static void RemovePlayer() {
 		if(playerInstance != null) {
 			playerInstance.Remove();
@@ -55,29 +55,6 @@ public class ActorManager {
 		Coordinate playerTilePos = new Coordinate(pos[2], pos[3]);
 		
 		playerInstance.forceMove(playerWorldPos, playerTilePos);
-	}
-	
-	public static Player CreatePlayerInstance() {
-		
-		if(playerInstance != null) {
-			System.out.println("Player is already instantiated!");
-			new Exception().printStackTrace();
-			System.exit(1);
-		}
-		
-		World world = World.instance.GetWorld();
-		
-		// get position
-		int[] pos = world.GetFreePosition();
-		
-		// create coordinates
-		Coordinate playerWorldPos = new Coordinate(pos[0], pos[1]);
-		Coordinate playerTilePos = new Coordinate(pos[2], pos[3]);
-		
-		// create player
-		playerInstance = new Player(playerWorldPos, playerTilePos, SpriteType.Player);
-		
-		return playerInstance;
 	}
 	
 	public static void CreateEnemies(int count, List<Tile> tiles) {
@@ -116,31 +93,15 @@ public class ActorManager {
 		
 		SpriteType spriteType = null;
 		
-		/*switch(enemyType) {
-		case Skeleton:
-			spriteType = SpriteType.Skeleton01;
-			break;
-		case Zombie:
-			spriteType = SpriteType.Zombie01;
-			break;
-		case Maggot:
-			spriteType = SpriteType.Maggot01;
-			break;
-		default:
-			System.out.println("SPRITETYPE NOT FOUND FOR ENEMYTYPE: " + enemyType);
-			break;
-		}*/
-		
-		// TODO: switch cases for all different enemies.
-		// ---> now every enemy is shown as generic.
+		// TODO: enemy sprites
 		spriteType = SpriteType.GenericEnemy;
 		
 		Coordinate enemyWorldPos = new Coordinate(pos[0], pos[1]);
 		Coordinate enemyTilePos = new Coordinate(pos[2], pos[3]);
 		
 		// create enemy object
-		// TODO: refactor melee, ranged and magic damage...
-		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, maxHP, 0, damage, damage, damage, name, isRanged, movementSpeed, movementCooldownBase);
+		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, 
+				maxHP, 0, damage, damage, damage, name, isRanged, movementSpeed, null, movementCooldownBase);
 	}
 	
 	public static Enemy[] GetEnemyInstances() { return enemyInstances; }

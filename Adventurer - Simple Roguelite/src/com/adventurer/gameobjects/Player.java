@@ -3,6 +3,7 @@ package com.adventurer.gameobjects;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Equipment;
@@ -12,6 +13,7 @@ import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.Session;
 import com.adventurer.data.Stats;
 import com.adventurer.data.World;
+import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.GameState;
@@ -32,9 +34,9 @@ public class Player extends Actor {
 	private Experience playerExperience;
 	private PlayerClass playerClass;
 	
-	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
-		// TODO: refactor damage... 
-		super(worldPos, tilePos, spritetype, Game.PLAYER_START_BASE_HEALTH, Game.PLAYER_START_BASE_MANA, 1, 1, 1, "Player", 2);
+	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, Map<DamageType, Integer> resistances) {
+		super(worldPos, tilePos, spritetype, 
+				Game.PLAYER_START_BASE_HEALTH, Game.PLAYER_START_BASE_MANA, 1, 1, 1, "Player", 2, resistances);
 		
 		this.stats = new Stats();
 		this.losmanager = new LoSManager();

@@ -3,9 +3,11 @@ package com.adventurer.gameobjects;
 import java.awt.Graphics;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
+import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.EnemyType;
 import com.adventurer.enumerations.SpriteType;
@@ -29,8 +31,9 @@ public class Enemy extends Actor {
 	
 	public Enemy(Coordinate worldPos, Coordinate tilePos,
 			EnemyType enemytype, SpriteType spritetype,
-			int maxHP, int maxMP, int meleeDmg, int rangedDmg, int magicDmg, String name, boolean isRanged, int movementSpeed, int moveCooldownBase) {
-		super(worldPos, tilePos, spritetype, maxHP, maxMP, meleeDmg, rangedDmg, magicDmg, name, movementSpeed);
+			int maxHP, int maxMP, int meleeDmg, int rangedDmg, int magicDmg, 
+			String name, boolean isRanged, int movementSpeed, Map<DamageType, Integer> resistances, int moveCooldownBase) {
+		super(worldPos, tilePos, spritetype, maxHP, maxMP, meleeDmg, rangedDmg, magicDmg, name, movementSpeed, resistances);
 		
 		// declare ranged units here
 		this.hasRangedAttack = isRanged;

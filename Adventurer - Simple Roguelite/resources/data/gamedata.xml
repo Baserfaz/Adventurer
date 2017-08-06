@@ -30,6 +30,7 @@
 			<movementSpeed>1</movementSpeed>
 			<movementCooldownBase>1750</movementCooldownBase>
 		</enemy>
+		
 		<enemy>
 			<name>Ghoul Archer</name>
 			<enemyType>Undead</enemyType>

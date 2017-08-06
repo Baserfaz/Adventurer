@@ -3,12 +3,15 @@ package com.adventurer.gameobjects;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Health;
 import com.adventurer.data.Mana;
 import com.adventurer.data.PredefinedMaps;
+import com.adventurer.data.Resistances;
 import com.adventurer.data.World;
+import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.*;
@@ -27,13 +30,16 @@ public class Actor extends GameObject {
 	
 	protected Health myHP;
 	protected Mana myMP;
+	protected Resistances myResistances;
 	
 	protected int meleeDamage = 0, rangedDamage = 0, magicDamage = 0;
 	
 	protected String name = "";
 	protected int movementSpeed = 2; // how fast is the animation between tiles
 	
-	public Actor(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int maxHP, int maxMP, int meleeDamage, int rangedDamage, int magicDamage, String name, int movementSpeed) {
+	public Actor(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, 
+			int maxHP, int maxMP, int meleeDamage, int rangedDamage, int magicDamage,
+			String name, int movementSpeed, Map<DamageType, Integer> resistances) {
 		super(worldPos, tilePos, spritetype);
 		
 		// set stuff here
@@ -49,6 +55,10 @@ public class Actor extends GameObject {
 		this.movementSpeed = movementSpeed;
 		this.myHP = new Health(maxHP);
 		this.myMP = new Mana(maxMP);
+		
+		// set resistances
+		if(resistances == null || resistances.isEmpty()) this.myResistances = new Resistances();
+		else this.myResistances = new Resistances(resistances);
 		
 		// register to tile
 		World.instance.GetTileAtPosition(tilePos).SetActor(this);
@@ -231,6 +241,8 @@ public class Actor extends GameObject {
 	public String getName() { return this.name; }
 	public Health getHealth() { return this.myHP; }
 	public Mana getMana() { return this.myMP; }
+	
+	public Resistances getResistances() { return this.myResistances; }
 	
 	public Rectangle GetBounds() {
 		return new Rectangle(this.GetWorldPosition().getX(), this.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE);

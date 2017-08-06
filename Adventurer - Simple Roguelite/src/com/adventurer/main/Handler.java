@@ -10,6 +10,9 @@ import java.util.Map.Entry;
 
 import com.adventurer.data.Camera;
 import com.adventurer.data.Coordinate;
+import com.adventurer.data.Experience;
+import com.adventurer.data.Resistances;
+import com.adventurer.data.Stats;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.WorldType;
 import com.adventurer.gameobjects.Actor;
@@ -192,6 +195,10 @@ public class Handler {
 			// render character info tag
 			Renderer.renderString("CHARACTER", chainfo_coord, Color.white, 8, g2d);
 			
+			Resistances resistances = player.getResistances();
+			Experience exp = player.getPlayerExperience();
+			Stats stats = player.getStats();
+			
 			// render character info
 	        Renderer.renderString(
 	            String.format(
@@ -217,21 +224,24 @@ public class Handler {
 	            	
 	            		player.getName(),
 	            		player.getPlayerClass().toString(),
-	            		player.getPlayerExperience().getCurrentLevel(),
-	            		player.getPlayerExperience().getCurrentExp(),
-	            		player.getPlayerExperience().getNeededExp(player.getPlayerExperience().getCurrentLevel()),
+	            		exp.getCurrentLevel(),
+	            		exp.getCurrentExp(),
+	            		exp.getNeededExp(exp.getCurrentLevel()),
 	            		
-		            	player.getStats().getStrength(), 
-		            	player.getStats().getVitality(), 
-		            	player.getStats().getIntelligence(), 
-		            	player.getStats().getDexterity(),
+		            	stats.getStrength(), 
+		            	stats.getVitality(), 
+		            	stats.getIntelligence(), 
+		            	stats.getDexterity(),
 		            	
-		            	Util.calcMeleeDamage(player.getStats().getStrength()),
-		            	Util.calcMagicDamage(player.getStats().getIntelligence()),
-		            	Util.calcRangedDamage(player.getStats().getDexterity()),
+		            	Util.calcMeleeDamage(stats.getStrength()),
+		            	Util.calcMagicDamage(stats.getIntelligence()),
+		            	Util.calcRangedDamage(stats.getDexterity()),
 		            	
-		            	// TODO: resistances + armor class
-		            	0, 0, 0, 0, 0
+		            	resistances.getPhysicalResistance(),
+		            	resistances.getFireResistance(),
+		            	resistances.getFrostResistance(),
+		            	resistances.getShockResistance(),
+		            	resistances.getHolyResistance()
 		            	
 	            ), chainfo_coord, Color.gray, 8, g2d
 	        );
