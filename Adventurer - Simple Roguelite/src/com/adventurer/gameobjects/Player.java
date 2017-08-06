@@ -209,7 +209,7 @@ public class Player extends Actor {
 	}
 	
 	// drops the last item from inventory.
-	public void dropItem() {
+	/*public void dropItem() {
 		int size = this.inventory.getInventoryItems().size();
 		
 		if(size > 0) {
@@ -219,7 +219,7 @@ public class Player extends Actor {
 			this.inventory.removeItemFromInventory(item);
 			Handler.instance.AddObject(item);
 		}
-	}
+	}*/
 	
 	public boolean dropItem(Item item) {
 		boolean success = false;

@@ -35,6 +35,28 @@ public class KeyInput extends KeyAdapter {
 		// cache in which gui state are we in.
 		GuiState guiState = Game.instance.getGuiState();
 		
+		// Toggle inventory state
+		if(key == KeyEvent.VK_I) {
+			if(Game.instance.getGuiState() == GuiState.None) {
+				
+				// reset inventory cursor position
+				Handler.instance.setInventoryCursorPos(0);
+				Game.instance.setGuiState(GuiState.Inventory);
+				
+			}
+		}
+		
+		// Toggle equipment state
+		if(key == KeyEvent.VK_E) {
+			if(Game.instance.getGuiState() == GuiState.None) {
+				
+				// reset inventory cursor position
+				Handler.instance.setEquipmentCursorPos(0);
+				Game.instance.setGuiState(GuiState.Equipment);
+				
+			}
+		}
+		
 		// decide what actions to do when
 		// in different GUI-states.
 		if(guiState == GuiState.None) {
@@ -60,24 +82,37 @@ public class KeyInput extends KeyAdapter {
 			if(key == KeyEvent.VK_R) {
 				// get the item that is selected i.e. cursor position
 				Item item = player.getInventory().getItemOnPosition(Handler.instance.getInventoryCursorPos());
-				if(item != null) player.dropItem(item);
-				success = true;
+				if(item != null) {
+					success = true;
+					player.dropItem(item);
+				}
 			}
 			
+			// equip item
+			if(key == KeyEvent.VK_E) {
+				Item item = player.getInventory().getItemOnPosition(Handler.instance.getInventoryCursorPos());
+				if(item != null) {
+					success = true;
+					player.getEquipment().equipItem(item);
+				}
+			}
 			
+			// exit inventory mode automatically
 			if(Game.AUTOMATICALLY_ESCAPE_FROM_INV_MODE_AFTER_SUCCESS && success) Game.instance.setGuiState(GuiState.None);
-			
-		}
 		
-		// Toggle inventory state
-		if(key == KeyEvent.VK_I) {
-			if(Game.instance.getGuiState() == GuiState.None) {
-				
-				// reset inventory cursor position
-				Handler.instance.setInventoryCursorPos(0);
-				Game.instance.setGuiState(GuiState.Inventory);
-			}
-			else Game.instance.setGuiState(GuiState.None);
+		} else if(guiState == GuiState.Equipment) {
+			
+			boolean success = false;
+			
+			// move cursor in inventory
+			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) Handler.instance.moveEquipmentCursorUp();
+			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) Handler.instance.moveEquipmentCursorDown();
+			
+			// escape from equipment mode
+			if(key == KeyEvent.VK_ESCAPE) Game.instance.setGuiState(GuiState.None);
+		
+			// exit inventory mode automatically
+			if(Game.AUTOMATICALLY_ESCAPE_FROM_INV_MODE_AFTER_SUCCESS && success) Game.instance.setGuiState(GuiState.None);
 		}
 		
 		// toggle character panel
@@ -86,16 +121,6 @@ public class KeyInput extends KeyAdapter {
 			else Handler.instance.setShowStats(true);
 		}
 		
-		// bomb
-		/*if(key == KeyEvent.VK_SPACE) {
-			Tile t = World.instance.GetTileFromDirection(player.GetTilePosition(), player.GetLookDirection());
-			player.UseBomb(t);
-		}*/
-		
-		// shoot
-		/*if(key == KeyEvent.VK_SHIFT) {
-			player.Shoot(player.GetTilePosition(), player.GetLookDirection(), SpriteType.Arrow01);
-		}*/
 	}
 	
 	public void keyReleased(KeyEvent e) {}

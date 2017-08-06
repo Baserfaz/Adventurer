@@ -37,8 +37,9 @@ public class Handler {
 	private Tile hoverTile = null;
 	private Coordinate mousePosition = new Coordinate(0, 0);
 	
-	// inventory cursor
+	// GUI cursors
 	private int inventoryCursorPos = 0;
+	private int equipmentCursorPos = 0;
 	
 	// flags to show different GUI-elements.
 	private boolean showStats = false;
@@ -153,6 +154,11 @@ public class Handler {
 	    int equipment_yPos = (int) cam.getMinY() + 25;
 	    int equipment_xPos = (int) cam.getMaxX() - 210;
 	    Coordinate equipment_coord = new Coordinate(equipment_xPos, equipment_yPos);
+	    
+	    // help text position
+	    int help_yPos = (int) cam.getMaxY() - 15;
+	    int help_xPos = (int) cam.getMinX() + 100;
+	    Coordinate help_coord = new Coordinate(help_xPos, help_yPos);
 	    
 	    // end calc
 	    
@@ -290,10 +296,33 @@ public class Handler {
         	for(int i = 0; i < count; i++) { invItems += "-\n"; }
         }
         
-        // render inventory cursor
+        // when the inventory GUI-mode is selected...
         if(Game.instance.getGuiState() == GuiState.Inventory) {
+        	
+        	// render inventory cursor
         	Renderer.renderRect(new Coordinate(0 + inventory_coord.getX(), this.getInventoryCursorPos() * 10 + inventory_coord.getY() + 13),
         			new Coordinate(90, 10), Color.white, Color.white, true, g2d);
+        	
+        	// render inventory help
+        	Renderer.renderString("Inventory mode: Move cursor up: W, down: S, Equip item: E, Drop item: R, Exit: ESC",
+        			help_coord, Color.white, 8, g2d);
+        	
+        } else if(Game.instance.getGuiState() == GuiState.None) {
+        	
+        	// render general help
+        	Renderer.renderString("Play mode: Move/attack WASD, Inventory: I, Equipment: E, Character sheet: C",
+        			help_coord, Color.gray, 8, g2d);
+        	
+        } else if(Game.instance.getGuiState() == GuiState.Equipment) {
+        	
+        	// render inventory cursor
+        	Renderer.renderRect(new Coordinate(0 + equipment_coord.getX(), this.getEquipmentCursorPos() * 10 + equipment_coord.getY() + 13),
+        			new Coordinate(90, 10), Color.white, Color.white, true, g2d);
+        	
+        	// render inventory help
+        	Renderer.renderString("Equipment mode: Move cursor up: W, down: S, Unequip item: E, Exit: ESC",
+        			help_coord, Color.white, 8, g2d);
+        	
         }
         
         // render inventory tag
@@ -373,6 +402,9 @@ public class Handler {
 	public int getInventoryCursorPos() { return inventoryCursorPos; }
 	public void setInventoryCursorPos(int inventoryCursorPos) { this.inventoryCursorPos = inventoryCursorPos; }
 	
+	public int getEquipmentCursorPos() { return equipmentCursorPos; }
+	public void setEquipmentCursorPos(int equipmentCursorPos) { this.equipmentCursorPos = equipmentCursorPos; }
+	
 	public void moveInvCursorDown() {
 		
 		int max = ActorManager.GetPlayerInstance().getInventory().getMaxSize();
@@ -394,4 +426,30 @@ public class Handler {
 			this.setInventoryCursorPos(inventoryCursorPos - 1);
 		}
 	}
+
+	public void moveEquipmentCursorDown() {
+		
+		int max = 8; // player has 8 slots.
+		
+		// set cursor to the last item -> loops
+		if(this.equipmentCursorPos == max - 1) {
+			this.setEquipmentCursorPos(0);
+		} else {
+			this.setEquipmentCursorPos(equipmentCursorPos + 1);
+		}
+	}
+	
+	public void moveEquipmentCursorUp() {
+		
+		int max = 8; // player has 8 slots.
+		
+		// set cursor to the last item -> loops
+		if(this.equipmentCursorPos == 0) {
+			this.setEquipmentCursorPos(max - 1);
+		} else {
+			this.setEquipmentCursorPos(equipmentCursorPos - 1);
+		}
+	}
+	
+
 }
