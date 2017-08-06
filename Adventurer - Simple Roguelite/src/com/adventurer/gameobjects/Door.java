@@ -32,7 +32,11 @@ public class Door extends Tile {
 		World.instance.ChangeTile(this, TileType.LockedDoor, SpriteType.LockedDoor01);
 	}
 	
-	public String toString() { return this.doorType + " " + this.GetTileType(); }
+	public String toString() { 
+		String s = "Door";
+		if(this.GetTileType() == TileType.LockedDoor) s = "Locked Door";
+		return this.doorType + " " + s; 
+	}
 	
 	public DoorType getDoorType() { return this.doorType; }
 	public boolean isLocked() { return this.locked; }
