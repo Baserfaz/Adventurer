@@ -23,7 +23,7 @@ public class ItemCreator {
 
 	public static Armor createArmor(Tile tile, String itemName) {
 		
-		System.out.println("CREATING ARMOR");
+		//System.out.println("CREATING ARMOR");
 		
 		Map<String, String> iteminfo = FileReader.readXMLGameData(itemName, RootElement.armor);
 		Armor armor = null;
@@ -77,14 +77,14 @@ public class ItemCreator {
 			
 			// create new armor with the info.
 			armor = new Armor(tile, SpriteType.GenericItem, name, value, armorSlot, defenseValues);
-			System.out.println("CREATION COMPLETE: " + armor.getName());
+			//System.out.println("CREATION COMPLETE: " + armor.getName());
 		}
 		return armor;
 	}
 	
 	public static Weapon createWeapon(Tile tile, String itemName) {
 		
-		System.out.println("CREATING WEAPON");
+		//System.out.println("CREATING WEAPON");
 		
 		Map<String, String> iteminfo = FileReader.readXMLGameData(itemName, RootElement.weapon);
 		Weapon weapon = null;
@@ -144,7 +144,7 @@ public class ItemCreator {
 			
 			// create weapon with data.
 			weapon = new Weapon(tile, SpriteType.GenericItem, name, value, damageValues, weaponType, weaponSlot);
-			System.out.println("CREATION COMPLETE: " + weapon.getName());
+			//System.out.println("CREATION COMPLETE: " + weapon.getName());
 		}
 		return weapon;
 	}

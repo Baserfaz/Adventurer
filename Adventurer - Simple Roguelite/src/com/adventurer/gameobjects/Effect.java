@@ -7,7 +7,6 @@ import com.adventurer.data.Coordinate;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Handler;
 import com.adventurer.utilities.Renderer;
-import com.adventurer.utilities.Util;
 
 public class Effect extends GameObject {
 	

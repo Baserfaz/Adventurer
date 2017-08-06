@@ -7,7 +7,7 @@ import com.adventurer.gameobjects.Tile;
 public class EffectCreator {
 
 	public static void CreateStaticHitEffect(Tile tile) {
-		new Effect(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Hit01, 150);
+		new Effect(tile.GetWorldPosition(), tile.GetTilePosition(), SpriteType.Hit01, 125);
 	}
 	
 }
