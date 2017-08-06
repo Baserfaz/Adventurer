@@ -39,26 +39,16 @@ public class Game extends Canvas implements Runnable {
 	// do we create lobby or random dungeon first.
 	public static final boolean START_GAME_WITH_RANDOM_ROOM = false;
 	
-	// use simpler spritesheet layout
-	public static final boolean USE_SIMPLE_SPRITESHEET_LAYOUT = true;
-	
 	// LOS settings
 	public static final boolean CALCULATE_PLAYER_LOS   = true;
 	public static final boolean PERMANENTLY_SHOW_TILES = false;
-	
-	// render settings
-	public static final boolean RENDER_ACTORS_DIRECTION_ARROW = false;
-	public static final boolean RENDER_PLAYER_DIRECTION_ARROW = false;
-	
-	// movement 
-	public static final boolean MOVEMENT_ROTATE_FIRST = false;
 
 	// tile settings
-	public static final boolean ANIMATE_TILE_DISCOVERY = false;
+	public static final boolean ANIMATE_TILE_DISCOVERY = false;		// buggy
 	public static final int TILEGAP = 2;
 	
 	// player defaults
-	public static final int PLAYER_START_BASE_HEALTH	= 90;
+	public static final int PLAYER_START_BASE_HEALTH	= 50;
 	public static final int PLAYER_START_BASE_MANA		= 10;
 	
 	// player stat defaults
@@ -81,9 +71,6 @@ public class Game extends Canvas implements Runnable {
 	public static final int START_DIAMOND_KEY_COUNT	 	= 0;
 	public static final int START_BOMB_COUNT        	= 0;
 	public static final int START_PROJECTILE_COUNT  	= 0;
-	
-	// enemy settings
-	public static final boolean MAGGOTS_SPAWN_EGGS_ON_DEATH = false;
 	
 	// world size
 	public static final int WORLDHEIGHT = 30; // ~40 max 
