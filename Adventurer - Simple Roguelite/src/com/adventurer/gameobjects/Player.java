@@ -110,7 +110,6 @@ public class Player extends Actor {
 			if(tile instanceof Shrine) ((Shrine)tile).activate();
 			
 			// pickup items
-			// TODO: now automatically picks up items.
 			if(tile.GetItems().isEmpty() == false) {
 				List<Item> temp = new ArrayList<Item>(tile.GetItems());
 				for(Item i : temp) pickUpItem(i);
@@ -204,8 +203,8 @@ public class Player extends Actor {
 	}
 	
 	public void pickUpItem(Item item) {
-		this.inventory.addToInventory(item);
-		item.Remove();
+		boolean success = this.inventory.addToInventory(item);
+		if(success) item.Remove();
 	}
 	
 	// drops the last item from inventory.

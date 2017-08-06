@@ -26,19 +26,25 @@ public class Inventory {
 		
 	}
 	
-	public void addToInventory(Item item) {
+	// returns false if inventory is full
+	public boolean addToInventory(Item item) {
 		
 		// stack gold.
 		if(item instanceof Gold) {
 			Gold currentGold = this.getGold();
 			if(currentGold != null) {
 				currentGold.addAmount(((Gold)item).getAmount());
-				return;
+				return true;
 			}
 		}
 		
-		if(this.inventory.size() < this.maxInventorySpace) this.inventory.add(item);
-		else System.out.println("Inventory is full!");
+		if(this.inventory.size() < this.maxInventorySpace) {
+			this.inventory.add(item);
+			return true;
+		} else {
+			//System.out.println("Inventory is full!");
+			return false;
+		}
 	}
 	
 	public Gold getGold() {

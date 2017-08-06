@@ -2,9 +2,13 @@ package com.adventurer.main;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import com.adventurer.data.Equipment;
+import com.adventurer.enumerations.ArmorSlot;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.GameState;
 import com.adventurer.enumerations.GuiState;
+import com.adventurer.enumerations.WeaponSlot;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
 
@@ -107,6 +111,41 @@ public class KeyInput extends KeyAdapter {
 			// move cursor in inventory
 			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) Handler.instance.moveEquipmentCursorUp();
 			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) Handler.instance.moveEquipmentCursorDown();
+			
+			// unequip item
+			if(key == KeyEvent.VK_E) {
+			
+				int pos = Handler.instance.getEquipmentCursorPos();
+				Equipment eq = player.getEquipment();
+				
+				// TODO: HARDCODED TO MATCH EQUIPMENT GUI!!!!
+				if(pos == 0) {
+					eq.unequipSlot(WeaponSlot.Mainhand);
+					success = true;
+				} else if(pos == 1) {
+					eq.unequipSlot(WeaponSlot.Offhand);
+					success = true;
+				} else if(pos == 2) {
+					eq.unequipSlot(ArmorSlot.Head);
+					success = true;
+				} else if(pos == 3) {
+					eq.unequipSlot(ArmorSlot.Chest);
+					success = true;
+				} else if(pos == 4) {
+					eq.unequipSlot(ArmorSlot.Legs);
+					success = true;
+				} else if(pos == 5) {
+					eq.unequipSlot(ArmorSlot.Feet);
+					success = true;
+				} else if(pos == 6) {
+					eq.unequipSlot(ArmorSlot.Amulet);
+					success = true;
+				} else if(pos == 7) {
+					eq.unequipSlot(ArmorSlot.Ring);
+					success = true;
+				} else System.out.println("NO SUCH POSITION AVAILABLE!!");
+				
+			}
 			
 			// escape from equipment mode
 			if(key == KeyEvent.VK_ESCAPE) Game.instance.setGuiState(GuiState.None);
