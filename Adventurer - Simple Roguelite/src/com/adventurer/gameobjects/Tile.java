@@ -165,14 +165,19 @@ public class Tile extends GameObject {
 
 	public String getItemsInfo() {
 		String itemsInfo = "";
-		
+		int count = 0;
 		for(Item item : this.items) {
+			count += 1;
+			
 			if(item instanceof Gold) {
 				Gold gold = (Gold) item;
 				itemsInfo += gold.getAmount() + " " + gold.itemName + ", ";
 			} else {
 				itemsInfo += item.itemName  + ", ";
 			}
+			
+			// add new line if the string is getting too long.
+			if(count % 3 == 0) itemsInfo += "\n";
 		}
 		
 		// remove the last dot.
