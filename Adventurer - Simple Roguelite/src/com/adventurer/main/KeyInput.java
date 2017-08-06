@@ -34,6 +34,8 @@ public class KeyInput extends KeyAdapter {
 		// cache in which gui state are we in.
 		GuiState guiState = Game.instance.getGuiState();
 		
+		// decide what actions to do when
+		// in different GUI-states.
 		if(guiState == GuiState.None) {
 		
 			// movement
@@ -45,6 +47,8 @@ public class KeyInput extends KeyAdapter {
 		} else if(guiState == GuiState.Inventory) {
 			
 			// move cursor in inventory
+			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) Handler.instance.moveInvCursorUp();
+			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) Handler.instance.moveInvCursorDown();
 			
 		}
 		
@@ -53,7 +57,12 @@ public class KeyInput extends KeyAdapter {
 		
 		// Toggle inventory state
 		if(key == KeyEvent.VK_I) {
-			if(Game.instance.getGuiState() == GuiState.None) Game.instance.setGuiState(GuiState.Inventory);
+			if(Game.instance.getGuiState() == GuiState.None) {
+				
+				// reset inventory cursor position
+				Handler.instance.setInventoryCursorPos(0);
+				Game.instance.setGuiState(GuiState.Inventory);
+			}
 			else Game.instance.setGuiState(GuiState.None);
 		}
 		

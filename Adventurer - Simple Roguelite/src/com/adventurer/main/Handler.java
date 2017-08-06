@@ -14,6 +14,7 @@ import com.adventurer.data.Experience;
 import com.adventurer.data.Resistances;
 import com.adventurer.data.Stats;
 import com.adventurer.data.World;
+import com.adventurer.enumerations.GuiState;
 import com.adventurer.enumerations.WorldType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Door;
@@ -35,6 +36,9 @@ public class Handler {
 	// TODO: mouse hover --- > this is bad.
 	private Tile hoverTile = null;
 	private Coordinate mousePosition = new Coordinate(0, 0);
+	
+	// inventory cursor
+	private int inventoryCursorPos = 0;
 	
 	// flags to show different GUI-elements.
 	private boolean showStats = false;
@@ -286,6 +290,12 @@ public class Handler {
         	for(int i = 0; i < count; i++) { invItems += "-\n"; }
         }
         
+        // render inventory cursor
+        if(Game.instance.getGuiState() == GuiState.Inventory) {
+        	Renderer.renderRect(new Coordinate(0 + inventory_coord.getX(), this.getInventoryCursorPos() * 10 + inventory_coord.getY() + 13),
+        			new Coordinate(90, 10), Color.white, Color.white, true, g2d);
+        }
+        
         // render inventory tag
         Renderer.renderString(
         		"Inventory " + "(" + currentInvSpaces + "/" + player.getInventory().getMaxSize() + ")",
@@ -359,4 +369,29 @@ public class Handler {
 
 	public boolean isShowingStats() { return showStats; }
 	public void setShowStats(boolean showStats) { this.showStats = showStats; }
+
+	public int getInventoryCursorPos() { return inventoryCursorPos; }
+	public void setInventoryCursorPos(int inventoryCursorPos) { this.inventoryCursorPos = inventoryCursorPos; }
+	
+	public void moveInvCursorDown() {
+		
+		int max = ActorManager.GetPlayerInstance().getInventory().getMaxSize();
+		
+		// set cursor to the last item -> loops
+		if(this.inventoryCursorPos == max - 1) {
+			this.setInventoryCursorPos(0);
+		} else {
+			this.setInventoryCursorPos(inventoryCursorPos + 1);
+		}
+	}
+	
+	public void moveInvCursorUp() {
+		// set cursor to the last item -> loops
+		if(this.inventoryCursorPos == 0) {
+			int max = ActorManager.GetPlayerInstance().getInventory().getMaxSize();
+			this.setInventoryCursorPos(max - 1);
+		} else {
+			this.setInventoryCursorPos(inventoryCursorPos - 1);
+		}
+	}
 }

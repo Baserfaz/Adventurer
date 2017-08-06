@@ -242,6 +242,24 @@ public class Renderer {
         Renderer.renderString(txt, txtpos, fontCol, fontSize, g2d);
 	}
 	
+	public static void renderRect(Coordinate pos, Coordinate size, Color borderColor, Color fillColor, boolean fill, Graphics g2d) {
+        // positions
+        int y = pos.getY();
+        int x = pos.getX();
+		int width = size.getX();
+		int height = size.getY();
+		
+		// set color for the border
+		g2d.setColor(borderColor);
+		
+        // render rectangle and fill it
+		g2d.drawRect(x, y, width, height);
+        if(fill) { 
+    		g2d.setColor(fillColor);
+        	g2d.fillRect(x, y, width, height); 
+        }
+	}
+	
 	// https://stackoverflow.com/questions/4413132/problems-with-newline-in-graphics2d-drawstring
 	public static void renderString(String txt, Coordinate pos, Color color, int fontSize, Graphics2D g2d) {
 	    
