@@ -1,19 +1,48 @@
 package com.adventurer.data;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class Experience {
 
 	private int currentExp = 0;
 	private int currentLevel = 1;
 	
+	// TODO: create static fiels for these.
+	private static int baseExp = 500;
+	private static double expMultiplier = 1.2;
+	private static int maxLevel = 100;
+	private Map<Integer, Integer> levelToExp = new LinkedHashMap<Integer, Integer>();
+	
 	public Experience() {
+		calculateExpPoints();
+	}
+	
+	private void calculateExpPoints() {
 		
-		// TODO: calculate experience needed for all levels.
+		for(int i = 1; i < maxLevel; i++) {
+			Double exp = baseExp * expMultiplier * i;
+			int level = i + 1;
+			levelToExp.put(level, exp.intValue());
+			//System.out.println("level: " + level + " needed exp: " + exp.intValue());
+		}
 		
+	}
+	
+	private void levelUp() {
+		currentLevel += 1;
+		currentExp = 0;
 	}
 	
 	public int getCurrentExp() { return currentExp; }
 	public void setCurrentExp(int currentExp) { this.currentExp = currentExp; }
-
+	public void addCurrentExp(int a) {
+		this.currentExp += a;
+		if(this.currentExp >= levelToExp.get(this.currentLevel + 1)) {
+			levelUp();
+		}
+	}
+	
 	public int getCurrentLevel() { return currentLevel; }
 	public void setCurrentLevel(int currentLevel) { this.currentLevel = currentLevel; }
 }

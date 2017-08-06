@@ -10,7 +10,6 @@ import com.adventurer.data.Mana;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.Direction;
-import com.adventurer.enumerations.EnemyType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.*;
 import com.adventurer.utilities.Util;
@@ -25,6 +24,7 @@ public class Actor extends GameObject {
 	protected Direction lastLookDir;
 	
 	protected boolean canMove = true;
+	
 	protected Health myHP;
 	protected Mana myMP;
 	
