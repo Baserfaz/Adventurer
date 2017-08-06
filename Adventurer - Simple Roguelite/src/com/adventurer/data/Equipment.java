@@ -218,7 +218,11 @@ public class Equipment {
 			Player player = ActorManager.GetPlayerInstance();
 			Inventory inv = player.getInventory();
 			
+			System.out.println("moveItemToInventoryOrDrop: " + item.GetInfo());
+			
 			if(inv.isFull()) {
+				
+				System.out.println("inv is full");
 				
 				// inventory is full 
 				// -> drop the item on the ground.

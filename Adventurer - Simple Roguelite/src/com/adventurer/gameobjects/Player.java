@@ -203,32 +203,21 @@ public class Player extends Actor {
 	}
 	
 	public void pickUpItem(Item item) {
-		boolean success = this.inventory.addToInventory(item);
-		if(success) item.Remove();
+		if(this.inventory.isFull() == false) {
+			this.inventory.addToInventory(item);
+			item.Remove();
+		}
 	}
 	
-	// drops the last item from inventory.
-	/*public void dropItem() {
-		int size = this.inventory.getInventoryItems().size();
-		
-		if(size > 0) {
-			// drops the last item on the list.
-			Item item = this.inventory.getInventoryItems().get(size - 1);
-			item.moveItemTo(World.instance.GetTileAtPosition(this.GetTilePosition()));
-			this.inventory.removeItemFromInventory(item);
-			Handler.instance.AddObject(item);
-		}
-	}*/
-	
-	public boolean dropItem(Item item) {
-		boolean success = false;
+	public void dropItem(Item item) {
 		if(this.inventory.getInventoryItems().contains(item)) {
 			item.moveItemTo(World.instance.GetTileAtPosition(this.GetTilePosition()));
 			this.inventory.removeItemFromInventory(item);
 			Handler.instance.AddObject(item);
-			success = true;
+		} else {
+			item.moveItemTo(World.instance.GetTileAtPosition(this.GetTilePosition()));
+			Handler.instance.AddObject(item);
 		}
-		return success;
 	}
 	
 	public void updateStats() {
