@@ -23,6 +23,7 @@ import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Shrine;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.utilities.Renderer;
+import com.adventurer.utilities.Util;
 
 public class Handler {
 
@@ -31,6 +32,9 @@ public class Handler {
 	// TODO: mouse hover --- > this is bad.
 	private Tile hoverTile = null;
 	private Coordinate mousePosition = new Coordinate(0, 0);
+	
+	// flags to show different GUI-elements.
+	private boolean showStats = false;
 	
 	public static Handler instance;
 	
@@ -124,8 +128,8 @@ public class Handler {
 		Coordinate dungeonInfo_coord = new Coordinate(dungeoninfo_xPos, dungeoninfo_yPos);
 		
 		// player info
-	    int charinfo_yPos = (int) cam.getMaxY() - 75;
-	    int charinfo_xPos = (int) cam.getMinX() + 125;
+	    int charinfo_yPos = (int) cam.getMinY() + 50;
+	    int charinfo_xPos = (int) cam.getMinX() + 50;
 	    Coordinate chainfo_coord = new Coordinate(charinfo_xPos, charinfo_yPos);
 	
 	    // hover tile info
@@ -168,31 +172,68 @@ public class Handler {
             
 	    }
 	    
-	    // ---------------------- STATS -------------------------
+	    // ---------------------- VITALS ------------------------
 	    
-	    // render stats tag
+	    // render vitals tag
 	    Renderer.renderString("Vitals", stats_coord, Color.white, 8, g2d);
 	    
-		// render stats (HP etc.)
+		// render vitals (HP etc.)
 		Renderer.renderString(
 	        "\nHP: " + player.getHealth().GetCurrentHealth() + "/" + player.getHealth().GetMaxHP() + "\n" +
 	        "MP: " + player.getMana().GetCurrentMana() + "/" + player.getMana().GetMaxMP() + "\n",
 	        stats_coord,
 	        Color.gray, 8, g2d
 		);
-		
-		// render character info tag
-		Renderer.renderString("Stats", chainfo_coord, Color.white, 8, g2d);
-		
-		// render character info
-        Renderer.renderString(
-            String.format("\nSTR: %d \nVIT: %d \nINT: %d \nDEX: %d", 
-            		player.getStats().getStrength(), 
-            	player.getStats().getVitality(), 
-            	player.getStats().getIntelligence(), 
-            	player.getStats().getDexterity()
-            ), chainfo_coord, Color.gray, 8, g2d
-        );
+	    
+	    // ---------------------- STATS -------------------------
+	   
+	    if(showStats) {
+			
+			// render character info tag
+			Renderer.renderString("CHARACTER", chainfo_coord, Color.white, 8, g2d);
+			
+			// render character info
+	        Renderer.renderString(
+	            String.format(
+	            		"\nName: %s\n"
+	            		+ "Class: %s\n"
+	            		+ "Level: %d\n"
+	            		+ "__________________________\n"
+	            		+ "STR: %d\n"
+	            		+ "VIT: %d\n"
+	            		+ "INT: %d\n"
+	            		+ "DEX: %d\n"
+	            		+ "__________________________\n"
+	            		+ "Melee: %d\n"
+	            		+ "Magic: %d\n"
+	            		+ "Ranged: %d\n"
+	            		+ "___________________________\n"
+	            		+ "Armor Class: %d\n"
+	            		+ "Fire: %d\n"
+	            		+ "Frost: %d\n"
+	            		+ "Shock: %d\n"
+	            		+ "Holy: %d\n",
+	            	
+	            		player.getName(),
+	            		player.getPlayerClass().toString(),
+	            		player.getPlayerExperience().getCurrentLevel(),
+	            		
+		            	player.getStats().getStrength(), 
+		            	player.getStats().getVitality(), 
+		            	player.getStats().getIntelligence(), 
+		            	player.getStats().getDexterity(),
+		            	
+		            	Util.calcMeleeDamage(player.getStats().getStrength()),
+		            	Util.calcMagicDamage(player.getStats().getIntelligence()),
+		            	Util.calcRangedDamage(player.getStats().getDexterity()),
+		            	
+		            	// TODO: resistances + armor class
+		            	0, 0, 0, 0, 0
+		            	
+	            ), chainfo_coord, Color.gray, 8, g2d
+	        );
+	        
+	    }
         
         // -------------------- INVENTORY ----------------------
         
@@ -298,4 +339,7 @@ public class Handler {
 
 	public Coordinate getMousePosition() { return mousePosition; }
 	public void setMousePosition(Coordinate mousePosition) { this.mousePosition = mousePosition; }
+
+	public boolean isShowingStats() { return showStats; }
+	public void setShowStats(boolean showStats) { this.showStats = showStats; }
 }

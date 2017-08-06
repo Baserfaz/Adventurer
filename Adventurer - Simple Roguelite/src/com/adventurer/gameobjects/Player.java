@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Equipment;
+import com.adventurer.data.Experience;
 import com.adventurer.data.Inventory;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.Session;
@@ -15,6 +16,7 @@ import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.GameState;
 import com.adventurer.enumerations.KeyType;
+import com.adventurer.enumerations.PlayerClass;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.main.*;
@@ -27,6 +29,8 @@ public class Player extends Actor {
 	private Inventory inventory;
 	private Equipment equipment;
 	private Stats stats;
+	private Experience playerExperience;
+	private PlayerClass playerClass;
 	
 	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype) {
 		// TODO: refactor damage... 
@@ -36,6 +40,8 @@ public class Player extends Actor {
 		this.losmanager = new LoSManager();
 		this.inventory = new Inventory(this);
 		this.equipment = new Equipment();
+		this.playerExperience = new Experience();
+		this.playerClass = PlayerClass.Warrior;
 		
 		// calculate health and damage from stats
 		updateStats();
@@ -250,4 +256,10 @@ public class Player extends Actor {
 	public Inventory getInventory() { return this.inventory; }
 	public Stats getStats() { return this.stats; }
 	public Equipment getEquipment() { return equipment; }
+
+	public PlayerClass getPlayerClass() { return playerClass; }
+	public void setPlayerClass(PlayerClass playerClass) { this.playerClass = playerClass; }
+
+	public Experience getPlayerExperience() { return playerExperience; }
+	public void setPlayerExperience(Experience playerExperience) { this.playerExperience = playerExperience; }
 }

@@ -39,6 +39,12 @@ public class KeyInput extends KeyAdapter {
 		// drop item
 		if(key == KeyEvent.VK_R) player.dropItem();
 		
+		// toggle character panel
+		if(key == KeyEvent.VK_C) {
+			if(Handler.instance.isShowingStats()) Handler.instance.setShowStats(false);
+			else Handler.instance.setShowStats(true);
+		}
+		
 		// bomb
 		/*if(key == KeyEvent.VK_SPACE) {
 			Tile t = World.instance.GetTileFromDirection(player.GetTilePosition(), player.GetLookDirection());
