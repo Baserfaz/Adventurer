@@ -8,6 +8,7 @@ import java.util.Map;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Health;
 import com.adventurer.data.Mana;
+import com.adventurer.data.Offense;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.Resistances;
 import com.adventurer.data.World;
@@ -31,8 +32,7 @@ public class Actor extends GameObject {
 	protected Health myHP;
 	protected Mana myMP;
 	protected Resistances myResistances;
-	
-	protected int meleeDamage = 0, rangedDamage = 0, magicDamage = 0;
+	protected Offense myOffense;
 	
 	protected String name = "";
 	protected int movementSpeed = 2; // how fast is the animation between tiles
@@ -46,9 +46,7 @@ public class Actor extends GameObject {
 		this.lookDir = Direction.West;
 
 		// set damage types
-		this.meleeDamage = meleeDamage;
-		this.rangedDamage = rangedDamage;
-		this.magicDamage = magicDamage;
+		this.myOffense = new Offense(meleeDamage, magicDamage, rangedDamage);
 		
 		// set other stuff
 		this.name = name;
@@ -169,7 +167,7 @@ public class Actor extends GameObject {
 			
 			// enemies who can shoot dont lose projectiles.
 			Tile projStartTile = World.instance.GetTileAtPosition(originTilePos);
-			new Projectile(projStartTile, projSpriteType, rangedDamage, direction);
+			new Projectile(projStartTile, projSpriteType, this.myOffense.getRangedDmg(), direction);
 			
 		}
 	}
@@ -182,7 +180,7 @@ public class Actor extends GameObject {
 		GameObject object = tile.GetActor();
 		
 		// do damage
-		if(object != null) DamageHandler.ActorTakeDamage(tile, meleeDamage);
+		if(object != null) DamageHandler.ActorTakeDamage(tile, this.myOffense.getMeleeDmg());
 		
 	}
 	
@@ -223,28 +221,14 @@ public class Actor extends GameObject {
 	public Tile getCurrentTile() { return World.instance.GetTileAtPosition(this.GetTilePosition()); }
 	
 	public Direction GetLookDirection() { return this.lookDir; }
-	public void SetLookDirection(Direction dir) { this.lookDir = dir; }	
-	
-	public void AddRangedDamage(int a) { this.rangedDamage += a; }
-	public void SetRangedDamage(int a) { this.rangedDamage = a; }
-	
-	public void AddMagicDamage(int a) { this.magicDamage += a; }
-	public void SetMagicDamage(int a) { this.magicDamage = a; }
-	
-	public void AddMeleeDamage(int a) { this.meleeDamage += a; }	
-	public void SetMeleeDamage(int a) { this.meleeDamage = a;}
-	
-	public int GetMeleeDamage() { return this.meleeDamage; }
-	public int GetRangedDamage() { return this.rangedDamage; }
-	public int GetMagicDamage() { return this.magicDamage; }
+	public void SetLookDirection(Direction dir) { this.lookDir = dir; }
 	
 	public String getName() { return this.name; }
 	public Health getHealth() { return this.myHP; }
 	public Mana getMana() { return this.myMP; }
 	
 	public Resistances getResistances() { return this.myResistances; }
+	public Offense getOffense() { return this.myOffense; }
 	
-	public Rectangle GetBounds() {
-		return new Rectangle(this.GetWorldPosition().getX(), this.GetWorldPosition().getY(), Game.SPRITESIZE, Game.SPRITESIZE);
-	}
+	public Rectangle GetBounds() { return null; }
 }

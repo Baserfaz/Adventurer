@@ -231,25 +231,26 @@ public class Player extends Actor {
 	
 	public void updateStats() {
 		
-		// calculate health + dmg from stats
+		// TODO: WHEN EQUIPPING ITEM
+		// -> CHANGE STATS BEFORE CALLING THIS FUNCTION!
+		
+		// calculate health and mana
 		int health = Util.calcHealth(stats.getVitality());
 		int mana = Util.calcMana(stats.getIntelligence());
 		
+		// calculate damage based off stats
 		int meleeDmg = Util.calcMeleeDamage(stats.getStrength());
 		int rangedDmg = Util.calcRangedDamage(stats.getDexterity());
 		int magicDmg = Util.calcMagicDamage(stats.getIntelligence());
 		
-		// update them
-		this.SetMeleeDamage(meleeDmg);
-		this.SetRangedDamage(rangedDmg);
-		this.SetMagicDamage(magicDmg);
+		// TODO: add weapon specific damage
 		
+		// calculate resistances
+		//int physicalRes = 
+		
+		// update them in Health, Mana, Offense and Resistances.
 		this.getHealth().setMaxHP(health);
 		this.getMana().setMaxMP(mana);
-	
-		// TODO: do we want to max out our current hp/mp?
-		// this.getHealth().setCurrentHP(health);
-		// this.getMana().setCurrentMP(mana);
 	}
 	
 	public String toString() { return "You, our hero."; }

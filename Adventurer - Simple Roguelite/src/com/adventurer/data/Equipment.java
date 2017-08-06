@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.adventurer.enumerations.ArmorSlot;
+import com.adventurer.enumerations.WeaponSlot;
 import com.adventurer.gameobjects.Armor;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
@@ -25,17 +26,6 @@ public class Equipment {
 		this.ring = null;
 	}
 	
-	public Equipment(Item mh, Item of, Item head, Item chest, Item legs, Item feet, Item amulet, Item ring) {
-		this.mainHand = mh;
-		this.offHand = of;
-		this.head = head;
-		this.chest = chest;
-		this.legs = legs;
-		this.feet = feet;
-		this.amulet = amulet;
-		this.ring = ring;
-	}
-	
 	public Map<String, Item> getAllEquipment() {
 		
 		Map<String, Item> eq = new LinkedHashMap<String, Item>();
@@ -54,12 +44,10 @@ public class Equipment {
 	
 	public void equipItem(Item item) {
 		
-		ArmorSlot armorSlot = null;
-		
 		if(item instanceof Armor) {
 			
 			Armor armor = (Armor) item;
-			armorSlot = armor.getSlot();
+			ArmorSlot armorSlot = armor.getSlot();
 			
 			// drop or inventory current item 
 			// and equip the new one.
@@ -73,7 +61,7 @@ public class Equipment {
 				case Head: this.setHead(armor); break;
 				case Legs: this.setLegs(armor); break;
 				case Ring: this.setRing(armor); break;
-				default: break;
+				default: System.out.println("INVALID ARMORSLOT IN EQUIPMENT.EQUIP: " + armorSlot); break;
 			}
 			
 			// remove item from inventory.
@@ -81,16 +69,54 @@ public class Equipment {
 			
 		} else if(item instanceof Weapon) {
 			
+			Weapon weapon = (Weapon) item;
+			WeaponSlot weaponSlot = weapon.getWeaponSlot();
 			
+			this.unequipSlot(weaponSlot);
 			
+			switch(weaponSlot) {
+				case Mainhand: this.setMainHand(weapon); break;
+				case Offhand: this.setOffHand(weapon); break;
+				default: System.out.println("INVALID WEAPONSLOT IN EQUIPMENT.EQUIP: " + weaponSlot); break;
+			}
 			
-		} else {
+			// remove item from inventory.
+			ActorManager.GetPlayerInstance().getInventory().removeItemFromInventory(weapon);
 			
-			System.out.println("Item cannot be equipped!");
-			
-		}
+		} else System.out.println("Item cannot be equipped!");
 		
 		// TODO: update stats!
+		
+	}
+	
+	public void unequipSlot(WeaponSlot slot) {
+		Item item = null;
+		switch(slot) {
+			case Mainhand: item = this.getMainHand(); this.setMainHand(null); break;
+			case Offhand: item = this.getOffHand(); this.setOffHand(null); break;
+			default: break;
+		}
+		
+		// move the item to inventory
+		if(item != null) {
+			
+			Player player = ActorManager.GetPlayerInstance();
+			Inventory inv = player.getInventory();
+			
+			if(inv.isFull()) {
+				
+				// inventory is full 
+				// -> drop the item on the ground.
+				player.dropItem(item);
+				
+			} else {
+				
+				// put item into inventory.
+				inv.addToInventory(item);
+			}
+		}
+		
+		// TODO: update stats
 		
 	}
 	
@@ -124,6 +150,9 @@ public class Equipment {
 				inv.addToInventory(item);
 			}
 		}
+		
+		// TODO: update stats
+		
 	}
 	
 	public Item getMainHand() { return mainHand; }
