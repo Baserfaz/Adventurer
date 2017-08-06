@@ -79,14 +79,14 @@ public class Tile extends GameObject {
 		// -> override fov-rendering.
 		if(selected) {
 			if(hidden == false) {
-				Renderer.RenderSpriteWithBorder(sprite, this.GetWorldPosition(), g, Color.red);
-				for(GameObject vi : vanityItems) { Renderer.RenderSprite(vi.GetSprite(), vi.GetWorldPosition(), g); }
+				Renderer.RenderSpriteWithBorder(sprite, this.GetWorldPosition(), g, Color.white);
 			} else {
-				Renderer.RenderSpriteWithBorder(Util.tint(sprite, true), this.GetWorldPosition(), g, Color.red);
-				for(GameObject vi : vanityItems) { Renderer.RenderSprite(Util.tint(vi.GetSprite(), true), vi.GetWorldPosition(), g); }
+				// if the tile is hidden 
+				// -> we must tint the sprite to default color first.
+				Renderer.RenderSpriteWithBorder(Util.tint(sprite, true), this.GetWorldPosition(), g, Color.white);
 			}
 			return;
-		} 
+		}
 		
 		// fov-rendering
 		if(hidden == false && discovered) {

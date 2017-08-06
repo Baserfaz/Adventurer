@@ -100,20 +100,26 @@ public class Util {
 		for(int x = 0; x < tintedImage.getWidth(); x++) {
 			for (int y = 0; y < tintedImage.getHeight(); y++) {
 				
-				// second parameter is if there is alpha channel.
+				// get pixel + alpha values
 				Color pixelColor = new Color(tintedImage.getRGB(x, y), true);
 				int r, g, b, a, rgba;
 				
 				if(x == 0 || x == tintedImage.getWidth() - 1 || y == 0 || y == tintedImage.getHeight() - 1) {
 				
+					// tint the border with some color
+					// calculates average values of all color channels.
 					r = (pixelColor.getRed() + tintColor.getRed()) / 2;
 		            g = (pixelColor.getGreen() + tintColor.getGreen()) / 2;
 		            b = (pixelColor.getBlue() + tintColor.getBlue()) / 2;
-		            a = pixelColor.getAlpha();
+		            a = 255;
 		            rgba = (a << 24) | (r << 16) | (g << 8) | b;
 					
+		            // ALPHA	RED		 GREEN    BLUE
+		            // 11111111 00000000 00000000 00000000 32-bit integer
+		            
 				} else {
 					
+					// use default pixel color.
 					r = pixelColor.getRed();
 		            g = pixelColor.getGreen();
 		            b = pixelColor.getBlue();
