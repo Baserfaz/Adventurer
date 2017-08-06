@@ -4,6 +4,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.GameState;
+import com.adventurer.enumerations.GuiState;
 import com.adventurer.gameobjects.Player;
 
 public class KeyInput extends KeyAdapter {
@@ -30,14 +31,31 @@ public class KeyInput extends KeyAdapter {
 		
 		// -------------- HANDLE INPUTS ------------------
 		
-		// movement
-		if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) player.Move(Direction.North);
-		else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) player.Move(Direction.South);
-		else if(key == KeyEvent.VK_A || key == KeyEvent.VK_NUMPAD4) player.Move(Direction.West);
-		else if(key == KeyEvent.VK_D || key == KeyEvent.VK_NUMPAD6) player.Move(Direction.East);
+		// cache in which gui state are we in.
+		GuiState guiState = Game.instance.getGuiState();
+		
+		if(guiState == GuiState.None) {
+		
+			// movement
+			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) player.Move(Direction.North);
+			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) player.Move(Direction.South);
+			else if(key == KeyEvent.VK_A || key == KeyEvent.VK_NUMPAD4) player.Move(Direction.West);
+			else if(key == KeyEvent.VK_D || key == KeyEvent.VK_NUMPAD6) player.Move(Direction.East);
+		
+		} else if(guiState == GuiState.Inventory) {
+			
+			// move cursor in inventory
+			
+		}
 		
 		// drop item
 		if(key == KeyEvent.VK_R) player.dropItem();
+		
+		// Toggle inventory state
+		if(key == KeyEvent.VK_I) {
+			if(Game.instance.getGuiState() == GuiState.None) Game.instance.setGuiState(GuiState.Inventory);
+			else Game.instance.setGuiState(GuiState.None);
+		}
 		
 		// toggle character panel
 		if(key == KeyEvent.VK_C) {

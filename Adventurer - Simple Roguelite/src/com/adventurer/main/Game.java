@@ -11,6 +11,7 @@ import com.adventurer.data.SaveFile;
 import com.adventurer.data.Session;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.GameState;
+import com.adventurer.enumerations.GuiState;
 import com.adventurer.utilities.Renderer;
 import com.adventurer.utilities.Window;
 
@@ -96,6 +97,7 @@ public class Game extends Canvas implements Runnable {
 	private SaveFile currentSaveFile;
     private Session currentSession;
 	private GameState gameState;
+	private GuiState guiState;
 	
 	private Image backgroundImage = null;
 	
@@ -106,6 +108,7 @@ public class Game extends Canvas implements Runnable {
 		Game.instance = this;
 		
 		gameState = GameState.MainMenu;
+		guiState = GuiState.None;
 		
 		// create object handler
 		new Handler();
@@ -257,4 +260,7 @@ public class Game extends Canvas implements Runnable {
 
 	public Image getBackgroundImage() { return backgroundImage; }
 	public void setBackgroundImage(Image backgroundImage) { this.backgroundImage = backgroundImage; }
+
+	public GuiState getGuiState() { return guiState; }
+	public void setGuiState(GuiState guiState) { this.guiState = guiState; }
 }
