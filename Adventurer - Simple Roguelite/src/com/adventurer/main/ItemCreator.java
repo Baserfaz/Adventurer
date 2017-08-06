@@ -152,6 +152,8 @@ public class ItemCreator {
 		return weapon;
 	}
 	
+	//public static Bank 
+	
 	public static Chest CreateChest(Tile tile, boolean locked) {
 		SpriteType st = null;
 		if(locked) st = SpriteType.LockedChest02;

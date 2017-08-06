@@ -39,7 +39,7 @@ public class Renderer {
 		// the position of all GUI elements
 		// --> cleaner look.
 		int xPos = Game.WIDTH / 5;
-		int xPos_offset = xPos + 35;
+		int xPos_offset = xPos;
 		
         // title
         Renderer.renderString(
@@ -48,11 +48,14 @@ public class Renderer {
         
         // creator info
         Renderer.renderString(
-        		"Wanna be roguelike.",
+        		"Awesome roguelike!",
                 new Coordinate(xPos + 20, 170), Color.gray, 18, g2d);
         
         // version info
-        Renderer.renderString("Version: early", new Coordinate(xPos_offset, 550), Color.gray, 16, g2d);
+        Renderer.renderString("Version: extra early\nDate: 7.8.2017", new Coordinate(xPos_offset, 550), Color.gray, 16, g2d);
+        
+        // creator info :)
+        Renderer.renderString("By Baserfaz (Heikki Heiskanen)", new Coordinate(1000, 660), Color.gray, 16, g2d);
         
         // INFO:
         // IF YOU CHANGE THE BUTTON COORDINATES 

@@ -310,7 +310,7 @@ public class Handler {
         } else if(Game.instance.getGuiState() == GuiState.None) {
         	
         	// render general help
-        	Renderer.renderString("Play mode: Move/attack WASD, Inventory: I, Equipment: E, Character sheet: C",
+        	Renderer.renderString("Play mode: Move/attack WASD, Inventory: I, Equipment: E, Character sheet: C, Mouse hover: info",
         			help_coord, Color.gray, 8, g2d);
         	
         } else if(Game.instance.getGuiState() == GuiState.Equipment) {

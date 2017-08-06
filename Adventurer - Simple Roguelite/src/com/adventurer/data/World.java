@@ -210,6 +210,7 @@ public class World {
     				case 'D': tile = new Door(worldPos, tilePos, SpriteType.LockedDoorDiamond01, TileType.LockedDoor, true, DoorType.Diamond); break;
     				case 'c': tile = new Tile(worldPos, tilePos, SpriteType.Floor01, TileType.Floor); break;
     				case 'l': tile = new Tile(worldPos, tilePos, SpriteType.Floor01, TileType.Floor); break;
+    				case 'B': tile = new Tile(worldPos, tilePos, SpriteType.TreasuryFloor01 , TileType.Floor); break;
     				default: System.out.println("INVALID CHARACTER AT CreatePredefinedMap."); new Exception().printStackTrace(); System.exit(1); break;
 				}
 				
@@ -217,6 +218,7 @@ public class World {
 				switch(mapChar) {
 					case 'c': ItemCreator.CreateChest(tile, false); break;
 					case 'l': ItemCreator.CreateChest(tile, true); break;
+					case 'B': /* TODO: CREATE BANK! */ break;
 					default: break;
 				}
 				
