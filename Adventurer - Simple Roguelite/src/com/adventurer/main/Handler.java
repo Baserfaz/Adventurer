@@ -207,10 +207,10 @@ public class Handler {
 	            		+ "Level: %d\n"
 	            		+ "Experience: %d / %d\n"
 	            		+ "--------------------------\n"
-	            		+ "STR: %d\n"
-	            		+ "VIT: %d\n"
-	            		+ "INT: %d\n"
-	            		+ "DEX: %d\n"
+	            		+ "STR: %d (Base: %d)\n"
+	            		+ "VIT: %d (Base: %d)\n"
+	            		+ "INT: %d (Base: %d)\n"
+	            		+ "DEX: %d (Base: %d)\n"
 	            		+ "--------------------------\n"
 	            		+ "Melee: %d\n"
 	            		+ "Magic: %d\n"
@@ -228,14 +228,18 @@ public class Handler {
 	            		exp.getCurrentExp(),
 	            		exp.getNeededExp(exp.getCurrentLevel()),
 	            		
-		            	stats.getStrength(), 
-		            	stats.getVitality(), 
-		            	stats.getIntelligence(), 
-		            	stats.getDexterity(),
+	            		stats.getSumStr(),
+		            	stats.getBaseStrength(),
+		            	stats.getSumVit(),
+		            	stats.getBaseVitality(), 
+		            	stats.getSumInt(),
+		            	stats.getBaseIntelligence(), 
+		            	stats.getSumDex(),
+		            	stats.getBaseDexterity(),
 		            	
-		            	Util.calcMeleeDamage(stats.getStrength()),
-		            	Util.calcMagicDamage(stats.getIntelligence()),
-		            	Util.calcRangedDamage(stats.getDexterity()),
+		            	Util.calcMeleeDamage(stats.getSumStr()),
+		            	Util.calcMagicDamage(stats.getSumInt()),
+		            	Util.calcRangedDamage(stats.getSumDex()),
 		            	
 		            	resistances.getPhysicalResistance(),
 		            	resistances.getFireResistance(),

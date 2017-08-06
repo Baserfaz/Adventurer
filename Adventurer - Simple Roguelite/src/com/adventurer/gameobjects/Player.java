@@ -231,17 +231,16 @@ public class Player extends Actor {
 	
 	public void updateStats() {
 		
-		// TODO: WHEN EQUIPPING ITEM
-		// -> CHANGE STATS BEFORE CALLING THIS FUNCTION!
+		// --------------- Calculate secondary stats ---------------
 		
 		// calculate health and mana
-		int health = Util.calcHealth(stats.getVitality());
-		int mana = Util.calcMana(stats.getIntelligence());
+		int health = Util.calcHealth(stats.getSumVit());
+		int mana = Util.calcMana(stats.getSumInt());
 		
 		// calculate damage based off stats
-		int meleeDmg = Util.calcMeleeDamage(stats.getStrength());
-		int rangedDmg = Util.calcRangedDamage(stats.getDexterity());
-		int magicDmg = Util.calcMagicDamage(stats.getIntelligence());
+		int meleeDmg = Util.calcMeleeDamage(stats.getSumStr());
+		int rangedDmg = Util.calcRangedDamage(stats.getSumDex());
+		int magicDmg = Util.calcMagicDamage(stats.getSumInt());
 		
 		// TODO: add weapon specific damage
 		

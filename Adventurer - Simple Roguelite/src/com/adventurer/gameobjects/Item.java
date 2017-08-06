@@ -3,6 +3,7 @@ package com.adventurer.gameobjects;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import com.adventurer.data.ItemBonus;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Handler;
@@ -14,10 +15,14 @@ public class Item extends GameObject {
 	protected String itemName;
 	protected int value;
 	
+	protected ItemBonus bonus;
+	
 	public Item(Tile tile, SpriteType spritetype, String name, int value) {
 		super(tile.GetWorldPosition(), tile.GetTilePosition(), spritetype);
 		this.itemName = name;
 		this.value = value;
+		
+		this.bonus = new ItemBonus();
 	}
 	
 	public void Remove() {

@@ -14,11 +14,15 @@ public class Weapon extends Item {
 	private WeaponType weaponType; // which stat scales with the damage.
 	private WeaponSlot weaponSlot;
 	
-	public Weapon(Tile tile, SpriteType spritetype, String name, int value, Map<DamageType, Integer> damageValues, WeaponType weaponType, WeaponSlot weaponSlot) {
+	public Weapon(Tile tile, SpriteType spritetype,
+			String name, int value, Map<DamageType, Integer> damageValues, WeaponType weaponType, WeaponSlot weaponSlot) {
 		super(tile, spritetype, name, value);
 		this.weaponType = weaponType;
 		this.weaponSlot = weaponSlot;
 		this.damageValues = new HashMap<DamageType, Integer>(damageValues);
+		
+		// TODO: set bonuses here?
+		
 	}
 
 	public Map<DamageType, Integer> getDamage() { return this.damageValues; }

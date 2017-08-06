@@ -5,6 +5,7 @@ import com.adventurer.main.Game;
 public class Stats {
 	
 	private int strength, intelligence, dexterity, vitality;
+	private int addedStr, addedInt, addedDex, addedVit;
 	
 	public Stats() {
 		this.strength     = Game.DEFAULT_STRENGTH_PLAYER;
@@ -20,19 +21,34 @@ public class Stats {
 		this.vitality     = vit_;
 	}
 	
-	public int getStrength() { return strength; }
-	public void setStrength(int strength) { this.strength = strength; }
-	public void addStrength(int a) { this.strength += a; }
+	public int getSumStr() { return strength + addedStr; }
+	public int getSumInt() { return intelligence + addedInt; }
+	public int getSumDex() { return dexterity + addedDex; }
+	public int getSumVit() { return vitality + addedVit; }
 	
-	public int getIntelligence() { return intelligence; }
-	public void setIntelligence(int intelligence) { this.intelligence = intelligence; }
-	public void addIntelligence(int a ) { this.intelligence += a; }
+	public void setAddedStr(int a) { this.addedStr = a; }
+	public void setAddedInt(int a) { this.addedInt = a; }
+	public void setAddedDex(int a) { this.addedDex = a; }
+	public void setAddedVit(int a) { this.addedVit = a; }
 	
-	public int getDexterity() { return dexterity; }
-	public void setDexterity(int dexterity) { this.dexterity = dexterity; }
-	public void addDexterity(int a) { this.dexterity += a; }
+	public void addAddedStr(int a) { this.addedStr += a; }
+	public void addAddedInt(int a) { this.addedInt += a; }
+	public void addAddedDex(int a) { this.addedDex += a; }
+	public void addAddedVit(int a) { this.addedVit += a; }
+	
+	public int getBaseStrength() { return strength; }
+	public void setBaseStrength(int strength) { this.strength = strength; }
+	public void addBaseStrength(int a) { this.strength += a; }
+	
+	public int getBaseIntelligence() { return intelligence; }
+	public void setBaseIntelligence(int intelligence) { this.intelligence = intelligence; }
+	public void addBaseIntelligence(int a ) { this.intelligence += a; }
+	
+	public int getBaseDexterity() { return dexterity; }
+	public void setBaseDexterity(int dexterity) { this.dexterity = dexterity; }
+	public void addBaseDexterity(int a) { this.dexterity += a; }
 
-	public int getVitality() { return vitality; }
-	public void setVitality(int vitality) { this.vitality = vitality; }
-	public void addVitality(int a) { this.vitality += a; }
+	public int getBaseVitality() { return vitality; }
+	public void setBaseVitality(int vitality) { this.vitality = vitality; }
+	public void addBaseVitality(int a) { this.vitality += a; }
 }

@@ -42,15 +42,22 @@ public class Equipment {
 		return eq;
 	}
 	
+	public void updateStats(Item item) {
+		
+		
+		
+	}
+	
 	public void equipItem(Item item) {
+		
+		boolean success = false;
 		
 		if(item instanceof Armor) {
 			
 			Armor armor = (Armor) item;
 			ArmorSlot armorSlot = armor.getSlot();
 			
-			// drop or inventory current item 
-			// and equip the new one.
+			// drop or inventory current item
 			this.unequipSlot(armorSlot);
 			
 			// equip item
@@ -66,6 +73,8 @@ public class Equipment {
 			
 			// remove item from inventory.
 			ActorManager.GetPlayerInstance().getInventory().removeItemFromInventory(armor);
+			
+			success = true;
 			
 		} else if(item instanceof Weapon) {
 			
@@ -83,10 +92,14 @@ public class Equipment {
 			// remove item from inventory.
 			ActorManager.GetPlayerInstance().getInventory().removeItemFromInventory(weapon);
 			
+			success = true;
+			
 		} else System.out.println("Item cannot be equipped!");
 		
-		// TODO: update stats!
-		
+		// update stats
+		if(success) {
+			
+		}
 	}
 	
 	public void unequipSlot(WeaponSlot slot) {
@@ -94,30 +107,10 @@ public class Equipment {
 		switch(slot) {
 			case Mainhand: item = this.getMainHand(); this.setMainHand(null); break;
 			case Offhand: item = this.getOffHand(); this.setOffHand(null); break;
-			default: break;
+			default: System.out.println("INVALID WEAPONSLOT IN EQUIPMENT.UNEQUIP: " + slot); break;
 		}
 		
-		// move the item to inventory
-		if(item != null) {
-			
-			Player player = ActorManager.GetPlayerInstance();
-			Inventory inv = player.getInventory();
-			
-			if(inv.isFull()) {
-				
-				// inventory is full 
-				// -> drop the item on the ground.
-				player.dropItem(item);
-				
-			} else {
-				
-				// put item into inventory.
-				inv.addToInventory(item);
-			}
-		}
-		
-		// TODO: update stats
-		
+		moveItemToInventoryOrDrop(item);
 	}
 	
 	public void unequipSlot(ArmorSlot slot) {
@@ -129,8 +122,13 @@ public class Equipment {
 			case Feet: item = this.getFeet(); this.setFeet(null); break;
 			case Amulet: item = this.getAmulet(); this.setAmulet(null); break;
 			case Ring: item = this.getRing(); this.setRing(null); break;
-			default: break;
+			default: System.out.println("INVALID ARMORSLOT IN EQUIPMENT.UNEQUIP: " + slot); break;
 		}
+		
+		moveItemToInventoryOrDrop(item);
+	}
+	
+	private void moveItemToInventoryOrDrop(Item item) {
 		
 		// move the item to inventory
 		if(item != null) {
@@ -149,9 +147,9 @@ public class Equipment {
 				// put item into inventory.
 				inv.addToInventory(item);
 			}
+			
+			// TODO: update stats
 		}
-		
-		// TODO: update stats
 		
 	}
 	
