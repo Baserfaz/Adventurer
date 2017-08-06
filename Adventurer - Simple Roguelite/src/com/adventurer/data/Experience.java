@@ -34,6 +34,8 @@ public class Experience {
 		currentExp = 0;
 	}
 	
+	public int getNeededExp(int lvl) { return levelToExp.get(lvl + 1); }
+	
 	public int getCurrentExp() { return currentExp; }
 	public void setCurrentExp(int currentExp) { this.currentExp = currentExp; }
 	public void addCurrentExp(int a) {

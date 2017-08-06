@@ -198,6 +198,7 @@ public class Handler {
 	            		"\nName: %s\n"
 	            		+ "Class: %s\n"
 	            		+ "Level: %d\n"
+	            		+ "Experience: %d / %d\n"
 	            		+ "--------------------------\n"
 	            		+ "STR: %d\n"
 	            		+ "VIT: %d\n"
@@ -217,6 +218,8 @@ public class Handler {
 	            		player.getName(),
 	            		player.getPlayerClass().toString(),
 	            		player.getPlayerExperience().getCurrentLevel(),
+	            		player.getPlayerExperience().getCurrentExp(),
+	            		player.getPlayerExperience().getNeededExp(player.getPlayerExperience().getCurrentLevel()),
 	            		
 		            	player.getStats().getStrength(), 
 		            	player.getStats().getVitality(), 
