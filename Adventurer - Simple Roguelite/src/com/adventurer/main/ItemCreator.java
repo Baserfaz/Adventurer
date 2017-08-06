@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.adventurer.enumerations.ArmorSlot;
+import com.adventurer.enumerations.BombType;
 import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.enumerations.RootElement;
@@ -11,9 +12,11 @@ import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.WeaponSlot;
 import com.adventurer.enumerations.WeaponType;
 import com.adventurer.gameobjects.Armor;
+import com.adventurer.gameobjects.Bomb;
 import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.Gold;
 import com.adventurer.gameobjects.Key;
+import com.adventurer.gameobjects.Projectile;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Weapon;
 import com.adventurer.utilities.FileReader;
@@ -173,8 +176,28 @@ public class ItemCreator {
 			type = SpriteType.Key;
 		}
 		
+		// TODO: static fields for key values
 		return new Key(tile, type, name, keyType, value);
 	}
+	
+	/*public static Projectile createProjectile() {
+		new Projectile();
+	}*/
+	
+	/*public static Bomb createBomb(Tile tile, BombType bombtype) {
+		
+		String name = "";
+		int value = 0;
+		
+		switch(bombtype) {
+			case Gas: name = "Gasbomb";  value = 10; break;
+			case Normal: name = "Bomb";  value = 15; break;
+			default: name = "???? BOMB ????"; break;
+		}
+		
+		// TODO: static field for bomb time, damage and values
+		return new Bomb(tile, SpriteType.Bomb01, 1000, 50, bombtype, name, value);
+	}*/
 	
 	public static Gold createGold(Tile tile, int amount) {
 		return new Gold(tile, SpriteType.Gold01, amount);

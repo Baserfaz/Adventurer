@@ -43,10 +43,11 @@ public class Bomb extends Item {
 			
 			for(Tile tile : tiles) {
 				
-				// Damage:
+				// Do damage:
 				// 1. destructible tiles
 				// 2. doors
 				// 3. actors
+				
 				if(tile instanceof DestructibleTile) {
 					
 					((DestructibleTile)tile).getTileHealth().TakeDamage(this.damage);

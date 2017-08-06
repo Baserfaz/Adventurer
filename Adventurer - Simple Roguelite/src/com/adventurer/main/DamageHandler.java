@@ -10,9 +10,8 @@ public class DamageHandler {
 		// do damage
 		actor.getHealth().TakeDamage(damage); 
 		
-		// play effects
-		
-		
+		// create effect
+		EffectCreator.CreateStaticHitEffect(actor.getCurrentTile());
 		
 	}
 	

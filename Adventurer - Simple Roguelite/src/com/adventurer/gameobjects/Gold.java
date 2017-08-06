@@ -12,4 +12,5 @@ public class Gold extends Item {
 	}
 
 	public int getAmount() { return amount; }
+	public void addAmount(int a) { this.amount += a; }
 }

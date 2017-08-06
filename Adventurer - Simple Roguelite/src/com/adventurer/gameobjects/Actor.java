@@ -174,9 +174,6 @@ public class Actor extends GameObject {
 		// do damage
 		if(object != null) DamageHandler.ActorTakeDamage(tile, meleeDamage);
 		
-		// create effect
-		EffectCreator.CreateStaticHitEffect(tile);
-		
 	}
 	
 	protected void UpdatePosition() {

@@ -17,6 +17,7 @@ import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Effect;
 import com.adventurer.gameobjects.Enemy;
 import com.adventurer.gameobjects.GameObject;
+import com.adventurer.gameobjects.Gold;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Shrine;
@@ -208,7 +209,19 @@ public class Handler {
         } else {
         	
         	// first add the items into the list.
-        	for(Item item : player.getInventory().getInventoryItems()) { invItems += item.getName() + "\n"; }
+        	for(Item item : player.getInventory().getInventoryItems()) { 
+        		
+        		// handle different items here.
+        		// --> show different info.
+        		
+        		if(item instanceof Gold) {
+        			Gold gold = (Gold) item;
+        			invItems += gold.getName() + " (" + gold.getAmount() + ")\n";
+        		} else {
+        			invItems += item.getName() + "\n"; 
+        		}
+        		
+        	}
         	
         	// then add '-' to fill the empty spaces.
         	int count = maxinvSpaces - currentInvSpaces;
