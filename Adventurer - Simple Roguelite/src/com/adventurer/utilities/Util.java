@@ -104,6 +104,9 @@ public class Util {
 				Color pixelColor = new Color(tintedImage.getRGB(x, y), true);
 				int r, g, b, a, rgba;
 				
+				// by changing these values here, we can choose
+				// which kind of selection pattern is used.
+				// -> now only renders the borders.
 				if(x == 0 || x == tintedImage.getWidth() - 1 || y == 0 || y == tintedImage.getHeight() - 1) {
 				
 					// tint the border with some color
