@@ -6,16 +6,13 @@ import java.awt.image.BufferedImage;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Health;
-import com.adventurer.data.Inventory;
 import com.adventurer.data.Mana;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.World;
-import com.adventurer.enumerations.BombType;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.EnemyType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.*;
-import com.adventurer.utilities.Renderer;
 import com.adventurer.utilities.Util;
 
 public class Actor extends GameObject {
@@ -77,14 +74,14 @@ public class Actor extends GameObject {
 	public void OnDeath(Tile tile) {
 		
 		if(this instanceof Enemy) {
-
-			EnemyType enemyType = ((Enemy)this).getEnemyType();
 			
 			// remove gameobject
 			Remove();
 						
 		} else if(this instanceof Player) {
 			
+			// TODO: death screen? 
+			// respawn player at lobby
 			ActorManager.RemovePlayer();
 			World.instance.Remove();
 			new World(PredefinedMaps.GetLobby());
@@ -141,6 +138,8 @@ public class Actor extends GameObject {
 	
 	public void Shoot(Coordinate originTilePos, Direction direction, SpriteType projSpriteType) {
 		
+		// ----- this is ranged attack -----
+		
 		if(this instanceof Player) {
 			
 			// TODO: player shoot 
@@ -174,6 +173,10 @@ public class Actor extends GameObject {
 		
 		// do damage
 		if(object != null) DamageHandler.ActorTakeDamage(tile, meleeDamage);
+		
+		// create effect
+		EffectCreator.CreateStaticHitEffect(tile);
+		
 	}
 	
 	protected void UpdatePosition() {
