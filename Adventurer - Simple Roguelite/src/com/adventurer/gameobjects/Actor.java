@@ -180,7 +180,8 @@ public class Actor extends GameObject {
 		GameObject object = tile.GetActor();
 		
 		// do damage
-		if(object != null) DamageHandler.ActorTakeDamage(tile, this.myOffense.getMeleeDmg());
+		// TODO: HARDCODED TO ONLY DO PHYSICAL DAMAGE!
+		if(object != null) DamageHandler.ActorTakeDamage(tile, this.myOffense.getMeleeDmgOfType(DamageType.Physical));
 		
 	}
 	

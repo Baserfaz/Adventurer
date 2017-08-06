@@ -22,7 +22,6 @@ public class Weapon extends Item {
 		this.damageValues = new HashMap<DamageType, Integer>(damageValues);
 		
 		// TODO: set bonuses here?
-		
 	}
 
 	public Map<DamageType, Integer> getDamage() { return this.damageValues; }

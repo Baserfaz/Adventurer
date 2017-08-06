@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import com.adventurer.enumerations.ArmorSlot;
 import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.WeaponSlot;
+import com.adventurer.enumerations.WeaponType;
 import com.adventurer.gameobjects.Armor;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
@@ -49,12 +50,15 @@ public class Equipment {
 		Player player = ActorManager.GetPlayerInstance();
 		Stats stats = player.getStats();
 		Resistances res = player.getResistances();
+		Offense offense = player.getOffense();
 		
-		// TODO: read + parse + set XML itembonuses when creating item.
 		ItemBonus ib = item.getBonuses();
+		
+		// ---------------- UPDATE WITH ITEM BONUS STATS --------------------
 		
 		// TODO: update item's bonuses
 		
+		// ---------------- UPDATE WITH ITEM BASE STATS ---------------------
 		if(item instanceof Armor) {
 			
 			Armor armor = (Armor) item;
@@ -92,7 +96,37 @@ public class Equipment {
 			
 		} else if(item instanceof Weapon) {
 			
-			// TODO: update damage?
+			Weapon weapon = (Weapon) item;
+			
+			if(weapon.getWeaponSlot() == WeaponSlot.Mainhand) {
+				
+				// MAINHAND
+				
+				if(weapon.getWeaponType() == WeaponType.Melee) {
+					
+					for(Entry<DamageType, Integer> e : weapon.getDamage().entrySet()) {
+						DamageType key = e.getKey();
+						int val = e.getValue();
+						if(isAddition) offense.setMeleeDmgOfType(key, val);
+						else offense.setMeleeDmgOfType(key, -val);
+					}
+					
+				} else if(weapon.getWeaponType() == WeaponType.Magic) {
+					
+					// TODO: Add magic damage types
+					
+					
+				} else if(weapon.getWeaponType() == WeaponType.Ranged) {
+					
+					// TODO: add ranged damage types
+					
+				}
+				
+			} else {
+				
+				// TODO: OFFHAND --> ONLY SHIELDS?
+				
+			}
 			
 		}
 		
