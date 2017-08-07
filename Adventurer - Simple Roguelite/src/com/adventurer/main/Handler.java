@@ -6,11 +6,14 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import com.adventurer.data.Camera;
 import com.adventurer.data.Coordinate;
+import com.adventurer.data.Equipment;
 import com.adventurer.data.Experience;
+import com.adventurer.data.ItemBonus;
 import com.adventurer.data.Offense;
 import com.adventurer.data.Resistances;
 import com.adventurer.data.Stats;
@@ -19,6 +22,7 @@ import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.GuiState;
 import com.adventurer.enumerations.WorldType;
 import com.adventurer.gameobjects.Actor;
+import com.adventurer.gameobjects.Armor;
 import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Effect;
 import com.adventurer.gameobjects.Enemy;
@@ -28,6 +32,7 @@ import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Shrine;
 import com.adventurer.gameobjects.Tile;
+import com.adventurer.gameobjects.Weapon;
 import com.adventurer.utilities.Renderer;
 import com.adventurer.utilities.Util;
 
@@ -45,6 +50,7 @@ public class Handler {
 	
 	// flags to show different GUI-elements.
 	private boolean showStats = false;
+	private boolean showItemInspect = false;
 	
 	public static Handler instance;
 	
@@ -143,8 +149,8 @@ public class Handler {
 	    Coordinate chainfo_coord = new Coordinate(charinfo_xPos, charinfo_yPos);
 	
 	    // hover tile info
-	    int tileinfo_yPos = mousePosition.getY() - 10; //(int) cam.getMaxY() - 200;
-	    int tileinfo_xPos = mousePosition.getX() + 20; //(int) cam.getMaxX() - 200;
+	    int tileinfo_yPos = mousePosition.getY() - 10;
+	    int tileinfo_xPos = mousePosition.getX() + 20;
 	    Coordinate tileinfo_coord = new Coordinate(tileinfo_xPos, tileinfo_yPos);
 	    
 	    // inventory position
@@ -153,8 +159,8 @@ public class Handler {
 	    Coordinate inventory_coord = new Coordinate(inventory_xPos, inventory_yPos);
 	    
 	    // equipment position
-	    int equipment_yPos = (int) cam.getMinY() + 25;
-	    int equipment_xPos = (int) cam.getMaxX() - 210;
+	    int equipment_yPos = (int) cam.getMinY() + 175;
+	    int equipment_xPos = (int) cam.getMaxX() - 100;
 	    Coordinate equipment_coord = new Coordinate(equipment_xPos, equipment_yPos);
 	    
 	    // help text position
@@ -162,8 +168,66 @@ public class Handler {
 	    int help_xPos = (int) cam.getMinX() + 100;
 	    Coordinate help_coord = new Coordinate(help_xPos, help_yPos);
 	    
-	    // end calc
+	    // item inspect position
+	    int inspect_yPos = (int) cam.getMinY() + 25;
+	    int inspect_xPos = (int) cam.getMaxX() - 300;
+	    Coordinate inspect_coord = new Coordinate(inspect_xPos, inspect_yPos);
 	    
+	    // -------------------- Show help and cursors --------------------------
+	    
+        if(Game.instance.getGuiState() == GuiState.Inventory) {
+        	
+        	// render inventory cursor
+        	Renderer.renderRect(new Coordinate(0 + inventory_coord.getX(), this.getInventoryCursorPos() * 10 + inventory_coord.getY() + 13),
+        			new Coordinate(90, 10), Color.white, Color.white, true, g2d);
+        	
+        	// render inventory help
+        	Renderer.renderString("Inventory mode: Move cursor up: W, down: S, Equip item: E, Inspect: I, Drop item: R, Exit: ESC",
+        			help_coord, Color.gray, 8, g2d);
+        
+        } else if(Game.instance.getGuiState() == GuiState.None) {
+        	
+        	// render general help
+        	Renderer.renderString("Play mode: Move/attack WASD, Inventory: I, Equipment: E, Character sheet: C, Mouse hover: info",
+        			help_coord, Color.gray, 8, g2d);
+        	
+        } else if(Game.instance.getGuiState() == GuiState.Equipment) {
+        	
+        	// render inventory cursor
+        	Renderer.renderRect(new Coordinate(0 + equipment_coord.getX(), this.getEquipmentCursorPos() * 10 + equipment_coord.getY() + 13),
+        			new Coordinate(90, 10), Color.white, Color.white, true, g2d);
+        	
+        	// render inventory help
+        	Renderer.renderString("Equipment mode: Move cursor up: W, down: S, Unequip item: E, Inspect: I, Exit: ESC",
+        			help_coord, Color.gray, 8, g2d);
+        }
+	    
+        // -------------------- INSPECT ITEM --------------------
+        
+        if(showItemInspect && Game.instance.getGuiState() == GuiState.Equipment) {
+        	
+			int pos = this.getEquipmentCursorPos();
+			Equipment eq = player.getEquipment();
+			Item item = null;
+			
+			if(pos == 0) item = eq.getMainHand();
+			else if(pos == 1) item = eq.getOffHand();
+			else if(pos == 2) item = eq.getHead();
+			else if(pos == 3) item = eq.getChest();
+			else if(pos == 4) item = eq.getLegs();
+			else if(pos == 5) item = eq.getFeet();
+			else if(pos == 6) item = eq.getAmulet();
+			else if(pos == 7) item = eq.getRing();
+        	
+        	drawItemInspectInfo(item, inspect_coord, g2d);
+        	
+        } else if(showItemInspect && Game.instance.getGuiState() == GuiState.Inventory) {
+        	
+        	Item item = player.getInventory().getItemOnPosition(Handler.instance.getInventoryCursorPos());
+        	drawItemInspectInfo(item, inspect_coord, g2d);
+        	
+        }
+        
 	    // -------------- LOCATION ---------------------
 	    
 	    if(showStats == false) {
@@ -339,35 +403,6 @@ public class Handler {
         	for(int i = 0; i < count; i++) { invItems += "-\n"; }
         }
         
-        // when the inventory GUI-mode is selected...
-        if(Game.instance.getGuiState() == GuiState.Inventory) {
-        	
-        	// render inventory cursor
-        	Renderer.renderRect(new Coordinate(0 + inventory_coord.getX(), this.getInventoryCursorPos() * 10 + inventory_coord.getY() + 13),
-        			new Coordinate(90, 10), Color.white, Color.white, true, g2d);
-        	
-        	// render inventory help
-        	Renderer.renderString("Inventory mode: Move cursor up: W, down: S, Equip item: E, Drop item: R, Exit: ESC",
-        			help_coord, Color.white, 8, g2d);
-        	
-        } else if(Game.instance.getGuiState() == GuiState.None) {
-        	
-        	// render general help
-        	Renderer.renderString("Play mode: Move/attack WASD, Inventory: I, Equipment: E, Character sheet: C, Mouse hover: info",
-        			help_coord, Color.gray, 8, g2d);
-        	
-        } else if(Game.instance.getGuiState() == GuiState.Equipment) {
-        	
-        	// render inventory cursor
-        	Renderer.renderRect(new Coordinate(0 + equipment_coord.getX(), this.getEquipmentCursorPos() * 10 + equipment_coord.getY() + 13),
-        			new Coordinate(90, 10), Color.white, Color.white, true, g2d);
-        	
-        	// render inventory help
-        	Renderer.renderString("Equipment mode: Move cursor up: W, down: S, Unequip item: E, Exit: ESC",
-        			help_coord, Color.white, 8, g2d);
-        	
-        }
-        
         // render inventory tag
         Renderer.renderString(
         		"Inventory " + "(" + currentInvSpaces + "/" + player.getInventory().getMaxSize() + ")",
@@ -382,7 +417,7 @@ public class Handler {
         String equipmentInfo = "";
         for(Entry<String, Item> eq: player.getEquipment().getAllEquipment().entrySet()) {
         	
-        	equipmentInfo += "- " + eq.getKey() + ": ";
+        	equipmentInfo += eq.getKey() + ": ";
         	
         	Item i = eq.getValue();
         	if(i != null) equipmentInfo += eq.getValue().getName() + "\n";
@@ -395,7 +430,7 @@ public class Handler {
         // render equipment info.
         Renderer.renderString("\n" + equipmentInfo, equipment_coord, Color.gray, 8, g2d);
         
-        // -------------------- MOUSE HOVER -------------------------
+        // -------------------- MOUSE HOVER ---------------------
         if(hoverTile != null) {
         	
         	// cache tile
@@ -428,6 +463,74 @@ public class Handler {
         } else Renderer.renderString("", tileinfo_coord, Color.white, 8, g2d);
 	}
 	
+	private void drawItemInspectInfo(Item item, Coordinate inspect_coord, Graphics2D g2d) {
+		
+		// vars
+		String slot = "";
+    	int physical = 0, fire = 0, frost = 0, shock = 0, holy = 0, str = 0, dex = 0, intel = 0, vit = 0;
+    	
+    	// populate vars
+    	if(item instanceof Armor) {
+    		
+    		Armor armor = (Armor) item;
+    		Map<DamageType, Integer> res = armor.getDefenseValues();
+    		ItemBonus ib = armor.getBonuses();
+    		
+    		slot = armor.getSlot().toString();
+    		
+    		fire = res.get(DamageType.Fire);
+    		frost = res.get(DamageType.Frost);
+    		shock = res.get(DamageType.Shock);
+    		holy = res.get(DamageType.Holy);
+    		
+    		str = ib.getStrBonus();
+    		dex = ib.getDexBonus(); 
+    		intel = ib.getIntBonus();
+    		vit = ib.getVitBonus();
+    		
+    	} else if(item instanceof Weapon) {
+    		
+    		Weapon weapon = (Weapon) item;
+    		Map<DamageType, Integer> dmg = weapon.getDamage();
+    		ItemBonus ib = weapon.getBonuses();
+    		
+    		slot = weapon.getWeaponSlot().toString();
+    		
+    		fire = dmg.get(DamageType.Fire);
+    		frost = dmg.get(DamageType.Frost);
+    		shock = dmg.get(DamageType.Shock);
+    		holy = dmg.get(DamageType.Holy);
+    		
+    		str = ib.getStrBonus();
+    		dex = ib.getDexBonus(); 
+    		intel = ib.getIntBonus();
+    		vit = ib.getVitBonus();
+    		
+    	}
+    	
+    	// build string using vars
+    	String inspectInfo = String.format(
+    			"\n\'%s\'\n"
+    			+"--------------------------------\n"
+    			+ "Value: %d gp\n"
+    			+ "Slot:  %s\n"
+    			+ "--------------------------------\n"
+    			+ "Physical: %d    |   Bonus\n"
+    			+ "Fire:     %d    |   STR: %d\n"
+    			+ "Frost:    %d    |   DEX: %d\n"
+    			+ "Shock:    %d    |   INT: %d\n"
+    			+ "Holy:     %d    |   VIT: %d\n"
+    			+ "--------------------------------",
+    			item.getDescription(), item.getValue(), slot, physical, fire, str, frost, dex, shock, intel, holy, vit);
+    		
+    	// render item name
+    	Renderer.renderString(item.getName(), inspect_coord, Color.white, 8, g2d);
+    	
+    	// render item info
+    	Renderer.renderString(inspectInfo, inspect_coord, Color.white, 8, g2d);
+		
+	}
+	
 	public void AddObject(GameObject go) { this.getObjects().add(go); }	
 	public void RemoveObject(GameObject go) { this.getObjects().remove(go); }
 	public List<GameObject> getObjects() { return objects; }
@@ -448,51 +551,31 @@ public class Handler {
 	public int getEquipmentCursorPos() { return equipmentCursorPos; }
 	public void setEquipmentCursorPos(int equipmentCursorPos) { this.equipmentCursorPos = equipmentCursorPos; }
 	
+	public boolean isShowItemInspect() { return showItemInspect; }
+	public void setShowItemInspect(boolean showItemInspect) { this.showItemInspect = showItemInspect; }
+	
 	public void moveInvCursorDown() {
-		
 		int max = ActorManager.GetPlayerInstance().getInventory().getMaxSize();
-		
-		// set cursor to the last item -> loops
-		if(this.inventoryCursorPos == max - 1) {
-			this.setInventoryCursorPos(0);
-		} else {
-			this.setInventoryCursorPos(inventoryCursorPos + 1);
-		}
+		if(this.inventoryCursorPos == max - 1) this.setInventoryCursorPos(0);
+		else this.setInventoryCursorPos(inventoryCursorPos + 1);
 	}
 	
 	public void moveInvCursorUp() {
-		// set cursor to the last item -> loops
+		int max = ActorManager.GetPlayerInstance().getInventory().getMaxSize();
 		if(this.inventoryCursorPos == 0) {
-			int max = ActorManager.GetPlayerInstance().getInventory().getMaxSize();
 			this.setInventoryCursorPos(max - 1);
-		} else {
-			this.setInventoryCursorPos(inventoryCursorPos - 1);
-		}
+		} else this.setInventoryCursorPos(inventoryCursorPos - 1);
 	}
 
 	public void moveEquipmentCursorDown() {
-		
-		int max = 8; // player has 8 slots.
-		
-		// set cursor to the last item -> loops
-		if(this.equipmentCursorPos == max - 1) {
-			this.setEquipmentCursorPos(0);
-		} else {
-			this.setEquipmentCursorPos(equipmentCursorPos + 1);
-		}
+		int max = 8;
+		if(this.equipmentCursorPos == max - 1) this.setEquipmentCursorPos(0);
+		else this.setEquipmentCursorPos(equipmentCursorPos + 1);
 	}
 	
 	public void moveEquipmentCursorUp() {
-		
-		int max = 8; // player has 8 slots.
-		
-		// set cursor to the last item -> loops
-		if(this.equipmentCursorPos == 0) {
-			this.setEquipmentCursorPos(max - 1);
-		} else {
-			this.setEquipmentCursorPos(equipmentCursorPos - 1);
-		}
+		int max = 8;
+		if(this.equipmentCursorPos == 0) this.setEquipmentCursorPos(max - 1);
+		else this.setEquipmentCursorPos(equipmentCursorPos - 1);
 	}
-	
-
 }

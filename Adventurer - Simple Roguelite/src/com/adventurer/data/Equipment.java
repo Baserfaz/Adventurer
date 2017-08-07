@@ -232,30 +232,13 @@ public class Equipment {
 	}
 	
 	private void moveItemToInventoryOrDrop(Item item) {
-		
-		// move the item to inventory
 		if(item != null) {
 			
 			Player player = ActorManager.GetPlayerInstance();
 			Inventory inv = player.getInventory();
 			
-			System.out.println("moveItemToInventoryOrDrop: " + item.GetInfo());
-			
-			if(inv.isFull()) {
-				
-				System.out.println("inv is full");
-				
-				// inventory is full 
-				// -> drop the item on the ground.
-				player.dropItem(item);
-				
-			} else {
-				
-				// put item into inventory.
-				inv.addToInventory(item);
-			}
-			
-			// update stats here
+			if(inv.isFull()) player.dropItem(item);
+			else inv.addToInventory(item);
 			updateStats(item, false);
 		}
 	}

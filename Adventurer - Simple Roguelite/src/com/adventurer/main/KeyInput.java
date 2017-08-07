@@ -39,30 +39,7 @@ public class KeyInput extends KeyAdapter {
 		// cache in which gui state are we in.
 		GuiState guiState = Game.instance.getGuiState();
 		
-		// Toggle inventory state
-		if(key == KeyEvent.VK_I) {
-			if(Game.instance.getGuiState() == GuiState.None) {
-				
-				// reset inventory cursor position
-				Handler.instance.setInventoryCursorPos(0);
-				Game.instance.setGuiState(GuiState.Inventory);
-				
-			}
-		}
-		
-		// Toggle equipment state
-		if(key == KeyEvent.VK_E) {
-			if(Game.instance.getGuiState() == GuiState.None) {
-				
-				// reset inventory cursor position
-				Handler.instance.setEquipmentCursorPos(0);
-				Game.instance.setGuiState(GuiState.Equipment);
-				
-			}
-		}
-		
-		// decide what actions to do when
-		// in different GUI-states.
+		// decide what actions to do when in different GUI-states.
 		if(guiState == GuiState.None) {
 		
 			// movement
@@ -71,20 +48,35 @@ public class KeyInput extends KeyAdapter {
 			else if(key == KeyEvent.VK_A || key == KeyEvent.VK_NUMPAD4) player.Move(Direction.West);
 			else if(key == KeyEvent.VK_D || key == KeyEvent.VK_NUMPAD6) player.Move(Direction.East);
 		
+			// Toggle inventory state
+			if(key == KeyEvent.VK_I) {
+				Handler.instance.setInventoryCursorPos(0);
+				Game.instance.setGuiState(GuiState.Inventory);
+			}
+			
+			// Toggle equipment state
+			if(key == KeyEvent.VK_E) {
+				Handler.instance.setEquipmentCursorPos(0);
+				Game.instance.setGuiState(GuiState.Equipment);
+			}
+			
 		} else if(guiState == GuiState.Inventory) {
 			
 			boolean success = false;
 			
 			// move cursor in inventory
-			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) Handler.instance.moveInvCursorUp();
-			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) Handler.instance.moveInvCursorDown();
-			
-			// escape from inventory mode
-			if(key == KeyEvent.VK_ESCAPE) Game.instance.setGuiState(GuiState.None);
+			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) {
+				Handler.instance.moveInvCursorUp();
+				Handler.instance.setShowItemInspect(false);
+			}
+			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) {
+				Handler.instance.moveInvCursorDown();
+				Handler.instance.setShowItemInspect(false);
+			}
 			
 			// drop item
 			if(key == KeyEvent.VK_R) {
-				// get the item that is selected i.e. cursor position
+				Handler.instance.setShowItemInspect(false);
 				Item item = player.getInventory().getItemOnPosition(Handler.instance.getInventoryCursorPos());
 				if(item != null) {
 					success = true;
@@ -94,6 +86,7 @@ public class KeyInput extends KeyAdapter {
 			
 			// equip item
 			if(key == KeyEvent.VK_E) {
+				Handler.instance.setShowItemInspect(false);
 				Item item = player.getInventory().getItemOnPosition(Handler.instance.getInventoryCursorPos());
 				if(item != null) {
 					success = true;
@@ -101,24 +94,51 @@ public class KeyInput extends KeyAdapter {
 				}
 			}
 			
+			// inspect item
+			if(key == KeyEvent.VK_I) {
+				Item item = player.getInventory().getItemOnPosition(Handler.instance.getInventoryCursorPos());
+				if(item != null) {
+					if(Handler.instance.isShowItemInspect()) Handler.instance.setShowItemInspect(false);
+					else Handler.instance.setShowItemInspect(true);
+				}
+			}
+			
+			// escape from inventory mode
+			if(key == KeyEvent.VK_ESCAPE) {
+				Handler.instance.setShowItemInspect(false);
+				Game.instance.setGuiState(GuiState.None);
+			}
+			
 			// exit inventory mode automatically
-			if(Game.AUTOMATICALLY_ESCAPE_FROM_INV_MODE_AFTER_SUCCESS && success) Game.instance.setGuiState(GuiState.None);
+			if(Game.AUTOMATICALLY_ESCAPE_FROM_INV_MODE_AFTER_SUCCESS) {
+				if (success) {
+					Game.instance.setGuiState(GuiState.None);
+					Handler.instance.setShowItemInspect(false);
+				}
+			}
 		
 		} else if(guiState == GuiState.Equipment) {
 			
 			boolean success = false;
 			
 			// move cursor in inventory
-			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) Handler.instance.moveEquipmentCursorUp();
-			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) Handler.instance.moveEquipmentCursorDown();
+			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) {
+				Handler.instance.moveEquipmentCursorUp();
+				Handler.instance.setShowItemInspect(false);
+			}
+			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) {
+				Handler.instance.moveEquipmentCursorDown();
+				Handler.instance.setShowItemInspect(false);
+			}
 			
 			// unequip item
 			if(key == KeyEvent.VK_E) {
-			
+				
+				Handler.instance.setShowItemInspect(false);
+				
 				int pos = Handler.instance.getEquipmentCursorPos();
 				Equipment eq = player.getEquipment();
 				
-				// TODO: HARDCODED TO MATCH EQUIPMENT GUI!!!!
 				if(pos == 0) {
 					eq.unequipSlot(WeaponSlot.Mainhand);
 					success = true;
@@ -147,12 +167,41 @@ public class KeyInput extends KeyAdapter {
 				
 			}
 			
+			// inspect item
+			if(key == KeyEvent.VK_I) {
+				
+				int pos = Handler.instance.getEquipmentCursorPos();
+				Equipment eq = player.getEquipment();
+				Item item = null;
+				
+				if(pos == 0) item = eq.getMainHand();
+				else if(pos == 1) item = eq.getOffHand();
+				else if(pos == 2) item = eq.getHead();
+				else if(pos == 3) item = eq.getChest();
+				else if(pos == 4) item = eq.getLegs();
+				else if(pos == 5) item = eq.getFeet();
+				else if(pos == 6) item = eq.getAmulet();
+				else if(pos == 7) item = eq.getRing();
+				
+				if(item != null) Handler.instance.setShowItemInspect(true);
+			}
+			
 			// escape from equipment mode
-			if(key == KeyEvent.VK_ESCAPE) Game.instance.setGuiState(GuiState.None);
+			if(key == KeyEvent.VK_ESCAPE) {
+				Handler.instance.setShowItemInspect(false);
+				Game.instance.setGuiState(GuiState.None);
+			}
 		
 			// exit inventory mode automatically
-			if(Game.AUTOMATICALLY_ESCAPE_FROM_INV_MODE_AFTER_SUCCESS && success) Game.instance.setGuiState(GuiState.None);
+			if(Game.AUTOMATICALLY_ESCAPE_FROM_INV_MODE_AFTER_SUCCESS) {
+				if (success) {
+					Handler.instance.setShowItemInspect(false);
+					Game.instance.setGuiState(GuiState.None);
+				}
+			}
 		}
+		
+		// ------ BELOW THIS LINE, ALL BUTTONS WORK WHATEVER GUI-STATE IS ON --------
 		
 		// toggle character panel
 		if(key == KeyEvent.VK_C) {

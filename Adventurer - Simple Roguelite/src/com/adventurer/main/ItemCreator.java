@@ -125,7 +125,7 @@ public class ItemCreator {
 						default: System.out.println("NO WEAPONTYPE: " + val + " EXISTS!"); return null;
 					}
 					
-				} 
+				}
 				else if(key.equals("PHYSICAL")) damageValues.put(DamageType.Physical, Integer.parseInt(val)); 
 				else if(key.equals("FIRE")) damageValues.put(DamageType.Fire, Integer.parseInt(val)); 
 				else if(key.equals("FROST")) damageValues.put(DamageType.Frost, Integer.parseInt(val)); 
@@ -154,7 +154,7 @@ public class ItemCreator {
 		
 		String name = "";
 		SpriteType type = null;
-		int value = 0;
+		int value = 5;
 		
 		if(keyType == KeyType.Normal) {
 			name = "Normal Key";
@@ -163,8 +163,8 @@ public class ItemCreator {
 			name = "Diamond key";
 			type = SpriteType.DiamondKey;
 		} else {
-			name = "???? KEY ????";
-			type = SpriteType.Key;
+			System.out.println("NOT VALID KEY TYPE: " + keyType);
+			return null;
 		}
 		
 		// TODO: static fields for key values
