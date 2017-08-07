@@ -22,31 +22,38 @@ public class DamageHandler {
 		// calculates damage and considers resistances
 		
 		Resistances res = actor.getResistances();
+		int calcdmg = 0;
 		
 		// calculate resistances - damage here
 		for(Entry<DamageType, Integer> d : dmg.entrySet()) {
 			
 			DamageType key = d.getKey();
 			int val = d.getValue();
-			int calcdmg = 0;
 			
-			switch(key) {
-				case Fire: calcdmg = val - res.getFireResistance(); break;
-				case Frost: calcdmg = val - res.getFrostResistance(); break;
-				case Holy: calcdmg = val - res.getHolyResistance(); break;
-				case Physical: calcdmg = val - res.getPhysicalResistance(); break;
-				case Shock: calcdmg = val - res.getShockResistance(); break;
-				default: break;
+			// if there is some damage of type
+			// only then calculate damage.
+			if(val > 0) {
+				switch(key) {
+					case Fire: calcdmg += val - res.getFireResistance(); break;
+					case Frost: calcdmg += val - res.getFrostResistance(); break;
+					case Holy: calcdmg += val - res.getHolyResistance(); break;
+					case Physical: calcdmg += val - res.getPhysicalResistance(); break;
+					case Shock: calcdmg += val - res.getShockResistance(); break;
+					default: break;
+				}
 			}
-			
-			// if the resistances absorb all damage
-			// then do just one point of damage.
-			// --> can kill everything in the game.
-			if(calcdmg > 0) {
-				if(actor.getHealth().isDead() == false) actor.getHealth().TakeDamage(calcdmg);
-			} else {
-				if(actor.getHealth().isDead() == false) actor.getHealth().TakeDamage(1);
-			}
+
+		}
+		
+		System.out.println("DAMAGE DEALT: " + calcdmg);
+		
+		// if the resistances absorb all damage
+		// then do just one point of damage.
+		// --> can kill everything in the game.
+		if(calcdmg > 0) {
+			if(actor.getHealth().isDead() == false) actor.getHealth().TakeDamage(calcdmg);
+		} else {
+			if(actor.getHealth().isDead() == false) actor.getHealth().TakeDamage(1);
 		}
 		
 		// TODO: every damagetype has own effect?

@@ -12,10 +12,10 @@
 			<movementSpeed>2</movementSpeed>
 			<movementCooldownBase>1000</movementCooldownBase>
 			<resistances>
-				<physicalRes>5</physicalRes>
-				<fireRes>0</fireRes>
-				<frostRes>0</frostRes>
-				<shockRes>0</shockRes>
+				<physicalRes>4</physicalRes>
+				<fireRes>2</fireRes>
+				<frostRes>1</frostRes>
+				<shockRes>1</shockRes>
 				<holyRes>0</holyRes>
 			</resistances>
 		</enemy>
@@ -30,9 +30,9 @@
 			<movementCooldownBase>1500</movementCooldownBase>
 			<resistances>
 				<physicalRes>5</physicalRes>
-				<fireRes>0</fireRes>
-				<frostRes>0</frostRes>
-				<shockRes>0</shockRes>
+				<fireRes>2</fireRes>
+				<frostRes>2</frostRes>
+				<shockRes>2</shockRes>
 				<holyRes>0</holyRes>
 			</resistances>
 		</enemy>
@@ -46,11 +46,11 @@
 			<movementSpeed>1</movementSpeed>
 			<movementCooldownBase>1750</movementCooldownBase>
 			<resistances>
-				<physicalRes>5</physicalRes>
-				<fireRes>0</fireRes>
-				<frostRes>0</frostRes>
-				<shockRes>0</shockRes>
-				<holyRes>0</holyRes>
+				<physicalRes>2</physicalRes>
+				<fireRes>1</fireRes>
+				<frostRes>1</frostRes>
+				<shockRes>1</shockRes>
+				<holyRes>1</holyRes>
 			</resistances>
 		</enemy>
 		
@@ -64,9 +64,9 @@
 			<movementCooldownBase>1000</movementCooldownBase>
 			<resistances>
 				<physicalRes>5</physicalRes>
-				<fireRes>0</fireRes>
-				<frostRes>0</frostRes>
-				<shockRes>0</shockRes>
+				<fireRes>3</fireRes>
+				<frostRes>3</frostRes>
+				<shockRes>3</shockRes>
 				<holyRes>0</holyRes>
 			</resistances>
 		</enemy>
@@ -80,27 +80,27 @@
 			<movementSpeed>3</movementSpeed>
 			<movementCooldownBase>500</movementCooldownBase>
 			<resistances>
-				<physicalRes>5</physicalRes>
-				<fireRes>0</fireRes>
-				<frostRes>0</frostRes>
-				<shockRes>0</shockRes>
-				<holyRes>0</holyRes>
+				<physicalRes>1</physicalRes>
+				<fireRes>1</fireRes>
+				<frostRes>1</frostRes>
+				<shockRes>1</shockRes>
+				<holyRes>1</holyRes>
 			</resistances>
 		</enemy>
 		
 		<enemy>
 			<name>Orc</name>
 			<enemyType>Humanoid</enemyType>
-			<health>100</health>
-			<damage>20</damage>
+			<health>40</health>
+			<damage>15</damage>
 			<isRanged>false</isRanged>
 			<movementSpeed>1</movementSpeed>
 			<movementCooldownBase>1000</movementCooldownBase>
 			<resistances>
 				<physicalRes>5</physicalRes>
-				<fireRes>0</fireRes>
-				<frostRes>0</frostRes>
-				<shockRes>0</shockRes>
+				<fireRes>3</fireRes>
+				<frostRes>3</frostRes>
+				<shockRes>3</shockRes>
 				<holyRes>0</holyRes>
 			</resistances>	
 		</enemy>
@@ -114,7 +114,7 @@
 			<movementSpeed>2</movementSpeed>
 			<movementCooldownBase>400</movementCooldownBase>
 			<resistances>
-				<physicalRes>5</physicalRes>
+				<physicalRes>1</physicalRes>
 				<fireRes>0</fireRes>
 				<frostRes>0</frostRes>
 				<shockRes>0</shockRes>
