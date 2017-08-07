@@ -13,6 +13,7 @@ import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Weapon;
 import com.adventurer.main.ActorManager;
+import com.adventurer.utilities.Util;
 
 public class Equipment {
 
@@ -56,7 +57,12 @@ public class Equipment {
 		
 		// ---------------- UPDATE WITH ITEM BONUS STATS --------------------
 		
-		// TODO: update item's bonuses
+		stats.addAddedDex(ib.getDexBonus()); 
+		stats.addAddedInt(ib.getIntBonus());
+		stats.addAddedStr(ib.getStrBonus());
+		stats.addAddedVit(ib.getVitBonus());
+		
+		// TODO: resistance + damage bonuses?
 		
 		// ---------------- UPDATE WITH ITEM BASE STATS ---------------------
 		if(item instanceof Armor) {
@@ -104,32 +110,47 @@ public class Equipment {
 				
 				if(weapon.getWeaponType() == WeaponType.Melee) {
 					
+					// calculate damage based off stats.
+					int meleeDmg = Util.calcMeleeDamage();
+					
+					// add calculated damage values to weapon damage values
+					// and lastly cache the sum in offense.
 					for(Entry<DamageType, Integer> e : weapon.getDamage().entrySet()) {
 						DamageType key = e.getKey();
 						int val = e.getValue();
+						
+						// physical damage is affected by characters strength stat.
+						if(key == DamageType.Physical) {
+							val += meleeDmg;
+						}
+						
 						if(isAddition) offense.setMeleeDmgOfType(key, val);
 						else offense.setMeleeDmgOfType(key, -val);
 					}
 					
 				} else if(weapon.getWeaponType() == WeaponType.Magic) {
 					
+					int magicDmg = Util.calcMagicDamage();
 					// TODO: Add magic damage types
 					
 					
 				} else if(weapon.getWeaponType() == WeaponType.Ranged) {
 					
+					int rangedDmg = Util.calcRangedDamage();
 					// TODO: add ranged damage types
 					
 				}
 				
-			} else {
+			} else if(weapon.getWeaponSlot() == WeaponSlot.Offhand){
 				
-				// TODO: OFFHAND --> ONLY SHIELDS?
+				// TODO: OFFHAND --> ONLY SHIELDS AND SPECIAL OFFHAND WEAPONS?
 				
 			}
 			
 		}
 		
+		// update health and mana based on stats
+		player.updateHPandMP();
 	}
 	
 	public void equipItem(Item item) {

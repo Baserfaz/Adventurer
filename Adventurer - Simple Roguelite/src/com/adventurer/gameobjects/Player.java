@@ -43,10 +43,15 @@ public class Player extends Actor {
 		this.inventory = new Inventory(this);
 		this.equipment = new Equipment();
 		this.playerExperience = new Experience();
+		
+		// TODO: class chooser
 		this.playerClass = PlayerClass.Warrior;
 		
-		// calculate health and damage from stats
-		updateStats();
+		// calculate health and mana
+		updateHPandMP();
+		
+		// update damage too
+		updateDmg();
 	}
 	
 	public void tick() {
@@ -220,27 +225,19 @@ public class Player extends Actor {
 		}
 	}
 	
-	public void updateStats() {
-		
-		// --------------- Calculate secondary stats ---------------
+	public void updateHPandMP() {
 		
 		// calculate health and mana
-		int health = Util.calcHealth(stats.getSumVit());
-		int mana = Util.calcMana(stats.getSumInt());
-		
-		// calculate damage based off stats
-		int meleeDmg = Util.calcMeleeDamage(stats.getSumStr());
-		int rangedDmg = Util.calcRangedDamage(stats.getSumDex());
-		int magicDmg = Util.calcMagicDamage(stats.getSumInt());
-		
-		// TODO: add weapon specific damage
-		
-		// calculate resistances
-		//int physicalRes = 
+		int health = Util.calcHealth(this.getStats().getSumVit());
+		int mana = Util.calcMana(this.getStats().getSumInt());
 		
 		// update them in Health, Mana, Offense and Resistances.
 		this.getHealth().setMaxHP(health);
 		this.getMana().setMaxMP(mana);
+	}
+	
+	public void updateDmg() {
+		this.getOffense().setMeleeDmgOfType(DamageType.Physical, Util.calcMeleeDamage(this.stats.getSumStr()));
 	}
 	
 	public String toString() { return "You, our hero."; }

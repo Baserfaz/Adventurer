@@ -11,9 +11,11 @@ import java.util.Map.Entry;
 import com.adventurer.data.Camera;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Experience;
+import com.adventurer.data.Offense;
 import com.adventurer.data.Resistances;
 import com.adventurer.data.Stats;
 import com.adventurer.data.World;
+import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.GuiState;
 import com.adventurer.enumerations.WorldType;
 import com.adventurer.gameobjects.Actor;
@@ -136,7 +138,7 @@ public class Handler {
 		Coordinate dungeonInfo_coord = new Coordinate(dungeoninfo_xPos, dungeoninfo_yPos);
 		
 		// player info
-	    int charinfo_yPos = (int) cam.getMinY() + 50;
+	    int charinfo_yPos = (int) cam.getMinY() + 20;
 	    int charinfo_xPos = (int) cam.getMinX() + 50;
 	    Coordinate chainfo_coord = new Coordinate(charinfo_xPos, charinfo_yPos);
 	
@@ -163,40 +165,46 @@ public class Handler {
 	    // end calc
 	    
 	    // -------------- LOCATION ---------------------
-	    // render location tag.
-	    Renderer.renderString("Location: ", dungeonInfo_coord, Color.white, 8, g2d);
 	    
-        // render dungeon name and level
-	    if(World.instance.getWorldType() == WorldType.Predefined) {
-	    	
-            Renderer.renderString(
-                "Chilly lobby",
-                new Coordinate(dungeonInfo_coord.getX() + 50, dungeonInfo_coord.getY()), 
-                Color.gray, 8, g2d
-            );
-            
-	    } else if(World.instance.getWorldType() == WorldType.Random) {
-	        
-            Renderer.renderString(
-                "Dungeon (lvl. "+ Game.instance.getCurrentSession().getDungeonLevel() + ")",
-                new Coordinate(dungeonInfo_coord.getX() + 50, dungeonInfo_coord.getY()),
-                Color.gray, 8, g2d
-            );
-            
+	    if(showStats == false) {
+	    
+		    // render location tag.
+		    Renderer.renderString("Location: ", dungeonInfo_coord, Color.white, 8, g2d);
+		    
+	        // render dungeon name and level
+		    if(World.instance.getWorldType() == WorldType.Predefined) {
+		    	
+	            Renderer.renderString(
+	                "Chilly lobby",
+	                new Coordinate(dungeonInfo_coord.getX() + 50, dungeonInfo_coord.getY()), 
+	                Color.gray, 8, g2d
+	            );
+	            
+		    } else if(World.instance.getWorldType() == WorldType.Random) {
+		        
+	            Renderer.renderString(
+	                "Dungeon (lvl. "+ Game.instance.getCurrentSession().getDungeonLevel() + ")",
+	                new Coordinate(dungeonInfo_coord.getX() + 50, dungeonInfo_coord.getY()),
+	                Color.gray, 8, g2d
+	            );
+	            
+		    }
 	    }
 	    
 	    // ---------------------- VITALS ------------------------
 	    
-	    // render vitals tag
-	    Renderer.renderString("Vitals", stats_coord, Color.white, 8, g2d);
-	    
-		// render vitals (HP etc.)
-		Renderer.renderString(
-	        "\nHP: " + player.getHealth().GetCurrentHealth() + "/" + player.getHealth().GetMaxHP() + "\n" +
-	        "MP: " + player.getMana().GetCurrentMana() + "/" + player.getMana().GetMaxMP() + "\n",
-	        stats_coord,
-	        Color.gray, 8, g2d
-		);
+	    if(showStats == false) {
+		    // render vitals tag
+		    Renderer.renderString("Vitals", stats_coord, Color.white, 8, g2d);
+		    
+			// render vitals (HP etc.)
+			Renderer.renderString(
+		        "\nHP: " + player.getHealth().GetCurrentHealth() + "/" + player.getHealth().GetMaxHP() + "\n" +
+		        "MP: " + player.getMana().GetCurrentMana() + "/" + player.getMana().GetMaxMP() + "\n",
+		        stats_coord,
+		        Color.gray, 8, g2d
+			);
+	    }
 	    
 	    // ---------------------- STATS -------------------------
 	   
@@ -206,6 +214,7 @@ public class Handler {
 			Renderer.renderString("CHARACTER", chainfo_coord, Color.white, 8, g2d);
 			
 			Resistances resistances = player.getResistances();
+			Offense offense = player.getOffense();
 			Experience exp = player.getPlayerExperience();
 			Stats stats = player.getStats();
 			
@@ -216,27 +225,41 @@ public class Handler {
 	            		+ "Class: %s\n"
 	            		+ "Level: %d\n"
 	            		+ "Experience: %d / %d\n"
-	            		+ "--------------------------\n"
-	            		+ "STR: %d (Base: %d)\n"
-	            		+ "VIT: %d (Base: %d)\n"
-	            		+ "INT: %d (Base: %d)\n"
-	            		+ "DEX: %d (Base: %d)\n"
-	            		+ "--------------------------\n"
-	            		+ "Melee: %d\n"
-	            		+ "Magic: %d\n"
+	            		+ "-------- VITALS --------\n"
+	            		+ "Health: %d / %d\n"
+	            		+ "Mana:   %d / %d\n"
+	            		+ "-------- STATS ---------\n"
+	            		+ "STR: %d (base: %d)\n"
+	            		+ "VIT: %d (base: %d)\n"
+	            		+ "INT: %d (base: %d)\n"
+	            		+ "DEX: %d (base: %d)\n"
+	            		+ "-------- DAMAGE --------\n"
+	            		+ "Melee:  %d\n" 
+	            		+ "> fire: %d, frost: %d, shock: %d\n" 
+	            		+ "> holy: %d, physical: %d\n"
+	            		+ "Magic:  %d\n"
+	            		+ "> fire: %d, frost: %d, shock: %d\n"
+	            		+ "> holy: %d, physical: %d\n"
 	            		+ "Ranged: %d\n"
-	            		+ "--------------------------\n"
-	            		+ "Armor Class: %d\n"
-	            		+ "Fire: %d\n"
-	            		+ "Frost: %d\n"
-	            		+ "Shock: %d\n"
-	            		+ "Holy: %d\n",
+	            		+ "> fire: %d, frost: %d, shock: %d\n"
+	            		+ "> holy: %d, physical: %d\n"
+	            		+ "------ RESISTANCES -----\n"
+	            		+ "Physical: %d\n"
+	            		+ "Fire:     %d\n"
+	            		+ "Frost:    %d\n"
+	            		+ "Shock:    %d\n"
+	            		+ "Holy:     %d\n",
 	            	
 	            		player.getName(),
 	            		player.getPlayerClass().toString(),
 	            		exp.getCurrentLevel(),
 	            		exp.getCurrentExp(),
 	            		exp.getNeededExp(exp.getCurrentLevel()),
+	            		
+	            		player.getHealth().GetCurrentHealth(),
+	            		player.getHealth().GetMaxHP(),
+	            		player.getMana().GetCurrentMana(),
+	            		player.getMana().GetMaxMP(),
 	            		
 	            		stats.getSumStr(),
 		            	stats.getBaseStrength(),
@@ -247,9 +270,29 @@ public class Handler {
 		            	stats.getSumDex(),
 		            	stats.getBaseDexterity(),
 		            	
-		            	Util.calcMeleeDamage(stats.getSumStr()),
-		            	Util.calcMagicDamage(stats.getSumInt()),
-		            	Util.calcRangedDamage(stats.getSumDex()),
+		            	Util.calcMeleeDamage(),  // calculated from str
+		            	
+		            	offense.getMeleeDmgOfType(DamageType.Fire),
+		            	offense.getMeleeDmgOfType(DamageType.Frost),
+		            	offense.getMeleeDmgOfType(DamageType.Shock),
+		            	offense.getMeleeDmgOfType(DamageType.Holy),
+		            	offense.getMeleeDmgOfType(DamageType.Physical),
+		            	
+		            	Util.calcMagicDamage(),  // calculated from int
+		            	
+		            	offense.getMagicDmgOfType(DamageType.Fire),
+		            	offense.getMagicDmgOfType(DamageType.Frost),
+		            	offense.getMagicDmgOfType(DamageType.Shock),
+		            	offense.getMagicDmgOfType(DamageType.Holy),
+		            	offense.getMagicDmgOfType(DamageType.Physical),
+		            	
+		            	Util.calcRangedDamage(), // calculated from dex
+		            	
+		            	offense.getRangedDmgOfType(DamageType.Fire),
+		            	offense.getRangedDmgOfType(DamageType.Frost),
+		            	offense.getRangedDmgOfType(DamageType.Shock),
+		            	offense.getRangedDmgOfType(DamageType.Holy),
+		            	offense.getRangedDmgOfType(DamageType.Physical),
 		            	
 		            	resistances.getPhysicalResistance(),
 		            	resistances.getFireResistance(),

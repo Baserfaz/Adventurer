@@ -60,5 +60,6 @@ public enum SpriteType {
     
     // other
     Hit01,
+    Heal,
     Error;
 }

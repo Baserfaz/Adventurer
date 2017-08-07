@@ -1,5 +1,9 @@
 package com.adventurer.data;
 
+import com.adventurer.gameobjects.Player;
+import com.adventurer.main.ActorManager;
+import com.adventurer.utilities.Util;
+
 public class Health {
 	
 	private int currentHP = 0;

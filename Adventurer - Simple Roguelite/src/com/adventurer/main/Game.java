@@ -41,7 +41,7 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean START_GAME_WITH_RANDOM_ROOM = false;
 	
 	// GUI SETTINGS
-	public static final boolean AUTOMATICALLY_ESCAPE_FROM_INV_MODE_AFTER_SUCCESS = true;
+	public static final boolean AUTOMATICALLY_ESCAPE_FROM_INV_MODE_AFTER_SUCCESS = false;
 	
 	// LOS settings
 	public static final boolean CALCULATE_PLAYER_LOS   = true;
@@ -56,10 +56,10 @@ public class Game extends Canvas implements Runnable {
 	public static final int PLAYER_START_BASE_MANA		= 10;
 	
 	// player stat defaults
-	public static final int DEFAULT_VITALITY_PLAYER 	= 5;
-	public static final int DEFAULT_STRENGTH_PLAYER 	= 5;
-	public static final int DEFAULT_DEXTERITY_PLAYER 	= 5;
-	public static final int DEFAULT_INTELLIGENCE_PLAYER = 5;
+	public static final int DEFAULT_VITALITY_PLAYER 	= 1;
+	public static final int DEFAULT_STRENGTH_PLAYER 	= 1;
+	public static final int DEFAULT_DEXTERITY_PLAYER 	= 1;
+	public static final int DEFAULT_INTELLIGENCE_PLAYER = 1;
 	
 	// stats multipliers
 	public static final int VITALITY_TO_HEALTH_MULTIPLIER 			= 2;

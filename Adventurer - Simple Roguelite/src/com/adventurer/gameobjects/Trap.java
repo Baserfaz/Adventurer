@@ -1,9 +1,12 @@
 package com.adventurer.gameobjects;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
+import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
@@ -13,13 +16,13 @@ import com.adventurer.utilities.Util;
 
 public class Trap extends Tile {
 
-	private int damage = 0;
+	private Map<DamageType, Integer> damage;
 	private TrapType trapType;
 	
-	public Trap(Tile tile, SpriteType spritetype, TileType tiletype, TrapType traptype, int damage) {
+	public Trap(Tile tile, SpriteType spritetype, TileType tiletype, TrapType traptype, Map<DamageType, Integer> dmg) {
 		super(tile.GetWorldPosition(), tile.GetTilePosition(), spritetype, tiletype);
 		
-		this.setDamage(damage);
+		this.damage = new LinkedHashMap<DamageType, Integer>(dmg);
 		this.trapType = traptype;
 	}
 
@@ -45,8 +48,6 @@ public class Trap extends Tile {
 				}
 			}
 		}
-		
-		//EffectCreator.CreateGasEffectArea(this, Util.GetRandomInteger(3, 7));
 	}
 	
 	private void ActivateProjectileTrap() {
@@ -103,6 +104,5 @@ public class Trap extends Tile {
 		new Projectile(current, SpriteType.Arrow01, this.damage, projectileDir);
 	}
 	
-	public int getDamage() { return damage; }
-	public void setDamage(int damage) { this.damage = damage; }
+	public Map<DamageType, Integer> getDamage() { return this.damage; }
 }

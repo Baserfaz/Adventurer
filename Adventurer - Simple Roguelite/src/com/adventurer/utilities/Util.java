@@ -21,6 +21,7 @@ import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Portal;
 import com.adventurer.gameobjects.Tile;
+import com.adventurer.main.ActorManager;
 import com.adventurer.main.Game;
 
 public class Util {
@@ -160,24 +161,41 @@ public class Util {
 	
 	// ------------------------ STAT CALCULATIONS ---------------------
 	
-	public static int calcHealth(int vitPoints) {
-		return Game.PLAYER_START_BASE_HEALTH + (vitPoints * Game.VITALITY_TO_HEALTH_MULTIPLIER);
+	public static int calcHealth(int vit) {
+		return Game.PLAYER_START_BASE_HEALTH + (vit * Game.VITALITY_TO_HEALTH_MULTIPLIER);
 	}
 	
-	public static int calcMana(int intPoints) {
-		return Game.PLAYER_START_BASE_MANA + (intPoints * Game.INTELLIGENCE_TO_MANA_MULTIPLIER);
+	public static int calcMana(int intelligence) {
+		return Game.PLAYER_START_BASE_MANA + (intelligence * Game.INTELLIGENCE_TO_MANA_MULTIPLIER);
 	}
 	
-	public static int calcMeleeDamage(int strPoints) {
-		return strPoints * Game.STRENGTH_TO_MELEE_DAMAGE_MULTIPLIER;
+	public static int calcHealth() {
+		Player player = ActorManager.GetPlayerInstance();
+		return Game.PLAYER_START_BASE_HEALTH + (player.getStats().getSumVit() * Game.VITALITY_TO_HEALTH_MULTIPLIER);
 	}
 	
-	public static int calcRangedDamage(int dexPoints) {
-		return dexPoints * Game.DEXTERITY_TO_RANGED_DAMAGE_MULTIPLIER;
+	public static int calcMana() {
+		Player player = ActorManager.GetPlayerInstance();
+		return Game.PLAYER_START_BASE_MANA + (player.getStats().getSumInt() * Game.INTELLIGENCE_TO_MANA_MULTIPLIER);
 	}
 	
-	public static int calcMagicDamage(int intPoints) {
-		return intPoints * Game.INTELLIGENCE_TO_MAGIC_DAMAGE_MULTIPLIER;
+	public static int calcMeleeDamage(int a) {
+		return a * Game.STRENGTH_TO_MELEE_DAMAGE_MULTIPLIER;
+	}
+	
+	public static int calcMeleeDamage() {
+		Player player = ActorManager.GetPlayerInstance();
+		return player.getStats().getSumStr() * Game.STRENGTH_TO_MELEE_DAMAGE_MULTIPLIER;
+	}
+	
+	public static int calcRangedDamage() {
+		Player player = ActorManager.GetPlayerInstance();
+		return player.getStats().getSumDex() * Game.DEXTERITY_TO_RANGED_DAMAGE_MULTIPLIER;
+	}
+	
+	public static int calcMagicDamage() {
+		Player player = ActorManager.GetPlayerInstance();
+		return player.getStats().getSumInt() * Game.INTELLIGENCE_TO_MAGIC_DAMAGE_MULTIPLIER;
 	}
 	
 	// ------------------------ DUNGEON/TILE FUNCTIONS ---------------------

@@ -41,7 +41,9 @@ public class Bomb extends Item {
 			// add the current tile to the tiles list
 			tiles.add(World.instance.GetTileAtPosition(this.GetTilePosition()));
 			
-			for(Tile tile : tiles) {
+			// TODO: FIX BOMBS
+			
+			/*for(Tile tile : tiles) {
 				
 				// Do damage:
 				// 1. destructible tiles
@@ -65,7 +67,7 @@ public class Bomb extends Item {
 					
 				} else if(tile.GetActor() != null) DamageHandler.ActorTakeDamage(tile, damage);
 				
-			}
+			}*/
 			
 			// destroy this object
 			Remove();

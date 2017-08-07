@@ -167,8 +167,9 @@ public class Actor extends GameObject {
 			
 			// enemies who can shoot dont lose projectiles.
 			Tile projStartTile = World.instance.GetTileAtPosition(originTilePos);
-			new Projectile(projStartTile, projSpriteType, this.myOffense.getRangedDmg(), direction);
 			
+			// create projectile
+			new Projectile(projStartTile, projSpriteType, this.myOffense.getAllRangedDamageTypes(), direction);
 		}
 	}
 	
@@ -180,8 +181,7 @@ public class Actor extends GameObject {
 		GameObject object = tile.GetActor();
 		
 		// do damage
-		// TODO: HARDCODED TO ONLY DO PHYSICAL DAMAGE!
-		if(object != null) DamageHandler.ActorTakeDamage(tile, this.myOffense.getMeleeDmgOfType(DamageType.Physical));
+		if(object != null) DamageHandler.ActorTakeDamage(tile, this.myOffense.getAllMeleeDamageTypes());
 		
 	}
 	

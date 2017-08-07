@@ -11,7 +11,7 @@ import com.adventurer.enumerations.WeaponType;
 public class Weapon extends Item {
 
 	private Map<DamageType, Integer> damageValues;
-	private WeaponType weaponType; // which stat scales with the damage.
+	private WeaponType weaponType;
 	private WeaponSlot weaponSlot;
 	
 	public Weapon(Tile tile, SpriteType spritetype,

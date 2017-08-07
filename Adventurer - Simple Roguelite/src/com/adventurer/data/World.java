@@ -2,8 +2,11 @@ package com.adventurer.data;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.GameState;
@@ -434,12 +437,17 @@ public class World {
 			// randomize trap type
 			TrapType randTrapType = TrapType.values()[Util.GetRandomInteger(0, TrapType.values().length)];
 			
+			// create damage map
+			Map<DamageType, Integer> dmg = new LinkedHashMap<DamageType, Integer>();
+			
 			switch(randTrapType) {
 			case Projectile:
-				newTile = new Trap(old, SpriteType.TrapTile01, TileType.Trap, TrapType.Projectile, 100);
+				dmg.put(DamageType.Physical, 10);
+				newTile = new Trap(old, SpriteType.TrapTile01, TileType.Trap, TrapType.Projectile, dmg);
 				break;
 			case Gas:
-				newTile = new Trap(old, SpriteType.TrapTile01, TileType.Trap, TrapType.Gas, 25);
+				dmg.put(DamageType.Physical, 10);
+				newTile = new Trap(old, SpriteType.TrapTile01, TileType.Trap, TrapType.Gas, dmg);
 				break;
 			}
 		
