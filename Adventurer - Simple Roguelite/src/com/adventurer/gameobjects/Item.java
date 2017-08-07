@@ -13,13 +13,15 @@ import com.adventurer.utilities.Util;
 public class Item extends GameObject {
 
 	protected String itemName;
+	protected String description;
 	protected int value;
 	
 	protected ItemBonus bonus;
 	
-	public Item(Tile tile, SpriteType spritetype, String name, int value) {
+	public Item(Tile tile, SpriteType spritetype, String name, String description, int value) {
 		super(tile.GetWorldPosition(), tile.GetTilePosition(), spritetype);
 		this.itemName = name;
+		this.description = description;
 		this.value = value;
 		
 		this.bonus = new ItemBonus();
@@ -39,8 +41,6 @@ public class Item extends GameObject {
 		// hide 
 		Hide();
 	}
-
-	public String getName() { return this.itemName; }
 	
 	public void moveItemTo(Tile tile) {
 		this.SetTilePosition(tile.GetTilePosition()); 
@@ -56,7 +56,9 @@ public class Item extends GameObject {
 		}
 	}
 	
+	public String getName() { return this.itemName; }
 	public int getValue() { return this.value; }
+	public String getDescription( ) { return this.description; }
 	public ItemBonus getBonuses() { return this.bonus; }
 	
 	public void tick() {}

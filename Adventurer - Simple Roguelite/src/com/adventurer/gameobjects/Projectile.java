@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.Direction;
@@ -29,7 +28,7 @@ public class Projectile extends Item {
 	private boolean canMove = true;
 	
 	public Projectile(Tile tile, SpriteType spritetype, Map<DamageType, Integer> dmg, Direction dir) {
-		super(tile, spritetype, "Projectile", 0);
+		super(tile, spritetype, "Projectile", "Used to hurt thingies at range.", 0);
 		this.direction = dir;
 		this.damage = new LinkedHashMap<DamageType, Integer>(dmg);
 	}

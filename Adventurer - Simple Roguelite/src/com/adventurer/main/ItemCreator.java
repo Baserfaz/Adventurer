@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.adventurer.enumerations.ArmorSlot;
-import com.adventurer.enumerations.BombType;
 import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.enumerations.RootElement;
@@ -12,11 +11,9 @@ import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.WeaponSlot;
 import com.adventurer.enumerations.WeaponType;
 import com.adventurer.gameobjects.Armor;
-import com.adventurer.gameobjects.Bomb;
 import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.Gold;
 import com.adventurer.gameobjects.Key;
-import com.adventurer.gameobjects.Projectile;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Weapon;
 import com.adventurer.utilities.FileReader;
@@ -25,8 +22,6 @@ import com.adventurer.utilities.Util;
 public class ItemCreator {
 
 	public static Armor createArmor(Tile tile, String itemName) {
-		
-		//System.out.println("CREATING ARMOR");
 		
 		Map<String, String> iteminfo = FileReader.readXMLGameData(itemName, RootElement.armor);
 		Armor armor = null;
@@ -40,6 +35,7 @@ public class ItemCreator {
 			
 			// variables
 			String name = "";
+			String description = "";
 			int value = 0;
 			ArmorSlot armorSlot = null;
 			Map<DamageType, Integer> defenseValues = new HashMap<DamageType, Integer>();
@@ -50,9 +46,8 @@ public class ItemCreator {
 				String key = entry.getKey().toUpperCase();
 				String val = entry.getValue().toUpperCase();
 				
-				//System.out.println(key + ": " + val);
-				
 				if(key.equals("NAME")) name = Util.Capitalize(val);
+				else if(key.equals("DESCRIPTION")) description = Util.Capitalize(val);
 				else if(key.equals("VALUE")) value = Integer.parseInt(val);
 				else if(key.equals("ARMORSLOT")) {
 					
@@ -79,15 +74,12 @@ public class ItemCreator {
 			}
 			
 			// create new armor with the info.
-			armor = new Armor(tile, SpriteType.GenericItem, name, value, armorSlot, defenseValues);
-			//System.out.println("CREATION COMPLETE: " + armor.getName());
+			armor = new Armor(tile, SpriteType.GenericItem, name, description, value, armorSlot, defenseValues);
 		}
 		return armor;
 	}
 	
 	public static Weapon createWeapon(Tile tile, String itemName) {
-		
-		//System.out.println("CREATING WEAPON");
 		
 		Map<String, String> iteminfo = FileReader.readXMLGameData(itemName, RootElement.weapon);
 		Weapon weapon = null;
@@ -101,6 +93,7 @@ public class ItemCreator {
 		
 			// variables
 			String name = "";
+			String description = "";
 			int value = 0;
 			WeaponSlot weaponSlot = null;
 			WeaponType weaponType = null;
@@ -112,9 +105,8 @@ public class ItemCreator {
 				String key = entry.getKey().toUpperCase();
 				String val = entry.getValue().toUpperCase();
 				
-				//System.out.println(key + ": " + val);
-				
 				if(key.equals("NAME")) name = Util.Capitalize(val);
+				else if(key.equals("DESCRIPTION")) description = Util.Capitalize(val);
 				else if(key.equals("VALUE")) value = Integer.parseInt(val);
 				else if(key.equals("WEAPONSLOT")) {
 					
@@ -146,13 +138,10 @@ public class ItemCreator {
 			}
 			
 			// create weapon with data.
-			weapon = new Weapon(tile, SpriteType.GenericItem, name, value, damageValues, weaponType, weaponSlot);
-			//System.out.println("CREATION COMPLETE: " + weapon.getName());
+			weapon = new Weapon(tile, SpriteType.GenericItem, name, description, value, damageValues, weaponType, weaponSlot);
 		}
 		return weapon;
 	}
-	
-	//public static Bank 
 	
 	public static Chest CreateChest(Tile tile, boolean locked) {
 		SpriteType st = null;

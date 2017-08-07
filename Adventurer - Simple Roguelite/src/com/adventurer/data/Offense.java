@@ -21,8 +21,8 @@ public class Offense {
 		meleeDmg = new LinkedHashMap<DamageType, Integer>();
 		magicDmg = new LinkedHashMap<DamageType, Integer>();
 		rangedDmg = new LinkedHashMap<DamageType, Integer>();
-				
-		// populate melee dmg
+		
+		// populate
 		// TODO: hardcoded to physical dmg.
 		meleeDmg.put(DamageType.Physical, melee);
 		magicDmg.put(DamageType.Physical, magic);

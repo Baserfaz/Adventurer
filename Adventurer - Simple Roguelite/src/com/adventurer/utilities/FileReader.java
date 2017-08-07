@@ -105,10 +105,12 @@ public class FileReader {
 			    		if(e.getElementsByTagName("name").item(0).getTextContent().equals(key)) {
 			    			
 			    			String name = e.getElementsByTagName("name").item(0).getTextContent();
+			    			String description = e.getElementsByTagName("description").item(0).getTextContent();
 			    			String value = e.getElementsByTagName("value").item(0).getTextContent();
 			    			String armorSlot = e.getElementsByTagName("armorSlot").item(0).getTextContent();
 			    			
 			    			myMap.put("name", name);
+			    			myMap.put("description", description);
 			    			myMap.put("value", value);
 			    			myMap.put("armorSlot", armorSlot);
 			    			
@@ -143,11 +145,13 @@ public class FileReader {
 			    		if(e.getElementsByTagName("name").item(0).getTextContent().equals(key)) {
 			    			
 			    			String name = e.getElementsByTagName("name").item(0).getTextContent();
+			    			String description = e.getElementsByTagName("description").item(0).getTextContent();
 			    			String value = e.getElementsByTagName("value").item(0).getTextContent();
 			    			String weaponSlot = e.getElementsByTagName("weaponSlot").item(0).getTextContent();
 			    			String weaponType = e.getElementsByTagName("weaponType").item(0).getTextContent();
 			    			
 			    			myMap.put("name", name);
+			    			myMap.put("description", description);
 			    			myMap.put("value", value);
 			    			myMap.put("weaponSlot", weaponSlot);
 			    			myMap.put("weaponType", weaponType);

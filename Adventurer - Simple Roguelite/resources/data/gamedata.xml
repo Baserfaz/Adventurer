@@ -12,7 +12,7 @@
 			<movementSpeed>2</movementSpeed>
 			<movementCooldownBase>1000</movementCooldownBase>
 			<resistances>
-				<physicalRes>4</physicalRes>
+				<physicalRes>2</physicalRes>
 				<fireRes>2</fireRes>
 				<frostRes>1</frostRes>
 				<shockRes>1</shockRes>
@@ -29,7 +29,7 @@
 			<movementSpeed>2</movementSpeed>
 			<movementCooldownBase>1500</movementCooldownBase>
 			<resistances>
-				<physicalRes>5</physicalRes>
+				<physicalRes>2</physicalRes>
 				<fireRes>2</fireRes>
 				<frostRes>2</frostRes>
 				<shockRes>2</shockRes>
@@ -63,7 +63,7 @@
 			<movementSpeed>2</movementSpeed>
 			<movementCooldownBase>1000</movementCooldownBase>
 			<resistances>
-				<physicalRes>5</physicalRes>
+				<physicalRes>2</physicalRes>
 				<fireRes>3</fireRes>
 				<frostRes>3</frostRes>
 				<shockRes>3</shockRes>
@@ -80,7 +80,7 @@
 			<movementSpeed>3</movementSpeed>
 			<movementCooldownBase>500</movementCooldownBase>
 			<resistances>
-				<physicalRes>1</physicalRes>
+				<physicalRes>0</physicalRes>
 				<fireRes>1</fireRes>
 				<frostRes>1</frostRes>
 				<shockRes>1</shockRes>
@@ -97,7 +97,7 @@
 			<movementSpeed>1</movementSpeed>
 			<movementCooldownBase>1000</movementCooldownBase>
 			<resistances>
-				<physicalRes>5</physicalRes>
+				<physicalRes>2</physicalRes>
 				<fireRes>3</fireRes>
 				<frostRes>3</frostRes>
 				<shockRes>3</shockRes>
@@ -127,7 +127,9 @@
 	<items>
 		<armor>
 			<name>Padded armor</name>
-			<value>2</value><armorSlot>chest</armorSlot>
+			<description>Young adventurer's first armor.</description>
+			<value>2</value>
+			<armorSlot>chest</armorSlot>
 			<defenseValues>
 				<Physical>1</Physical>
 				<Fire>0</Fire>
@@ -138,6 +140,7 @@
 		</armor>
 		<armor>
 			<name>Leather armor</name>
+			<description>Sturdy, but smelly armor.</description>
 			<value>10</value>
 			<armorSlot>chest</armorSlot>
 			<defenseValues>
@@ -150,6 +153,7 @@
 		</armor>
 		<weapon>
 			<name>Battleaxe</name>
+			<description>Useful for killing pesky mobs.</description>
 			<value>10</value>
 			<weaponType>melee</weaponType>
 			<weaponSlot>mainhand</weaponSlot>

@@ -12,8 +12,8 @@ public class Armor extends Item {
 	private Map<DamageType, Integer> defenseValues;
 	private ArmorSlot slot;
 	
-	public Armor(Tile tile, SpriteType spritetype, String name, int value, ArmorSlot armorSlot, Map<DamageType, Integer> defenseValues) {
-		super(tile, spritetype, name, value);
+	public Armor(Tile tile, SpriteType spritetype, String name, String description, int value, ArmorSlot armorSlot, Map<DamageType, Integer> defenseValues) {
+		super(tile, spritetype, name, description, value);
 		this.defenseValues = new HashMap<DamageType, Integer>(defenseValues);
 		this.slot = armorSlot;
 	}

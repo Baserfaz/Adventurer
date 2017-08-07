@@ -45,7 +45,7 @@ public class DamageHandler {
 
 		}
 		
-		System.out.println("DAMAGE DEALT: " + calcdmg);
+		//System.out.println("DAMAGE DEALT: " + calcdmg);
 		
 		// if the resistances absorb all damage
 		// then do just one point of damage.
