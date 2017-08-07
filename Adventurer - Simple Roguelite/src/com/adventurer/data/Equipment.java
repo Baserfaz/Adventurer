@@ -120,9 +120,7 @@ public class Equipment {
 						int val = e.getValue();
 						
 						// physical damage is affected by characters strength stat.
-						if(key == DamageType.Physical) {
-							val += meleeDmg;
-						}
+						if(key == DamageType.Physical) val += meleeDmg;
 						
 						if(isAddition) offense.setMeleeDmgOfType(key, val);
 						else offense.setMeleeDmgOfType(key, -val);

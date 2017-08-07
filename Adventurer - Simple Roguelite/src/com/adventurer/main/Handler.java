@@ -482,6 +482,7 @@ public class Handler {
     		frost = res.get(DamageType.Frost);
     		shock = res.get(DamageType.Shock);
     		holy = res.get(DamageType.Holy);
+    		physical = res.get(DamageType.Physical);
     		
     		str = ib.getStrBonus();
     		dex = ib.getDexBonus(); 
@@ -500,6 +501,7 @@ public class Handler {
     		frost = dmg.get(DamageType.Frost);
     		shock = dmg.get(DamageType.Shock);
     		holy = dmg.get(DamageType.Holy);
+    		physical = dmg.get(DamageType.Physical);
     		
     		str = ib.getStrBonus();
     		dex = ib.getDexBonus(); 
