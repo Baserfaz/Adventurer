@@ -9,6 +9,7 @@ import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.WeaponSlot;
 import com.adventurer.enumerations.WeaponType;
 import com.adventurer.gameobjects.Armor;
+import com.adventurer.gameobjects.Equipable;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Weapon;
@@ -49,9 +50,10 @@ public class Equipment {
 	public void updateStats(Item item, boolean isAddition) {
 		
 		// cache vars
+		Equipable eItem = (Equipable) item;
 		Player player = ActorManager.GetPlayerInstance();
 		Stats stats = player.getStats();
-		ItemBonus ib = item.getBonuses();
+		ItemBonus ib = eItem.getBonuses();
 		
 		// update stats
 		if(isAddition) {
@@ -86,9 +88,6 @@ public class Equipment {
 		Player player = ActorManager.GetPlayerInstance();
 		Offense offense = player.getOffense();
 		
-		// 1. offense has ONLY the weapon damage at the moment.
-		// 2. we have already updated our stats.
-		
 		// update melee -> PHYSICAL scales with STR
 		offense.setMeleeDmgOfType(DamageType.Physical, Util.calcMeleeDamage());
 		
@@ -112,7 +111,7 @@ public class Equipment {
 			
 			if(weapon.getWeaponType() == WeaponType.Melee) {
 
-				for(Entry<DamageType, Integer> entry : weapon.getDamage().entrySet()) {
+				for(Entry<DamageType, Integer> entry : weapon.getBonuses().getDamage().entrySet()) {
 					DamageType key = entry.getKey();
 					int value = entry.getValue();
 					
@@ -144,7 +143,7 @@ public class Equipment {
 		Resistances res = player.getResistances();
 		Armor armor = (Armor) item;
 		
-			for(Entry<DamageType, Integer> d : armor.getDefenseValues().entrySet()) {
+			for(Entry<DamageType, Integer> d : armor.getBonuses().getResistances().entrySet()) {
 			
 			DamageType key = d.getKey();
 			int val = d.getValue();

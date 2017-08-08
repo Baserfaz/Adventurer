@@ -28,12 +28,9 @@ public class Chest extends Item {
 		itemsInside.add(ItemCreator.createGold(tile, 1));
 		
 		Armor armor = ItemCreator.createArmor(tile, "Padded armor");
-		armor.getBonuses().setStrBonus(1);
 		itemsInside.add(armor);
 		
 		Weapon ba = ItemCreator.createWeapon(tile, "Battleaxe");
-		//ba.getDamage().put(DamageType.Physical, 5);
-		ba.getBonuses().setStrBonus(1);
 		itemsInside.add(ba);
 		
 		// register to tile

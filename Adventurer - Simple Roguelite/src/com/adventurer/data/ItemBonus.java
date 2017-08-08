@@ -7,14 +7,14 @@ import com.adventurer.enumerations.DamageType;
 
 public class ItemBonus {
 
-	//private Map<DamageType, Integer> bonusDamage = null;
-	//private Map<DamageType, Integer> bonusResistance = null;
+	private Map<DamageType, Integer> damageValues = null;
+	private Map<DamageType, Integer> resistanceValues = null;
 	
 	private int strBonus, dexBonus, intBonus, vitBonus;
 	
 	public ItemBonus() {
-		//this.bonusDamage = new LinkedHashMap<DamageType, Integer>();
-		//this.bonusResistance = new LinkedHashMap<DamageType, Integer>();
+		this.damageValues = new LinkedHashMap<DamageType, Integer>();
+		this.resistanceValues = new LinkedHashMap<DamageType, Integer>();
 		
 		this.strBonus = 0;
 		this.dexBonus = 0;
@@ -22,10 +22,41 @@ public class ItemBonus {
 		this.vitBonus = 0;
 	}
 
-	//public Map<DamageType, Integer> getBonusDamage() { return bonusDamage; }
-	//public void setBonusDamage(Map<DamageType, Integer> bonusDamage) { this.bonusDamage = bonusDamage; }
-	//public Map<DamageType, Integer> getBonusResistance() { return bonusResistance; }
-	//public void setBonusResistance(Map<DamageType, Integer> bonusResistance) { this.bonusResistance = bonusResistance; }
+	public ItemBonus(Map<DamageType, Integer> myMap, boolean isResistance) {
+		
+		this.resistanceValues = new LinkedHashMap<DamageType, Integer>();
+		this.damageValues = new LinkedHashMap<DamageType, Integer>();
+		
+		if(isResistance) this.resistanceValues = new LinkedHashMap<DamageType, Integer>(myMap);
+		else this.damageValues = new LinkedHashMap<DamageType, Integer>(myMap);
+		
+		this.strBonus = 0;
+		this.dexBonus = 0;
+		this.intBonus = 0;
+		this.vitBonus = 0;
+		
+	}
+	
+	public ItemBonus(Map<DamageType, Integer> resistances, Map<DamageType, Integer> dmg) {
+		
+		this.damageValues = new LinkedHashMap<DamageType, Integer>(dmg);
+		this.resistanceValues = new LinkedHashMap<DamageType, Integer>(resistances);
+		
+		this.strBonus = 0;
+		this.dexBonus = 0;
+		this.intBonus = 0;
+		this.vitBonus = 0;
+		
+	}
+	
+	public Map<DamageType, Integer> getDamage() { return damageValues; }
+	public void setDamage(Map<DamageType, Integer> bonusDamage) { this.damageValues = bonusDamage; }
+	public Map<DamageType, Integer> getResistances() { return resistanceValues; }
+	public void setResistances(Map<DamageType, Integer> bonusResistance) { this.resistanceValues = bonusResistance; }
+	
+	public void setDamageOfType(DamageType type, int dmg) { this.damageValues.put(type, dmg); }
+	public void setResistanceOfType(DamageType type, int res) { this.resistanceValues.put(type, res); }
+	
 	public int getStrBonus() { return strBonus; }
 	public void setStrBonus(int strBonus) { this.strBonus = strBonus; }
 	public int getDexBonus() { return dexBonus; }

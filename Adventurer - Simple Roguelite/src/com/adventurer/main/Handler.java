@@ -480,7 +480,7 @@ public class Handler {
     	if(item instanceof Armor) {
     		
     		Armor armor = (Armor) item;
-    		Map<DamageType, Integer> res = armor.getDefenseValues();
+    		Map<DamageType, Integer> res = armor.getBonuses().getResistances();
     		ItemBonus ib = armor.getBonuses();
     		
     		slot = armor.getSlot().toString();
@@ -499,7 +499,7 @@ public class Handler {
     	} else if(item instanceof Weapon) {
     		
     		Weapon weapon = (Weapon) item;
-    		Map<DamageType, Integer> dmg = weapon.getDamage();
+    		Map<DamageType, Integer> dmg = weapon.getBonuses().getDamage();
     		ItemBonus ib = weapon.getBonuses();
     		
     		slot = weapon.getWeaponSlot().toString();

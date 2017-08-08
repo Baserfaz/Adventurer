@@ -16,15 +16,11 @@ public class Item extends GameObject {
 	protected String description;
 	protected int value;
 	
-	protected ItemBonus bonus;
-	
 	public Item(Tile tile, SpriteType spritetype, String name, String description, int value) {
 		super(tile.GetWorldPosition(), tile.GetTilePosition(), spritetype);
 		this.itemName = name;
 		this.description = description;
 		this.value = value;
-		
-		this.bonus = new ItemBonus();
 	}
 	
 	public void Remove() {
@@ -59,7 +55,6 @@ public class Item extends GameObject {
 	public String getName() { return this.itemName; }
 	public int getValue() { return this.value; }
 	public String getDescription( ) { return this.description; }
-	public ItemBonus getBonuses() { return this.bonus; }
 	
 	public void tick() {}
 	public Rectangle GetBounds() { return null; }
