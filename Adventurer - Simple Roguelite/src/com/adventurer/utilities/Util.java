@@ -188,9 +188,17 @@ public class Util {
 		return player.getStats().getSumStr() * Game.STRENGTH_TO_MELEE_DAMAGE_MULTIPLIER;
 	}
 	
+	public static int calcRangedDamage(int a) {
+		return a * Game.DEXTERITY_TO_RANGED_DAMAGE_MULTIPLIER;
+	}
+	
 	public static int calcRangedDamage() {
 		Player player = ActorManager.GetPlayerInstance();
 		return player.getStats().getSumDex() * Game.DEXTERITY_TO_RANGED_DAMAGE_MULTIPLIER;
+	}
+	
+	public static int calcMagicDamage(int a) {
+		return a * Game.INTELLIGENCE_TO_MAGIC_DAMAGE_MULTIPLIER;
 	}
 	
 	public static int calcMagicDamage() {

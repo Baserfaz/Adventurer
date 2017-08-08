@@ -12,7 +12,7 @@ public class Offense {
 	private Map<DamageType, Integer> rangedDmg;
 	
 	public Offense() {
-		meleeDmg = new LinkedHashMap<DamageType, Integer>();
+		this.meleeDmg = new LinkedHashMap<DamageType, Integer>();
 		this.magicDmg = new LinkedHashMap<DamageType, Integer>();
 		this.rangedDmg = new LinkedHashMap<DamageType, Integer>();
 	}
@@ -23,10 +23,9 @@ public class Offense {
 		rangedDmg = new LinkedHashMap<DamageType, Integer>();
 		
 		// populate
-		// TODO: hardcoded to physical dmg.
 		meleeDmg.put(DamageType.Physical, melee);
-		magicDmg.put(DamageType.Physical, magic);
-		rangedDmg.put(DamageType.Physical, ranged);
+		//magicDmg.put(DamageType.Physical, magic);
+		//rangedDmg.put(DamageType.Physical, ranged);
 	}
 
 	public int getMagicDmgOfType(DamageType type) {

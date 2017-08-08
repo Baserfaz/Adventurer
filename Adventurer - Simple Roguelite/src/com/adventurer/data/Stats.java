@@ -36,19 +36,23 @@ public class Stats {
 	public void addAddedDex(int a) { this.addedDex += a; }
 	public void addAddedVit(int a) { this.addedVit += a; }
 	
+	public int getAddedStr() { return this.addedStr; }
+	public int getAddedInt() { return this.addedInt; }
+	public int getAddedDex() { return this.addedDex; }
+	public int getAddedVit() { return this.addedVit; }
+	
 	public int getBaseStrength() { return strength; }
-	public void setBaseStrength(int strength) { this.strength = strength; }
-	public void addBaseStrength(int a) { this.strength += a; }
-	
-	public int getBaseIntelligence() { return intelligence; }
-	public void setBaseIntelligence(int intelligence) { this.intelligence = intelligence; }
-	public void addBaseIntelligence(int a ) { this.intelligence += a; }
-	
-	public int getBaseDexterity() { return dexterity; }
-	public void setBaseDexterity(int dexterity) { this.dexterity = dexterity; }
-	public void addBaseDexterity(int a) { this.dexterity += a; }
-
 	public int getBaseVitality() { return vitality; }
+	public int getBaseIntelligence() { return intelligence; }
+	public int getBaseDexterity() { return dexterity; }
+	
+	public void setBaseStrength(int strength) { this.strength = strength; }
+	public void setBaseIntelligence(int intelligence) { this.intelligence = intelligence; }
+	public void setBaseDexterity(int dexterity) { this.dexterity = dexterity; }
 	public void setBaseVitality(int vitality) { this.vitality = vitality; }
+	
+	public void addBaseStrength(int a) { this.strength += a; }
+	public void addBaseIntelligence(int a ) { this.intelligence += a; }
+	public void addBaseDexterity(int a) { this.dexterity += a; }
 	public void addBaseVitality(int a) { this.vitality += a; }
 }

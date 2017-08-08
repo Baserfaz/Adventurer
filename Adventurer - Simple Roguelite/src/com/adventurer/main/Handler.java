@@ -293,10 +293,10 @@ public class Handler {
 	            		+ "Health: %d / %d\n"
 	            		+ "Mana:   %d / %d\n"
 	            		+ "-------- STATS ---------\n"
-	            		+ "STR: %d (base: %d)\n"
-	            		+ "VIT: %d (base: %d)\n"
-	            		+ "INT: %d (base: %d)\n"
-	            		+ "DEX: %d (base: %d)\n"
+	            		+ "STR: %d (%d + %d)\n"
+	            		+ "VIT: %d (%d + %d)\n"
+	            		+ "INT: %d (%d + %d)\n"
+	            		+ "DEX: %d (%d + %d)\n"
 	            		+ "-------- DAMAGE --------\n"
 	            		+ "Melee:  %d\n" 
 	            		+ "> fire: %d, frost: %d, shock: %d\n" 
@@ -327,12 +327,19 @@ public class Handler {
 	            		
 	            		stats.getSumStr(),
 		            	stats.getBaseStrength(),
+		            	stats.getAddedStr(),
+		            	
 		            	stats.getSumVit(),
 		            	stats.getBaseVitality(), 
+		            	stats.getAddedVit(),
+		            	
 		            	stats.getSumInt(),
 		            	stats.getBaseIntelligence(), 
+		            	stats.getAddedInt(),
+		            	
 		            	stats.getSumDex(),
 		            	stats.getBaseDexterity(),
+		            	stats.getAddedDex(),
 		            	
 		            	Util.calcMeleeDamage(),  // calculated from str
 		            	

@@ -48,107 +48,132 @@ public class Equipment {
 	
 	public void updateStats(Item item, boolean isAddition) {
 		
+		// cache vars
 		Player player = ActorManager.GetPlayerInstance();
 		Stats stats = player.getStats();
-		Resistances res = player.getResistances();
-		Offense offense = player.getOffense();
-		
 		ItemBonus ib = item.getBonuses();
 		
-		// ---------------- UPDATE WITH ITEM BONUS STATS --------------------
+		// update stats
+		if(isAddition) {
+			
+			stats.addAddedVit(ib.getVitBonus());
+			stats.addAddedStr(ib.getStrBonus());
+			stats.addAddedInt(ib.getIntBonus());
+			stats.addAddedDex(ib.getDexBonus());
+			
+		} else {
+			
+			stats.addAddedVit(-ib.getVitBonus());
+			stats.addAddedStr(-ib.getStrBonus());
+			stats.addAddedInt(-ib.getIntBonus());
+			stats.addAddedDex(-ib.getDexBonus());
+	
+		}
 		
-		stats.addAddedDex(ib.getDexBonus()); 
-		stats.addAddedInt(ib.getIntBonus());
-		stats.addAddedStr(ib.getStrBonus());
-		stats.addAddedVit(ib.getVitBonus());
+		// update dmg/res
+		if(item instanceof Armor) updateResistance(item, isAddition);
+		else if(item instanceof Weapon) updateDamage(item, isAddition);
 		
-		// TODO: resistance + damage bonuses?
+		// calculate stats + weapons
+		updateDamageScaling();
 		
-		// ---------------- UPDATE WITH ITEM BASE STATS ---------------------
-		if(item instanceof Armor) {
+		// update player health and mana pools.
+		player.updateHPandMP();
+	}
+	
+	private void updateDamageScaling() {
+		
+		Player player = ActorManager.GetPlayerInstance();
+		Offense offense = player.getOffense();
+		
+		// 1. offense has ONLY the weapon damage at the moment.
+		// 2. we have already updated our stats.
+		
+		// update melee -> PHYSICAL scales with STR
+		offense.setMeleeDmgOfType(DamageType.Physical, Util.calcMeleeDamage());
+		
+		// update magic -> ... scales with INT
+		
+		
+		
+		// update range -> ... scales with DEX
+		
+		
+		
+	}
+	
+	private void updateDamage(Item item, boolean isAddition) {
 			
-			Armor armor = (Armor) item;
+		Player player = ActorManager.GetPlayerInstance();
+		Offense offense = player.getOffense();
+		Weapon weapon = (Weapon) item;
+		
+		if(weapon.getWeaponSlot() == WeaponSlot.Mainhand) {
 			
-			// update resistances
-			for(Entry<DamageType, Integer> d : armor.getDefenseValues().entrySet()) {
-				
-				DamageType key = d.getKey();
-				int val = d.getValue();
-				
-				if(isAddition) {
-				
-					switch(key) {
-						case Fire: res.addFireResistance(val); break;
-						case Frost: res.addFireResistance(val); break;
-						case Holy: res.addHolyResistance(val); break;
-						case Physical: res.addPhysicalResistance(val); break;
-						case Shock: res.addShockResistance(val); break;
-						default: break;
-					}
+			if(weapon.getWeaponType() == WeaponType.Melee) {
+
+				for(Entry<DamageType, Integer> entry : weapon.getDamage().entrySet()) {
+					DamageType key = entry.getKey();
+					int value = entry.getValue();
 					
-				} else {
-					
-					switch(key) {
-						case Fire: res.addFireResistance(-val); break;
-						case Frost: res.addFireResistance(-val); break;
-						case Holy: res.addHolyResistance(-val); break;
-						case Physical: res.addPhysicalResistance(-val); break;
-						case Shock: res.addShockResistance(-val); break;
-						default: break;
-					}
-					
-				}
-			}
-			
-		} else if(item instanceof Weapon) {
-			
-			Weapon weapon = (Weapon) item;
-			
-			if(weapon.getWeaponSlot() == WeaponSlot.Mainhand) {
-				
-				// MAINHAND
-				
-				if(weapon.getWeaponType() == WeaponType.Melee) {
-					
-					// calculate damage based off stats.
-					int meleeDmg = Util.calcMeleeDamage();
-					
-					// add calculated damage values to weapon damage values
-					// and lastly cache the sum in offense.
-					for(Entry<DamageType, Integer> e : weapon.getDamage().entrySet()) {
-						DamageType key = e.getKey();
-						int val = e.getValue();
-						
-						// physical damage is affected by characters strength stat.
-						if(key == DamageType.Physical) val += meleeDmg;
-						
-						if(isAddition) offense.setMeleeDmgOfType(key, val);
-						else offense.setMeleeDmgOfType(key, -val);
-					}
-					
-				} else if(weapon.getWeaponType() == WeaponType.Magic) {
-					
-					int magicDmg = Util.calcMagicDamage();
-					// TODO: Add magic damage types
-					
-					
-				} else if(weapon.getWeaponType() == WeaponType.Ranged) {
-					
-					int rangedDmg = Util.calcRangedDamage();
-					// TODO: add ranged damage types
-					
+					if(isAddition) offense.setMeleeDmgOfType(key, value);
+					else offense.setMeleeDmgOfType(key, offense.getMeleeDmgOfType(key) - value);
 				}
 				
-			} else if(weapon.getWeaponSlot() == WeaponSlot.Offhand){
+			} else if(weapon.getWeaponType() == WeaponType.Magic) {
+				// TODO: Add magic damage types
 				
-				// TODO: OFFHAND --> ONLY SHIELDS AND SPECIAL OFFHAND WEAPONS?
+				
+			} else if(weapon.getWeaponType() == WeaponType.Ranged) {
+				
+				// TODO: add ranged damage types
 				
 			}
+			
+		} else if(weapon.getWeaponSlot() == WeaponSlot.Offhand){
+			
+			// TODO: OFFHAND --> ONLY SHIELDS AND SPECIAL OFFHAND WEAPONS?
 			
 		}
 		
-		// update health and mana based on stats
-		player.updateHPandMP();
+	}
+	
+	private void updateResistance(Item item, boolean isAddition) {
+			
+		Player player = ActorManager.GetPlayerInstance();
+		Resistances res = player.getResistances();
+		Armor armor = (Armor) item;
+		
+			for(Entry<DamageType, Integer> d : armor.getDefenseValues().entrySet()) {
+			
+			DamageType key = d.getKey();
+			int val = d.getValue();
+			
+			if(isAddition) {
+			
+				switch(key) {
+					case Fire: res.addFireResistance(val); break;
+					case Frost: res.addFireResistance(val); break;
+					case Holy: res.addHolyResistance(val); break;
+					case Physical: res.addPhysicalResistance(val); break;
+					case Shock: res.addShockResistance(val); break;
+					default: break;
+				}
+				
+			} else {
+				
+				switch(key) {
+					case Fire: res.addFireResistance(-val); break;
+					case Frost: res.addFireResistance(-val); break;
+					case Holy: res.addHolyResistance(-val); break;
+					case Physical: res.addPhysicalResistance(-val); break;
+					case Shock: res.addShockResistance(-val); break;
+					default: break;
+				}
+				
+			}
+		}
+		
 	}
 	
 	public void equipItem(Item item) {

@@ -9,6 +9,7 @@ import com.adventurer.data.Coordinate;
 import com.adventurer.data.Equipment;
 import com.adventurer.data.Experience;
 import com.adventurer.data.Inventory;
+import com.adventurer.data.Offense;
 import com.adventurer.data.PredefinedMaps;
 import com.adventurer.data.Session;
 import com.adventurer.data.Stats;
@@ -36,7 +37,7 @@ public class Player extends Actor {
 	
 	public Player(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, Map<DamageType, Integer> resistances) {
 		super(worldPos, tilePos, spritetype, 
-				Game.PLAYER_START_BASE_HEALTH, Game.PLAYER_START_BASE_MANA, 1, 1, 1, "Player", 2, resistances);
+				Game.PLAYER_START_BASE_HEALTH, Game.PLAYER_START_BASE_MANA, 0, 0, 0, "Player", 2, resistances);
 		
 		this.stats = new Stats();
 		this.losmanager = new LoSManager();
@@ -237,7 +238,8 @@ public class Player extends Actor {
 	}
 	
 	public void updateDmg() {
-		this.getOffense().setMeleeDmgOfType(DamageType.Physical, Util.calcMeleeDamage(this.stats.getSumStr()));
+		Offense offense = this.getOffense();
+		offense.setMeleeDmgOfType(DamageType.Physical, Util.calcMeleeDamage(this.stats.getSumStr()));
 	}
 	
 	public String toString() { return "You, our hero."; }
