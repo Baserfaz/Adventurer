@@ -302,11 +302,11 @@ public class Handler {
 	            		+ "> fire: %d, frost: %d, shock: %d\n" 
 	            		+ "> holy: %d, physical: %d\n"
 	            		+ "Magic:  %d\n"
-	            		+ "> fire: %d, frost: %d, shock: %d\n"
-	            		+ "> holy: %d, physical: %d\n"
+	            		/*+ "> fire: %d, frost: %d, shock: %d\n"
+	            		+ "> holy: %d, physical: %d\n"*/
 	            		+ "Ranged: %d\n"
-	            		+ "> fire: %d, frost: %d, shock: %d\n"
-	            		+ "> holy: %d, physical: %d\n"
+	            		/*+ "> fire: %d, frost: %d, shock: %d\n"
+	            		+ "> holy: %d, physical: %d\n"*/
 	            		+ "------ RESISTANCES -----\n"
 	            		+ "Physical: %d\n"
 	            		+ "Fire:     %d\n"
@@ -347,23 +347,23 @@ public class Handler {
 		            	offense.getMeleeDmgOfType(DamageType.Frost),
 		            	offense.getMeleeDmgOfType(DamageType.Shock),
 		            	offense.getMeleeDmgOfType(DamageType.Holy),
-		            	offense.getMeleeDmgOfType(DamageType.Physical),
+		            	offense.getTotalMeleeDmgOfType(DamageType.Physical), //offense.getMeleeDmgOfType(DamageType.Physical),
 		            	
 		            	Util.calcMagicDamage(),  // calculated from int
 		            	
-		            	offense.getMagicDmgOfType(DamageType.Fire),
+		            	/*offense.getMagicDmgOfType(DamageType.Fire),
 		            	offense.getMagicDmgOfType(DamageType.Frost),
 		            	offense.getMagicDmgOfType(DamageType.Shock),
 		            	offense.getMagicDmgOfType(DamageType.Holy),
-		            	offense.getMagicDmgOfType(DamageType.Physical),
+		            	offense.getMagicDmgOfType(DamageType.Physical),*/
 		            	
 		            	Util.calcRangedDamage(), // calculated from dex
 		            	
-		            	offense.getRangedDmgOfType(DamageType.Fire),
+		            	/*offense.getRangedDmgOfType(DamageType.Fire),
 		            	offense.getRangedDmgOfType(DamageType.Frost),
 		            	offense.getRangedDmgOfType(DamageType.Shock),
 		            	offense.getRangedDmgOfType(DamageType.Holy),
-		            	offense.getRangedDmgOfType(DamageType.Physical),
+		            	offense.getRangedDmgOfType(DamageType.Physical),*/
 		            	
 		            	resistances.getPhysicalResistance(),
 		            	resistances.getFireResistance(),

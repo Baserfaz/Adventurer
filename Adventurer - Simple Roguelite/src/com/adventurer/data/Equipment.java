@@ -51,6 +51,7 @@ public class Equipment {
 		
 		// cache vars
 		Equipable eItem = (Equipable) item;
+		
 		Player player = ActorManager.GetPlayerInstance();
 		Stats stats = player.getStats();
 		ItemBonus ib = eItem.getBonuses();
@@ -72,78 +73,61 @@ public class Equipment {
 	
 		}
 		
-		// update dmg/res
-		if(item instanceof Armor) updateResistance(item, isAddition);
-		else if(item instanceof Weapon) updateDamage(item, isAddition);
+		// update resistances
+		updateResistance(eItem, isAddition);
+		
+		// update damage
+		updateDamage(eItem, isAddition);
 		
 		// calculate stats + weapons
-		updateDamageScaling();
+		updateDamageScaling(eItem);
 		
 		// update player health and mana pools.
 		player.updateHPandMP();
 	}
 	
-	private void updateDamageScaling() {
+	private void updateDamageScaling(Equipable eItem) {
 		
 		Player player = ActorManager.GetPlayerInstance();
 		Offense offense = player.getOffense();
 		
 		// update melee -> PHYSICAL scales with STR
-		offense.setMeleeDmgOfType(DamageType.Physical, Util.calcMeleeDamage());
+		int meleeDmg = Util.calcMeleeDamage();
+		int weaponDmg = offense.getMeleeDmgOfType(DamageType.Physical);
+		offense.setTotalMeleeDmgOfType(DamageType.Physical, meleeDmg + weaponDmg);
 		
 		// update magic -> ... scales with INT
-		
+		// TODO
 		
 		
 		// update range -> ... scales with DEX
-		
-		
+		// TODO
 		
 	}
 	
-	private void updateDamage(Item item, boolean isAddition) {
-			
+	private void updateDamage(Equipable eItem, boolean isAddition) {
+		
 		Player player = ActorManager.GetPlayerInstance();
 		Offense offense = player.getOffense();
-		Weapon weapon = (Weapon) item;
 		
-		if(weapon.getWeaponSlot() == WeaponSlot.Mainhand) {
+		// TODO: implement magic and ranged damage.
+		// --> now hardcoded to melee damage.
+		for(Entry<DamageType, Integer> entry : eItem.getBonuses().getDamage().entrySet()) {
+			DamageType key = entry.getKey();
+			int value = entry.getValue();
 			
-			if(weapon.getWeaponType() == WeaponType.Melee) {
-
-				for(Entry<DamageType, Integer> entry : weapon.getBonuses().getDamage().entrySet()) {
-					DamageType key = entry.getKey();
-					int value = entry.getValue();
-					
-					if(isAddition) offense.setMeleeDmgOfType(key, value);
-					else offense.setMeleeDmgOfType(key, offense.getMeleeDmgOfType(key) - value);
-				}
-				
-			} else if(weapon.getWeaponType() == WeaponType.Magic) {
-				// TODO: Add magic damage types
-				
-				
-			} else if(weapon.getWeaponType() == WeaponType.Ranged) {
-				
-				// TODO: add ranged damage types
-				
-			}
-			
-		} else if(weapon.getWeaponSlot() == WeaponSlot.Offhand){
-			
-			// TODO: OFFHAND --> ONLY SHIELDS AND SPECIAL OFFHAND WEAPONS?
-			
+			if(isAddition) offense.addMeleeDmgOfType(key, value);    //setMeleeDmgOfType(key, value);
+			else offense.addMeleeDmgOfType(key, -value);             //setMeleeDmgOfType(key, offense.getMeleeDmgOfType(key) - value);
 		}
 		
 	}
 	
-	private void updateResistance(Item item, boolean isAddition) {
-			
+	private void updateResistance(Equipable item, boolean isAddition) {
+		
 		Player player = ActorManager.GetPlayerInstance();
 		Resistances res = player.getResistances();
-		Armor armor = (Armor) item;
 		
-			for(Entry<DamageType, Integer> d : armor.getBonuses().getResistances().entrySet()) {
+			for(Entry<DamageType, Integer> d : item.getBonuses().getResistances().entrySet()) {
 			
 			DamageType key = d.getKey();
 			int val = d.getValue();
@@ -177,7 +161,10 @@ public class Equipment {
 	
 	public void equipItem(Item item) {
 		
-		if(item instanceof Equipable == false) return;
+		if(item instanceof Equipable == false) {
+			System.out.println("ITEM CANNOT BE EQUIPPED!");
+			return;
+		}
 		
 		boolean success = false;
 		
@@ -223,7 +210,7 @@ public class Equipment {
 			
 			success = true;
 			
-		} else System.out.println("Item cannot be equipped!");
+		}
 		
 		// update stats
 		if(success) updateStats(item, true);

@@ -6,65 +6,83 @@ import java.util.Map;
 import com.adventurer.enumerations.DamageType;
 
 public class Offense {
-
-	private Map<DamageType, Integer> meleeDmg;
-	private Map<DamageType, Integer> magicDmg;
-	private Map<DamageType, Integer> rangedDmg;
+	
+	private Map<DamageType, Integer> meleeWeaponDmg;
+	private Map<DamageType, Integer> magicWeaponDmg;
+	private Map<DamageType, Integer> rangedWeaponDmg;
+	
+	private Map<DamageType, Integer> totalMeleeDmg;
 	
 	public Offense() {
-		this.meleeDmg = new LinkedHashMap<DamageType, Integer>();
-		this.magicDmg = new LinkedHashMap<DamageType, Integer>();
-		this.rangedDmg = new LinkedHashMap<DamageType, Integer>();
+		this.meleeWeaponDmg = new LinkedHashMap<DamageType, Integer>();
+		this.magicWeaponDmg = new LinkedHashMap<DamageType, Integer>();
+		this.rangedWeaponDmg = new LinkedHashMap<DamageType, Integer>();
+		
+		this.totalMeleeDmg = new LinkedHashMap<DamageType, Integer>();
 	}
 	
 	public Offense(int melee, int magic, int ranged) {
-		meleeDmg = new LinkedHashMap<DamageType, Integer>();
-		magicDmg = new LinkedHashMap<DamageType, Integer>();
-		rangedDmg = new LinkedHashMap<DamageType, Integer>();
+		this.meleeWeaponDmg = new LinkedHashMap<DamageType, Integer>();
+		this.magicWeaponDmg = new LinkedHashMap<DamageType, Integer>();
+		this.rangedWeaponDmg = new LinkedHashMap<DamageType, Integer>();
+		
+		this.totalMeleeDmg = new LinkedHashMap<DamageType, Integer>();
 		
 		// populate
-		meleeDmg.put(DamageType.Physical, melee);
-		//magicDmg.put(DamageType.Physical, magic);
-		//rangedDmg.put(DamageType.Physical, ranged);
+		this.totalMeleeDmg.put(DamageType.Physical, melee);
 	}
 
 	public int getMagicDmgOfType(DamageType type) {
 		int dmg = 0;
-		if(magicDmg.containsKey(type)) dmg = magicDmg.get(type);
+		if(this.magicWeaponDmg.containsKey(type)) dmg = this.magicWeaponDmg.get(type);
 		return dmg;
 	}
 	
 	public int getRangedDmgOfType(DamageType type) {
 		int dmg = 0;
-		if(rangedDmg.containsKey(type)) dmg = rangedDmg.get(type);
+		if(this.rangedWeaponDmg.containsKey(type)) dmg = this.rangedWeaponDmg.get(type);
 		return dmg;
 	}
 	
 	public int getMeleeDmgOfType(DamageType type) {
 		int dmg = 0;
-		if(meleeDmg.containsKey(type)) dmg = meleeDmg.get(type);
+		if(this.meleeWeaponDmg.containsKey(type)) dmg = this.meleeWeaponDmg.get(type);
 		return dmg;
 	}
 	
-	public void setMeleeDmgOfType(DamageType type, int dmg) {
-		//if(meleeDmg.containsKey(type)) meleeDmg.put(type, meleeDmg.get(type) + dmg);
-		//else meleeDmg.put(type, dmg);
-		meleeDmg.put(type, dmg);
+	public int getTotalMeleeDmgOfType(DamageType type) {
+		int dmg = 0;
+		if(this.totalMeleeDmg.containsKey(type)) dmg = this.totalMeleeDmg.get(type);
+		return dmg;
 	}
 	
-	public void setMagicDmgOfType(DamageType type, int dmg) {
-		//if(magicDmg.containsKey(type)) magicDmg.put(type, magicDmg.get(type) + dmg);
-		//else magicDmg.put(type, dmg);
-		magicDmg.put(type, dmg);
+	public void addMeleeDmgOfType(DamageType type, int dmg) {
+		int calc = 0;
+		if(this.meleeWeaponDmg.containsKey(type)) calc = this.meleeWeaponDmg.get(type);
+		this.meleeWeaponDmg.put(type, calc + dmg);
 	}
 	
-	public void setRangedDmgOfType(DamageType type, int dmg) {
-		//if(rangedDmg.containsKey(type)) rangedDmg.put(type, rangedDmg.get(type) + dmg);
-		//else rangedDmg.put(type, dmg);
-		rangedDmg.put(type, dmg);
+	public void addMagicDmgOfType(DamageType type, int dmg) {
+		int calc = 0;
+		if(this.magicWeaponDmg.containsKey(type)) calc = this.magicWeaponDmg.get(type);
+		this.magicWeaponDmg.put(type, calc + dmg);
 	}
 	
-	public Map<DamageType, Integer> getAllMeleeDamageTypes() { return meleeDmg; }
-	public Map<DamageType, Integer> getAllMagicDamageTypes() { return magicDmg; }
-	public Map<DamageType, Integer> getAllRangedDamageTypes() { return rangedDmg; }
+	public void addRangedDmgOfType(DamageType type, int dmg) {
+		int calc = 0;
+		if(this.rangedWeaponDmg.containsKey(type)) calc = this.rangedWeaponDmg.get(type);
+		this.rangedWeaponDmg.put(type, calc + dmg);
+	}
+	
+	public void setMeleeDmgOfType(DamageType type, int dmg) { this.meleeWeaponDmg.put(type, dmg); }
+	public void setMagicDmgOfType(DamageType type, int dmg) { this.magicWeaponDmg.put(type, dmg); }
+	public void setRangedDmgOfType(DamageType type, int dmg) { this.rangedWeaponDmg.put(type, dmg); }
+	
+	public void setTotalMeleeDmgOfType(DamageType type, int dmg) { this.totalMeleeDmg.put(type, dmg); }
+	
+	public Map<DamageType, Integer> getAllMeleeDamageTypes() { return this.meleeWeaponDmg; }
+	public Map<DamageType, Integer> getAllMagicDamageTypes() { return this.magicWeaponDmg; }
+	public Map<DamageType, Integer> getAllRangedDamageTypes() { return this.rangedWeaponDmg; }
+
+	public Map<DamageType, Integer> getTotalMeleeDmg() { return this.totalMeleeDmg; } 
 }

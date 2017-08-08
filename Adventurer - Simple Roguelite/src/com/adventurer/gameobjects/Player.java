@@ -239,7 +239,7 @@ public class Player extends Actor {
 	
 	public void updateDmg() {
 		Offense offense = this.getOffense();
-		offense.setMeleeDmgOfType(DamageType.Physical, Util.calcMeleeDamage(this.stats.getSumStr()));
+		offense.setTotalMeleeDmgOfType(DamageType.Physical, Util.calcMeleeDamage(this.stats.getSumStr()));
 	}
 	
 	public String toString() { return "You, our hero."; }

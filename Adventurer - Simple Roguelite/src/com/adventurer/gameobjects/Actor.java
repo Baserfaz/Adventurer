@@ -181,7 +181,7 @@ public class Actor extends GameObject {
 		GameObject object = tile.GetActor();
 		
 		// do damage
-		if(object != null) DamageHandler.ActorTakeDamage(tile, this.myOffense.getAllMeleeDamageTypes());
+		if(object != null) DamageHandler.ActorTakeDamage(tile, this.myOffense.getTotalMeleeDmg());
 		
 	}
 	

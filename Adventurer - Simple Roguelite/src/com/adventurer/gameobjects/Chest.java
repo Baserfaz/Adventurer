@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.adventurer.data.World;
-import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Game;
 import com.adventurer.main.ItemCreator;
@@ -25,12 +24,15 @@ public class Chest extends Item {
 		
 		// put item(s) inside the chest.
 		// TODO: randomize loot.
+		
 		itemsInside.add(ItemCreator.createGold(tile, 1));
 		
 		Armor armor = ItemCreator.createArmor(tile, "Padded armor");
+		armor.getBonuses().setStrBonus(1);
 		itemsInside.add(armor);
 		
 		Weapon ba = ItemCreator.createWeapon(tile, "Battleaxe");
+		ba.getBonuses().setStrBonus(1);
 		itemsInside.add(ba);
 		
 		// register to tile
