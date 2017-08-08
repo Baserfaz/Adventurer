@@ -9,7 +9,7 @@ public class Experience {
 	private int currentLevel = 1;
 	
 	// TODO: create static fiels for these.
-	private static int baseExp = 500;
+	private static int baseExp = 100;
 	private static double expMultiplier = 1.2;
 	private static int maxLevel = 100;
 	private Map<Integer, Integer> levelToExp = new LinkedHashMap<Integer, Integer>();
@@ -24,7 +24,7 @@ public class Experience {
 			Double exp = baseExp * expMultiplier * i;
 			int level = i + 1;
 			levelToExp.put(level, exp.intValue());
-			//System.out.println("level: " + level + " needed exp: " + exp.intValue());
+			System.out.println("level: " + level + " needed exp: " + exp.intValue());
 		}
 		
 	}
