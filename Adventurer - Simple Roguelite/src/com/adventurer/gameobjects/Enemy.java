@@ -23,6 +23,7 @@ public class Enemy extends Actor {
 	private EnemyLoSManager losManager;
 	
 	private boolean hasRangedAttack = false;
+	private int exp = 0;
 	
 	private int moveCooldownBase = 1000;
 	private long moveTimer = 0;
@@ -32,7 +33,7 @@ public class Enemy extends Actor {
 	public Enemy(Coordinate worldPos, Coordinate tilePos,
 			EnemyType enemytype, SpriteType spritetype,
 			int maxHP, int maxMP, int meleeDmg, int rangedDmg, int magicDmg, 
-			String name, boolean isRanged, int movementSpeed, Map<DamageType, Integer> resistances, int moveCooldownBase) {
+			String name, boolean isRanged, int movementSpeed, Map<DamageType, Integer> resistances, int moveCooldownBase, int exp) {
 		super(worldPos, tilePos, spritetype, maxHP, maxMP, meleeDmg, rangedDmg, magicDmg, name, movementSpeed, resistances);
 		
 		// declare ranged units here
@@ -43,6 +44,9 @@ public class Enemy extends Actor {
 		
 		// TODO: different projectiles?
 		this.projectileType = SpriteType.Arrow01;
+		
+		// set exp gained
+		this.exp = exp;
 		
 		this.setEnemyType(enemytype);
 		this.losManager = new EnemyLoSManager();
@@ -216,7 +220,7 @@ public class Enemy extends Actor {
 		} else if(tile instanceof Door) {
 			
 			// open door
-			//((Door)tile).Open();
+			((Door)tile).Open();
 			
 		} else if(tile.GetActor() != null) {
 			
@@ -232,4 +236,7 @@ public class Enemy extends Actor {
 	
 	public EnemyType getEnemyType() { return enemyType; }
 	public void setEnemyType(EnemyType enemyType) { this.enemyType = enemyType; }
+
+	public int getExp() { return exp; }
+	public void setExp(int exp) { this.exp = exp; }
 }

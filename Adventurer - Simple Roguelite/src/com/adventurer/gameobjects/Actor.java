@@ -83,6 +83,11 @@ public class Actor extends GameObject {
 		
 		if(this instanceof Enemy) {
 			
+			Enemy enemy = (Enemy) this;
+			
+			// give player exp
+			ActorManager.GetPlayerInstance().getPlayerExperience().addCurrentExp(enemy.getExp());
+			
 			// remove gameobject
 			Remove();
 						

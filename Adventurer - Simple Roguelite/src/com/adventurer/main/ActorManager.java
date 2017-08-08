@@ -67,7 +67,7 @@ public class ActorManager {
 			EnemyType randomType = EnemyType.values()[Util.GetRandomInteger(0, EnemyType.values().length)];
 			
 			// vars
-	        int damage = 0, health = 0, movementSpeed = 0, movementCooldownBase = 0;
+	        int damage = 0, health = 0, movementSpeed = 0, movementCooldownBase = 0, exp = 0;
 	        String name = "";
 	        boolean isRanged = false;
 	        Map<DamageType, Integer> resistances = new LinkedHashMap<DamageType, Integer>();
@@ -77,29 +77,28 @@ public class ActorManager {
 			
 			// go through the data and set stuff
 			for(Map.Entry<String, String> entry : retval.entrySet()) {
-				String key = entry.getKey();
-				String val = entry.getValue();
+				String key = entry.getKey().toUpperCase();
+				String val = entry.getValue().toUpperCase();
 				
-				//System.out.println(key + " : " + val);
-				
-				if(key == "damage") damage = Integer.parseInt(val);
-				else if(key == "health") health = Integer.parseInt(val);
-				else if(key == "name") name = val;
-				else if(key == "isRanged") isRanged = Boolean.parseBoolean(val);
-				else if(key == "movementSpeed") movementSpeed = Integer.parseInt(val);
-				else if(key == "movementCooldownBase") movementCooldownBase = Integer.parseInt(val);
-				else if(key == "physicalRes") resistances.put(DamageType.Physical, Integer.parseInt(val));
-				else if(key == "fireRes") resistances.put(DamageType.Fire, Integer.parseInt(val));
-				else if(key == "frostRes") resistances.put(DamageType.Frost, Integer.parseInt(val));
-				else if(key == "shockRes") resistances.put(DamageType.Shock, Integer.parseInt(val));
-				else if(key == "holyRes") resistances.put(DamageType.Holy, Integer.parseInt(val));
+				if(key.equals("DAMAGE")) damage = Integer.parseInt(val);
+				else if(key.equals("HEALTH")) health = Integer.parseInt(val);
+				else if(key.equals("NAME")) name = Util.Capitalize(val);
+				else if(key.equals("ISRANGED")) isRanged = Boolean.parseBoolean(val);
+				else if(key.equals("MOVEMENTSPEED")) movementSpeed = Integer.parseInt(val);
+				else if(key.equals("MOVEMENTCOOLDOWNBASE")) movementCooldownBase = Integer.parseInt(val);
+				else if(key.equals("EXP")) exp = Integer.parseInt(val);
+				else if(key.equals("PHYSICALRES")) resistances.put(DamageType.Physical, Integer.parseInt(val));
+				else if(key.equals("FIRERES")) resistances.put(DamageType.Fire, Integer.parseInt(val));
+				else if(key.equals("FROSTRES")) resistances.put(DamageType.Frost, Integer.parseInt(val));
+				else if(key.equals("SHOCKRES")) resistances.put(DamageType.Shock, Integer.parseInt(val));
+				else if(key.equals("HOLYRES")) resistances.put(DamageType.Holy, Integer.parseInt(val));
 			}
-			CreateEnemy(name, health, damage, randomType, tiles, isRanged, movementSpeed, resistances, movementCooldownBase);
+			CreateEnemy(name, health, damage, randomType, tiles, isRanged, movementSpeed, resistances, movementCooldownBase, exp);
 		}
 	}
 	
 	public static Enemy CreateEnemy(String name, int maxHP, int damage,
-		EnemyType enemyType, List<Tile> tiles_, boolean isRanged, int movementSpeed, Map<DamageType, Integer> resistances, int movementCooldownBase) {
+		EnemyType enemyType, List<Tile> tiles_, boolean isRanged, int movementSpeed, Map<DamageType, Integer> resistances, int movementCooldownBase, int exp) {
 	    
 		// get position
 		int[] pos = World.instance.GetFreePosition(tiles_);
@@ -114,7 +113,7 @@ public class ActorManager {
 		
 		// create enemy object
 		return new Enemy(enemyWorldPos, enemyTilePos, enemyType, spriteType, 
-				maxHP, 0, damage, damage, damage, name, isRanged, movementSpeed, resistances, movementCooldownBase);
+				maxHP, 0, damage, damage, damage, name, isRanged, movementSpeed, resistances, movementCooldownBase, exp);
 	}
 	
 	public static Enemy[] GetEnemyInstances() { return enemyInstances; }

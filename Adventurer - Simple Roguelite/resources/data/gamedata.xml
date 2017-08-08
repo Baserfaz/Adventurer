@@ -11,6 +11,7 @@
 			<isRanged>false</isRanged>
 			<movementSpeed>2</movementSpeed>
 			<movementCooldownBase>1000</movementCooldownBase>
+			<exp>15</exp>
 			<resistances>
 				<physicalRes>2</physicalRes>
 				<fireRes>2</fireRes>
@@ -28,6 +29,7 @@
 			<isRanged>false</isRanged>
 			<movementSpeed>2</movementSpeed>
 			<movementCooldownBase>1500</movementCooldownBase>
+			<exp>15</exp>
 			<resistances>
 				<physicalRes>2</physicalRes>
 				<fireRes>2</fireRes>
@@ -45,6 +47,7 @@
 			<isRanged>false</isRanged>
 			<movementSpeed>1</movementSpeed>
 			<movementCooldownBase>1750</movementCooldownBase>
+			<exp>15</exp>
 			<resistances>
 				<physicalRes>2</physicalRes>
 				<fireRes>1</fireRes>
@@ -62,6 +65,7 @@
 			<isRanged>true</isRanged>
 			<movementSpeed>2</movementSpeed>
 			<movementCooldownBase>1000</movementCooldownBase>
+			<exp>15</exp>
 			<resistances>
 				<physicalRes>2</physicalRes>
 				<fireRes>3</fireRes>
@@ -79,6 +83,7 @@
 			<isRanged>false</isRanged>
 			<movementSpeed>3</movementSpeed>
 			<movementCooldownBase>500</movementCooldownBase>
+			<exp>15</exp>
 			<resistances>
 				<physicalRes>0</physicalRes>
 				<fireRes>1</fireRes>
@@ -96,6 +101,7 @@
 			<isRanged>false</isRanged>
 			<movementSpeed>1</movementSpeed>
 			<movementCooldownBase>1000</movementCooldownBase>
+			<exp>15</exp>
 			<resistances>
 				<physicalRes>2</physicalRes>
 				<fireRes>3</fireRes>
@@ -113,6 +119,7 @@
 			<isRanged>false</isRanged>
 			<movementSpeed>2</movementSpeed>
 			<movementCooldownBase>400</movementCooldownBase>
+			<exp>15</exp>
 			<resistances>
 				<physicalRes>1</physicalRes>
 				<fireRes>0</fireRes>

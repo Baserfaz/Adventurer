@@ -64,6 +64,7 @@ public class FileReader {
 			    			String isRanged = e.getElementsByTagName("isRanged").item(0).getTextContent();
 			    			String movementSpeed = e.getElementsByTagName("movementSpeed").item(0).getTextContent();
 			    			String movementCooldownBase = e.getElementsByTagName("movementCooldownBase").item(0).getTextContent();
+			    			String exp = e.getElementsByTagName("exp").item(0).getTextContent();
 			    			
 			    			myMap.put("name", name);
 			    			myMap.put("enemyType", enemyType);
@@ -72,6 +73,7 @@ public class FileReader {
 			    			myMap.put("isRanged", isRanged);
 			    			myMap.put("movementSpeed", movementSpeed);
 			    			myMap.put("movementCooldownBase", movementCooldownBase);
+			    			myMap.put("exp", exp);
 			    			
 			    			// resistances
 			    			NodeList list = e.getElementsByTagName("resistances").item(0).getChildNodes();
