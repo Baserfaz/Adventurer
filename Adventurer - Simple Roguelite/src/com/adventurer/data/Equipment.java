@@ -177,6 +177,8 @@ public class Equipment {
 	
 	public void equipItem(Item item) {
 		
+		if(item instanceof Equipable == false) return;
+		
 		boolean success = false;
 		
 		if(item instanceof Armor) {

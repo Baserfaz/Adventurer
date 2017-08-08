@@ -183,7 +183,10 @@ public class KeyInput extends KeyAdapter {
 				else if(pos == 6) item = eq.getAmulet();
 				else if(pos == 7) item = eq.getRing();
 				
-				if(item != null) Handler.instance.setShowItemInspect(true);
+				if(item != null) {
+					if(Handler.instance.isShowItemInspect()) Handler.instance.setShowItemInspect(false);
+					else Handler.instance.setShowItemInspect(true);
+				}
 			}
 			
 			// escape from equipment mode
