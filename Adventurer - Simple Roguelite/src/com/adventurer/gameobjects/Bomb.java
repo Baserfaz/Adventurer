@@ -5,25 +5,23 @@ import java.util.List;
 import java.util.Map;
 
 import com.adventurer.data.World;
-import com.adventurer.enumerations.BombType;
 import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.SpriteType;
 
 public class Bomb extends Usable {
 
 	private Map<DamageType, Integer> damage;
-	private BombType bombType;
 	
 	private long liveTime = 0;
 	private long liveTimer = 0;
 	private boolean active = false;
 	
-	public Bomb(Tile tile, SpriteType spritetype, int liveTime, Map<DamageType, Integer> damage, BombType btype, String name, String description, int value) {
+	public Bomb(Tile tile, SpriteType spritetype, int liveTime,
+			Map<DamageType, Integer> damage, String name, String description, int value) {
 		super(tile, spritetype, name, description, value);
 		
 		this.damage = new LinkedHashMap<DamageType, Integer>(damage);
 		this.liveTime = liveTime;
-		this.bombType = btype;
 	}
 	
 	public void tick() {

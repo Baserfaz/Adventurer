@@ -3,6 +3,7 @@ package com.adventurer.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Gold;
@@ -22,6 +23,10 @@ public class Inventory {
 		// populate inventory with keys etc.
 		for(int i = 0; i < Game.START_KEY_COUNT; i++) {
 			this.addToInventory(ItemCreator.createKey(actor.getCurrentTile(), KeyType.Normal));
+		}
+		
+		for(int i = 0; i < Game.START_BOMB_COUNT; i++) {
+			this.addToInventory(ItemCreator.createBomb(actor.getCurrentTile(), DamageType.Physical));
 		}
 		
 	}

@@ -1,6 +1,7 @@
 package com.adventurer.main;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.adventurer.enumerations.ArmorSlot;
@@ -11,6 +12,7 @@ import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.WeaponSlot;
 import com.adventurer.enumerations.WeaponType;
 import com.adventurer.gameobjects.Armor;
+import com.adventurer.gameobjects.Bomb;
 import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.Gold;
 import com.adventurer.gameobjects.Key;
@@ -175,22 +177,52 @@ public class ItemCreator {
 		new Projectile();
 	}*/
 	
-	/*public static Bomb createBomb(Tile tile, BombType bombtype) {
+	public static Bomb createBomb(Tile tile, DamageType bombtype) {
 		
+		// vars
 		String name = "";
+		String description = "";
 		int value = 0;
+		Map<DamageType, Integer> dmg = new LinkedHashMap<DamageType, Integer>();
 		
+		// populate vars
 		switch(bombtype) {
-			case Gas: name = "Gasbomb";  value = 10; break;
-			case Normal: name = "Bomb";  value = 15; break;
-			default: name = "???? BOMB ????"; break;
+			case Frost:
+				name = "Frost Bomb";
+				description = "Does frost damage in AOE.";
+				value = 15;
+				dmg.put(DamageType.Frost, 15);
+				break;
+			case Physical:
+				name = "Bomb";
+				description = "Does physical damage in AOE.";
+				value = 5;
+				dmg.put(DamageType.Physical, 5);
+				break;
+			case Fire:
+				name = "Fire bomb";
+				description = "Does fire damage in AOE.";
+				value = 15;
+				dmg.put(DamageType.Fire, 5);
+				break;
+			case Holy:
+				name = "Holy bomb";
+				description = "Does holy damage in AOE.";
+				value = 15;
+				dmg.put(DamageType.Holy, 5);
+				break;
+			case Shock:
+				name = "Shock bomb";
+				description = "Does shock damage in AOE.";
+				value = 15;
+				dmg.put(DamageType.Shock, 5);
+				break;
+			default: System.out.println("NOT VALID BOMBTYPE: " + bombtype); return null;
 		}
 		
-		// TODO: static field for bomb time, damage and values
-		return new Bomb(tile, SpriteType.Bomb01, 1000, 50, bombtype, name, value);
-	}*/
-	
-	public static Gold createGold(Tile tile, int amount) {
-		return new Gold(tile, SpriteType.Gold01, amount);
+		// create an instance of bomb.
+		return new Bomb(tile, SpriteType.Bomb01, 1000, dmg, name, description, value);
 	}
+	
+	public static Gold createGold(Tile tile, int amount) { return new Gold(tile, SpriteType.Gold01, amount); }
 }
