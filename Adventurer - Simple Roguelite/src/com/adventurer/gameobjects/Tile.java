@@ -19,18 +19,13 @@ import com.adventurer.utilities.Util;
 public class Tile extends GameObject {
 
 	protected TileType type;
-	protected boolean inView   = false;
+	protected boolean inView   = true;
 	protected boolean selected = false;
 	protected boolean walkable = false;
 	
 	protected List<Item> items = null;
 	protected Actor actor      = null;
 	protected Node node;
-	
-	// tile falling effect
-	protected int targety        = 0;
-	protected int fallingSpeed   = 1;
-	protected int fallingYOffset = 10;
 	
 	public Tile(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, TileType type) {
 		super(worldPos, tilePos, spritetype);
@@ -41,6 +36,10 @@ public class Tile extends GameObject {
 	}
 	
 	public void tick() {
+		calculateCameraView();
+	}
+	
+	private void calculateCameraView() {
 		
 		// check if the tile is in the camera's view
 		Rectangle camera = Camera.instance.getCameraBounds();
@@ -58,13 +57,6 @@ public class Tile extends GameObject {
 				return;
 			}
 		}
-		
-		if(Game.ANIMATE_TILE_DISCOVERY) UpdatePosition(x, y);
-	}
-	
-	// move the tile
-	protected void UpdatePosition(int x, int y) {
-		if(y < targety + fallingSpeed && y < targety) this.SetWorldPosition(x, y + fallingSpeed);
 	}
 	
 	public void render(Graphics g) {
@@ -120,15 +112,7 @@ public class Tile extends GameObject {
 	}
 	
 	public void Discover() {
-		
-		int x = this.GetWorldPosition().getX();
-		int y = this.GetWorldPosition().getY();
-		
-		if(Game.ANIMATE_TILE_DISCOVERY) {
-			this.targety = this.GetWorldPosition().getY();
-			this.SetWorldPosition(x, y - fallingYOffset);
-		}
-			
+
 		this.discovered = true;
 		
 		// discover actors and items.

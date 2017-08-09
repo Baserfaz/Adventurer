@@ -70,7 +70,7 @@ public class ItemCreator {
 					break;
 				case Mana:
 					name += "mana";
-					description += "regains mana";
+					description += "regains your mana";
 					value += 20;
 					spritetype = SpriteType.ManaPotion;
 			}

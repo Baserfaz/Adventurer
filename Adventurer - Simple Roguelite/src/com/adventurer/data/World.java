@@ -16,7 +16,6 @@ import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.enumerations.TrapType;
 import com.adventurer.enumerations.WorldType;
-import com.adventurer.gameobjects.DestructibleTile;
 import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Portal;
 import com.adventurer.gameobjects.Shrine;
@@ -457,8 +456,6 @@ public class World {
 			newTile = new Door(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.LockedDoor01, TileType.Door, true, DoorType.Normal);
 		} else if(newType == TileType.Floor) {
 			newTile = new Tile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.Floor01, TileType.Floor);
-		} else if(newType == TileType.DestructibleTile) {
-			newTile = new DestructibleTile(old.GetWorldPosition(), old.GetTilePosition(), SpriteType.DestructibleWall01, TileType.DestructibleTile, 300);
 		} else {
 			System.out.println("WORLD.REPLACETILE: TILETYPE NOT YET IMPLEMENTED!");
 			new Exception().printStackTrace();
