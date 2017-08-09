@@ -36,8 +36,6 @@ public class Bomb extends Usable {
 			// add the current tile to the tiles list
 			tiles.add(World.instance.GetTileAtPosition(this.GetTilePosition()));
 			
-			// TODO: FIX BOMBS
-			
 			/*for(Tile tile : tiles) {
 				
 				// Do damage:

@@ -149,7 +149,7 @@ public class SpriteCreator {
 		    case UsedShrine: row = 12; column = 1; break;
 		    
 		    // bombs and traps
-		    case Bomb01: row = 9; column = 0; break;
+		    case Bomb01: row = 9; column = 1; break;
 		    
 		    // projectiles
 		    case Spear01: row = 10; column = 0; break;
