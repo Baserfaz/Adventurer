@@ -23,6 +23,7 @@ import com.adventurer.enumerations.GuiState;
 import com.adventurer.enumerations.WorldType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Armor;
+import com.adventurer.gameobjects.Bomb;
 import com.adventurer.gameobjects.Door;
 import com.adventurer.gameobjects.Effect;
 import com.adventurer.gameobjects.Enemy;
@@ -515,6 +516,26 @@ public class Handler {
     		intel = ib.getIntBonus();
     		vit = ib.getVitBonus();
     		
+    	} else if(item instanceof Bomb) {
+    		
+    		Bomb bomb = (Bomb) item;
+    		
+    		slot = "-";
+    		
+    		for(Entry<DamageType, Integer> e : bomb.getDamage().entrySet()) {
+    			
+    			DamageType key = e.getKey();
+    			int val = e.getValue();
+    			
+    			switch(key) {
+					case Fire: fire = val; break;
+					case Frost:  frost = val; break;
+					case Holy: holy = val; break;
+					case Physical: physical = val; break;
+					case Shock: shock = val; break;
+					default: break;
+    			}
+    		}
     	}
     	
     	// build string using vars

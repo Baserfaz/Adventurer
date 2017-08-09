@@ -73,4 +73,7 @@ public class Bomb extends Usable {
 		
 		// TODO: remove from inventory and put down on a tile
 	}
+
+	public Map<DamageType, Integer> getDamage() { return damage; }
+	public void setDamage(Map<DamageType, Integer> damage) { this.damage = damage; }
 }
