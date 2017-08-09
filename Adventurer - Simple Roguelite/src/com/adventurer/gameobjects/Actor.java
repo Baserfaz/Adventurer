@@ -170,11 +170,14 @@ public class Actor extends GameObject {
 			
 		} else {
 			
-			// enemies who can shoot dont lose projectiles.
+			// get tile
 			Tile projStartTile = World.instance.GetTileAtPosition(originTilePos);
 			
 			// create projectile
-			new Projectile(projStartTile, projSpriteType, this.myOffense.getAllRangedDamageTypes(), direction);
+			Projectile p = ItemCreator.createProjectile(projStartTile, DamageType.Physical, 5, direction);
+			
+			// shoot projectile
+			p.use();
 		}
 	}
 	

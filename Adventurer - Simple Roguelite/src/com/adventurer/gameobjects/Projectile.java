@@ -12,11 +12,13 @@ import com.adventurer.main.*;
 import com.adventurer.utilities.Renderer;
 import com.adventurer.utilities.Util;
 
-public class Projectile extends Ammunition {
+public class Projectile extends Usable {
 	
 	private Direction direction;
 	private boolean alive = true;
 	private boolean tileDiscovered = true;
+	
+	private boolean shot = false;
 	
 	private Map<DamageType, Integer> damage;
 	private int movementSpeed = 2;
@@ -26,13 +28,15 @@ public class Projectile extends Ammunition {
 	
 	private boolean canMove = true;
 	
-	public Projectile(Tile tile, SpriteType spritetype, Map<DamageType, Integer> dmg, Direction dir) {
-		super(tile, spritetype, "Projectile", "Used to hurt thingies at range.", 0);
+	public Projectile(Tile tile, SpriteType spritetype, String name, String description, Map<DamageType, Integer> dmg, Direction dir) {
+		super(tile, spritetype, name, description, 0);
 		this.direction = dir;
 		this.damage = new LinkedHashMap<DamageType, Integer>(dmg);
 	}
 	
 	public void tick() {
+		
+		if(shot == false) return;
 		
 		// "animate"
 		UpdatePosition();
@@ -124,5 +128,9 @@ public class Projectile extends Ammunition {
 		}
 	}
 	
-	public Map<DamageType, Integer> GetDamage() { return this.damage; }
+	public void use() { this.shot = true; }
+	
+	public Map<DamageType, Integer> getDamage() { return this.damage; }
+
+	public boolean isShot() { return shot; }
 }

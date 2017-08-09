@@ -31,6 +31,7 @@ import com.adventurer.gameobjects.GameObject;
 import com.adventurer.gameobjects.Gold;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
+import com.adventurer.gameobjects.Projectile;
 import com.adventurer.gameobjects.Shrine;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Weapon;
@@ -536,6 +537,27 @@ public class Handler {
 					default: break;
     			}
     		}
+    		
+    	} else if(item instanceof Projectile) {
+    		
+    		Projectile proj = (Projectile) item;
+    		slot = "-";
+    		
+    		for(Entry<DamageType, Integer> e : proj.getDamage().entrySet()) {
+    			
+    			DamageType key = e.getKey();
+    			int val = e.getValue();
+    			
+    			switch(key) {
+					case Fire: fire = val; break;
+					case Frost:  frost = val; break;
+					case Holy: holy = val; break;
+					case Physical: physical = val; break;
+					case Shock: shock = val; break;
+					default: break;
+    			}
+    		}
+    		
     	}
     	
     	// build string using vars

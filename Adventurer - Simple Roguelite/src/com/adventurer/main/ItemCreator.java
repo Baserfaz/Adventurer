@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.adventurer.enumerations.ArmorSlot;
 import com.adventurer.enumerations.DamageType;
+import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.enumerations.RootElement;
 import com.adventurer.enumerations.SpriteType;
@@ -16,6 +17,7 @@ import com.adventurer.gameobjects.Bomb;
 import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.Gold;
 import com.adventurer.gameobjects.Key;
+import com.adventurer.gameobjects.Projectile;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Weapon;
 import com.adventurer.utilities.FileReader;
@@ -173,9 +175,48 @@ public class ItemCreator {
 		return new Key(tile, type, name, keyType, value);
 	}
 	
-	/*public static Projectile createProjectile() {
-		new Projectile();
-	}*/
+	public static Projectile createProjectile(Tile tile, DamageType projtype, int damageAmount, Direction dir) {
+		
+		// vars
+		String name = "", description = "";
+		Map<DamageType, Integer> dmg = new LinkedHashMap<DamageType, Integer>();
+		
+		// TODO: now hardcoded to shoot always north
+		if(dir == null) dir = Direction.North;
+		
+		// damage
+		switch(projtype) {
+			case Fire: 
+				name = "Fire arrow";
+				description = "Does fire damage on hit.";
+				dmg.put(DamageType.Fire, damageAmount);
+				break;
+			case Frost: 
+				name = "Frost arrow";
+				description = "Does frost damage on hit.";
+				dmg.put(DamageType.Frost, damageAmount); 
+				break;
+			case Holy: 
+				name = "Holy arrow";
+				description = "Does holy damage on hit.";
+				dmg.put(DamageType.Holy, damageAmount);
+				break;
+			case Physical: 
+				name = "Arrow";
+				description = "Does physical damage on hit.";
+				dmg.put(DamageType.Physical, damageAmount); 
+				break;
+			case Shock: 
+				name = "Shock arrow";
+				description = "Does shock damage on hit.";
+				dmg.put(DamageType.Shock, damageAmount); 
+				break;
+			default: break;
+		}
+		
+		// create projectile.
+		return new Projectile(tile, SpriteType.Arrow01, name, description, dmg, dir);
+	}
 	
 	public static Bomb createBomb(Tile tile, DamageType bombtype) {
 		

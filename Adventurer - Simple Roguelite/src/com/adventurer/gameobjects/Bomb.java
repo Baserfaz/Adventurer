@@ -6,7 +6,10 @@ import java.util.Map;
 
 import com.adventurer.data.World;
 import com.adventurer.enumerations.DamageType;
+import com.adventurer.enumerations.DoorType;
 import com.adventurer.enumerations.SpriteType;
+import com.adventurer.enumerations.TileType;
+import com.adventurer.main.DamageHandler;
 
 public class Bomb extends Usable {
 
@@ -36,31 +39,19 @@ public class Bomb extends Usable {
 			// add the current tile to the tiles list
 			tiles.add(World.instance.GetTileAtPosition(this.GetTilePosition()));
 			
-			/*for(Tile tile : tiles) {
+			for(Tile tile : tiles) {
 				
-				// Do damage:
-				// 1. destructible tiles
-				// 2. doors
-				// 3. actors
-				
-				if(tile instanceof DestructibleTile) {
+				if(tile instanceof Door) {
 					
-					((DestructibleTile)tile).getTileHealth().TakeDamage(this.damage);
+					Door door = (Door) tile;
 					
-				} else if(tile instanceof Door) {
-					
-					if(tile.GetTileType() == TileType.LockedDoor) {
-						
+					if(tile.GetTileType() == TileType.LockedDoor || door.getDoorType() == DoorType.Diamond) {
 						// dont do anything.
-						
-					} else {
-						
-						((Door) tile).Open();
-					}
+					} else door.Open();
 					
-				} else if(tile.GetActor() != null) DamageHandler.ActorTakeDamage(tile, damage);
+				} else if(tile.GetActor() != null) DamageHandler.ActorTakeDamage(tile.GetActor(), damage);
 				
-			}*/
+			}
 			
 			// destroy this object
 			Remove();
@@ -70,8 +61,6 @@ public class Bomb extends Usable {
 	public void use() { 
 		this.liveTimer = System.currentTimeMillis() + this.liveTime;
 		this.active = true;
-		
-		// TODO: remove from inventory and put down on a tile
 	}
 
 	public Map<DamageType, Integer> getDamage() { return damage; }

@@ -9,6 +9,7 @@ import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Gold;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Key;
+import com.adventurer.gameobjects.Projectile;
 import com.adventurer.main.Game;
 import com.adventurer.main.ItemCreator;
 
@@ -20,13 +21,17 @@ public class Inventory {
 	public Inventory(Actor actor) {
 		this.maxInventorySpace = Game.DEFAULT_INVENTORY_MAX_SIZE;
 		
-		// populate inventory with keys etc.
+		// populate inventory
 		for(int i = 0; i < Game.START_KEY_COUNT; i++) {
 			this.addToInventory(ItemCreator.createKey(actor.getCurrentTile(), KeyType.Normal));
 		}
 		
 		for(int i = 0; i < Game.START_BOMB_COUNT; i++) {
 			this.addToInventory(ItemCreator.createBomb(actor.getCurrentTile(), DamageType.Physical));
+		}
+		
+		for(int i = 0; i < Game.START_PROJECTILE_COUNT; i++) {
+			this.addToInventory(ItemCreator.createProjectile(actor.getCurrentTile(), DamageType.Physical, 5, null));
 		}
 		
 	}
@@ -46,6 +51,17 @@ public class Inventory {
 		if(this.isFull() == false) {
 			this.inventory.add(item);
 		} 
+	}
+	
+	public Projectile getProjectile() {
+		Projectile proj = null;
+		for(Item item : inventory) {
+			if(item instanceof Projectile) {
+				proj = (Projectile) item;
+				break;
+			}
+		}
+		return proj;
 	}
 	
 	public Gold getGold() {
