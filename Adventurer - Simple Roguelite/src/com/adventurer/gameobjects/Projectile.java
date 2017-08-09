@@ -28,8 +28,8 @@ public class Projectile extends Usable {
 	
 	private boolean canMove = true;
 	
-	public Projectile(Tile tile, SpriteType spritetype, String name, String description, Map<DamageType, Integer> dmg, Direction dir) {
-		super(tile, spritetype, name, description, 0);
+	public Projectile(Tile tile, SpriteType spritetype, String name, String description, int value, Map<DamageType, Integer> dmg, Direction dir) {
+		super(tile, spritetype, name, description, value);
 		this.direction = dir;
 		this.damage = new LinkedHashMap<DamageType, Integer>(dmg);
 	}

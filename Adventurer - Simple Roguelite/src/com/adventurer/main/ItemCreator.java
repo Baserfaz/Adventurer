@@ -63,23 +63,25 @@ public class ItemCreator {
 			switch(key) {
 				case Health: 
 					name += "health";
-					description = "heals.";
+					description += "heals";
 					value += 15;
 					spritetype = SpriteType.HealthPotion;
 					break;
 				case Mana:
 					name += "mana";
-					description = "regains mana.";
+					description += "regains mana";
 					value += 20;
 					spritetype = SpriteType.ManaPotion;
 				default: return null;
 			}
 			
+			description += " and ";
 			name += " and ";
 		}
 		
 		// remove last ' and '.
-		name.substring(0, name.length() - 5);
+		name = name.substring(0, name.length() - 5);
+		description = description.substring(0, description.length() - 5) + ".";
 		
 		return new Potion(tile, spritetype, name, description, value, effects);
 	}
@@ -239,6 +241,7 @@ public class ItemCreator {
 		// vars
 		String name = "", description = "";
 		Map<DamageType, Integer> dmg = new LinkedHashMap<DamageType, Integer>();
+		int value = 0;
 		
 		// TODO: now hardcoded to shoot always north
 		if(dir == null) dir = Direction.North;
@@ -249,32 +252,37 @@ public class ItemCreator {
 				name = "Fire arrow";
 				description = "Does fire damage on hit.";
 				dmg.put(DamageType.Fire, damageAmount);
+				value = 15;
 				break;
 			case Frost: 
 				name = "Frost arrow";
 				description = "Does frost damage on hit.";
-				dmg.put(DamageType.Frost, damageAmount); 
+				dmg.put(DamageType.Frost, damageAmount);
+				value = 15;
 				break;
 			case Holy: 
 				name = "Holy arrow";
 				description = "Does holy damage on hit.";
 				dmg.put(DamageType.Holy, damageAmount);
+				value = 15;
 				break;
 			case Physical: 
 				name = "Arrow";
 				description = "Does physical damage on hit.";
-				dmg.put(DamageType.Physical, damageAmount); 
+				dmg.put(DamageType.Physical, damageAmount);
+				value = 3;
 				break;
 			case Shock: 
 				name = "Shock arrow";
 				description = "Does shock damage on hit.";
-				dmg.put(DamageType.Shock, damageAmount); 
+				dmg.put(DamageType.Shock, damageAmount);
+				value = 15;
 				break;
 			default: break;
 		}
 		
 		// create projectile.
-		return new Projectile(tile, SpriteType.Arrow01, name, description, dmg, dir);
+		return new Projectile(tile, SpriteType.Arrow01, name, description, value, dmg, dir);
 	}
 	
 	public static Bomb createBomb(Tile tile, DamageType bombtype) {

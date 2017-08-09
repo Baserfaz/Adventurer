@@ -31,6 +31,7 @@ import com.adventurer.gameobjects.GameObject;
 import com.adventurer.gameobjects.Gold;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
+import com.adventurer.gameobjects.Potion;
 import com.adventurer.gameobjects.Projectile;
 import com.adventurer.gameobjects.Shrine;
 import com.adventurer.gameobjects.Tile;
@@ -558,6 +559,9 @@ public class Handler {
     			}
     		}
     		
+    	} else if(item instanceof Potion) {
+    		
+    		slot = "-";
     	}
     	
     	// build string using vars
