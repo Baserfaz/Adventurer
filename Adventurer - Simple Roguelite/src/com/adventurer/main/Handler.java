@@ -25,7 +25,7 @@ import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Armor;
 import com.adventurer.gameobjects.Bomb;
 import com.adventurer.gameobjects.Door;
-import com.adventurer.gameobjects.Effect;
+import com.adventurer.gameobjects.VisualEffect;
 import com.adventurer.gameobjects.Enemy;
 import com.adventurer.gameobjects.GameObject;
 import com.adventurer.gameobjects.Gold;
@@ -115,7 +115,7 @@ public class Handler {
 		for(int i = 0; i < getObjects().size(); i++) {
 			GameObject current = getObjects().get(i);
 			if(current == null) continue;
-			if(current instanceof Effect) current.render(g);
+			if(current instanceof VisualEffect) current.render(g);
 		}
 	}	
 

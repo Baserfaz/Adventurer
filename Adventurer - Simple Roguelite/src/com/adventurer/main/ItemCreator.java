@@ -3,10 +3,12 @@ package com.adventurer.main;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.adventurer.enumerations.ArmorSlot;
 import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.Direction;
+import com.adventurer.enumerations.Effect;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.enumerations.RootElement;
 import com.adventurer.enumerations.SpriteType;
@@ -17,6 +19,7 @@ import com.adventurer.gameobjects.Bomb;
 import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.Gold;
 import com.adventurer.gameobjects.Key;
+import com.adventurer.gameobjects.Potion;
 import com.adventurer.gameobjects.Projectile;
 import com.adventurer.gameobjects.Tile;
 import com.adventurer.gameobjects.Weapon;
@@ -25,6 +28,62 @@ import com.adventurer.utilities.Util;
 
 public class ItemCreator {
 
+	public static Potion createHealthPotion(Tile tile, int amount) {
+		Map<Effect, Integer> m = new LinkedHashMap<Effect, Integer>();
+		m.put(Effect.Health, amount);
+		return createPotion(tile, m);
+	}
+	
+	public static Potion createManaPotion(Tile tile, int amount) {
+		Map<Effect, Integer> m = new LinkedHashMap<Effect, Integer>();
+		m.put(Effect.Mana, amount);
+		return createPotion(tile, m);
+	}
+	
+	public static Potion createRestorationPotion(Tile tile, int amount) {
+		Map<Effect, Integer> m = new LinkedHashMap<Effect, Integer>();
+		m.put(Effect.Mana, amount);
+		m.put(Effect.Health, amount);
+		return createPotion(tile, m);
+	}
+	
+	public static Potion createPotion(Tile tile, Map<Effect, Integer> effects) {
+		
+		// vars
+		String name = "Potion of ", description = "This potion ";
+		int value = 0;
+		SpriteType spritetype = null;
+		
+		// populate vars with using effect info.
+		for(Entry<Effect, Integer> e : effects.entrySet()) {
+			
+			Effect key = e.getKey();
+			int val = e.getValue();
+			
+			switch(key) {
+				case Health: 
+					name += "health";
+					description = "heals.";
+					value += 15;
+					spritetype = SpriteType.HealthPotion;
+					break;
+				case Mana:
+					name += "mana";
+					description = "regains mana.";
+					value += 20;
+					spritetype = SpriteType.ManaPotion;
+				default: return null;
+			}
+			
+			name += " and ";
+		}
+		
+		// remove last ' and '.
+		name.substring(0, name.length() - 5);
+		
+		return new Potion(tile, spritetype, name, description, value, effects);
+	}
+	
 	public static Armor createArmor(Tile tile, String itemName) {
 		
 		Map<String, String> iteminfo = FileReader.readXMLGameData(itemName, RootElement.armor);

@@ -1,15 +1,19 @@
 package com.adventurer.data;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.adventurer.enumerations.DamageType;
+import com.adventurer.enumerations.Effect;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Gold;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Key;
 import com.adventurer.gameobjects.Projectile;
+import com.adventurer.gameobjects.Tile;
 import com.adventurer.main.Game;
 import com.adventurer.main.ItemCreator;
 
@@ -21,19 +25,23 @@ public class Inventory {
 	public Inventory(Actor actor) {
 		this.maxInventorySpace = Game.DEFAULT_INVENTORY_MAX_SIZE;
 		
+		Tile tile = actor.getCurrentTile();
+		
 		// populate inventory
 		for(int i = 0; i < Game.START_KEY_COUNT; i++) {
-			this.addToInventory(ItemCreator.createKey(actor.getCurrentTile(), KeyType.Normal));
+			this.addToInventory(ItemCreator.createKey(tile, KeyType.Normal));
 		}
 		
 		for(int i = 0; i < Game.START_BOMB_COUNT; i++) {
-			this.addToInventory(ItemCreator.createBomb(actor.getCurrentTile(), DamageType.Physical));
+			this.addToInventory(ItemCreator.createBomb(tile, DamageType.Physical));
 		}
 		
 		for(int i = 0; i < Game.START_PROJECTILE_COUNT; i++) {
-			this.addToInventory(ItemCreator.createProjectile(actor.getCurrentTile(), DamageType.Physical, 5, null));
+			this.addToInventory(ItemCreator.createProjectile(tile, DamageType.Physical, 5, null));
 		}
 		
+		// DEBUG ITEMS HERE
+		this.addToInventory(ItemCreator.createHealthPotion(tile, 15));
 	}
 	
 	// returns false if inventory is full

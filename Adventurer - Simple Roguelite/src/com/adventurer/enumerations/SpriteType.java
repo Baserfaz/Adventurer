@@ -52,6 +52,8 @@ public enum SpriteType {
     Gold01,
     Key,
     DiamondKey,
+    HealthPotion,
+    ManaPotion,
     
     // projectiles
     Bomb01,

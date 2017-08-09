@@ -121,7 +121,7 @@ public class Projectile extends Usable {
 		} else {
 			
 			// create effect
-			if(tile.isDiscovered()) EffectCreator.CreateHitEffect(tile);
+			if(tile.isDiscovered()) VisualEffectCreator.CreateHitEffect(tile);
 			
 			alive = false;
 			Remove();

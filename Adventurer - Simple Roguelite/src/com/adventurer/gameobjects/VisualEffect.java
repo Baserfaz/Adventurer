@@ -8,12 +8,12 @@ import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Handler;
 import com.adventurer.utilities.Renderer;
 
-public class Effect extends GameObject {
+public class VisualEffect extends GameObject {
 	
 	protected long liveTimer = 0;
 	protected boolean isAlive = true;
 	
-	public Effect(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int timeToLiveInMs) {
+	public VisualEffect(Coordinate worldPos, Coordinate tilePos, SpriteType spritetype, int timeToLiveInMs) {
 		super(worldPos, tilePos, spritetype);
 		
 		this.liveTimer = System.currentTimeMillis() + timeToLiveInMs;

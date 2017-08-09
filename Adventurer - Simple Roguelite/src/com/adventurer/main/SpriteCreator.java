@@ -139,6 +139,8 @@ public class SpriteCreator {
 		    case Gold01: row = 13; column = 1; break;
 		    case Key: row = 13; column = 2; break;
 		    case DiamondKey: row = 13; column = 3; break;
+		    case HealthPotion: row = 15; column = 0; break;
+		    case ManaPotion: row = 15; column = 1; break;
 		    
 		    // portals
 		    case Portal01: row = 8; column = 0; break;

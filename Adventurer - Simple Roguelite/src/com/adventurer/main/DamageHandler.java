@@ -8,10 +8,15 @@ import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Tile;
 
 public class DamageHandler {
-
+	
+	public static void actorRestoreMana(Actor actor, int amount) {
+		actor.getMana().addMP(amount);
+		VisualEffectCreator.CreateHealEffect(actor.getCurrentTile());
+	}
+	
 	public static void ActorHeal(Actor actor, int amount) {
 		actor.getHealth().healDamage(amount);
-		EffectCreator.CreateHealEffect(actor.getCurrentTile());
+		VisualEffectCreator.CreateHealEffect(actor.getCurrentTile());
 	}
 	
 	public static void ActorTakeDamage(Tile tile, Map<DamageType, Integer> dmg) { ActorTakeDamage(tile.GetActor(), dmg); }
@@ -55,7 +60,7 @@ public class DamageHandler {
 		}
 		
 		// TODO: every damagetype has own effect?
-		EffectCreator.CreateHitEffect(actor.getCurrentTile());
+		VisualEffectCreator.CreateHitEffect(actor.getCurrentTile());
 	}
 	
 }
