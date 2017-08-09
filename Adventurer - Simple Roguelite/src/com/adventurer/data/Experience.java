@@ -24,7 +24,7 @@ public class Experience {
 			Double exp = baseExp * expMultiplier * i;
 			int level = i + 1;
 			levelToExp.put(level, exp.intValue());
-			System.out.println("level: " + level + " needed exp: " + exp.intValue());
+			//System.out.println("level: " + level + " needed exp: " + exp.intValue());
 		}
 		
 	}

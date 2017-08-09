@@ -9,7 +9,7 @@ import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.WeaponSlot;
 import com.adventurer.enumerations.WeaponType;
 import com.adventurer.gameobjects.Armor;
-import com.adventurer.gameobjects.Equipable;
+import com.adventurer.gameobjects.Equippable;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Weapon;
@@ -50,7 +50,7 @@ public class Equipment {
 	public void updateStats(Item item, boolean isAddition) {
 		
 		// cache vars
-		Equipable eItem = (Equipable) item;
+		Equippable eItem = (Equippable) item;
 		
 		Player player = ActorManager.GetPlayerInstance();
 		Stats stats = player.getStats();
@@ -86,7 +86,7 @@ public class Equipment {
 		player.updateHPandMP();
 	}
 	
-	private void updateDamageScaling(Equipable eItem) {
+	private void updateDamageScaling(Equippable eItem) {
 		
 		Player player = ActorManager.GetPlayerInstance();
 		Offense offense = player.getOffense();
@@ -105,7 +105,7 @@ public class Equipment {
 		
 	}
 	
-	private void updateDamage(Equipable eItem, boolean isAddition) {
+	private void updateDamage(Equippable eItem, boolean isAddition) {
 		
 		Player player = ActorManager.GetPlayerInstance();
 		Offense offense = player.getOffense();
@@ -122,7 +122,7 @@ public class Equipment {
 		
 	}
 	
-	private void updateResistance(Equipable item, boolean isAddition) {
+	private void updateResistance(Equippable item, boolean isAddition) {
 		
 		Player player = ActorManager.GetPlayerInstance();
 		Resistances res = player.getResistances();
@@ -161,7 +161,7 @@ public class Equipment {
 	
 	public void equipItem(Item item) {
 		
-		if(item instanceof Equipable == false) {
+		if(item instanceof Equippable == false) {
 			System.out.println("ITEM CANNOT BE EQUIPPED!");
 			return;
 		}

@@ -7,7 +7,7 @@ import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.WeaponSlot;
 import com.adventurer.enumerations.WeaponType;
 
-public class Weapon extends Equipable {
+public class Weapon extends Equippable {
 	
 	private WeaponType weaponType;
 	private WeaponSlot weaponSlot;

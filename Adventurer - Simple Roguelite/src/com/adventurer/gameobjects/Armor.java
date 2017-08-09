@@ -6,7 +6,7 @@ import com.adventurer.enumerations.ArmorSlot;
 import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.SpriteType;
 
-public class Armor extends Equipable {
+public class Armor extends Equippable {
 	
 	private ArmorSlot slot;
 	
