@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 import com.adventurer.enumerations.ArmorSlot;
 import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.WeaponSlot;
-import com.adventurer.enumerations.WeaponType;
 import com.adventurer.gameobjects.Armor;
 import com.adventurer.gameobjects.Equippable;
 import com.adventurer.gameobjects.Item;
@@ -18,7 +17,7 @@ import com.adventurer.utilities.Util;
 
 public class Equipment {
 
-	private Item mainHand, offHand, head, chest, legs, feet, amulet, ring;
+	private Item mainHand, offHand, head, chest, legs, feet, hands, amulet, ring;
 
 	public Equipment() {
 		this.mainHand = null;
@@ -27,6 +26,7 @@ public class Equipment {
 		this.chest = null;
 		this.legs = null;
 		this.feet = null;
+		this.hands = null;
 		this.amulet = null;
 		this.ring = null;
 	}
@@ -35,14 +35,15 @@ public class Equipment {
 		
 		Map<String, Item> eq = new LinkedHashMap<String, Item>();
 		
-		eq.put("MainHand", mainHand);
-		eq.put("OffHand", offHand);
-		eq.put("Head", head);
-		eq.put("Chest", chest);
-		eq.put("Legs", legs);
-		eq.put("Feet", feet);
-		eq.put("Amulet", amulet);
-		eq.put("Ring", ring);
+		eq.put("MainHand", this.mainHand);
+		eq.put("OffHand", this.offHand);
+		eq.put("Head", this.head);
+		eq.put("Chest", this.chest);
+		eq.put("Legs", this.legs);
+		eq.put("Feet", this.feet);
+		eq.put("Hands",	 this.hands);
+		eq.put("Amulet", this.amulet);
+		eq.put("Ring", this.ring);
 		
 		return eq;
 	}
@@ -183,6 +184,7 @@ public class Equipment {
 				case Feet: this.setFeet(armor); break;
 				case Head: this.setHead(armor); break;
 				case Legs: this.setLegs(armor); break;
+				case Hands: this.setHands(armor); break;
 				case Ring: this.setRing(armor); break;
 				default: System.out.println("INVALID ARMORSLOT IN EQUIPMENT.EQUIP: " + armorSlot); break;
 			}
@@ -234,6 +236,7 @@ public class Equipment {
 			case Chest: item = this.getChest(); this.setChest(null); break;
 			case Legs: item = this.getLegs(); this.setLegs(null); break;
 			case Feet: item = this.getFeet(); this.setFeet(null); break;
+			case Hands: item = this.getHands(); this.setHands(null); break;
 			case Amulet: item = this.getAmulet(); this.setAmulet(null); break;
 			case Ring: item = this.getRing(); this.setRing(null); break;
 			default: System.out.println("INVALID ARMORSLOT IN EQUIPMENT.UNEQUIP: " + slot); break;
@@ -270,4 +273,6 @@ public class Equipment {
 	private void setAmulet(Item amulet) { this.amulet = amulet; }
 	public Item getRing() { return ring; }
 	private void setRing(Item ring) { this.ring = ring; }
+	public Item getHands() { return hands; }
+	public void setHands(Item hands) { this.hands = hands;}
 }

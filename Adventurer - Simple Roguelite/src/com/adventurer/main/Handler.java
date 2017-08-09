@@ -624,13 +624,13 @@ public class Handler {
 	}
 
 	public void moveEquipmentCursorDown() {
-		int max = 8;
+		int max = 9;
 		if(this.equipmentCursorPos == max - 1) this.setEquipmentCursorPos(0);
 		else this.setEquipmentCursorPos(equipmentCursorPos + 1);
 	}
 	
 	public void moveEquipmentCursorUp() {
-		int max = 8;
+		int max = 9;
 		if(this.equipmentCursorPos == 0) this.setEquipmentCursorPos(max - 1);
 		else this.setEquipmentCursorPos(equipmentCursorPos - 1);
 	}

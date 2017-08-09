@@ -109,12 +109,10 @@ public class FileReader {
 			    			String name = e.getElementsByTagName("name").item(0).getTextContent();
 			    			String description = e.getElementsByTagName("description").item(0).getTextContent();
 			    			String value = e.getElementsByTagName("value").item(0).getTextContent();
-			    			String armorSlot = e.getElementsByTagName("armorSlot").item(0).getTextContent();
 			    			
 			    			myMap.put("name", name);
 			    			myMap.put("description", description);
 			    			myMap.put("value", value);
-			    			myMap.put("armorSlot", armorSlot);
 			    			
 			    			NodeList list = e.getElementsByTagName("defenseValues").item(0).getChildNodes();
 			    			

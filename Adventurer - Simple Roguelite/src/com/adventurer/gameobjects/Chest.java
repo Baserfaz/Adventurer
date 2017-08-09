@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.adventurer.data.World;
+import com.adventurer.enumerations.ArmorSlot;
+import com.adventurer.enumerations.ItemNames;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Game;
 import com.adventurer.main.ItemCreator;
@@ -27,11 +29,27 @@ public class Chest extends Item {
 		
 		itemsInside.add(ItemCreator.createGold(tile, 1));
 		
-		Armor armor = ItemCreator.createArmor(tile, "Padded armor");
+		Armor armor = ItemCreator.createArmor(tile, ItemNames.Padded, ArmorSlot.Chest);
 		armor.getBonuses().setStrBonus(1);
 		itemsInside.add(armor);
 		
-		Weapon ba = ItemCreator.createWeapon(tile, "Battleaxe");
+		Armor armor2 = ItemCreator.createArmor(tile, ItemNames.Leather,  ArmorSlot.Feet);
+		armor2.getBonuses().setDexBonus(1);
+		itemsInside.add(armor2);
+		
+		Armor armor3 = ItemCreator.createArmor(tile, ItemNames.Leather,  ArmorSlot.Hands);
+		armor3.getBonuses().setIntBonus(1);
+		itemsInside.add(armor3);
+		
+		Armor armor4 = ItemCreator.createArmor(tile, ItemNames.Leather,  ArmorSlot.Head);
+		armor4.getBonuses().setDexBonus(1);
+		itemsInside.add(armor4);
+		
+		Armor armor5 = ItemCreator.createArmor(tile, ItemNames.Leather,  ArmorSlot.Legs);
+		armor5.getBonuses().setDexBonus(1);
+		itemsInside.add(armor5);
+		
+		Weapon ba = ItemCreator.createWeapon(tile, ItemNames.Battleaxe);
 		ba.getBonuses().setStrBonus(1);
 		itemsInside.add(ba);
 		

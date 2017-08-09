@@ -3,9 +3,13 @@ package com.adventurer.enumerations;
 public enum ItemNames {
 
 	// armor
-	Padded, Leather, StuddedLeather, ChainShirt,
-	Hide, ScaleMail, Chainmail, Breastplate,
-	SplintMail, BandedMail, HalfPlate, FullPlate,
+	Padded, Leather, StuddedLeather,
+	Hide, ScaleMail, Chainmail, SplintMail, 
+	BandedMail, HalfPlate, FullPlate,
+	
+	// rings
+	
+	// amulets
 	
 	// 1h weapons
 	Battleaxe, Club, Flail, Longsword, HeavyMace,

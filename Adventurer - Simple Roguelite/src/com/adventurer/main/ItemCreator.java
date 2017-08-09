@@ -9,6 +9,7 @@ import com.adventurer.enumerations.ArmorSlot;
 import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.Effect;
+import com.adventurer.enumerations.ItemNames;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.enumerations.RootElement;
 import com.adventurer.enumerations.SpriteType;
@@ -85,9 +86,9 @@ public class ItemCreator {
 		return new Potion(tile, spritetype, name, description, value, effects);
 	}
 	
-	public static Armor createArmor(Tile tile, String itemName) {
+	public static Armor createArmor(Tile tile, ItemNames itemName, ArmorSlot armorSlot) {
 		
-		Map<String, String> iteminfo = FileReader.readXMLGameData(itemName, RootElement.armor);
+		Map<String, String> iteminfo = FileReader.readXMLGameData(itemName.toString(), RootElement.armor);
 		Armor armor = null;
 		
 		if(iteminfo.isEmpty()) {
@@ -101,7 +102,6 @@ public class ItemCreator {
 			String name = "";
 			String description = "";
 			int value = 0;
-			ArmorSlot armorSlot = null;
 			Map<DamageType, Integer> defenseValues = new HashMap<DamageType, Integer>();
 			
 			// parse item's info entry by entry.
@@ -113,7 +113,7 @@ public class ItemCreator {
 				if(key.equals("NAME")) name = Util.Capitalize(val);
 				else if(key.equals("DESCRIPTION")) description = Util.Capitalize(val);
 				else if(key.equals("VALUE")) value = Integer.parseInt(val);
-				else if(key.equals("ARMORSLOT")) {
+				/*else if(key.equals("ARMORSLOT")) {
 					
 					switch(val) {
 						case "HEAD": armorSlot = ArmorSlot.Head; break;
@@ -125,7 +125,7 @@ public class ItemCreator {
 						default: System.out.println("COULDNT GET ARMORSLOT: " + key);
 					}
 					
-				} 
+				} */
 				else if(key.equals("PHYSICAL")) defenseValues.put(DamageType.Physical, Integer.parseInt(val)); 
 				else if(key.equals("FIRE")) defenseValues.put(DamageType.Fire, Integer.parseInt(val));
 				else if(key.equals("FROST")) defenseValues.put(DamageType.Frost, Integer.parseInt(val));
@@ -137,15 +137,27 @@ public class ItemCreator {
 				}
 			}
 			
+			// modify name
+			switch(armorSlot) {
+				case Head: name += " Helmet"; break;
+				case Chest: name += " Armor";  break;
+				case Legs: name += " Legs";  break;
+				case Feet: name += " Boots";  break;
+				case Hands: name += " Gloves"; break;
+				case Amulet: /*name += " Amulet";*/  break;
+				case Ring: /*armorSlot = ArmorSlot.Ring;*/ break;
+				default: System.out.println("COULDNT GET ARMORSLOT: " + armorSlot);
+			}
+			
 			// create new armor with the info.
 			armor = new Armor(tile, SpriteType.GenericItem, name, description, value, armorSlot, defenseValues);
 		}
 		return armor;
 	}
 	
-	public static Weapon createWeapon(Tile tile, String itemName) {
+	public static Weapon createWeapon(Tile tile, ItemNames itemName) {
 		
-		Map<String, String> iteminfo = FileReader.readXMLGameData(itemName, RootElement.weapon);
+		Map<String, String> iteminfo = FileReader.readXMLGameData(itemName.toString(), RootElement.weapon);
 		Weapon weapon = null;
 		
 		if(iteminfo.isEmpty()) {
