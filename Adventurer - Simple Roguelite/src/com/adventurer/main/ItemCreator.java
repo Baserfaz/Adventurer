@@ -99,8 +99,8 @@ public class ItemCreator {
 		} else {
 			
 			// variables
-			String name = "";
-			String description = "";
+			String name = "N/A";
+			String description = "N/A";
 			int value = 0;
 			Map<DamageType, Integer> defenseValues = new HashMap<DamageType, Integer>();
 			
@@ -110,22 +110,9 @@ public class ItemCreator {
 				String key = entry.getKey().toUpperCase();
 				String val = entry.getValue().toUpperCase();
 				
-				if(key.equals("NAME")) name = Util.Capitalize(val);
-				else if(key.equals("DESCRIPTION")) description = Util.Capitalize(val);
+				if(key.equals("NAME")) { if(val.length() > 0) name = Util.Capitalize(val); }
+				else if(key.equals("DESCRIPTION")) { if(val.length() > 0) description = Util.Capitalize(val); }
 				else if(key.equals("VALUE")) value = Integer.parseInt(val);
-				/*else if(key.equals("ARMORSLOT")) {
-					
-					switch(val) {
-						case "HEAD": armorSlot = ArmorSlot.Head; break;
-						case "CHEST": armorSlot = ArmorSlot.Chest; break;
-						case "LEGS": armorSlot = ArmorSlot.Legs; break;
-						case "FEET": armorSlot = ArmorSlot.Feet; break;
-						case "AMULET": armorSlot = ArmorSlot.Amulet; break;
-						case "RING": armorSlot = ArmorSlot.Ring; break;
-						default: System.out.println("COULDNT GET ARMORSLOT: " + key);
-					}
-					
-				} */
 				else if(key.equals("PHYSICAL")) defenseValues.put(DamageType.Physical, Integer.parseInt(val)); 
 				else if(key.equals("FIRE")) defenseValues.put(DamageType.Fire, Integer.parseInt(val));
 				else if(key.equals("FROST")) defenseValues.put(DamageType.Frost, Integer.parseInt(val));
@@ -162,14 +149,14 @@ public class ItemCreator {
 		
 		if(iteminfo.isEmpty()) {
 			
-			System.out.println("ARMOR NOT CREATED - DIDNT FIND ARMOR WITH NAME: " + itemName);
+			System.out.println("WEAPON NOT CREATED - DIDNT FIND WEAPON WITH NAME: " + itemName);
 			return null;
 			
 		} else {
 		
 			// variables
-			String name = "";
-			String description = "";
+			String name = "N/A";
+			String description = "N/A";
 			int value = 0;
 			WeaponSlot weaponSlot = null;
 			WeaponType weaponType = null;
@@ -181,8 +168,8 @@ public class ItemCreator {
 				String key = entry.getKey().toUpperCase();
 				String val = entry.getValue().toUpperCase();
 				
-				if(key.equals("NAME")) name = Util.Capitalize(val);
-				else if(key.equals("DESCRIPTION")) description = Util.Capitalize(val);
+				if(key.equals("NAME")) { if(val.length() > 0) name = Util.Capitalize(val); }
+				else if(key.equals("DESCRIPTION")) { if(val.length() > 0) description = Util.Capitalize(val); }
 				else if(key.equals("VALUE")) value = Integer.parseInt(val);
 				else if(key.equals("WEAPONSLOT")) {
 					
@@ -202,7 +189,7 @@ public class ItemCreator {
 					}
 					
 				}
-				else if(key.equals("PHYSICAL")) damageValues.put(DamageType.Physical, Integer.parseInt(val)); 
+				else if(key.equals("PHYSICAL")) damageValues.put(DamageType.Physical, Integer.parseInt(val));
 				else if(key.equals("FIRE")) damageValues.put(DamageType.Fire, Integer.parseInt(val)); 
 				else if(key.equals("FROST")) damageValues.put(DamageType.Frost, Integer.parseInt(val)); 
 				else if(key.equals("SHOCK")) damageValues.put(DamageType.Shock, Integer.parseInt(val)); 

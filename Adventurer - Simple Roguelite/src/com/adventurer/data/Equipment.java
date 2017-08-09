@@ -128,7 +128,7 @@ public class Equipment {
 		Player player = ActorManager.GetPlayerInstance();
 		Resistances res = player.getResistances();
 		
-			for(Entry<DamageType, Integer> d : item.getBonuses().getResistances().entrySet()) {
+		for(Entry<DamageType, Integer> d : item.getBonuses().getResistances().entrySet()) {
 			
 			DamageType key = d.getKey();
 			int val = d.getValue();

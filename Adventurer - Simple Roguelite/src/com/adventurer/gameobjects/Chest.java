@@ -27,9 +27,9 @@ public class Chest extends Item {
 		// put item(s) inside the chest.
 		// TODO: randomize loot.
 		
-		itemsInside.add(ItemCreator.createGold(tile, 1));
+		itemsInside.add(ItemCreator.createGold(tile, Util.GetRandomInteger(1, 5)));
 		
-		Armor armor = ItemCreator.createArmor(tile, ItemNames.Padded, ArmorSlot.Chest);
+		Armor armor = ItemCreator.createArmor(tile, ItemNames.Leather, ArmorSlot.Chest);
 		armor.getBonuses().setStrBonus(1);
 		itemsInside.add(armor);
 		
@@ -52,6 +52,10 @@ public class Chest extends Item {
 		Weapon ba = ItemCreator.createWeapon(tile, ItemNames.Battleaxe);
 		ba.getBonuses().setStrBonus(1);
 		itemsInside.add(ba);
+		
+		Weapon oh = ItemCreator.createWeapon(tile, ItemNames.LightWoodenShield);
+		oh.getBonuses().setVitBonus(2);
+		itemsInside.add(oh);
 		
 		// register to tile
 		tile.AddItem(this);

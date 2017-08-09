@@ -49,6 +49,22 @@ public class ItemBonus {
 		
 	}
 	
+	public void swapDmgAndRes(boolean dmgToRes) {
+		
+		if(dmgToRes) {
+			
+			this.resistanceValues = new LinkedHashMap<DamageType, Integer>(this.damageValues);
+			this.damageValues.clear();
+			
+		} else {
+			
+			this.damageValues = new LinkedHashMap<DamageType, Integer>(this.resistanceValues);
+			this.resistanceValues.clear();
+			
+		}
+		
+	}
+	
 	public Map<DamageType, Integer> getDamage() { return damageValues; }
 	public void setDamage(Map<DamageType, Integer> bonusDamage) { this.damageValues = bonusDamage; }
 	public Map<DamageType, Integer> getResistances() { return resistanceValues; }

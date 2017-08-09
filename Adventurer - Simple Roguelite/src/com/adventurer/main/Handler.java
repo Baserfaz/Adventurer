@@ -20,6 +20,7 @@ import com.adventurer.data.Stats;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.GuiState;
+import com.adventurer.enumerations.WeaponSlot;
 import com.adventurer.enumerations.WorldType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Armor;
@@ -488,11 +489,11 @@ public class Handler {
     		
     		slot = armor.getSlot().toString();
     		
-    		fire = res.get(DamageType.Fire);
-    		frost = res.get(DamageType.Frost);
-    		shock = res.get(DamageType.Shock);
-    		holy = res.get(DamageType.Holy);
-    		physical = res.get(DamageType.Physical);
+    		if(res.containsKey(DamageType.Fire)) fire = res.get(DamageType.Fire);
+    		if(res.containsKey(DamageType.Frost)) frost = res.get(DamageType.Frost);
+    		if(res.containsKey(DamageType.Shock)) shock = res.get(DamageType.Shock);
+    		if(res.containsKey(DamageType.Holy)) holy = res.get(DamageType.Holy);
+    		if(res.containsKey(DamageType.Physical)) physical = res.get(DamageType.Physical);
     		
     		str = ib.getStrBonus();
     		dex = ib.getDexBonus(); 
@@ -502,16 +503,33 @@ public class Handler {
     	} else if(item instanceof Weapon) {
     		
     		Weapon weapon = (Weapon) item;
-    		Map<DamageType, Integer> dmg = weapon.getBonuses().getDamage();
     		ItemBonus ib = weapon.getBonuses();
     		
     		slot = weapon.getWeaponSlot().toString();
     		
-    		fire = dmg.get(DamageType.Fire);
-    		frost = dmg.get(DamageType.Frost);
-    		shock = dmg.get(DamageType.Shock);
-    		holy = dmg.get(DamageType.Holy);
-    		physical = dmg.get(DamageType.Physical);
+    		// if we have a mainhand weapon -> show it's damage,
+    		// else if we have offhand weapon -> show it's resistances.
+    		if(weapon.getWeaponSlot() == WeaponSlot.Mainhand) {
+    			
+    			Map<DamageType, Integer> dmg = weapon.getBonuses().getDamage();
+    			
+	    		if(dmg.containsKey(DamageType.Fire)) fire = dmg.get(DamageType.Fire);
+	    		if(dmg.containsKey(DamageType.Frost)) frost = dmg.get(DamageType.Frost);
+	    		if(dmg.containsKey(DamageType.Shock)) shock = dmg.get(DamageType.Shock);
+	    		if(dmg.containsKey(DamageType.Holy)) holy = dmg.get(DamageType.Holy);
+	    		if(dmg.containsKey(DamageType.Physical)) physical = dmg.get(DamageType.Physical);
+	    		
+    		} else if(weapon.getWeaponSlot() == WeaponSlot.Offhand) {
+    			
+    			Map<DamageType, Integer> dmg = weapon.getBonuses().getResistances();
+    			
+	    		if(dmg.containsKey(DamageType.Fire)) fire = dmg.get(DamageType.Fire);
+	    		if(dmg.containsKey(DamageType.Frost)) frost = dmg.get(DamageType.Frost);
+	    		if(dmg.containsKey(DamageType.Shock)) shock = dmg.get(DamageType.Shock);
+	    		if(dmg.containsKey(DamageType.Holy)) holy = dmg.get(DamageType.Holy);
+	    		if(dmg.containsKey(DamageType.Physical)) physical = dmg.get(DamageType.Physical);
+    			
+    		}
     		
     		str = ib.getStrBonus();
     		dex = ib.getDexBonus(); 

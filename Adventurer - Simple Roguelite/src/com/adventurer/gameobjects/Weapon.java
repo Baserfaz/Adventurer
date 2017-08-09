@@ -12,12 +12,17 @@ public class Weapon extends Equippable {
 	private WeaponType weaponType;
 	private WeaponSlot weaponSlot;
 	
-	public Weapon(Tile tile, SpriteType spritetype,
-			String name, String description, int value, Map<DamageType, Integer> damageValues, WeaponType weaponType, WeaponSlot weaponSlot) {
+	public Weapon(Tile tile, SpriteType spritetype, String name, String description, int value, Map<DamageType, Integer> damageValues, WeaponType weaponType, WeaponSlot weaponSlot) {
 		super(tile, spritetype, name, description, value, damageValues, false);
 		
 		this.weaponType = weaponType;
 		this.weaponSlot = weaponSlot;
+		
+		// because weapons are set to do damage
+		// therefore we need to swap damage to resistance.
+		// ---> in a case of SHIELD.
+		if(this.weaponSlot == WeaponSlot.Offhand) { this.getBonuses().swapDmgAndRes(true); }
+		
 	}
 	
 	public WeaponType getWeaponType() { return weaponType; }

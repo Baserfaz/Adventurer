@@ -14,7 +14,7 @@ public abstract class Equippable extends Item {
 	public Equippable(Tile tile, SpriteType spritetype, String name, String description, int value, 
 			Map<DamageType, Integer> myMap, boolean isResistance) {
 		super(tile, spritetype, name, description, value);
-		
+
 		this.bonus = new ItemBonus(myMap, isResistance);
 	}
 	

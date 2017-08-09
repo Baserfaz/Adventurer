@@ -105,9 +105,24 @@ public class Util {
 				Color pixelColor = new Color(tintedImage.getRGB(x, y), true);
 				int r, g, b, a, rgba;
 				
-				// by changing these values here, we can choose
-				// which kind of selection pattern is used.
-				// -> now only renders the borders.
+				
+				// don't highlight the corner pixels
+				if((x == 0 && y == 0) || (x == tintedImage.getWidth() - 1 && y == 0) ||
+				(x == 0 && y == tintedImage.getHeight() - 1) || (x == tintedImage.getWidth() - 1 && y == tintedImage.getHeight() - 1)) {
+					
+					// use default pixel color.
+					r = pixelColor.getRed();
+		            g = pixelColor.getGreen();
+		            b = pixelColor.getBlue();
+		            a = pixelColor.getAlpha();
+		            rgba = (a << 24) | (r << 16) | (g << 8) | b;
+					
+		            tintedImage.setRGB(x, y, rgba);
+		            
+		            continue;
+				}
+				
+				// if the pixel is not a corner pixel
 				if(x == 0 || x == tintedImage.getWidth() - 1 || y == 0 || y == tintedImage.getHeight() - 1) {
 				
 					// tint the border with some color
