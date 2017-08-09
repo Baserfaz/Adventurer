@@ -3,7 +3,7 @@ package com.adventurer.gameobjects;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.enumerations.SpriteType;
 
-public class Key extends Item {
+public class Key extends Usable {
 
 	private KeyType keyType;
 	
@@ -13,4 +13,6 @@ public class Key extends Item {
 	}
 	
 	public KeyType getKeyType() { return keyType; }
+	
+	public void use() {}
 }

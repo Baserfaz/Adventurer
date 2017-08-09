@@ -1,7 +1,6 @@
 package com.adventurer.gameobjects;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,7 +12,7 @@ import com.adventurer.main.*;
 import com.adventurer.utilities.Renderer;
 import com.adventurer.utilities.Util;
 
-public class Projectile extends Item {
+public class Projectile extends Ammunition {
 	
 	private Direction direction;
 	private boolean alive = true;
@@ -118,13 +117,12 @@ public class Projectile extends Item {
 		} else {
 			
 			// create effect
-			//if(tile.isDiscovered()) EffectCreator.CreateStaticHitEffect(tile);
+			if(tile.isDiscovered()) EffectCreator.CreateHitEffect(tile);
 			
 			alive = false;
 			Remove();
 		}
 	}
-
-	public Rectangle GetBounds() { return null; }
+	
 	public Map<DamageType, Integer> GetDamage() { return this.damage; }
 }

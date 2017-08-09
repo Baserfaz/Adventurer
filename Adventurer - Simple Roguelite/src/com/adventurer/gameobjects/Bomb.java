@@ -1,36 +1,36 @@
 package com.adventurer.gameobjects;
 
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.adventurer.data.World;
 import com.adventurer.enumerations.BombType;
+import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.SpriteType;
-import com.adventurer.utilities.Renderer;
-import com.adventurer.utilities.Util;
 
-public class Bomb extends Item {
+public class Bomb extends Usable {
 
-	private int damage = 0;
+	private Map<DamageType, Integer> damage;
 	private BombType bombType;
-	private long liveTimer = 0;
-	private boolean alive = false;
 	
-	public Bomb(Tile tile, SpriteType spritetype, int liveTime, int damage, BombType btype, String name, int value) {
-		super(tile, spritetype, name, "Explody thing.", value);
-		this.alive = true;
-		this.damage = damage;
-		this.liveTimer = System.currentTimeMillis() + liveTime;
+	private long liveTime = 0;
+	private long liveTimer = 0;
+	private boolean active = false;
+	
+	public Bomb(Tile tile, SpriteType spritetype, int liveTime, Map<DamageType, Integer> damage, BombType btype, String name, String description, int value) {
+		super(tile, spritetype, name, description, value);
+		
+		this.damage = new LinkedHashMap<DamageType, Integer>(damage);
+		this.liveTime = liveTime;
 		this.bombType = btype;
 	}
 	
 	public void tick() {
 		
+		if(active == false) return;
+		
 		if(System.currentTimeMillis() > liveTimer) {
-			
-			// explode
-			alive = false;
 			
 			// do damage to items near this position
 			List<Tile> tiles = World.instance.GetTilesInCardinalDirection(this.GetTilePosition());
@@ -71,13 +71,10 @@ public class Bomb extends Item {
 		}
 	}
 	
-	public void render(Graphics g) {
-		if(alive && hidden == false) {
-			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-		} else if(alive && discovered == true && hidden == true) {
-			Renderer.RenderSprite(Util.tint(sprite, true), this.GetWorldPosition(), g);
-		}
+	public void use() { 
+		this.liveTimer = System.currentTimeMillis() + this.liveTime;
+		this.active = true;
+		
+		// TODO: remove from inventory and put down on a tile
 	}
-	
-	public Rectangle GetBounds() { return null; }
 }
