@@ -72,7 +72,6 @@ public class ItemCreator {
 					description += "regains mana";
 					value += 20;
 					spritetype = SpriteType.ManaPotion;
-				default: return null;
 			}
 			
 			description += " and ";

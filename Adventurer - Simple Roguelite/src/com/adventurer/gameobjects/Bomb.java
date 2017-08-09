@@ -59,8 +59,8 @@ public class Bomb extends Usable {
 	}
 	
 	public void use() { 
-		this.liveTimer = System.currentTimeMillis() + this.liveTime;
-		this.active = true;
+		//this.liveTimer = System.currentTimeMillis() + this.liveTime;
+		//this.active = true;
 	}
 
 	public Map<DamageType, Integer> getDamage() { return damage; }

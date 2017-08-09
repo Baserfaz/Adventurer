@@ -9,8 +9,10 @@ import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.GameState;
 import com.adventurer.enumerations.GuiState;
 import com.adventurer.enumerations.WeaponSlot;
+import com.adventurer.gameobjects.Equippable;
 import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Player;
+import com.adventurer.gameobjects.Usable;
 
 public class KeyInput extends KeyAdapter {
 	
@@ -84,13 +86,16 @@ public class KeyInput extends KeyAdapter {
 				}
 			}
 			
-			// equip item
+			// equip/use item
 			if(key == KeyEvent.VK_E) {
 				Handler.instance.setShowItemInspect(false);
 				Item item = player.getInventory().getItemOnPosition(Handler.instance.getInventoryCursorPos());
 				if(item != null) {
+					
+					if(item instanceof Equippable) player.getEquipment().equipItem(item);
+					else if(item instanceof Usable) ((Usable) item).use();
+				
 					success = true;
-					player.getEquipment().equipItem(item);
 				}
 			}
 			

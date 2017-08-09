@@ -128,7 +128,13 @@ public class Projectile extends Usable {
 		}
 	}
 	
-	public void use() { this.shot = true; }
+	public void use() { 
+		
+		// if player 
+		// -> remove from inventory
+		
+		//this.shot = true;
+	}
 	
 	public Map<DamageType, Integer> getDamage() { return this.damage; }
 

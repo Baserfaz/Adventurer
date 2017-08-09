@@ -42,6 +42,8 @@ public class Inventory {
 		
 		// DEBUG ITEMS HERE
 		this.addToInventory(ItemCreator.createHealthPotion(tile, 15));
+		this.addToInventory(ItemCreator.createManaPotion(tile, 15));
+		//this.addToInventory(ItemCreator.createRestorationPotion(tile, 15));
 	}
 	
 	// returns false if inventory is full

@@ -185,7 +185,7 @@ public class Handler {
         			new Coordinate(90, 10), Color.white, Color.white, true, g2d);
         	
         	// render inventory help
-        	Renderer.renderString("Inventory mode: Move cursor up: W, down: S, Equip item: E, Inspect: I, Drop item: R, Exit: ESC",
+        	Renderer.renderString("Inventory mode: Move cursor up: W, down: S, Equip/Use item: E, Inspect: I, Drop item: R, Exit: ESC",
         			help_coord, Color.gray, 8, g2d);
         
         } else if(Game.instance.getGuiState() == GuiState.None) {
