@@ -158,12 +158,12 @@ public class Handler {
 	    
 	    // inventory position
 	    int inventory_yPos = (int) cam.getMinY() + 25;
-	    int inventory_xPos = (int) cam.getMaxX() - 100;
+	    int inventory_xPos = (int) cam.getMaxX() - 150;
 	    Coordinate inventory_coord = new Coordinate(inventory_xPos, inventory_yPos);
 	    
 	    // equipment position
 	    int equipment_yPos = (int) cam.getMinY() + 175;
-	    int equipment_xPos = (int) cam.getMaxX() - 100;
+	    int equipment_xPos = (int) cam.getMaxX() - 150;
 	    Coordinate equipment_coord = new Coordinate(equipment_xPos, equipment_yPos);
 	    
 	    // help text position
@@ -173,7 +173,7 @@ public class Handler {
 	    
 	    // item inspect position
 	    int inspect_yPos = (int) cam.getMinY() + 25;
-	    int inspect_xPos = (int) cam.getMaxX() - 300;
+	    int inspect_xPos = (int) cam.getMaxX() - 350;
 	    Coordinate inspect_coord = new Coordinate(inspect_xPos, inspect_yPos);
 	    
 	    // -------------------- Show help and cursors --------------------------
@@ -182,7 +182,7 @@ public class Handler {
         	
         	// render inventory cursor
         	Renderer.renderRect(new Coordinate(0 + inventory_coord.getX(), this.getInventoryCursorPos() * 10 + inventory_coord.getY() + 13),
-        			new Coordinate(90, 10), Color.white, Color.white, true, g2d);
+        			new Coordinate(120, 10), Color.white, Color.white, true, g2d);
         	
         	// render inventory help
         	Renderer.renderString("Inventory mode: Move cursor up: W, down: S, Equip/Use item: E, Inspect: I, Drop item: R, Exit: ESC",
@@ -196,11 +196,11 @@ public class Handler {
         	
         } else if(Game.instance.getGuiState() == GuiState.Equipment) {
         	
-        	// render inventory cursor
+        	// render equipment cursor
         	Renderer.renderRect(new Coordinate(0 + equipment_coord.getX(), this.getEquipmentCursorPos() * 10 + equipment_coord.getY() + 13),
-        			new Coordinate(90, 10), Color.white, Color.white, true, g2d);
+        			new Coordinate(120, 10), Color.white, Color.white, true, g2d);
         	
-        	// render inventory help
+        	// render equipment help
         	Renderer.renderString("Equipment mode: Move cursor up: W, down: S, Unequip item: E, Inspect: I, Exit: ESC",
         			help_coord, Color.gray, 8, g2d);
         }
