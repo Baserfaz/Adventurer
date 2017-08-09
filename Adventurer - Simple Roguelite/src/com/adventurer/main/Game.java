@@ -48,7 +48,6 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean PERMANENTLY_SHOW_TILES = false;
 
 	// tile settings
-	public static final boolean ANIMATE_TILE_DISCOVERY = false;		// buggy
 	public static final int TILEGAP = 2;
 	
 	// player defaults
