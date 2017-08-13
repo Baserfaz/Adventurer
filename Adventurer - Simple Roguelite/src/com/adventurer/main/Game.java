@@ -23,15 +23,16 @@ public class Game extends Canvas implements Runnable {
 
 	public static Game instance;
 	
-	public static final int WIDTH              = 1280;			           // viewport width
-	public static final int HEIGHT             = 720;                      // viewport height
+	public static final int WIDTH                  = 1280;			           // viewport width
+	public static final int HEIGHT                 = 720;                      // viewport height
 	
-	public static final int SPRITESIZE         = 16;                       // sprite size in pixels
-	public static final int CAMERAZOOM         = 2;                        // level of zoom
-	public static final double FRAME_CAP       = 60.0;                     // cap the framerate to this
+	public static final int SPRITESIZE             = 16;                       // sprite size in pixels
+	public static final int CAMERAZOOM             = 2;                        // level of zoom
+	public static final double FRAME_CAP           = 60.0;                     // cap the framerate to this
 	
-	public static final String SPRITESHEETNAME = "spritesheet_simple.png"; // name of the spritesheet
-	public static final String BACKGROUNDNAME  = "background.jpg";		   // name of the main menu background
+	public static final String SPRITESHEETNAME     = "spritesheet_simple.png"; // name of the spritesheet
+	public static final String BACKGROUNDNAME      = "background.jpg";		   // name of the main menu background
+	public static final String FRAMICONPATH        = "resources/icon.png";     // path to frame icon.
 	
 	public static final String CUSTOMFONTNAME      = "coders_crux";		       // name of the custom font
 	public static final String CUSTOMFONTEXTENSION = ".ttf";			       // file extension name
@@ -45,7 +46,7 @@ public class Game extends Canvas implements Runnable {
 	// draw debugging stuff
 	public static final boolean DRAW_CAMERA     = false;
 	public static final boolean DRAW_ENEMY_FOV  = false;
-	public static final boolean DRAW_ENEMY_PATH = false; 			// works correctly only with one enemy
+	public static final boolean DRAW_ENEMY_PATH = false;
 	
 	// do we create lobby or random dungeon first.
 	public static final boolean START_GAME_WITH_RANDOM_ROOM = false;

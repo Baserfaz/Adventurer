@@ -3,6 +3,7 @@ package com.adventurer.utilities;
 import java.awt.Canvas;
 import java.awt.Dimension;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import com.adventurer.main.Game;
@@ -34,6 +35,10 @@ public class Window extends Canvas {
 		
 		// set the location
 		frame.setLocationRelativeTo(null);
+		
+		// set frame icon
+		ImageIcon img = new ImageIcon(Game.FRAMICONPATH);
+		frame.setIconImage(img.getImage());
 		
 		// add our game to the frame
 		frame.add(game);
