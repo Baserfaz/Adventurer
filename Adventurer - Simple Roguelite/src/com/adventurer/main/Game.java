@@ -25,17 +25,19 @@ public class Game extends Canvas implements Runnable {
 	
 	public static final int WIDTH              = 1280;			           // viewport width
 	public static final int HEIGHT             = 720;                      // viewport height
+	
 	public static final int SPRITESIZE         = 16;                       // sprite size in pixels
 	public static final int CAMERAZOOM         = 2;                        // level of zoom
 	public static final double FRAME_CAP       = 60.0;                     // cap the framerate to this
+	
 	public static final String SPRITESHEETNAME = "spritesheet_simple.png"; // name of the spritesheet
 	public static final String BACKGROUNDNAME  = "background.jpg";		   // name of the main menu background
 	
 	public static final String CUSTOMFONTNAME      = "coders_crux";		       // name of the custom font
 	public static final String CUSTOMFONTEXTENSION = ".ttf";			       // file extension name
-	public static final String CUSTOMFONTFOLDER    = "coders_crux";		       // folder name within resources/fonts/
+	public static final String CUSTOMFONTFOLDER    = "coders_crux";		       // folder name within 'resources/fonts/'
 	
-	public static final int BASEFONTSIZE 		   = 8;
+	public static final int BASEFONTSIZE 		   = 8;						   // base font size used when rendering strings.
 	
 	//------------------------------
 	// DEBUGGING TOOLS AND GAME SETTINGS
