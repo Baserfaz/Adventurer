@@ -111,6 +111,8 @@ public class Game extends Canvas implements Runnable {
 	private GameState gameState;
 	private GuiState guiState;
 	
+	private String mainmenuSubtitle = "";
+	
 	private Font customFont = null;
 	private Image backgroundImage = null;
 	
@@ -151,15 +153,11 @@ public class Game extends Canvas implements Runnable {
 		// create camera
 		new Camera();
 		
-		// create save file:
-		// this creates a save file object that
-		// reads the actual permanent save file and
-		// which has the data.
+		// read and cache save file.
 		setCurrentSaveFile(new SaveFile());
-
-		// --> we render main menu 
-		// and when play is pressed
-		// run Game.instance.startGame().
+		
+		// create a funny subtitle :)
+		this.setMainmenuSubtitle(Util.getRandomSubtitle());
 	}
 	
 	public void startGame() {
@@ -282,4 +280,7 @@ public class Game extends Canvas implements Runnable {
 
 	public Font getCustomFont() { return customFont; }
 	public void setCustomFont(Font customFont) { this.customFont = customFont; }
+
+	public String getMainmenuSubtitle() { return mainmenuSubtitle; }
+	public void setMainmenuSubtitle(String mainmenuSubtitle) { this.mainmenuSubtitle = mainmenuSubtitle; }
 }

@@ -38,28 +38,19 @@ public class Renderer {
 	    
 		// the position of all GUI elements
 		// --> cleaner look.
-		int xPos = Game.WIDTH / 5;
-		int xPos_offset = xPos;
+		int xPos = Game.WIDTH / 5 - 20;
 		
         // title
-        Renderer.renderString(
-        		"Adventurer",
-                new Coordinate(xPos, 125), Color.white, 36, g2d);
+        Renderer.renderString("ADVENTURER", new Coordinate(xPos, 125), Color.white, 36, g2d);
         
-        // creator info
-        Renderer.renderString(
-        		"Awesome roguelike!",
-                new Coordinate(xPos + 20, 170), Color.gray, 18, g2d);
+        // game subtitle :)
+        Renderer.renderString(Game.instance.getMainmenuSubtitle(), new Coordinate(xPos + 20, 170), Color.gray, 18, g2d);
         
         // version info
-        Renderer.renderString("Version: extra early\nDate: 7.8.2017", new Coordinate(xPos_offset, 550), Color.gray, 16, g2d);
+        Renderer.renderString("Version: extra early\nDate: 13.8.2017", new Coordinate(xPos, 550), Color.gray, 16, g2d);
         
-        // creator info :)
-        Renderer.renderString("By Baserfaz (Heikki Heiskanen)", new Coordinate(1000, 660), Color.gray, 16, g2d);
-        
-        // INFO:
-        // IF YOU CHANGE THE BUTTON COORDINATES 
-        // REMEMBER TO CHANGE THEM IN MOUSE HOVER TOO!
+        // creator info
+        Renderer.renderString("By Baserfaz (Heikki Heiskanen)", new Coordinate(900, 660), Color.gray, 16, g2d);
         
         // draw play button
         Renderer.renderButton("Play", new Coordinate(xPos, 250), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
@@ -239,7 +230,7 @@ public class Renderer {
         if(fill) { g2d.fillRect(x, y, width, height); }
         
         // calculate text position inside the button
-        Coordinate txtpos = new Coordinate(x + width/2 - 25, y + height/2 - 20);
+        Coordinate txtpos = new Coordinate(x + width/2 - 25, y + height/2 - 15);
         
         // render string
         Renderer.renderString(txt, txtpos, fontCol, fontSize, g2d);

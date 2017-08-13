@@ -198,6 +198,22 @@ public class Util {
 	    System.out.println("Succesfully loaded custom font: " + font.getFontName());
 	}
 	
+	public static String getRandomSubtitle() {
+		
+		String[] adjectives = new String[] { 
+				"Awesome", "Good", "Amazing", "Epic", "Wonderful", 
+				"Acceptable", "Excellent", "Great", "Satisfactory", 
+				"Superb", "Exceptional", "Marvelous", "Spanking", "Rad",
+				"Ace", "Cracking" };
+		String[] substantives = new String[] { 
+				"Game", "Dungeoncrawler", "Roguelike",
+				"Torture", "Misery", "Torment", "Ache", 
+				"Suffering", "Despair", "Sorrow", "Adventure",
+				"Play", "Distraction", "Joke", "Amusement" };
+		
+		return adjectives[Util.GetRandomInteger(0, adjectives.length - 1)] + " " + substantives[Util.GetRandomInteger(0, substantives.length - 1)] + "!";
+	}
+	
 	// ------------------------ STAT CALCULATIONS ---------------------
 	
 	public static int calcHealth(int vit) {

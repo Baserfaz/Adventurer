@@ -67,13 +67,13 @@ public class KeyInput extends KeyAdapter {
 			boolean success = false;
 			
 			// move cursor in inventory
-			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) {
+			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8 || key == KeyEvent.VK_UP) {
 				Handler.instance.moveInvCursorUp();
-				Handler.instance.setShowItemInspect(false);
+				//Handler.instance.setShowItemInspect(false);
 			}
-			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) {
+			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2 || key == KeyEvent.VK_DOWN) {
 				Handler.instance.moveInvCursorDown();
-				Handler.instance.setShowItemInspect(false);
+				//Handler.instance.setShowItemInspect(false);
 			}
 			
 			// drop item
@@ -87,7 +87,7 @@ public class KeyInput extends KeyAdapter {
 			}
 			
 			// equip/use item
-			if(key == KeyEvent.VK_E) {
+			if(key == KeyEvent.VK_E || key == KeyEvent.VK_ENTER) {
 				Handler.instance.setShowItemInspect(false);
 				Item item = player.getInventory().getItemOnPosition(Handler.instance.getInventoryCursorPos());
 				if(item != null) {
@@ -127,17 +127,17 @@ public class KeyInput extends KeyAdapter {
 			boolean success = false;
 			
 			// move cursor in inventory
-			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8) {
+			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8 || key == KeyEvent.VK_UP) {
 				Handler.instance.moveEquipmentCursorUp();
-				Handler.instance.setShowItemInspect(false);
+				//Handler.instance.setShowItemInspect(false);
 			}
-			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2) {
+			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2 || key == KeyEvent.VK_DOWN) {
 				Handler.instance.moveEquipmentCursorDown();
-				Handler.instance.setShowItemInspect(false);
+				//Handler.instance.setShowItemInspect(false);
 			}
 			
 			// unequip item
-			if(key == KeyEvent.VK_E) {
+			if(key == KeyEvent.VK_E || key == KeyEvent.VK_ENTER) {
 				
 				Handler.instance.setShowItemInspect(false);
 				

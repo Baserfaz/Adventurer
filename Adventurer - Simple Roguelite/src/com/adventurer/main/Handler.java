@@ -223,12 +223,13 @@ public class Handler {
 			else if(pos == 6) item = eq.getAmulet();
 			else if(pos == 7) item = eq.getRing();
         	
-        	drawItemInspectInfo(item, inspect_coord, g2d);
+        	if(item != null) drawItemInspectInfo(item, inspect_coord, g2d);
         	
         } else if(showItemInspect && Game.instance.getGuiState() == GuiState.Inventory) {
         	
         	Item item = player.getInventory().getItemOnPosition(Handler.instance.getInventoryCursorPos());
-        	drawItemInspectInfo(item, inspect_coord, g2d);
+        	
+        	if(item != null) drawItemInspectInfo(item, inspect_coord, g2d);
         	
         }
         
