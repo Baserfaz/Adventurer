@@ -1,9 +1,14 @@
 package com.adventurer.utilities;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -172,6 +177,25 @@ public class Util {
         int x = ((-player.GetWorldPosition().getX() * Game.CAMERAZOOM) - (Game.SPRITESIZE - Game.WIDTH / 2)) / Game.CAMERAZOOM;
         int y = ((-player.GetWorldPosition().getY() * Game.CAMERAZOOM) - (Game.SPRITESIZE - Game.HEIGHT / 2)) / Game.CAMERAZOOM;
 	    return new Coordinate(x, y);
+	}
+	
+	// https://stackoverflow.com/questions/5652344/how-can-i-use-a-custom-font-in-java
+	public static void loadCustomFont() {
+		
+		String fullPath = "resources/fonts/" + Game.CUSTOMFONTFOLDER + "/" + Game.CUSTOMFONTNAME + Game.CUSTOMFONTEXTENSION;
+		
+	    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	    Font font = null;
+	    
+	    try {
+	    	font = Font.createFont(Font.TRUETYPE_FONT, new File(fullPath));
+			ge.registerFont(font);
+		} catch (FontFormatException | IOException e) { e.printStackTrace(); }
+	    
+	    // cache the font
+	    Game.instance.setCustomFont(font);
+	    
+	    System.out.println("Succesfully loaded custom font: " + font.getFontName());
 	}
 	
 	// ------------------------ STAT CALCULATIONS ---------------------

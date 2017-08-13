@@ -1,6 +1,7 @@
 package com.adventurer.main;
 
 import java.awt.Canvas;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferStrategy;
@@ -13,6 +14,7 @@ import com.adventurer.data.World;
 import com.adventurer.enumerations.GameState;
 import com.adventurer.enumerations.GuiState;
 import com.adventurer.utilities.Renderer;
+import com.adventurer.utilities.Util;
 import com.adventurer.utilities.Window;
 
 public class Game extends Canvas implements Runnable {
@@ -28,6 +30,12 @@ public class Game extends Canvas implements Runnable {
 	public static final double FRAME_CAP       = 60.0;                     // cap the framerate to this
 	public static final String SPRITESHEETNAME = "spritesheet_simple.png"; // name of the spritesheet
 	public static final String BACKGROUNDNAME  = "background.jpg";		   // name of the main menu background
+	
+	public static final String CUSTOMFONTNAME      = "coders_crux";		       // name of the custom font
+	public static final String CUSTOMFONTEXTENSION = ".ttf";			       // file extension name
+	public static final String CUSTOMFONTFOLDER    = "coders_crux";		       // folder name within resources/fonts/
+	
+	public static final int BASEFONTSIZE 		   = 8;
 	
 	//------------------------------
 	// DEBUGGING TOOLS AND GAME SETTINGS
@@ -101,6 +109,7 @@ public class Game extends Canvas implements Runnable {
 	private GameState gameState;
 	private GuiState guiState;
 	
+	private Font customFont = null;
 	private Image backgroundImage = null;
 	
 	public Game() {
@@ -127,6 +136,9 @@ public class Game extends Canvas implements Runnable {
 		// create mouse listener
 		this.addMouseMotionListener(mouseInput);
 		this.addMouseListener(mouseInput);
+		
+		// load custom font, usage: new Font("Pixeled", Font.PLAIN, size);
+		Util.loadCustomFont();
 		
 		// create window 
 		window = new Window(WIDTH, HEIGHT, "Adventurer", this);
@@ -265,4 +277,7 @@ public class Game extends Canvas implements Runnable {
 
 	public GuiState getGuiState() { return guiState; }
 	public void setGuiState(GuiState guiState) { this.guiState = guiState; }
+
+	public Font getCustomFont() { return customFont; }
+	public void setCustomFont(Font customFont) { this.customFont = customFont; }
 }

@@ -7,9 +7,8 @@ public enum ItemNames {
 	Hide, ScaleMail, Chainmail, SplintMail, 
 	BandedMail, HalfPlate, FullPlate,
 	
-	// rings
-	
-	// amulets
+	// rings + amulets
+	Iron, Gold, Emerald, Ruby,
 	
 	// 1h weapons
 	Battleaxe, Club, Flail, Longsword, HeavyMace,

@@ -266,8 +266,8 @@ public class Renderer {
 	// https://stackoverflow.com/questions/4413132/problems-with-newline-in-graphics2d-drawstring
 	public static void renderString(String txt, Coordinate pos, Color color, int fontSize, Graphics2D g2d) {
 	    
-        // font
-        Font font = new Font("Consolas", Font.PLAIN, fontSize);
+        // create font
+        Font font = new Font(Game.instance.getCustomFont().getFontName(), Font.PLAIN, fontSize * 2 - 4);
         
         // font settings
         g2d.setFont(font);

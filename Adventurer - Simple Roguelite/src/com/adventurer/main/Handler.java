@@ -182,28 +182,28 @@ public class Handler {
         if(Game.instance.getGuiState() == GuiState.Inventory) {
         	
         	// render inventory cursor
-        	Renderer.renderRect(new Coordinate(0 + inventory_coord.getX(), this.getInventoryCursorPos() * 10 + inventory_coord.getY() + 13),
-        			new Coordinate(120, 10), Color.white, Color.white, true, g2d);
+        	Renderer.renderRect(new Coordinate(inventory_coord.getX(), this.getInventoryCursorPos() * Game.BASEFONTSIZE + inventory_coord.getY() + Game.BASEFONTSIZE + 1),
+        			new Coordinate(120, Game.BASEFONTSIZE), Color.white, Color.white, true, g2d);
         	
         	// render inventory help
         	Renderer.renderString("Inventory mode: Move cursor up: W, down: S, Equip/Use item: E, Inspect: I, Drop item: R, Exit: ESC",
-        			help_coord, Color.gray, 8, g2d);
+        			help_coord, Color.gray, Game.BASEFONTSIZE, g2d);
         
         } else if(Game.instance.getGuiState() == GuiState.None) {
         	
         	// render general help
         	Renderer.renderString("Play mode: Move/attack WASD, Inventory: I, Equipment: E, Character sheet: C, Mouse hover: info",
-        			help_coord, Color.gray, 8, g2d);
+        			help_coord, Color.gray, Game.BASEFONTSIZE, g2d);
         	
         } else if(Game.instance.getGuiState() == GuiState.Equipment) {
         	
         	// render equipment cursor
-        	Renderer.renderRect(new Coordinate(0 + equipment_coord.getX(), this.getEquipmentCursorPos() * 10 + equipment_coord.getY() + 13),
-        			new Coordinate(120, 10), Color.white, Color.white, true, g2d);
+        	Renderer.renderRect(new Coordinate(0 + equipment_coord.getX(), this.getEquipmentCursorPos() * Game.BASEFONTSIZE + equipment_coord.getY() + Game.BASEFONTSIZE + 1),
+        			new Coordinate(120, Game.BASEFONTSIZE), Color.white, Color.white, true, g2d);
         	
         	// render equipment help
         	Renderer.renderString("Equipment mode: Move cursor up: W, down: S, Unequip item: E, Inspect: I, Exit: ESC",
-        			help_coord, Color.gray, 8, g2d);
+        			help_coord, Color.gray, Game.BASEFONTSIZE, g2d);
         }
 	    
         // -------------------- INSPECT ITEM --------------------
@@ -237,7 +237,7 @@ public class Handler {
 	    if(showStats == false) {
 	    
 		    // render location tag.
-		    Renderer.renderString("Location: ", dungeonInfo_coord, Color.white, 8, g2d);
+		    Renderer.renderString("Location: ", dungeonInfo_coord, Color.white, Game.BASEFONTSIZE, g2d);
 		    
 	        // render dungeon name and level
 		    if(World.instance.getWorldType() == WorldType.Predefined) {
@@ -245,7 +245,7 @@ public class Handler {
 	            Renderer.renderString(
 	                "Chilly lobby",
 	                new Coordinate(dungeonInfo_coord.getX() + 50, dungeonInfo_coord.getY()), 
-	                Color.gray, 8, g2d
+	                Color.gray, Game.BASEFONTSIZE, g2d
 	            );
 	            
 		    } else if(World.instance.getWorldType() == WorldType.Random) {
@@ -253,7 +253,7 @@ public class Handler {
 	            Renderer.renderString(
 	                "Dungeon (lvl. "+ Game.instance.getCurrentSession().getDungeonLevel() + ")",
 	                new Coordinate(dungeonInfo_coord.getX() + 50, dungeonInfo_coord.getY()),
-	                Color.gray, 8, g2d
+	                Color.gray, Game.BASEFONTSIZE, g2d
 	            );
 	            
 		    }
@@ -263,14 +263,14 @@ public class Handler {
 	    
 	    if(showStats == false) {
 		    // render vitals tag
-		    Renderer.renderString("Vitals", stats_coord, Color.white, 8, g2d);
+		    Renderer.renderString("Vitals", stats_coord, Color.white, Game.BASEFONTSIZE, g2d);
 		    
 			// render vitals (HP etc.)
 			Renderer.renderString(
 		        "\nHP: " + player.getHealth().GetCurrentHealth() + "/" + player.getHealth().GetMaxHP() + "\n" +
 		        "MP: " + player.getMana().GetCurrentMana() + "/" + player.getMana().GetMaxMP() + "\n",
 		        stats_coord,
-		        Color.gray, 8, g2d
+		        Color.gray, Game.BASEFONTSIZE, g2d
 			);
 	    }
 	    
@@ -279,7 +279,7 @@ public class Handler {
 	    if(showStats) {
 			
 			// render character info tag
-			Renderer.renderString("CHARACTER", chainfo_coord, Color.white, 8, g2d);
+			Renderer.renderString("CHARACTER", chainfo_coord, Color.white, Game.BASEFONTSIZE, g2d);
 			
 			Resistances resistances = player.getResistances();
 			Offense offense = player.getOffense();
@@ -375,7 +375,7 @@ public class Handler {
 		            	resistances.getShockResistance(),
 		            	resistances.getHolyResistance()
 		            	
-	            ), chainfo_coord, Color.gray, 8, g2d
+	            ), chainfo_coord, Color.gray, Game.BASEFONTSIZE, g2d
 	        );
 	        
 	    }
@@ -417,11 +417,11 @@ public class Handler {
         // render inventory tag
         Renderer.renderString(
         		"Inventory " + "(" + currentInvSpaces + "/" + player.getInventory().getMaxSize() + ")",
-        		inventory_coord, Color.white, 8, g2d
+        		inventory_coord, Color.white, Game.BASEFONTSIZE, g2d
         );
         
         // render inventory items.
-        Renderer.renderString("\n" + invItems, inventory_coord, Color.gray, 8, g2d);
+        Renderer.renderString("\n" + invItems, inventory_coord, Color.gray, Game.BASEFONTSIZE, g2d);
         
         // -------------------- EQUIPMENT ---------------------
         
@@ -436,10 +436,10 @@ public class Handler {
         }
         
         // render equipment tag.
-        Renderer.renderString("Equipment", equipment_coord, Color.white, 8, g2d);
+        Renderer.renderString("Equipment", equipment_coord, Color.white, Game.BASEFONTSIZE, g2d);
         
         // render equipment info.
-        Renderer.renderString("\n" + equipmentInfo, equipment_coord, Color.gray, 8, g2d);
+        Renderer.renderString("\n" + equipmentInfo, equipment_coord, Color.gray, Game.BASEFONTSIZE, g2d);
         
         // -------------------- MOUSE HOVER ---------------------
         if(hoverTile != null) {
@@ -469,9 +469,9 @@ public class Handler {
         	String txt = String.format("Pos: %s\nTile: %s\nActor: %s\nItem: %s", 
         					cachedTile.GetTilePosition().toString(), tileinfo, actorinfo, iteminfo);
         	
-        	Renderer.renderString(txt, tileinfo_coord, Color.white, 8, g2d);
+        	Renderer.renderString(txt, tileinfo_coord, Color.white, Game.BASEFONTSIZE, g2d);
         	
-        } else Renderer.renderString("", tileinfo_coord, Color.white, 8, g2d);
+        } else Renderer.renderString("", tileinfo_coord, Color.white, Game.BASEFONTSIZE, g2d);
 	}
 	
 	private void drawItemInspectInfo(Item item, Coordinate inspect_coord, Graphics2D g2d) {
@@ -598,10 +598,10 @@ public class Handler {
     			item.getDescription(), item.getValue(), slot, physical, fire, str, frost, dex, shock, intel, holy, vit);
     		
     	// render item name
-    	Renderer.renderString(item.getName(), inspect_coord, Color.white, 8, g2d);
+    	Renderer.renderString(item.getName(), inspect_coord, Color.white, Game.BASEFONTSIZE, g2d);
     	
     	// render item info
-    	Renderer.renderString(inspectInfo, inspect_coord, Color.white, 8, g2d);
+    	Renderer.renderString(inspectInfo, inspect_coord, Color.white, Game.BASEFONTSIZE, g2d);
 		
 	}
 	

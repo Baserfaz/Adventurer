@@ -65,13 +65,13 @@ public class ItemCreator {
 				case Health: 
 					name += "health";
 					description += "heals";
-					value += 15;
+					value += val;
 					spritetype = SpriteType.HealthPotion;
 					break;
 				case Mana:
 					name += "mana";
 					description += "regains your mana";
-					value += 20;
+					value += val;
 					spritetype = SpriteType.ManaPotion;
 			}
 			
