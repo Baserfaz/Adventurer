@@ -10,7 +10,7 @@ import com.adventurer.main.DamageHandler;
 
 public class Potion extends Usable {
 	
-	Map<Effect, Integer> effects;
+	private Map<Effect, Integer> effects;
 	
 	public Potion(Tile tile, SpriteType spritetype, String name, String description, int value, Map<Effect, Integer> effects) {
 		super(tile, spritetype, name, description, value);
@@ -32,8 +32,8 @@ public class Potion extends Usable {
 			int val = e.getValue();
 			
 			switch(key) {
-				case Health: DamageHandler.ActorHeal(player, val); break;
-				case Mana: DamageHandler.actorRestoreMana(player, val); break;
+				case GainHealth: DamageHandler.ActorHeal(player, val); break;
+				case GainMana: DamageHandler.actorRestoreMana(player, val); break;
 				default: System.out.println("EFFECT NOT IMPLEMENTED: " + key + " IN POTION.USE"); break;
 			}
 			
@@ -42,5 +42,7 @@ public class Potion extends Usable {
 		// remove item
 		this.Remove();
 	}
+	
+	public Map<Effect, Integer> getEffects() { return this.effects; }
 
 }

@@ -179,31 +179,50 @@ public class Handler {
 	    
 	    // -------------------- Show help and cursors --------------------------
 	    
-        if(Game.instance.getGuiState() == GuiState.Inventory) {
+	    if(Game.instance.getGuiState() == GuiState.None) {
+	    	
+        	// render general help
+        	Renderer.renderString(
+        			"Play mode: Move/attack WASD, Inventory: I, Equipment: E, Character sheet: C, Mouse hover: info",
+        			help_coord, Color.gray, Game.BASEFONTSIZE, g2d
+        	);
+	    	
+	    } else if(Game.instance.getGuiState() == GuiState.Inventory) {
         	
+	    	int stepSize = this.getInventoryCursorPos() * (Game.BASEFONTSIZE + Game.LINEHEIGHT);
+	    	int yPos = inventory_coord.getY() + Game.BASEFONTSIZE + 1 + (Game.LINEHEIGHT * 2);
+	    	
         	// render inventory cursor
-        	Renderer.renderRect(new Coordinate(inventory_coord.getX(), this.getInventoryCursorPos() * Game.BASEFONTSIZE + inventory_coord.getY() + Game.BASEFONTSIZE + 1),
-        			new Coordinate(120, Game.BASEFONTSIZE), Color.white, Color.white, true, g2d);
+        	Renderer.renderRect(
+        			new Coordinate(inventory_coord.getX(), stepSize + yPos),
+        			new Coordinate(120, Game.BASEFONTSIZE),
+        			Color.white, Color.white, true, g2d
+        	);
         	
         	// render inventory help
-        	Renderer.renderString("Inventory mode: Move cursor up: W, down: S, Equip/Use item: E, Inspect: I, Drop item: R, Exit: ESC",
-        			help_coord, Color.gray, Game.BASEFONTSIZE, g2d);
-        
-        } else if(Game.instance.getGuiState() == GuiState.None) {
-        	
-        	// render general help
-        	Renderer.renderString("Play mode: Move/attack WASD, Inventory: I, Equipment: E, Character sheet: C, Mouse hover: info",
-        			help_coord, Color.gray, Game.BASEFONTSIZE, g2d);
+        	Renderer.renderString(
+        			"Inventory mode: Move cursor up: W, down: S, Equip/Use item: E, Inspect: I, Drop item: R, Exit: ESC",
+        			help_coord, Color.gray, Game.BASEFONTSIZE, g2d
+        	);
         	
         } else if(Game.instance.getGuiState() == GuiState.Equipment) {
         	
+        	int stepSize = this.getEquipmentCursorPos() * (Game.BASEFONTSIZE + Game.LINEHEIGHT);
+        	int yPos = equipment_coord.getY() + Game.BASEFONTSIZE + 1 + (Game.LINEHEIGHT * 2);
+        	
         	// render equipment cursor
-        	Renderer.renderRect(new Coordinate(0 + equipment_coord.getX(), this.getEquipmentCursorPos() * Game.BASEFONTSIZE + equipment_coord.getY() + Game.BASEFONTSIZE + 1),
-        			new Coordinate(120, Game.BASEFONTSIZE), Color.white, Color.white, true, g2d);
+        	Renderer.renderRect(
+        			new Coordinate(equipment_coord.getX(), stepSize + yPos),
+        			new Coordinate(120, Game.BASEFONTSIZE), 
+        			Color.white, Color.white, true, g2d
+        	);
         	
         	// render equipment help
-        	Renderer.renderString("Equipment mode: Move cursor up: W, down: S, Unequip item: E, Inspect: I, Exit: ESC",
-        			help_coord, Color.gray, Game.BASEFONTSIZE, g2d);
+        	Renderer.renderString(
+        			"Equipment mode: Move cursor up: W, down: S, Unequip item: E, Inspect: I, Exit: ESC",
+        			help_coord, Color.gray, Game.BASEFONTSIZE, g2d
+        	);
+        
         }
 	    
         // -------------------- INSPECT ITEM --------------------
@@ -352,7 +371,7 @@ public class Handler {
 		            	offense.getMeleeDmgOfType(DamageType.Frost),
 		            	offense.getMeleeDmgOfType(DamageType.Shock),
 		            	offense.getMeleeDmgOfType(DamageType.Holy),
-		            	offense.getTotalMeleeDmgOfType(DamageType.Physical), //offense.getMeleeDmgOfType(DamageType.Physical),
+		            	offense.getTotalMeleeDmgOfType(DamageType.Physical), // total: weapon + stats
 		            	
 		            	Util.calcMagicDamage(),  // calculated from int
 		            	
@@ -399,15 +418,15 @@ public class Handler {
         	for(Item item : player.getInventory().getInventoryItems()) { 
         		
         		// handle different items here.
-        		// --> show different info.
-        		
         		if(item instanceof Gold) {
+        			
         			Gold gold = (Gold) item;
-        			invItems += gold.getName() + " (" + gold.getAmount() + ")\n";
-        		} else {
-        			invItems += item.getName() + "\n"; 
-        		}
+        			invItems += gold.getName() + " (" + gold.getAmount() + ")";
+        			
+        		} else invItems += item.getName();
         		
+        		// add newlines
+        		invItems += "\n";
         	}
         	
         	// then add '-' to fill the empty spaces.

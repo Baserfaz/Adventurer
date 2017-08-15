@@ -39,6 +39,7 @@ public class Game extends Canvas implements Runnable {
 	public static final String CUSTOMFONTFOLDER    = "coders_crux";		       // folder name within 'resources/fonts/'
 	
 	public static final int BASEFONTSIZE 		   = 8;						   // base font size used when rendering strings.
+	public static final int LINEHEIGHT			   = 2;						   // usage: renderer.renderString(): fontMetrics.getHeight() + lineheight
 	
 	//------------------------------
 	// DEBUGGING TOOLS AND GAME SETTINGS

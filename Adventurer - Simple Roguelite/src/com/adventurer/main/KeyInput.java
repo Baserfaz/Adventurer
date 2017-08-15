@@ -69,11 +69,9 @@ public class KeyInput extends KeyAdapter {
 			// move cursor in inventory
 			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8 || key == KeyEvent.VK_UP) {
 				Handler.instance.moveInvCursorUp();
-				//Handler.instance.setShowItemInspect(false);
 			}
 			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2 || key == KeyEvent.VK_DOWN) {
 				Handler.instance.moveInvCursorDown();
-				//Handler.instance.setShowItemInspect(false);
 			}
 			
 			// drop item
@@ -129,11 +127,9 @@ public class KeyInput extends KeyAdapter {
 			// move cursor in inventory
 			if(key == KeyEvent.VK_W || key == KeyEvent.VK_NUMPAD8 || key == KeyEvent.VK_UP) {
 				Handler.instance.moveEquipmentCursorUp();
-				//Handler.instance.setShowItemInspect(false);
 			}
 			else if(key == KeyEvent.VK_S || key == KeyEvent.VK_NUMPAD2 || key == KeyEvent.VK_DOWN) {
 				Handler.instance.moveEquipmentCursorDown();
-				//Handler.instance.setShowItemInspect(false);
 			}
 			
 			// unequip item

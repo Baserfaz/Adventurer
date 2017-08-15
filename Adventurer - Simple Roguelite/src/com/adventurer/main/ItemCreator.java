@@ -31,27 +31,28 @@ public class ItemCreator {
 
 	public static Potion createHealthPotion(Tile tile, int amount) {
 		Map<Effect, Integer> m = new LinkedHashMap<Effect, Integer>();
-		m.put(Effect.Health, amount);
-		return createPotion(tile, m);
+		m.put(Effect.GainHealth, amount);
+		return createPotion(tile, m, "Health", "restores HP.");
 	}
 	
 	public static Potion createManaPotion(Tile tile, int amount) {
 		Map<Effect, Integer> m = new LinkedHashMap<Effect, Integer>();
-		m.put(Effect.Mana, amount);
-		return createPotion(tile, m);
+		m.put(Effect.GainMana, amount);
+		return createPotion(tile, m, "Mana", "restores MP.");
 	}
 	
 	public static Potion createRestorationPotion(Tile tile, int amount) {
 		Map<Effect, Integer> m = new LinkedHashMap<Effect, Integer>();
-		m.put(Effect.Mana, amount);
-		m.put(Effect.Health, amount);
-		return createPotion(tile, m);
+		m.put(Effect.GainMana, amount);
+		m.put(Effect.GainHealth, amount);
+		return createPotion(tile, m, "Restoration", "restores HP and MP.");
 	}
 	
-	public static Potion createPotion(Tile tile, Map<Effect, Integer> effects) {
+	public static Potion createPotion(Tile tile, Map<Effect, Integer> effects, String name_, String description_) {
 		
 		// vars
-		String name = "Potion of ", description = "This potion ";
+		String name = name_ + " potion";
+		String description = "This potion " + description_;
 		int value = 0;
 		SpriteType spritetype = null;
 		
@@ -62,26 +63,15 @@ public class ItemCreator {
 			int val = e.getValue();
 			
 			switch(key) {
-				case Health: 
-					name += "health";
-					description += "heals";
+				case GainHealth: 
 					value += val;
 					spritetype = SpriteType.HealthPotion;
 					break;
-				case Mana:
-					name += "mana";
-					description += "regains your mana";
+				case GainMana:
 					value += val;
 					spritetype = SpriteType.ManaPotion;
 			}
-			
-			description += " and ";
-			name += " and ";
 		}
-		
-		// remove last ' and '.
-		name = name.substring(0, name.length() - 5);
-		description = description.substring(0, description.length() - 5) + ".";
 		
 		return new Potion(tile, spritetype, name, description, value, effects);
 	}

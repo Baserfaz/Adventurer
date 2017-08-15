@@ -6,8 +6,7 @@ import com.adventurer.utilities.FileWriter;
 /*
  * This class gets the information about the 
  * permanent state of the game.
- * such as diamond keys that the player has picked up
- * during their runs.
+ * 
  */
 
 public class SaveFile {
