@@ -123,8 +123,7 @@ public class Util {
 			
 			count ++;
 			
-			// TODO: this means we can only
-			// parse one color command per string.
+			// TODO: this means we can only parse one color command per string.
 			if(hasEndCmdEnded) break;
 			
 			// parse end command
@@ -184,19 +183,20 @@ public class Util {
 		
 		if(startCmd && hasStartCmdEnded && endCmd && hasEndCmdEnded) {
 			
-			// after parsing the string, 
-			// we have to test if the cmd 
-			// is the same as endcmd.
+			// after parsing the string, we have to test if the cmd is the same as endcmd.
+			// if the commands are same, it's a complete and valid command.
 			
 			// remove the ending '/'
 			endcmd.remove(0);
 			
 			if(cmd.equals(endcmd)) {
 				
+				// create parameter string
 				String param = "";
 				for(char c : parameter) { param += c; }
 				
-				param = param.replaceAll("\\s+", ""); //https://stackoverflow.com/questions/5455794/removing-whitespace-from-strings-in-java
+				//https://stackoverflow.com/questions/5455794/removing-whitespace-from-strings-in-java
+				param = param.replaceAll("\\s+", ""); 
 				
 				// get color channels
 				String[] params = param.split(",");
@@ -207,21 +207,17 @@ public class Util {
 				// modify color with parsed data
 				Color color = new Color(r, g, b, 255);
 				
-				// get the position of the opening command '<'
-				
 				// create a string that doesn't have the rich-text commands.
-				StringBuilder builder = new StringBuilder(inputString);
-				builder = builder.delete(startCommandPos, endCommandPos);	// delete the whole command 
-				String ss = "";
-				String content_ = "";
-				for(char c : content) content_ += c;									// create content string
-				ss = builder.insert(startCommandPos, content_).toString();
+				StringBuilder builder = new StringBuilder(inputString);            // create a stringbuilder 
+				builder = builder.delete(startCommandPos, endCommandPos);	       // delete the whole command, other parts of the string are left untouched.
+				String content_ = "";										       // the content will be cached here
+				for(char c : content) content_ += c;						       // create content string
+				String ss = builder.insert(startCommandPos, content_).toString();  // insert the content in right position
 				
-				// get the start and end positions 
-				// of the string we want to color differently.
+				// get the start and end positions of the string we want to color differently.
 				int[] pos = new int[] { startCommandPos - 1, startCommandPos + content_.length() };
 				
-				// add color, string and positions to data
+				// add color, string and positions to data class
 				data.setColor(color);
 				data.setString(ss);
 				data.setPositions(pos);
