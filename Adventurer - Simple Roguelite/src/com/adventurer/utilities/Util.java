@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.Room;
@@ -95,6 +97,114 @@ public class Util {
 			}
 		}
 		return tintedImage;
+	}
+
+	public static Map<String, Color> parseStringColor(String s) {
+		Map<String, Color> data = new LinkedHashMap<String, Color>();
+		
+		// Parser supports command syntax:
+		// 1. <color="200,200,200"> ... </color>
+		
+		boolean startCmd = false, hasStartCmdEnded = false, hasStartCmdTerminated = false,
+				endCmd = false, hasEndCmdEnded = false,
+				paramStarted = false, paramEnded = false;
+		
+		List<Character> cmd       = new ArrayList<Character>();
+		List<Character> endcmd    = new ArrayList<Character>();
+		List<Character> parameter = new ArrayList<Character>();
+		List<Character> content   = new ArrayList<Character>();
+		
+		// parsing happens here
+		for(char c : s.toCharArray()) {
+			
+			// TODO: this means we can only
+			// parse one color command per string.
+			if(hasEndCmdEnded) break;
+			
+			// parse end command
+			if(endCmd && hasEndCmdEnded == false) {
+				
+				if(c == '>') hasEndCmdEnded = true;
+				else endcmd.add(c);
+
+				continue;
+				
+			}
+			
+			// content
+			if(hasStartCmdTerminated && endCmd == false) {
+				
+				if(c == '<') endCmd = true;
+				else content.add(c);
+				
+				continue;
+			}
+			
+			// end start command
+			if(c == '>' && paramEnded) {
+				hasStartCmdTerminated = true;
+				continue;
+			}
+			
+			// parse start command
+			if(startCmd && hasStartCmdEnded == false) {
+				
+				if(c == '=') hasStartCmdEnded = true;
+				else cmd.add(c);
+				
+				continue;
+				
+			} else if(startCmd && hasStartCmdEnded) {
+				
+				// parse command parameter
+				if(c == '"' && paramStarted == false) paramStarted = true; // first '"'
+				else if(c == '"' && paramStarted) paramEnded = true;	   // closing '"'
+				else if(paramEnded == false) parameter.add(c);  		   // cache parameter
+				
+				continue;
+			}
+			
+			
+			// check whether we should start parsing a command
+			if(c == '<' && startCmd == false) startCmd = true;
+		}
+		
+		if(startCmd && hasStartCmdEnded && endCmd && hasEndCmdEnded) {
+			
+			// after parsing the string, 
+			// we have to test if the cmd 
+			// is the same as endcmd.
+			
+			// remove the ending '/'
+			endcmd.remove(0);
+			
+			if(cmd.equals(endcmd)) {
+				
+				String param = "";
+				for(char c : parameter) { param += c; }
+				
+				param = param.replaceAll("\\s+", ""); //https://stackoverflow.com/questions/5455794/removing-whitespace-from-strings-in-java
+				
+				// get color channels
+				String[] params = param.split(",");
+				int r = Integer.parseInt(params[0]);
+				int b = Integer.parseInt(params[1]);
+				int g = Integer.parseInt(params[2]);
+				
+				// modify color with parsed data
+				Color color = new Color(r, g, b, 255);
+				
+				String content_ = "";
+				for(char c : content) content_ += c;
+				
+				// add to map
+				data.put(content_, color);
+			}
+			
+		}
+		
+		// return parsed color and content
+		return data;
 	}
 	
 	public static BufferedImage highlightTileBorders(BufferedImage image, Color tintColor) {

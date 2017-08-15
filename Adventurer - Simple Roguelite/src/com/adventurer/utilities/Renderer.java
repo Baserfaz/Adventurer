@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 
@@ -255,16 +256,16 @@ public class Renderer {
 	}
 	
 	// https://stackoverflow.com/questions/4413132/problems-with-newline-in-graphics2d-drawstring
-	public static void renderString(String txt, Coordinate pos, Color color, int fontSize, Graphics2D g2d) {
+	public static void renderString(String txt, Coordinate pos, Color baseColor, int fontSize, Graphics2D g2d) {
 	    
 		int calc_fontsize = fontSize * 2 - 4;
 		
         // create font
         Font font = new Font(Game.instance.getCustomFont().getFontName(), Font.PLAIN, calc_fontsize);
-        
+        	
         // font settings
         g2d.setFont(font);
-        g2d.setColor(color);
+        g2d.setColor(baseColor);
         
         int y = pos.getY();
         int x = pos.getX();
@@ -273,22 +274,38 @@ public class Renderer {
         for (String line : txt.split("\n")) {
             y += g2d.getFontMetrics().getHeight() + Game.LINEHEIGHT;
             
-            int xPos = 0, count = 0;
+            /*int xPos = 0, count = 0;
             
             for(char c : line.toCharArray()) {
             	
             	if(count == 0) xPos = x;
             	else xPos += g2d.getFontMetrics().charWidth(c);
-            		
+            	
+            	// TODO: perhaps use some random symbol
+            	// to tell which color next bit should be?
+            	
             	g2d.setColor(new Color(0, Util.GetRandomInteger(100, 255), 10, 255));
             	g2d.drawString(c + "", xPos, y);
             	
             	count ++;
             }
             
-            xPos = 0;
+            xPos = 0;*/
             
-            //g2d.drawString(line, x, y);
+            boolean hasRichText = false;
+            
+            // for every line check rich text 
+            for(Entry<String, Color> e : Util.parseStringColor(line).entrySet()) {
+            	g2d.setColor(e.getValue());
+            	g2d.drawString(e.getKey(), x, y);
+            	hasRichText = true;
+            }
+            
+            // draw the string
+            if(hasRichText == false) {
+            	g2d.setColor(baseColor);
+            	g2d.drawString(line, x, y);
+            }
             
         }
 	}
