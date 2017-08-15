@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import com.adventurer.data.Camera;
 import com.adventurer.data.Coordinate;
+import com.adventurer.data.ParseInfo;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.GameState;
@@ -255,7 +256,6 @@ public class Renderer {
         }
 	}
 	
-	// https://stackoverflow.com/questions/4413132/problems-with-newline-in-graphics2d-drawstring
 	public static void renderString(String txt, Coordinate pos, Color baseColor, int fontSize, Graphics2D g2d) {
 	    
 		int calc_fontsize = fontSize * 2 - 4;
@@ -270,38 +270,52 @@ public class Renderer {
         int y = pos.getY();
         int x = pos.getX();
         
-        // render
-        for (String line : txt.split("\n")) {
+    	// https://stackoverflow.com/questions/4413132/problems-with-newline-in-graphics2d-drawstring
+        for (String line : txt.split("\n")) { 
+        	
+        	boolean hasRichText = false;
+        	
+        	// calculate string height from the start position
             y += g2d.getFontMetrics().getHeight() + Game.LINEHEIGHT;
             
-            /*int xPos = 0, count = 0;
+            // parse the string for color commands
+            ParseInfo data = Util.parseStringColor(line);
             
-            for(char c : line.toCharArray()) {
+            if(data.getString() != null) {
             	
-            	if(count == 0) xPos = x;
-            	else xPos += g2d.getFontMetrics().charWidth(c);
-            	
-            	// TODO: perhaps use some random symbol
-            	// to tell which color next bit should be?
-            	
-            	g2d.setColor(new Color(0, Util.GetRandomInteger(100, 255), 10, 255));
-            	g2d.drawString(c + "", xPos, y);
-            	
-            	count ++;
+            	// cache vars
+	        	int count = 0, xPos = 0;
+	        	int[] positions = data.getPositions();
+	        	Color col = data.getColor();
+	        	
+	        	for(char c : data.getString().toCharArray()) {
+	        		
+	        		// calculate x-position
+	        		if(count == 0) xPos = x;
+	        		else xPos += g2d.getFontMetrics().charWidth(c);
+	        		
+	        		if(count > positions[0] && count < positions[1]) {
+	        			
+	        			// change the color
+	                  	g2d.setColor(col);
+	                	g2d.drawString(c + "", xPos, y);
+	        			
+	        		} else {
+	        			
+	        			// if the current character is not inside the rich text we use basecolor.
+	        			g2d.setColor(baseColor);
+	        			g2d.drawString(c + "", xPos, y);
+	        			
+	        		}
+	        		
+	        		count ++;
+	        	}
+	        	
+	        	hasRichText = true;
             }
             
-            xPos = 0;*/
-            
-            boolean hasRichText = false;
-            
-            // for every line check rich text 
-            for(Entry<String, Color> e : Util.parseStringColor(line).entrySet()) {
-            	g2d.setColor(e.getValue());
-            	g2d.drawString(e.getKey(), x, y);
-            	hasRichText = true;
-            }
-            
-            // draw the string
+            // draw the string as it is,
+            // there is no richtext in it.
             if(hasRichText == false) {
             	g2d.setColor(baseColor);
             	g2d.drawString(line, x, y);

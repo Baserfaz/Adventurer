@@ -1,6 +1,7 @@
 package com.adventurer.main;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -59,6 +60,13 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean CALCULATE_PLAYER_LOS   = true;
 	public static final boolean PERMANENTLY_SHOW_TILES = false;
 
+	// Rarity colors
+	public static final Color RARITYCOLOR_TRASH = new Color(159, 159, 146);
+	public static final Color RARITYCOLOR_GENERIC = new Color(255, 255, 255);
+	public static final Color RARITYCOLOR_SUPERIOR = new Color(37, 137, 189);
+	public static final Color RARITYCOLOR_EPIC = new Color(137, 99, 186);
+	public static final Color RARITYCOLOR_LEGENDARY = new Color(249, 160, 63);
+	
 	// tile settings
 	public static final int TILEGAP = 2;
 	

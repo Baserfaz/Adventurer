@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import com.adventurer.data.Coordinate;
+import com.adventurer.data.ParseInfo;
 import com.adventurer.data.Room;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.DoorType;
@@ -98,9 +99,10 @@ public class Util {
 		}
 		return tintedImage;
 	}
-
-	public static Map<String, Color> parseStringColor(String s) {
-		Map<String, Color> data = new LinkedHashMap<String, Color>();
+	
+	public static ParseInfo parseStringColor(String inputString) {
+		
+		ParseInfo data = new ParseInfo();
 		
 		// Parser supports command syntax:
 		// 1. <color="200,200,200"> ... </color>
@@ -109,13 +111,17 @@ public class Util {
 				endCmd = false, hasEndCmdEnded = false,
 				paramStarted = false, paramEnded = false;
 		
+		int count = -1, startCommandPos = 0, endCommandPos = 0;
+		
 		List<Character> cmd       = new ArrayList<Character>();
 		List<Character> endcmd    = new ArrayList<Character>();
 		List<Character> parameter = new ArrayList<Character>();
 		List<Character> content   = new ArrayList<Character>();
 		
 		// parsing happens here
-		for(char c : s.toCharArray()) {
+		for(char c : inputString.toCharArray()) {
+			
+			count ++;
 			
 			// TODO: this means we can only
 			// parse one color command per string.
@@ -124,7 +130,10 @@ public class Util {
 			// parse end command
 			if(endCmd && hasEndCmdEnded == false) {
 				
-				if(c == '>') hasEndCmdEnded = true;
+				if(c == '>') {
+					hasEndCmdEnded = true;
+					endCommandPos = count + 1;
+				}
 				else endcmd.add(c);
 
 				continue;
@@ -143,6 +152,7 @@ public class Util {
 			// end start command
 			if(c == '>' && paramEnded) {
 				hasStartCmdTerminated = true;
+				
 				continue;
 			}
 			
@@ -166,7 +176,10 @@ public class Util {
 			
 			
 			// check whether we should start parsing a command
-			if(c == '<' && startCmd == false) startCmd = true;
+			if(c == '<' && startCmd == false) {
+				startCmd = true;
+				startCommandPos = count;
+			}
 		}
 		
 		if(startCmd && hasStartCmdEnded && endCmd && hasEndCmdEnded) {
@@ -194,12 +207,26 @@ public class Util {
 				// modify color with parsed data
 				Color color = new Color(r, g, b, 255);
 				
-				String content_ = "";
-				for(char c : content) content_ += c;
+				// get the position of the opening command '<'
 				
-				// add to map
-				data.put(content_, color);
-			}
+				// create a string that doesn't have the rich-text commands.
+				StringBuilder builder = new StringBuilder(inputString);
+				builder = builder.delete(startCommandPos, endCommandPos);	// delete the whole command 
+				String ss = "";
+				String content_ = "";
+				for(char c : content) content_ += c;									// create content string
+				ss = builder.insert(startCommandPos, content_).toString();
+				
+				// get the start and end positions 
+				// of the string we want to color differently.
+				int[] pos = new int[] { startCommandPos - 1, startCommandPos + content_.length() };
+				
+				// add color, string and positions to data
+				data.setColor(color);
+				data.setString(ss);
+				data.setPositions(pos);
+				
+			} else data = null;
 			
 		}
 		

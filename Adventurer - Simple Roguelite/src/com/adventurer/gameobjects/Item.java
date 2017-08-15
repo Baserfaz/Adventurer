@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import com.adventurer.data.World;
+import com.adventurer.enumerations.ItemRarity;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Handler;
 import com.adventurer.utilities.Renderer;
@@ -14,12 +15,14 @@ public class Item extends GameObject {
 	protected String itemName;
 	protected String description;
 	protected int value;
+	protected ItemRarity itemRarity;
 	
 	public Item(Tile tile, SpriteType spritetype, String name, String description, int value) {
 		super(tile.GetWorldPosition(), tile.GetTilePosition(), spritetype);
 		this.itemName = name;
 		this.description = description;
 		this.value = value;
+		this.itemRarity = ItemRarity.Generic;
 	}
 	
 	public void Remove() {
@@ -54,6 +57,7 @@ public class Item extends GameObject {
 	public String getName() { return this.itemName; }
 	public int getValue() { return this.value; }
 	public String getDescription( ) { return this.description; }
+	public ItemRarity getRarity() { return this.itemRarity; }
 	
 	public void tick() {}
 	public Rectangle GetBounds() { return null; }

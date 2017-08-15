@@ -602,23 +602,40 @@ public class Handler {
     		slot = "-";
     	}
     	
+    	Color rarityColor = null;
+    	
+    	// decide rarity color
+    	switch(item.getRarity()) {
+			case Epic: rarityColor      = Game.RARITYCOLOR_EPIC;      break;
+			case Generic: rarityColor   = Game.RARITYCOLOR_GENERIC;   break;
+			case Legendary: rarityColor = Game.RARITYCOLOR_LEGENDARY; break;
+			case Superior: rarityColor  = Game.RARITYCOLOR_SUPERIOR;  break;
+			case Trash: rarityColor     = Game.RARITYCOLOR_TRASH;     break;
+    	}
+    	
+    	// create a string containing r, g and b values.
+    	String rarityColorStr = rarityColor.getRed() + "," + rarityColor.getGreen() + "," + rarityColor.getBlue();
+    	String totalRarityString = "<color=\"" + rarityColorStr + "\">" + item.getRarity() + "</color>";
+    	
     	// build string using vars
     	String inspectInfo = String.format(
-    			"\n\'%s\'\n"
-    			+"--------------------------------\n"
-    			+ "Value: %d gp\n"
-    			+ "Slot:  %s\n"
-    			+ "--------------------------------\n"
-    			+ "Physical: %d    |   Bonus\n"
-    			+ "Fire:     %d    |   STR: %d\n"
-    			+ "Frost:    %d    |   DEX: %d\n"
-    			+ "Shock:    %d    |   INT: %d\n"
-    			+ "Holy:     %d    |   VIT: %d\n"
-    			+ "--------------------------------",
-    			item.getDescription(), item.getValue(), slot, physical, fire, str, frost, dex, shock, intel, holy, vit);
-    		
-    	// render item name
-    	Renderer.renderString(item.getName(), inspect_coord, Color.white, Game.BASEFONTSIZE, g2d);
+			  "%s\n"
+			+ "\'%s\'\n"
+			+"--------------------------------\n"
+			+ "Value: %d gp\n"
+			+ "Slot:  %s\n"
+			+ "Rarity: %s\n"
+			+ "--------------------------------\n"
+			+ "Physical: %d    |   Bonus\n"
+			+ "Fire:     %d    |   STR: %d\n"
+			+ "Frost:    %d    |   DEX: %d\n"
+			+ "Shock:    %d    |   INT: %d\n"
+			+ "Holy:     %d    |   VIT: %d\n"
+			+ "--------------------------------",
+			item.getName(), item.getDescription(), item.getValue(),
+			slot, totalRarityString, physical, fire, str, frost,
+			dex, shock, intel, holy, vit
+    	);
     	
     	// render item info
     	Renderer.renderString(inspectInfo, inspect_coord, Color.white, Game.BASEFONTSIZE, g2d);
