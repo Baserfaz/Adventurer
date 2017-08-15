@@ -31,6 +31,7 @@ import com.adventurer.gameobjects.Enemy;
 import com.adventurer.gameobjects.GameObject;
 import com.adventurer.gameobjects.Gold;
 import com.adventurer.gameobjects.Item;
+import com.adventurer.gameobjects.Key;
 import com.adventurer.gameobjects.Player;
 import com.adventurer.gameobjects.Potion;
 import com.adventurer.gameobjects.Projectile;
@@ -600,6 +601,11 @@ public class Handler {
     	} else if(item instanceof Potion) {
     		
     		slot = "-";
+    	
+    	} else if(item instanceof Key) {
+    		
+    		slot = "-";
+    		
     	}
     	
     	Color rarityColor = null;
@@ -617,7 +623,7 @@ public class Handler {
     	String rarityColorStr = rarityColor.getRed() + "," + rarityColor.getGreen() + "," + rarityColor.getBlue();
     	String totalRarityString = "<color=\"" + rarityColorStr + "\">" + item.getRarity() + "</color>";
     	
-    	// build string using vars
+    	// build string using the item's data
     	String inspectInfo = String.format(
 			  "%s\n"
 			+ "\'%s\'\n"
