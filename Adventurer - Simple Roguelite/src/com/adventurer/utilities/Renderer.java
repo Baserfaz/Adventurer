@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 
 import com.adventurer.data.Camera;
 import com.adventurer.data.Coordinate;
-import com.adventurer.data.ParseInfo;
+import com.adventurer.data.ParseData;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.GameState;
@@ -279,7 +279,7 @@ public class Renderer {
             y += g2d.getFontMetrics().getHeight() + Game.LINEHEIGHT;
             
             // parse the string for color commands
-            ParseInfo data = Util.parseStringColor(line);
+            ParseData data = RichTextParser.parseStringColor(line);
             
             if(data.getString() != null) {
             	

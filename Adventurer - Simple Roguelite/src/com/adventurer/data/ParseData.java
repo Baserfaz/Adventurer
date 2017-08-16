@@ -2,19 +2,19 @@ package com.adventurer.data;
 
 import java.awt.Color;
 
-public class ParseInfo {
+public class ParseData {
 
 	private String string;
 	private Color color;
 	private int[] positions;
 	
-	public ParseInfo() {
+	public ParseData() {
 		this.string = null;
 		this.color = null;
 		this.positions = new int[2];
 	}
 	
-	public ParseInfo(String string, Color color, int[] positions) {
+	public ParseData(String string, Color color, int[] positions) {
 		this.string = string;
 		this.color = color;
 		this.positions = positions;
