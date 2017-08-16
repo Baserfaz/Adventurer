@@ -42,8 +42,14 @@ public class Renderer {
 		// --> cleaner look.
 		int xPos = Game.WIDTH / 5 - 20;
 		
+		// DEBUGGING
+		Renderer.renderString(
+				Util.generateRichTextForColor(Color.red, "adven") + 
+				Util.generateRichTextForColor(Color.blue, "turer"),
+		new Coordinate(xPos, 125), Color.white, 36, g2d);
+		
         // title
-        Renderer.renderString("ADVENTURER", new Coordinate(xPos, 125), Color.white, 36, g2d);
+        /*Renderer.renderString("ADVENTURER", new Coordinate(xPos, 125), Color.white, 36, g2d);
         
         // game subtitle :)
         Renderer.renderString(Game.instance.getMainmenuSubtitle(), new Coordinate(xPos + 20, 170), Color.gray, 18, g2d);
@@ -58,7 +64,7 @@ public class Renderer {
         Renderer.renderButton("Play", new Coordinate(xPos, 250), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
         
         // draw exit button
-        Renderer.renderButton("Exit", new Coordinate(xPos, 350), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
+        Renderer.renderButton("Exit", new Coordinate(xPos, 350), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);*/
 	}
 	
 	public static void renderLoading(Graphics g) {

@@ -323,15 +323,9 @@ public class Handler {
 	            		+ "INT: %d (%d + %d)\n"
 	            		+ "DEX: %d (%d + %d)\n"
 	            		+ "-------- DAMAGE --------\n"
-	            		+ "Melee:  %d\n" 
-	            		+ "> fire: %d, frost: %d, shock: %d\n" 
-	            		+ "> holy: %d, physical: %d\n"
+	            		+ "Melee:  %d (%s, %s, %s, %s, %s)\n"
 	            		+ "Magic:  %d\n"
-	            		/*+ "> fire: %d, frost: %d, shock: %d\n"
-	            		+ "> holy: %d, physical: %d\n"*/
 	            		+ "Ranged: %d\n"
-	            		/*+ "> fire: %d, frost: %d, shock: %d\n"
-	            		+ "> holy: %d, physical: %d\n"*/
 	            		+ "------ RESISTANCES -----\n"
 	            		+ "Physical: %d\n"
 	            		+ "Fire:     %d\n"
@@ -368,28 +362,15 @@ public class Handler {
 		            	
 		            	Util.calcMeleeDamage(),  // calculated from str
 		            	
-		            	offense.getMeleeDmgOfType(DamageType.Fire),
-		            	offense.getMeleeDmgOfType(DamageType.Frost),
-		            	offense.getMeleeDmgOfType(DamageType.Shock),
-		            	offense.getMeleeDmgOfType(DamageType.Holy),
-		            	offense.getTotalMeleeDmgOfType(DamageType.Physical), // total: weapon + stats
+		            	Util.generateRichTextForColor(Game.GUI_DMG_FIRE, offense.getMeleeDmgOfType(DamageType.Fire)),
+		            	Util.generateRichTextForColor(Game.GUI_DMG_FROST, offense.getMeleeDmgOfType(DamageType.Frost)),
+		            	Util.generateRichTextForColor(Game.GUI_DMG_SHOCK, offense.getMeleeDmgOfType(DamageType.Shock)),
+		            	Util.generateRichTextForColor(Game.GUI_DMG_HOLY, offense.getMeleeDmgOfType(DamageType.Holy)),
+		            	Util.generateRichTextForColor(Game.GUI_DMG_PHYSICAL, offense.getTotalMeleeDmgOfType(DamageType.Physical)), // total: weapon + stats
 		            	
 		            	Util.calcMagicDamage(),  // calculated from int
-		            	
-		            	/*offense.getMagicDmgOfType(DamageType.Fire),
-		            	offense.getMagicDmgOfType(DamageType.Frost),
-		            	offense.getMagicDmgOfType(DamageType.Shock),
-		            	offense.getMagicDmgOfType(DamageType.Holy),
-		            	offense.getMagicDmgOfType(DamageType.Physical),*/
-		            	
 		            	Util.calcRangedDamage(), // calculated from dex
-		            	
-		            	/*offense.getRangedDmgOfType(DamageType.Fire),
-		            	offense.getRangedDmgOfType(DamageType.Frost),
-		            	offense.getRangedDmgOfType(DamageType.Shock),
-		            	offense.getRangedDmgOfType(DamageType.Holy),
-		            	offense.getRangedDmgOfType(DamageType.Physical),*/
-		            	
+
 		            	resistances.getPhysicalResistance(),
 		            	resistances.getFireResistance(),
 		            	resistances.getFrostResistance(),

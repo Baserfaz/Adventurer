@@ -68,8 +68,13 @@ public class Game extends Canvas implements Runnable {
 	public static final Color RARITYCOLOR_LEGENDARY = new Color(249, 160, 63);
 	
 	// GUI colors
-	public static final Color GUI_HEALTH = new Color(186, 33, 13);
-	public static final Color GUI_MANA   = new Color(57, 67, 183);
+	public static final Color GUI_HEALTH         = new Color(186, 33, 13);
+	public static final Color GUI_MANA           = new Color(57, 67, 183);
+	public static final Color GUI_DMG_FIRE       = new Color(186, 33, 13);
+	public static final Color GUI_DMG_FROST      = new Color(57, 67, 183);
+	public static final Color GUI_DMG_SHOCK      = new Color(252, 191, 73);
+	public static final Color GUI_DMG_HOLY       = new Color(253, 255, 252);
+	public static final Color GUI_DMG_PHYSICAL   = new Color(100, 100, 100);
 	
 	// loot spawn chances
 	public static final int CHEST_GOLD_CHANCE = 25;

@@ -2,46 +2,83 @@ package com.adventurer.utilities;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.adventurer.data.ParseData;
 
 public class RichTextParser {
 
+	// Parser supports command syntax:
+	// <color="200,200,200"> ... </color>
+	
 	public static ParseData parseStringColor(String inputString) {
 		
 		ParseData data = new ParseData();
-		
-		// Parser supports command syntax:
-		// 1. <color="200,200,200"> ... </color>
 		
 		boolean startCmd = false, hasStartCmdEnded = false, hasStartCmdTerminated = false,
 				endCmd = false, hasEndCmdEnded = false,
 				paramStarted = false, paramEnded = false;
 		
-		int count = -1, startCommandPos = 0, endCommandPos = 0;
+		int count = -1, /*startCommandPos = 0, endCommandPos = 0, */ index = 0;
 		
-		List<Character> cmd       = new ArrayList<Character>();
-		List<Character> endcmd    = new ArrayList<Character>();
-		List<Character> parameter = new ArrayList<Character>();
-		List<Character> content   = new ArrayList<Character>();
+		List<Integer> startCommandPositions = new ArrayList<Integer>();
+		List<Integer> endCommandPositions = new ArrayList<Integer>();
+		
+		// dictionaries 
+		Map<Integer, ArrayList<Character>> cmd2 = new LinkedHashMap<Integer, ArrayList<Character>>();
+		Map<Integer, ArrayList<Character>> endcmd2 = new LinkedHashMap<Integer, ArrayList<Character>>();
+		Map<Integer, ArrayList<Character>> parameter2 = new LinkedHashMap<Integer, ArrayList<Character>>();
+		Map<Integer, ArrayList<Character>> content2 = new LinkedHashMap<Integer, ArrayList<Character>>();
+		
+		// instantiate arrays inside map
+		cmd2.put(index, new ArrayList<Character>());
+		endcmd2.put(index, new ArrayList<Character>());
+		parameter2.put(index, new ArrayList<Character>());
+		content2.put(index, new ArrayList<Character>());
 		
 		// parsing happens here
 		for(char c : inputString.toCharArray()) {
 			
 			count ++;
 			
-			// TODO: this means we can only parse one color command per string.
-			if(hasEndCmdEnded) break;
+			if(hasEndCmdEnded) {
+				
+				//break;
+				index += 1;
+				
+				// create new arrays
+				cmd2.put(index, new ArrayList<Character>());
+				endcmd2.put(index, new ArrayList<Character>());
+				parameter2.put(index, new ArrayList<Character>());
+				content2.put(index, new ArrayList<Character>());
+				
+				// reset 
+				startCmd = false; 
+				hasStartCmdEnded = false;
+				hasStartCmdTerminated = false;
+				endCmd = false;
+				hasEndCmdEnded = false;
+				paramStarted = false;
+				paramEnded = false;
+				
+				continue;
+			}
 			
 			// parse end command
 			if(endCmd && hasEndCmdEnded == false) {
 				
 				if(c == '>') {
 					hasEndCmdEnded = true;
-					endCommandPos = count + 1;
+					//endCommandPos = count + 1;
+					endCommandPositions.add(count + 1);
+				} else {
+					//endcmd.add(c);
+					
+					endcmd2.get(index).add(c);
+					
 				}
-				else endcmd.add(c);
 
 				continue;
 				
@@ -51,7 +88,10 @@ public class RichTextParser {
 			if(hasStartCmdTerminated && endCmd == false) {
 				
 				if(c == '<') endCmd = true;
-				else content.add(c);
+				else {
+					//content.add(c);
+					content2.get(index).add(c);
+				}
 				
 				continue;
 			}
@@ -67,7 +107,10 @@ public class RichTextParser {
 			if(startCmd && hasStartCmdEnded == false) {
 				
 				if(c == '=') hasStartCmdEnded = true;
-				else cmd.add(c);
+				else {
+					//cmd.add(c);
+					cmd2.get(index).add(c);
+				}
 				
 				continue;
 				
@@ -76,7 +119,10 @@ public class RichTextParser {
 				// parse command parameter
 				if(c == '"' && paramStarted == false) paramStarted = true; // first '"'
 				else if(c == '"' && paramStarted) paramEnded = true;	   // closing '"'
-				else if(paramEnded == false) parameter.add(c);  		   // cache parameter
+				else if(paramEnded == false) {							   // cache parameter
+					//parameter.add(c);
+					parameter2.get(index).add(c);
+				}
 				
 				continue;
 			}
@@ -85,11 +131,32 @@ public class RichTextParser {
 			// check whether we should start parsing a command
 			if(c == '<' && startCmd == false) {
 				startCmd = true;
-				startCommandPos = count;
+				//startCommandPos = count;
+				startCommandPositions.add(count);
 			}
 		}
 		
-		if(startCmd && hasStartCmdEnded && endCmd && hasEndCmdEnded) {
+		// loop through all commands in the string.
+		for(int i = 0; i < index; i++) {
+			
+			if(cmd2.get(i) == null || endcmd2.get(i) == null || content2.get(i) == null || parameter2.get(i) == null) {
+				System.out.println("wat");
+				continue;
+			}
+			
+			if(cmd2.get(i).isEmpty() || endcmd2.get(i).isEmpty() || content2.get(i).isEmpty() || parameter2.get(i).isEmpty()) {
+				System.out.println("wut");
+				continue;
+			}
+			
+			// cache the current commands data
+			List<Character> cmd = new ArrayList<Character>(cmd2.get(i));
+			List<Character> endcmd = new ArrayList<Character>(endcmd2.get(i));
+			List<Character> content = new ArrayList<Character>(content2.get(i));
+			List<Character> parameter = new ArrayList<Character>(parameter2.get(i));
+			
+			int startCommandPos = startCommandPositions.get(i);
+			int endCommandPos = endCommandPositions.get(i);
 			
 			// after parsing the string, we have to test if the cmd is the same as endcmd.
 			// if the commands are same, it's a complete and valid command.
@@ -115,6 +182,8 @@ public class RichTextParser {
 				// modify color with parsed data
 				Color color = new Color(r, g, b, 255);
 				
+				// TODO: PROBLEM HERE IN STRING BUILDING!
+				
 				// create a string that doesn't have the rich-text commands.
 				StringBuilder builder = new StringBuilder(inputString);            // create a stringbuilder 
 				builder = builder.delete(startCommandPos, endCommandPos);	       // delete the whole command, other parts of the string are left untouched.
@@ -131,7 +200,7 @@ public class RichTextParser {
 				data.setPositions(pos);
 				
 			} else data = null;
-			
+		
 		}
 		
 		// return parsed color and content
