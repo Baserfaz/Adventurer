@@ -7,6 +7,7 @@ import java.util.Map;
 import com.adventurer.data.World;
 import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.DoorType;
+import com.adventurer.enumerations.ItemRarity;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.main.DamageHandler;
@@ -21,7 +22,7 @@ public class Bomb extends Usable {
 	
 	public Bomb(Tile tile, SpriteType spritetype, int liveTime,
 			Map<DamageType, Integer> damage, String name, String description, int value) {
-		super(tile, spritetype, name, description, value);
+		super(tile, spritetype, name, description, value, ItemRarity.Generic);
 		
 		this.damage = new LinkedHashMap<DamageType, Integer>(damage);
 		this.liveTime = liveTime;

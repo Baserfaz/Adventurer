@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.adventurer.data.World;
-import com.adventurer.enumerations.ArmorSlot;
-import com.adventurer.enumerations.ItemNames;
+import com.adventurer.enumerations.ItemRarity;
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.main.Game;
 import com.adventurer.main.ItemCreator;
@@ -21,15 +20,17 @@ public class Chest extends Item {
 	private List<Item> itemsInside = new ArrayList<Item>();
 	
 	public Chest(Tile tile, SpriteType spritetype, boolean locked) {
-		super(tile, spritetype, "Chest", "Holds valuable goodies.", 0);
+		super(tile, spritetype, "Chest", "Holds valuable goodies.", 0, ItemRarity.Generic);
 		this.locked = locked;
 		
 		// put item(s) inside the chest.
 		// TODO: randomize loot.
 		
-		itemsInside.add(ItemCreator.createGold(tile, Util.GetRandomInteger(1, 5)));
+		if(Util.GetRandomInteger() < Game.CHEST_GOLD_CHANCE) {
+			itemsInside.add(ItemCreator.createGold(tile, Util.GetRandomInteger(1, 5)));
+		}
 		
-		Armor armor = ItemCreator.createArmor(tile, ItemNames.Leather, ArmorSlot.Chest);
+		/*Armor armor = ItemCreator.createArmor(tile, ItemNames.Leather, ArmorSlot.Chest);
 		armor.getBonuses().setStrBonus(1);
 		itemsInside.add(armor);
 		
@@ -55,7 +56,7 @@ public class Chest extends Item {
 		
 		Weapon oh = ItemCreator.createWeapon(tile, ItemNames.LightWoodenShield);
 		oh.getBonuses().setVitBonus(2);
-		itemsInside.add(oh);
+		itemsInside.add(oh);*/
 		
 		// register to tile
 		tile.AddItem(this);

@@ -1,7 +1,10 @@
 package com.adventurer.main;
 
+import java.awt.Color;
+
 import com.adventurer.enumerations.SpriteType;
 import com.adventurer.gameobjects.VisualEffect;
+import com.adventurer.utilities.Renderer;
 import com.adventurer.gameobjects.Tile;
 
 public class VisualEffectCreator {

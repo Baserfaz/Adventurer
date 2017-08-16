@@ -49,7 +49,7 @@ public class Handler {
 	private Tile hoverTile = null;
 	private Coordinate mousePosition = new Coordinate(0, 0);
 	
-	// GUI cursors
+	// GUI cursor positions
 	private int inventoryCursorPos = 0;
 	private int equipmentCursorPos = 0;
 	

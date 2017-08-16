@@ -10,6 +10,7 @@ import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.Direction;
 import com.adventurer.enumerations.Effect;
 import com.adventurer.enumerations.ItemNames;
+import com.adventurer.enumerations.ItemRarity;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.enumerations.RootElement;
 import com.adventurer.enumerations.SpriteType;
@@ -126,8 +127,11 @@ public class ItemCreator {
 				default: System.out.println("COULDNT GET ARMORSLOT: " + armorSlot);
 			}
 			
+			// TODO: rarity, prefixes + suffixes
+			ItemRarity itemRarity = ItemRarity.Generic;
+			
 			// create new armor with the info.
-			armor = new Armor(tile, SpriteType.GenericItem, name, description, value, armorSlot, defenseValues);
+			armor = new Armor(tile, SpriteType.GenericItem, name, description, value, itemRarity, armorSlot, defenseValues);
 		}
 		return armor;
 	}
@@ -180,7 +184,7 @@ public class ItemCreator {
 					
 				}
 				else if(key.equals("PHYSICAL")) damageValues.put(DamageType.Physical, Integer.parseInt(val));
-				else if(key.equals("FIRE")) damageValues.put(DamageType.Fire, Integer.parseInt(val)); 
+				else if(key.equals("FIRE")) damageValues.put(DamageType.Fire, Integer.parseInt(val));
 				else if(key.equals("FROST")) damageValues.put(DamageType.Frost, Integer.parseInt(val)); 
 				else if(key.equals("SHOCK")) damageValues.put(DamageType.Shock, Integer.parseInt(val)); 
 				else if(key.equals("HOLY")) damageValues.put(DamageType.Holy, Integer.parseInt(val)); 
@@ -190,8 +194,11 @@ public class ItemCreator {
 				}
 			}
 			
+			// TODO: rarity and prefixes + suffixes
+			ItemRarity itemRarity = ItemRarity.Generic;
+			
 			// create weapon with data.
-			weapon = new Weapon(tile, SpriteType.GenericItem, name, description, value, damageValues, weaponType, weaponSlot);
+			weapon = new Weapon(tile, SpriteType.GenericItem, name, description, value, itemRarity, damageValues, weaponType, weaponSlot);
 		}
 		return weapon;
 	}

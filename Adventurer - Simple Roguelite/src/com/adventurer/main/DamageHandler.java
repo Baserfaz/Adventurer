@@ -12,6 +12,7 @@ public class DamageHandler {
 	public static void actorRestoreMana(Actor actor, int amount) {
 		actor.getMana().addMP(amount);
 		VisualEffectCreator.CreateHealEffect(actor.getCurrentTile());
+		
 	}
 	
 	public static void ActorHeal(Actor actor, int amount) {

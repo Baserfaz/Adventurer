@@ -17,12 +17,12 @@ public class Item extends GameObject {
 	protected int value;
 	protected ItemRarity itemRarity;
 	
-	public Item(Tile tile, SpriteType spritetype, String name, String description, int value) {
+	public Item(Tile tile, SpriteType spritetype, String name, String description, int value, ItemRarity itemRarity) {
 		super(tile.GetWorldPosition(), tile.GetTilePosition(), spritetype);
 		this.itemName = name;
 		this.description = description;
 		this.value = value;
-		this.itemRarity = ItemRarity.Generic;
+		this.itemRarity = itemRarity;
 	}
 	
 	public void Remove() {

@@ -67,6 +67,9 @@ public class Game extends Canvas implements Runnable {
 	public static final Color RARITYCOLOR_EPIC = new Color(137, 99, 186);
 	public static final Color RARITYCOLOR_LEGENDARY = new Color(249, 160, 63);
 	
+	// loot spawn chances
+	public static final int CHEST_GOLD_CHANCE = 25;
+	
 	// tile settings
 	public static final int TILEGAP = 2;
 	

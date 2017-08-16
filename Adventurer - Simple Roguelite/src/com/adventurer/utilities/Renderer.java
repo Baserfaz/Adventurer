@@ -72,31 +72,28 @@ public class Renderer {
         Renderer.FillScreen(g, Color.black);
 	    
         // title
-        Renderer.renderString("Adventurer", new Coordinate(Game.WIDTH / 3, 100), Color.white, 36, g2d);
-        
-        // creator info
-        //Renderer.renderString("by Heikki Heiskanen", new Coordinate(Game.WIDTH / 3, 150), Color.gray, 21, g2d);
+        Renderer.renderString("Adventurer", new Coordinate(Game.WIDTH / 3, 100), Color.white, 24, g2d);
         
         // information about the dungeon
         if(World.instance.getWorldType() == WorldType.Random) {
             
             // dungeon generation states
             Renderer.renderString(">> Generating " + DungeonGeneration.state, 
-                    new Coordinate(Game.WIDTH / 3, 300), Color.white, 32, g2d);
+                    new Coordinate(Game.WIDTH / 3, 300), Color.white, 16, g2d);
             
             // dungeon settings
             Renderer.renderString("Dungeon size: " + Game.WORLDWIDTH + "x" + Game.WORLDHEIGHT +
                     "\nMax room count: " + Game.ROOM_COUNT +
                     "\nMax doors per room: " + Game.ROOM_DOOR_MAX_COUNT,
-                    new Coordinate(Game.WIDTH / 3, 350), Color.white, 18, g2d);
+                    new Coordinate(Game.WIDTH / 3, 350), Color.white, 16, g2d);
             
         } else if(World.instance.getWorldType() == WorldType.Predefined) {
             
             if(gameState == GameState.Loading) {
-                Renderer.renderString("Creating world...", new Coordinate(Game.WIDTH / 3, 300), Color.white, 32, g2d);
+                Renderer.renderString("Creating world...", new Coordinate(Game.WIDTH / 3, 300), Color.white, 16, g2d);
             } else if(gameState == GameState.Ready) {
-                // TODO: the name of the world/predefined should not be hard coded.
-                Renderer.renderString("World created. \n>>Lobby", new Coordinate(Game.WIDTH / 3, 300), Color.white, 32, g2d);
+                // TODO: the name of the world/predefined map should not be hard coded.
+                Renderer.renderString("World created. \n>> Lobby", new Coordinate(Game.WIDTH / 3, 300), Color.white, 16, g2d);
             }
             
         }
@@ -104,7 +101,7 @@ public class Renderer {
         // print finished 
         if(gameState == GameState.Ready) {
             Renderer.renderString("Press any key to continue...", 
-                    new Coordinate(Game.WIDTH / 3, 500), Color.white, 18, g2d);
+                    new Coordinate(Game.WIDTH / 3, 500), Color.white, 16, g2d);
         }
 	}
 	
