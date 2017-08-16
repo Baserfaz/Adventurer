@@ -34,9 +34,13 @@ import com.adventurer.main.Game;
 
 public class Util {
 	
+	// ------------------------ RANDOMIZATION -------------------------
+	
 	public static Direction GetRandomCardinalDirection() { return Direction.values()[Util.GetRandomInteger(0, 4)]; }
 	public static int GetRandomInteger() { return ThreadLocalRandom.current().nextInt(0, 101); }
 	public static int GetRandomInteger(int min, int max) { return ThreadLocalRandom.current().nextInt(min, max); }
+	
+	// ------------------------ MATH ----------------------------------
 	
 	// http://stackoverflow.com/questions/16656651/does-java-have-a-clamp-function
 	public static int clamp(int val, int min, int max) { return Math.max(min, Math.min(max, val)); }
@@ -46,6 +50,8 @@ public class Util {
 	
 	// http://www.java-gaming.org/index.php?topic=34706.0
 	public static int lerp(int point1, int point2, float alpha) { return Math.round(point1 + alpha * (point2 - point1)); }
+	
+	// ----------------------- IMAGE UTILS ----------------------------
 	
 	// http://stackoverflow.com/questions/4248104/applying-a-tint-to-an-image-in-java
 	public static BufferedImage tint(BufferedImage image, boolean darker) {
@@ -99,8 +105,6 @@ public class Util {
 		}
 		return tintedImage;
 	}
-	
-	
 	
 	public static BufferedImage highlightTileBorders(BufferedImage image, Color tintColor) {
 		
@@ -172,17 +176,7 @@ public class Util {
 		 return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 	}
 	
-	public static String Capitalize(String s) {
-		String a = s.substring(0, 1).toUpperCase();
-		String b = s.substring(1, s.length()).toLowerCase();
-		return a + b;
-	}
-	
-	public static Coordinate calculateCameraPos(Player player) {
-        int x = ((-player.GetWorldPosition().getX() * Game.CAMERAZOOM) - (Game.SPRITESIZE - Game.WIDTH / 2)) / Game.CAMERAZOOM;
-        int y = ((-player.GetWorldPosition().getY() * Game.CAMERAZOOM) - (Game.SPRITESIZE - Game.HEIGHT / 2)) / Game.CAMERAZOOM;
-	    return new Coordinate(x, y);
-	}
+	// ------------------ RESOURCE LOADING -----------------------
 	
 	// https://stackoverflow.com/questions/5652344/how-can-i-use-a-custom-font-in-java
 	public static void loadCustomFont() {
@@ -201,6 +195,24 @@ public class Util {
 	    Game.instance.setCustomFont(font);
 	    
 	    System.out.println("Succesfully loaded custom font: " + font.getFontName());
+	}
+	
+	// ----------------- OTHER UTILS -------------------------------
+	
+	public static String colorToString(Color color) { return color.getRed() + "," + color.getGreen() + "," + color.getBlue(); }
+	public static String generateRichTextForColor(Color color, String string) { return "<color=\"" + Util.colorToString(color) + "\">" + string + "</color>"; }
+	public static String generateRichTextForColor(Color color, int amount) { return generateRichTextForColor(color, amount + ""); }
+	
+	public static String Capitalize(String s) {
+		String a = s.substring(0, 1).toUpperCase();
+		String b = s.substring(1, s.length()).toLowerCase();
+		return a + b;
+	}
+	
+	public static Coordinate calculateCameraPos(Player player) {
+        int x = ((-player.GetWorldPosition().getX() * Game.CAMERAZOOM) - (Game.SPRITESIZE - Game.WIDTH / 2)) / Game.CAMERAZOOM;
+        int y = ((-player.GetWorldPosition().getY() * Game.CAMERAZOOM) - (Game.SPRITESIZE - Game.HEIGHT / 2)) / Game.CAMERAZOOM;
+	    return new Coordinate(x, y);
 	}
 	
 	public static String getRandomSubtitle() {

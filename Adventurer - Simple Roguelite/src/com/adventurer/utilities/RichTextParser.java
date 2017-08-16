@@ -109,8 +109,8 @@ public class RichTextParser {
 				// get color channels
 				String[] params = param.split(",");
 				int r = Integer.parseInt(params[0]);
-				int b = Integer.parseInt(params[1]);
-				int g = Integer.parseInt(params[2]);
+				int g = Integer.parseInt(params[1]);
+				int b = Integer.parseInt(params[2]);
 				
 				// modify color with parsed data
 				Color color = new Color(r, g, b, 255);

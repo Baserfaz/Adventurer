@@ -60,12 +60,16 @@ public class Game extends Canvas implements Runnable {
 	public static final boolean CALCULATE_PLAYER_LOS   = true;
 	public static final boolean PERMANENTLY_SHOW_TILES = false;
 
-	// Rarity colors
-	public static final Color RARITYCOLOR_TRASH = new Color(159, 159, 146);
-	public static final Color RARITYCOLOR_GENERIC = new Color(255, 255, 255);
-	public static final Color RARITYCOLOR_SUPERIOR = new Color(37, 137, 189);
-	public static final Color RARITYCOLOR_EPIC = new Color(137, 99, 186);
+	// Color data
+	public static final Color RARITYCOLOR_TRASH     = new Color(159, 159, 146);
+	public static final Color RARITYCOLOR_GENERIC   = new Color(255, 255, 255);
+	public static final Color RARITYCOLOR_SUPERIOR  = new Color(37, 137, 189);
+	public static final Color RARITYCOLOR_EPIC      = new Color(137, 99, 186);
 	public static final Color RARITYCOLOR_LEGENDARY = new Color(249, 160, 63);
+	
+	// GUI colors
+	public static final Color GUI_HEALTH = new Color(186, 33, 13);
+	public static final Color GUI_MANA   = new Color(57, 67, 183);
 	
 	// loot spawn chances
 	public static final int CHEST_GOLD_CHANCE = 25;

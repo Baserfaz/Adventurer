@@ -315,8 +315,8 @@ public class Handler {
 	            		+ "Level: %d\n"
 	            		+ "Experience: %d / %d\n"
 	            		+ "-------- VITALS --------\n"
-	            		+ "Health: %d / %d\n"
-	            		+ "Mana:   %d / %d\n"
+	            		+ "Health: %s / %s\n"
+	            		+ "Mana:   %s / %s\n"
 	            		+ "-------- STATS ---------\n"
 	            		+ "STR: %d (%d + %d)\n"
 	            		+ "VIT: %d (%d + %d)\n"
@@ -345,9 +345,9 @@ public class Handler {
 	            		exp.getCurrentExp(),
 	            		exp.getNeededExp(exp.getCurrentLevel()),
 	            		
-	            		player.getHealth().GetCurrentHealth(),
+	            		Util.generateRichTextForColor(Game.GUI_HEALTH, player.getHealth().GetCurrentHealth()),
 	            		player.getHealth().GetMaxHP(),
-	            		player.getMana().GetCurrentMana(),
+	            		Util.generateRichTextForColor(Game.GUI_MANA, player.getMana().GetCurrentMana()),
 	            		player.getMana().GetMaxMP(),
 	            		
 	            		stats.getSumStr(),
