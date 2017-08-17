@@ -474,8 +474,8 @@ public class Handler {
         	else if(cachedTile instanceof Door) tileinfo = ((Door)cachedTile).toString();
         	
         	// format our complete string
-        	String txt = String.format("Pos: %s\nTile: %s\nActor: %s\nItem: %s", 
-        					cachedTile.GetTilePosition().toString(), tileinfo, actorinfo, iteminfo);
+        	String txt = String.format("Tile: %s\nActor: %s\nItem: %s", 
+        					/*cachedTile.GetTilePosition().toString(),*/ tileinfo, actorinfo, iteminfo);
         	
         	Renderer.renderString(txt, tileinfo_coord, Color.white, Game.BASEFONTSIZE, g2d);
         	
@@ -665,10 +665,9 @@ public class Handler {
 	}
 	
 	public void moveInvCursorUp() {
-		int max = ActorManager.GetPlayerInstance().getInventory().getMaxSize();
-		if(this.inventoryCursorPos == 0) {
-			this.setInventoryCursorPos(max - 1);
-		} else this.setInventoryCursorPos(inventoryCursorPos - 1);
+		int max = ActorManager.GetPlayerInstance().getInventory().getInventoryItems().size();//ActorManager.GetPlayerInstance().getInventory().getMaxSize();
+		if(this.inventoryCursorPos == 0) this.setInventoryCursorPos(max - 1);
+		else this.setInventoryCursorPos(inventoryCursorPos - 1);
 	}
 
 	public void moveEquipmentCursorDown() {

@@ -21,29 +21,24 @@ public class Inventory {
 	private List<Item> inventory = new ArrayList<Item>();
 	
 	public Inventory(Actor actor) {
+		
 		this.maxInventorySpace = Game.DEFAULT_INVENTORY_MAX_SIZE;
 		
 		Tile tile = actor.getCurrentTile();
 		
+		/*
+		 *  Player starting gear:
+		 *  1x dagger
+		 *  1x HP pot
+		 *  nx keys
+		 * 
+		 */
+		
 		// populate inventory
-		for(int i = 0; i < Game.START_KEY_COUNT; i++) {
-			this.addToInventory(ItemCreator.createKey(tile, KeyType.Normal));
-		}
-		
-		for(int i = 0; i < Game.START_BOMB_COUNT; i++) {
-			this.addToInventory(ItemCreator.createBomb(tile, DamageType.Physical));
-		}
-		
-		for(int i = 0; i < Game.START_PROJECTILE_COUNT; i++) {
-			this.addToInventory(ItemCreator.createProjectile(tile, DamageType.Physical, 5, null));
-		}
-		
+		for(int i = 0; i < Game.START_KEY_COUNT; i++) { this.addToInventory(ItemCreator.createKey(tile, KeyType.Normal)); }
 		this.addToInventory(ItemCreator.createWeapon(tile, ItemNames.Dagger));
-		
-		// DEBUG ITEMS HERE
 		this.addToInventory(ItemCreator.createHealthPotion(tile, 15));
-		this.addToInventory(ItemCreator.createManaPotion(tile, 15));
-		//this.addToInventory(ItemCreator.createRestorationPotion(tile, 15));
+		
 	}
 	
 	// returns false if inventory is full
