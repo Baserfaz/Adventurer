@@ -314,22 +314,22 @@ public class Handler {
 	            		+ "Class: %s\n"
 	            		+ "Level: %d\n"
 	            		+ "Experience: %d / %d\n"
-	            		+ "-------- VITALS --------\n"
+	            		+ "-------- %s --------\n"
 	            		+ "Health: %s / %s\n"
 	            		+ "Mana:   %s / %s\n"
-	            		+ "-------- STATS ---------\n"
+	            		+ "-------- %s ---------\n"
 	            		+ "STR: %d (%d + %d)\n"
 	            		+ "VIT: %d (%d + %d)\n"
 	            		+ "INT: %d (%d + %d)\n"
 	            		+ "DEX: %d (%d + %d)\n"
-	            		+ "-------- DAMAGE --------\n"
+	            		+ "-------- %s --------\n"
 	            		+ "Melee: %d, Magic: %d, Ranged: %d\n"
 	            		+ "Physical:  %d\n" 
 	            		+ "Fire:      %d\n"
 	            		+ "Frost:     %d\n"
 	            		+ "Shock:     %d\n"
 	            		+ "Holy:      %d\n"
-	            		+ "------ RESISTANCES -----\n"
+	            		+ "------ %s -----\n"
 	            		+ "Physical: %s\n"
 	            		+ "Fire:     %s\n"
 	            		+ "Frost:    %s\n"
@@ -342,11 +342,13 @@ public class Handler {
 	            		exp.getCurrentExp(),
 	            		exp.getNeededExp(exp.getCurrentLevel()),
 	            		
+	            		Util.generateRichTextForColor(Color.white, "VITALS"),
 	            		Util.generateRichTextForColor(Game.GUI_HEALTH, player.getHealth().GetCurrentHealth()),
 	            		player.getHealth().GetMaxHP(),
 	            		Util.generateRichTextForColor(Game.GUI_MANA, player.getMana().GetCurrentMana()),
 	            		player.getMana().GetMaxMP(),
 	            		
+	            		Util.generateRichTextForColor(Color.white, "STATS"),
 	            		stats.getSumStr(),
 		            	stats.getBaseStrength(),
 		            	stats.getAddedStr(),
@@ -362,7 +364,8 @@ public class Handler {
 		            	stats.getSumDex(),
 		            	stats.getBaseDexterity(),
 		            	stats.getAddedDex(),
-		            	
+
+		            	Util.generateRichTextForColor(Color.white, "DAMAGE"),
 		            	Util.calcMeleeDamage(),  // calculated from str
 		            	Util.calcMagicDamage(),  // calculated from int
 		            	Util.calcRangedDamage(), // calculated from dex
@@ -373,6 +376,7 @@ public class Handler {
 		            	offense.getMeleeDmgOfType(DamageType.Shock),
 		            	offense.getMeleeDmgOfType(DamageType.Holy),
 
+		            	Util.generateRichTextForColor(Color.white, "RESISTANCES"),
 		            	resistances.getPhysicalResistance(),
 		            	resistances.getFireResistance(),
 		            	resistances.getFrostResistance(),
