@@ -41,8 +41,8 @@ public class Inventory {
 		this.addToInventory(ItemCreator.createWeapon(tile, ItemNames.Dagger));
 		
 		// DEBUG ITEMS HERE
-		//this.addToInventory(ItemCreator.createHealthPotion(tile, 15));
-		//this.addToInventory(ItemCreator.createManaPotion(tile, 15));
+		this.addToInventory(ItemCreator.createHealthPotion(tile, 15));
+		this.addToInventory(ItemCreator.createManaPotion(tile, 15));
 		//this.addToInventory(ItemCreator.createRestorationPotion(tile, 15));
 	}
 	

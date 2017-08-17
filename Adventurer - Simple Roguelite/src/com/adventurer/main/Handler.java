@@ -288,8 +288,8 @@ public class Handler {
 		    
 			// render vitals (HP etc.)
 			Renderer.renderString(
-		        "\nHP: " + player.getHealth().GetCurrentHealth() + "/" + player.getHealth().GetMaxHP() + "\n" +
-		        "MP: " + player.getMana().GetCurrentMana() + "/" + player.getMana().GetMaxMP() + "\n",
+		        "\nHP: " + Util.generateRichTextForColor(Game.GUI_HEALTH, player.getHealth().GetCurrentHealth()) + " / " + player.getHealth().GetMaxHP() + "\n" +
+		        "MP: " + Util.generateRichTextForColor(Game.GUI_MANA, player.getMana().GetCurrentMana()) + " / " + player.getMana().GetMaxMP() + "\n",
 		        stats_coord,
 		        Color.gray, Game.BASEFONTSIZE, g2d
 			);
@@ -324,7 +324,11 @@ public class Handler {
 	            		+ "DEX: %d (%d + %d)\n"
 	            		+ "-------- DAMAGE --------\n"
 	            		+ "Melee: %d, Magic: %d, Ranged: %d\n"
-	            		+ "fire: %d, frost: %d, shock: %d, holy: %d, phys: %d\n"
+	            		+ "Physical:  %d\n" 
+	            		+ "Fire:      %d\n"
+	            		+ "Frost:     %d\n"
+	            		+ "Shock:     %d\n"
+	            		+ "Holy:      %d\n"
 	            		+ "------ RESISTANCES -----\n"
 	            		+ "Physical: %s\n"
 	            		+ "Fire:     %s\n"
@@ -363,11 +367,11 @@ public class Handler {
 		            	Util.calcMagicDamage(),  // calculated from int
 		            	Util.calcRangedDamage(), // calculated from dex
 		            	
+		            	offense.getTotalMeleeDmgOfType(DamageType.Physical), // total: weapon + stats
 		            	offense.getMeleeDmgOfType(DamageType.Fire),
 		            	offense.getMeleeDmgOfType(DamageType.Frost),
 		            	offense.getMeleeDmgOfType(DamageType.Shock),
 		            	offense.getMeleeDmgOfType(DamageType.Holy),
-		            	offense.getTotalMeleeDmgOfType(DamageType.Physical), // total: weapon + stats
 
 		            	resistances.getPhysicalResistance(),
 		            	resistances.getFireResistance(),

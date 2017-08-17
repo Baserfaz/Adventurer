@@ -160,6 +160,7 @@ public class SpriteCreator {
 		    // other
 		    case Hit01: row = 14; column = 0; break;
 		    case Heal: row = 14; column = 2; break;
+		    case HealMana: row = 14; column = 3; break;
 		    case Error: row = 11; column = 0; break;
 		    
 		    default: System.out.println("NO SPRITE OF TYPE: " + type); break;
