@@ -362,11 +362,11 @@ public class Handler {
 		            	
 		            	Util.calcMeleeDamage(),  // calculated from str
 		            	
-		            	Util.generateRichTextForColor(Game.GUI_DMG_FIRE, offense.getMeleeDmgOfType(DamageType.Fire)),
-		            	Util.generateRichTextForColor(Game.GUI_DMG_FROST, offense.getMeleeDmgOfType(DamageType.Frost)),
-		            	Util.generateRichTextForColor(Game.GUI_DMG_SHOCK, offense.getMeleeDmgOfType(DamageType.Shock)),
-		            	Util.generateRichTextForColor(Game.GUI_DMG_HOLY, offense.getMeleeDmgOfType(DamageType.Holy)),
-		            	Util.generateRichTextForColor(Game.GUI_DMG_PHYSICAL, offense.getTotalMeleeDmgOfType(DamageType.Physical)), // total: weapon + stats
+		            	offense.getMeleeDmgOfType(DamageType.Fire),
+		            	offense.getMeleeDmgOfType(DamageType.Frost),
+		            	offense.getMeleeDmgOfType(DamageType.Shock),
+		            	offense.getMeleeDmgOfType(DamageType.Holy),
+		            	offense.getTotalMeleeDmgOfType(DamageType.Physical), // total: weapon + stats
 		            	
 		            	Util.calcMagicDamage(),  // calculated from int
 		            	Util.calcRangedDamage(), // calculated from dex

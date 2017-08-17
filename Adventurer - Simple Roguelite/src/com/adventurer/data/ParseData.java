@@ -6,33 +6,28 @@ import java.util.List;
 
 public class ParseData {
 
-	private List<String> string;
-	private List<Color> color;
-	private List<int[]> positions;
+	private String string;
+	private Color color;
+	private int[] positions;
 	
 	public ParseData() {
-		this.string = new ArrayList<String>();
-		this.color = new ArrayList<Color>();
-		this.positions = new ArrayList<int[]>();
+		this.string = null;
+		this.color = null;
+		this.positions = new int[2];
 	}
 	
 	public ParseData(String string, Color color, int[] positions) {
-		this.string = new ArrayList<String>();
-		this.string.add(string);
-		
-		this.color = new ArrayList<Color>();
-		this.color.add(color);
-		
-		this.positions = new ArrayList<int[]>();
-		this.positions.add(positions);
+		this.string = string;
+		this.color = color;
+		this.positions = positions;
 	}
 
-	public List<String> getStrings() { return this.string; }
-	public List<Color> getColors() { return this.color; }
-	public List<int[]> getPositions() { return this.positions; }
+	public String getString() { return string; }
+	public Color getColor() { return color; }
+	public int[] getPositions() { return positions; }
 	
-	public void addString(String string) { this.string.add(string); }
-	public void addColor(Color color) { this.color.add(color); }
-	public void addPositions(int[] positions) { this.positions.add(positions); }
+	public void setString(String string) { this.string = string; }
+	public void setColor(Color color) { this.color = color; }
+	public void setPositions(int[] positions) { this.positions = positions; }
 	
 }

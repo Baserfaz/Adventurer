@@ -26,37 +26,7 @@ public class Chest extends Item {
 		// put item(s) inside the chest.
 		// TODO: randomize loot.
 		
-		if(Util.GetRandomInteger() < Game.CHEST_GOLD_CHANCE) {
-			itemsInside.add(ItemCreator.createGold(tile, Util.GetRandomInteger(1, 5)));
-		}
-		
-		/*Armor armor = ItemCreator.createArmor(tile, ItemNames.Leather, ArmorSlot.Chest);
-		armor.getBonuses().setStrBonus(1);
-		itemsInside.add(armor);
-		
-		Armor armor2 = ItemCreator.createArmor(tile, ItemNames.Leather,  ArmorSlot.Feet);
-		armor2.getBonuses().setDexBonus(1);
-		itemsInside.add(armor2);
-		
-		Armor armor3 = ItemCreator.createArmor(tile, ItemNames.Leather,  ArmorSlot.Hands);
-		armor3.getBonuses().setIntBonus(1);
-		itemsInside.add(armor3);
-		
-		Armor armor4 = ItemCreator.createArmor(tile, ItemNames.Leather,  ArmorSlot.Head);
-		armor4.getBonuses().setDexBonus(1);
-		itemsInside.add(armor4);
-		
-		Armor armor5 = ItemCreator.createArmor(tile, ItemNames.Leather,  ArmorSlot.Legs);
-		armor5.getBonuses().setDexBonus(1);
-		itemsInside.add(armor5);
-		
-		Weapon ba = ItemCreator.createWeapon(tile, ItemNames.Battleaxe);
-		ba.getBonuses().setStrBonus(1);
-		itemsInside.add(ba);
-		
-		Weapon oh = ItemCreator.createWeapon(tile, ItemNames.LightWoodenShield);
-		oh.getBonuses().setVitBonus(2);
-		itemsInside.add(oh);*/
+		itemsInside.add(ItemCreator.createGold(tile, Util.GetRandomInteger(1, 5)));
 		
 		// register to tile
 		tile.AddItem(this);

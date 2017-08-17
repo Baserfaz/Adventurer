@@ -41,19 +41,8 @@ public class Renderer {
 		// --> cleaner look.
 		int xPos = Game.WIDTH / 5 - 20;
 		
-		String adven = Util.generateRichTextForColor(Color.red, "adven");
-		String tu = Util.generateRichTextForColor(Color.blue, "tu");
-		String rer = Util.generateRichTextForColor(Color.green, "rer");
-		
-		// DEBUGGING
-		Renderer.renderString("Awesome " + adven + tu + rer,
-		new Coordinate(xPos, 125), Color.white, 36, g2d);
-		
-		Renderer.renderString("Awesome!!!",
-		new Coordinate(xPos, 200), Color.white, 36, g2d);
-		
         // title
-        /*Renderer.renderString("ADVENTURER", new Coordinate(xPos, 125), Color.white, 36, g2d);
+        Renderer.renderString("ADVENTURER", new Coordinate(xPos, 125), Color.white, 36, g2d);
         
         // game subtitle :)
         Renderer.renderString(Game.instance.getMainmenuSubtitle(), new Coordinate(xPos + 20, 170), Color.gray, 18, g2d);
@@ -68,7 +57,7 @@ public class Renderer {
         Renderer.renderButton("Play", new Coordinate(xPos, 250), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
         
         // draw exit button
-        Renderer.renderButton("Exit", new Coordinate(xPos, 350), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);*/
+        Renderer.renderButton("Exit", new Coordinate(xPos, 350), new Coordinate(200, 50), Color.black, Color.white, 21, true, g2d);
 	}
 	
 	public static void renderLoading(Graphics g) {
@@ -288,48 +277,41 @@ public class Renderer {
             // parse the string for color commands
             ParseData data = RichTextParser.parseStringColor(line);
             
-            // position and character count
-            int xPos = 0, count = 0;
-            
-            // loop through all data and render strings
-            for(int i = 0; i < data.getStrings().size(); i++) {
-            
-	            if(data.getStrings().isEmpty() == false) {
-	            	
-	            	hasRichText = true;
-	            	
-	            	// cache vars
-		        	int[] positions = data.getPositions().get(i);
-		        	Color col = data.getColors().get(i);
-		        	
-		        	// loop through all characters in string
-		        	for(char c : data.getStrings().get(i).toCharArray()) {
-		        		
-		        		// calculate x-position
-		        		if(count == 0) xPos = x;
-		        		else xPos += g2d.getFontMetrics().charWidth(c);
-		        		
-		        		if(count > positions[0] && count < positions[1]) {
-		        			
-		        			// change the color
-		                  	g2d.setColor(col);
-		                	g2d.drawString(c + "", xPos, y);
-		        			
-		        		} else {
-		        			
-		        			// if the current character is not inside the rich text we use basecolor.
-		        			g2d.setColor(baseColor);
-		        			g2d.drawString(c + "", xPos, y);
-		        			
-		        		}
-		        		
-		        		count ++;
-		        	}
-	            }
+            if(data.getString() != null) {
+            	
+            	// cache vars
+	        	int count = 0, xPos = 0;
+	        	int[] positions = data.getPositions();
+	        	Color col = data.getColor();
+	        	
+	        	for(char c : data.getString().toCharArray()) {
+	        		
+	        		// calculate x-position
+	        		if(count == 0) xPos = x;
+	        		else xPos += g2d.getFontMetrics().charWidth(c);
+	        		
+	        		if(count > positions[0] && count < positions[1]) {
+	        			
+	        			// change the color
+	                  	g2d.setColor(col);
+	                	g2d.drawString(c + "", xPos, y);
+	        			
+	        		} else {
+	        			
+	        			// if the current character is not inside the rich text we use basecolor.
+	        			g2d.setColor(baseColor);
+	        			g2d.drawString(c + "", xPos, y);
+	        			
+	        		}
+	        		
+	        		count ++;
+	        	}
+	        	
+	        	hasRichText = true;
             }
             
             // draw the string as it is,
-            // -> there is no richtext in it.
+            // there is no richtext in it.
             if(hasRichText == false) {
             	g2d.setColor(baseColor);
             	g2d.drawString(line, x, y);
@@ -337,4 +319,5 @@ public class Renderer {
             
         }
 	}
+	
 }
