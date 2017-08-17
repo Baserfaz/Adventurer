@@ -4,9 +4,6 @@ public enum SpriteType {
 	
 	// actors
 	Player,
-	Zombie01,
-    Maggot01,
-    Skeleton01,
     GenericEnemy,
     
     // floor tiles
