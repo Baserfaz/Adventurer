@@ -45,11 +45,12 @@ public class Renderer {
 		String tu = Util.generateRichTextForColor(Color.blue, "tu");
 		String rer = Util.generateRichTextForColor(Color.green, "rer");
 		
-		System.out.println(adven + tu + rer);
-		
 		// DEBUGGING
-		Renderer.renderString(/*"Awesome " +*/ adven + tu + rer,
+		Renderer.renderString("Awesome " + adven + tu + rer,
 		new Coordinate(xPos, 125), Color.white, 36, g2d);
+		
+		Renderer.renderString("Awesome!!!",
+		new Coordinate(xPos, 200), Color.white, 36, g2d);
 		
         // title
         /*Renderer.renderString("ADVENTURER", new Coordinate(xPos, 125), Color.white, 36, g2d);
@@ -295,6 +296,8 @@ public class Renderer {
             
 	            if(data.getStrings().isEmpty() == false) {
 	            	
+	            	hasRichText = true;
+	            	
 	            	// cache vars
 		        	int[] positions = data.getPositions().get(i);
 		        	Color col = data.getColors().get(i);
@@ -322,13 +325,11 @@ public class Renderer {
 		        		
 		        		count ++;
 		        	}
-		        	
-		        	hasRichText = true;
 	            }
             }
             
             // draw the string as it is,
-            // there is no richtext in it.
+            // -> there is no richtext in it.
             if(hasRichText == false) {
             	g2d.setColor(baseColor);
             	g2d.drawString(line, x, y);
