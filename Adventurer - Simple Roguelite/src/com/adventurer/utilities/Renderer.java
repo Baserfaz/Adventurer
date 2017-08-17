@@ -254,6 +254,7 @@ public class Renderer {
 	
 	public static void renderString(String txt, Coordinate pos, Color baseColor, int fontSize, Graphics2D g2d) {
 	    
+		// TODO: GUI scaling?
 		int calc_fontsize = fontSize * 2 - 4;
 		
         // create font

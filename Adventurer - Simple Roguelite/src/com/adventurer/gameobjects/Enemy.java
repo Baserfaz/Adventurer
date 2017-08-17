@@ -51,12 +51,11 @@ public class Enemy extends Actor {
 		this.setEnemyType(enemytype);
 		this.losManager = new EnemyLoSManager();
 		this.moveTimer = System.currentTimeMillis();
+		
 	}
 
 	public void render(Graphics g) {
-		if(hidden == false && discovered) {
-			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
-		}
+		if(hidden == false && discovered) Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 	}
 	
 	public void tick() {

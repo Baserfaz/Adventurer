@@ -424,7 +424,7 @@ public class Handler {
         
         // render inventory tag
         Renderer.renderString(
-        		"Inventory " + "(" + currentInvSpaces + "/" + player.getInventory().getMaxSize() + ")",
+        		"Inventory " + "(" + currentInvSpaces + " / " + player.getInventory().getMaxSize() + ")",
         		inventory_coord, Color.white, Game.BASEFONTSIZE, g2d
         );
         
@@ -603,7 +603,7 @@ public class Handler {
 			case Generic: rarityColor   = Game.RARITYCOLOR_GENERIC;   break;
 			case Legendary: rarityColor = Game.RARITYCOLOR_LEGENDARY; break;
 			case Superior: rarityColor  = Game.RARITYCOLOR_SUPERIOR;  break;
-			case Trash: rarityColor     = Game.RARITYCOLOR_TRASH;     break;
+			case Junk: rarityColor      = Game.RARITYCOLOR_JUNK;     break;
     	}
     	
     	// create a string containing r, g and b values.

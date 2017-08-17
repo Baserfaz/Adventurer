@@ -88,6 +88,10 @@ public class Actor extends GameObject {
 			// give player exp
 			ActorManager.GetPlayerInstance().getPlayerExperience().addCurrentExp(enemy.getExp());
 			
+			// TODO: spawn loot
+			
+			
+			
 			// remove gameobject
 			Remove();
 						

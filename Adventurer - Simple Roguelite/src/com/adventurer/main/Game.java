@@ -62,7 +62,7 @@ public class Game extends Canvas implements Runnable {
 
 	// Color data
 	// rarity colors
-	public static final Color RARITYCOLOR_TRASH     = new Color(159, 159, 146);
+	public static final Color RARITYCOLOR_JUNK     = new Color(159, 159, 146);
 	public static final Color RARITYCOLOR_GENERIC   = new Color(255, 255, 255);
 	public static final Color RARITYCOLOR_SUPERIOR  = new Color(37, 137, 189);
 	public static final Color RARITYCOLOR_EPIC      = new Color(137, 99, 186);
