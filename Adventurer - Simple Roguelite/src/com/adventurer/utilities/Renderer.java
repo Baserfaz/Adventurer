@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 
@@ -42,10 +41,14 @@ public class Renderer {
 		// --> cleaner look.
 		int xPos = Game.WIDTH / 5 - 20;
 		
+		String adven = Util.generateRichTextForColor(Color.red, "adven");
+		String tu = Util.generateRichTextForColor(Color.blue, "tu");
+		String rer = Util.generateRichTextForColor(Color.green, "rer");
+		
+		System.out.println(adven + tu + rer);
+		
 		// DEBUGGING
-		Renderer.renderString(
-				Util.generateRichTextForColor(Color.red, "adven") + 
-				Util.generateRichTextForColor(Color.blue, "turer"),
+		Renderer.renderString(/*"Awesome " +*/ adven + tu + rer,
 		new Coordinate(xPos, 125), Color.white, 36, g2d);
 		
         // title
@@ -284,37 +287,44 @@ public class Renderer {
             // parse the string for color commands
             ParseData data = RichTextParser.parseStringColor(line);
             
-            if(data.getString() != null) {
-            	
-            	// cache vars
-	        	int count = 0, xPos = 0;
-	        	int[] positions = data.getPositions();
-	        	Color col = data.getColor();
-	        	
-	        	for(char c : data.getString().toCharArray()) {
-	        		
-	        		// calculate x-position
-	        		if(count == 0) xPos = x;
-	        		else xPos += g2d.getFontMetrics().charWidth(c);
-	        		
-	        		if(count > positions[0] && count < positions[1]) {
-	        			
-	        			// change the color
-	                  	g2d.setColor(col);
-	                	g2d.drawString(c + "", xPos, y);
-	        			
-	        		} else {
-	        			
-	        			// if the current character is not inside the rich text we use basecolor.
-	        			g2d.setColor(baseColor);
-	        			g2d.drawString(c + "", xPos, y);
-	        			
-	        		}
-	        		
-	        		count ++;
-	        	}
-	        	
-	        	hasRichText = true;
+            // position and character count
+            int xPos = 0, count = 0;
+            
+            // loop through all data and render strings
+            for(int i = 0; i < data.getStrings().size(); i++) {
+            
+	            if(data.getStrings().isEmpty() == false) {
+	            	
+	            	// cache vars
+		        	int[] positions = data.getPositions().get(i);
+		        	Color col = data.getColors().get(i);
+		        	
+		        	// loop through all characters in string
+		        	for(char c : data.getStrings().get(i).toCharArray()) {
+		        		
+		        		// calculate x-position
+		        		if(count == 0) xPos = x;
+		        		else xPos += g2d.getFontMetrics().charWidth(c);
+		        		
+		        		if(count > positions[0] && count < positions[1]) {
+		        			
+		        			// change the color
+		                  	g2d.setColor(col);
+		                	g2d.drawString(c + "", xPos, y);
+		        			
+		        		} else {
+		        			
+		        			// if the current character is not inside the rich text we use basecolor.
+		        			g2d.setColor(baseColor);
+		        			g2d.drawString(c + "", xPos, y);
+		        			
+		        		}
+		        		
+		        		count ++;
+		        	}
+		        	
+		        	hasRichText = true;
+	            }
             }
             
             // draw the string as it is,
