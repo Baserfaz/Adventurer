@@ -2,6 +2,8 @@ package com.adventurer.main;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.adventurer.data.Equipment;
 import com.adventurer.enumerations.ArmorSlot;
@@ -16,6 +18,8 @@ import com.adventurer.gameobjects.Usable;
 
 public class KeyInput extends KeyAdapter {
 	
+	private List<Integer> buttons = new ArrayList<Integer>();
+	
 	public KeyInput() {}
 	
 	public void keyPressed(KeyEvent e) {
@@ -24,6 +28,7 @@ public class KeyInput extends KeyAdapter {
 	}
 	
 	private void inGameKeys(KeyEvent e) {
+		
 		// get the pressed key 
 		int key = e.getKeyCode();
 		
@@ -37,6 +42,10 @@ public class KeyInput extends KeyAdapter {
 		if(player.getHealth().isDead()) return;
 		
 		// -------------- HANDLE INPUTS ------------------
+		
+		// toggle keys
+		if(buttons.contains(key) == false) buttons.add(key);
+		else return;
 		
 		// cache in which gui state are we in.
 		GuiState guiState = Game.instance.getGuiState();
@@ -215,5 +224,5 @@ public class KeyInput extends KeyAdapter {
 		
 	}
 	
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) { buttons.clear(); }
 }

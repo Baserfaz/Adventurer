@@ -1,12 +1,10 @@
 package com.adventurer.data;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.adventurer.enumerations.DamageType;
-import com.adventurer.enumerations.Effect;
+import com.adventurer.enumerations.ItemNames;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.gameobjects.Actor;
 import com.adventurer.gameobjects.Gold;
@@ -40,10 +38,12 @@ public class Inventory {
 			this.addToInventory(ItemCreator.createProjectile(tile, DamageType.Physical, 5, null));
 		}
 		
+		this.addToInventory(ItemCreator.createWeapon(tile, ItemNames.Dagger));
+		
 		// DEBUG ITEMS HERE
-		this.addToInventory(ItemCreator.createHealthPotion(tile, 15));
-		this.addToInventory(ItemCreator.createManaPotion(tile, 15));
-		this.addToInventory(ItemCreator.createRestorationPotion(tile, 15));
+		//this.addToInventory(ItemCreator.createHealthPotion(tile, 15));
+		//this.addToInventory(ItemCreator.createManaPotion(tile, 15));
+		//this.addToInventory(ItemCreator.createRestorationPotion(tile, 15));
 	}
 	
 	// returns false if inventory is full
