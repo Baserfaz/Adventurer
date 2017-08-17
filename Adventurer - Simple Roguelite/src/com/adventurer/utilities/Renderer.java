@@ -279,6 +279,8 @@ public class Renderer {
             
             if(data.getString() != null) {
             	
+            	hasRichText = true;
+            	
             	// cache vars
 	        	int count = 0, xPos = 0;
 	        	int[] positions = data.getPositions();
@@ -306,8 +308,6 @@ public class Renderer {
 	        		
 	        		count ++;
 	        	}
-	        	
-	        	hasRichText = true;
             }
             
             // draw the string as it is,

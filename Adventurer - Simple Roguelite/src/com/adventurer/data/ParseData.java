@@ -1,8 +1,6 @@
 package com.adventurer.data;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ParseData {
 

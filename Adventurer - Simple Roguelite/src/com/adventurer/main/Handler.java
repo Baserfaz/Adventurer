@@ -323,15 +323,14 @@ public class Handler {
 	            		+ "INT: %d (%d + %d)\n"
 	            		+ "DEX: %d (%d + %d)\n"
 	            		+ "-------- DAMAGE --------\n"
-	            		+ "Melee:  %d (%s, %s, %s, %s, %s)\n"
-	            		+ "Magic:  %d\n"
-	            		+ "Ranged: %d\n"
+	            		+ "Melee: %d, Magic: %d, Ranged: %d\n"
+	            		+ "fire: %d, frost: %d, shock: %d, holy: %d, phys: %d\n"
 	            		+ "------ RESISTANCES -----\n"
-	            		+ "Physical: %d\n"
-	            		+ "Fire:     %d\n"
-	            		+ "Frost:    %d\n"
-	            		+ "Shock:    %d\n"
-	            		+ "Holy:     %d\n",
+	            		+ "Physical: %s\n"
+	            		+ "Fire:     %s\n"
+	            		+ "Frost:    %s\n"
+	            		+ "Shock:    %s\n"
+	            		+ "Holy:     %s\n",
 	            	
 	            		player.getName(),
 	            		player.getPlayerClass().toString(),
@@ -361,15 +360,14 @@ public class Handler {
 		            	stats.getAddedDex(),
 		            	
 		            	Util.calcMeleeDamage(),  // calculated from str
+		            	Util.calcMagicDamage(),  // calculated from int
+		            	Util.calcRangedDamage(), // calculated from dex
 		            	
 		            	offense.getMeleeDmgOfType(DamageType.Fire),
 		            	offense.getMeleeDmgOfType(DamageType.Frost),
 		            	offense.getMeleeDmgOfType(DamageType.Shock),
 		            	offense.getMeleeDmgOfType(DamageType.Holy),
 		            	offense.getTotalMeleeDmgOfType(DamageType.Physical), // total: weapon + stats
-		            	
-		            	Util.calcMagicDamage(),  // calculated from int
-		            	Util.calcRangedDamage(), // calculated from dex
 
 		            	resistances.getPhysicalResistance(),
 		            	resistances.getFireResistance(),
