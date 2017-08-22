@@ -3,7 +3,6 @@ package com.adventurer.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.ItemNames;
 import com.adventurer.enumerations.KeyType;
 import com.adventurer.gameobjects.Actor;
@@ -19,13 +18,13 @@ public class Inventory {
 
 	private int maxInventorySpace;
 	private List<Item> inventory = new ArrayList<Item>();
-	
+
 	public Inventory(Actor actor) {
-		
+
 		this.maxInventorySpace = Game.DEFAULT_INVENTORY_MAX_SIZE;
-		
+
 		Tile tile = actor.getCurrentTile();
-		
+
 		/*
 		 *  Player starting gear:
 		 *  1x dagger
@@ -33,17 +32,17 @@ public class Inventory {
 		 *  nx keys
 		 * 
 		 */
-		
+
 		// populate inventory
 		for(int i = 0; i < Game.START_KEY_COUNT; i++) { this.addToInventory(ItemCreator.createKey(tile, KeyType.Normal)); }
 		this.addToInventory(ItemCreator.createWeapon(tile, ItemNames.Dagger));
 		this.addToInventory(ItemCreator.createHealthPotion(tile, 15));
-		
+
 	}
-	
+
 	// returns false if inventory is full
 	public void addToInventory(Item item) {
-		
+
 		// stack gold.
 		if(item instanceof Gold) {
 			Gold currentGold = this.getGold();
@@ -52,12 +51,12 @@ public class Inventory {
 				return;
 			}
 		}
-		
+
 		if(this.isFull() == false) {
 			this.inventory.add(item);
 		} 
 	}
-	
+
 	public Projectile getProjectile() {
 		Projectile proj = null;
 		for(Item item : inventory) {
@@ -68,7 +67,7 @@ public class Inventory {
 		}
 		return proj;
 	}
-	
+
 	public Gold getGold() {
 		Gold gold = null;
 		for(Item item : inventory) {
@@ -79,7 +78,7 @@ public class Inventory {
 		}
 		return gold;
 	}
-	
+
 	public Key getKey(KeyType keyType) {
 		Key key = null;
 		for(Item item : inventory) {
@@ -90,16 +89,16 @@ public class Inventory {
 		}
 		return key;
 	}
-	
+
 	public void removeItemFromInventory(Item item) { this.inventory.remove(item); }
-	
+
 	public boolean isFull() { 
 		if(this.inventory.size() >= this.maxInventorySpace) return true; 
 		else return false;
 	}
 	public int getMaxSize() { return this.maxInventorySpace; }
 	public List<Item> getInventoryItems() { return this.inventory; }
-	
+
 	public Item getItemOnPosition(int index) {
 		Item item = null;
 		if(index > this.maxInventorySpace || index < 0 || index > inventory.size() - 1) {
@@ -110,5 +109,5 @@ public class Inventory {
 		}
 		return item;
 	}
-	
+
 }

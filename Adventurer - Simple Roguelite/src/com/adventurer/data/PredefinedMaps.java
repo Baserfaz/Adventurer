@@ -16,7 +16,7 @@ public class PredefinedMaps {
 	 *  l -> locked chest
 	 *  B -> bank/safe chest
 	 */
-	
+
 	private static final char[][] lobbyMap = new char[][] {
 		{ '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
 		{ '#', '.', '.', '.', 'W', '.', 'c', '.', 'W', '.', '.', '.', '#' },
