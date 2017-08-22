@@ -164,7 +164,7 @@ public class Game extends Canvas implements Runnable {
 		this.addMouseMotionListener(mouseInput);
 		this.addMouseListener(mouseInput);
 
-		// load custom font, usage: new Font("Pixeled", Font.PLAIN, size);
+		// load custom font
 		Util.loadCustomFont();
 
 		// create window 

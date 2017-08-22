@@ -130,7 +130,7 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 		
 		// select only one tile at a time.
 		for(Tile tile : tiles) {
-			if(tile.isInView()) {
+			if(tile.calculateCameraView()) {
 				if(Game.CALCULATE_PLAYER_LOS == false || tile.isDiscovered()) {
 					if(tile.GetBounds().contains(new Point(pos.getX(), pos.getY()))) {
 						

@@ -19,7 +19,7 @@ import com.adventurer.utilities.Util;
 public class Tile extends GameObject {
 
 	protected TileType type;
-	protected boolean inView   = true;
+	//protected boolean inView   = true;
 	protected boolean selected = false;
 	protected boolean walkable = false;
 	
@@ -35,17 +35,17 @@ public class Tile extends GameObject {
 		this.walkable = Util.isTileWalkable(this.type);	
 	}
 	
-	public void tick() {
-		calculateCameraView();
-	}
+	public void tick() { }
 	
-	private void calculateCameraView() {
+	public boolean calculateCameraView() {
 		
 		// check if the tile is in the camera's view
 		Rectangle camera = Camera.instance.getCameraBounds();
 		
 		int x = this.GetWorldPosition().getX();
 		int y = this.GetWorldPosition().getY();
+		
+		boolean inView = false;
 		
 		if(camera != null) {
 			if(camera.contains(x + Game.SPRITESIZE / 2, y + Game.SPRITESIZE / 2)) {
@@ -54,16 +54,18 @@ public class Tile extends GameObject {
 			} else {
 				Hide();
 				inView = false;
-				return;
 			}
 		}
+		
+		return inView;
 	}
 	
 	public void render(Graphics g) {
 		
 		// tile is outside of our view
-		if(inView == false) return;
-		
+		//if(inView == false) return;
+		if(calculateCameraView() == false) return;
+	    
 		// Tile is selected
 		// -> override fov-rendering.
 		if(selected) {
@@ -175,7 +177,7 @@ public class Tile extends GameObject {
 	
 	public boolean isSelected( ) { return this.selected; }
 	public boolean isWalkable() { return this.walkable; }
-	public boolean isInView() { return this.inView; }
+	//public boolean isInView() { return this.inView; }
 	
 	public TileType GetTileType() { return this.type; }
 	public List<Item> GetItems() { return items; }
