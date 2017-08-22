@@ -27,6 +27,9 @@ public class Game extends Canvas implements Runnable {
 	public static final int WIDTH                  = 1280;			           // viewport width
 	public static final int HEIGHT                 = 720;                      // viewport height
 
+	public static final int CAMERA_WIDTH           = 1273 / Game.CAMERAZOOM;
+	public static final int CAMERA_HEIGHT          = 690 / Game.CAMERAZOOM;
+	
 	public static final int SPRITESIZE             = 16;                       // sprite size in pixels
 	public static final int CAMERAZOOM             = 2;                        // level of zoom
 	public static final double FRAME_CAP           = 60.0;                     // cap the framerate to this
@@ -102,15 +105,15 @@ public class Game extends Canvas implements Runnable {
 	public static final int INTELLIGENCE_TO_MAGIC_DAMAGE_MULTIPLIER = 2;
 
 	// player inventory settings
-	public static final int DEFAULT_INVENTORY_MAX_SIZE = 12; 
+	public static final int DEFAULT_INVENTORY_MAX_SIZE  = 12; 
 	public static final int START_KEY_COUNT         	= 1;
 	public static final int START_DIAMOND_KEY_COUNT	 	= 0;
 	public static final int START_BOMB_COUNT        	= 1;
 	public static final int START_PROJECTILE_COUNT  	= 1;
 
 	// world size
-	public static final int WORLDHEIGHT = 30; // ~40 max 
-	public static final int WORLDWIDTH  = 30; // ~40 max
+	public static final int WORLDHEIGHT = 30; 
+	public static final int WORLDWIDTH  = 30; 
 
 	// room count
 	public static final int ROOM_COUNT                = 20;
@@ -246,7 +249,7 @@ public class Game extends Canvas implements Runnable {
 			}
 
 			// render the scene
-			if(isRunning  && render) {
+			if(isRunning && render) {
 				render();
 				frames++;
 			}

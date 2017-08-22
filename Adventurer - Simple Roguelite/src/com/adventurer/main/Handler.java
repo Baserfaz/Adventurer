@@ -271,11 +271,23 @@ public class Handler {
 
 			} else if(World.instance.getWorldType() == WorldType.Random) {
 
-				Renderer.renderString(
+			    if(Game.instance.getCurrentSession() != null) {
+			    
+    				Renderer.renderString(
 						"Dungeon (lvl. "+ Game.instance.getCurrentSession().getDungeonLevel() + ")",
 						new Coordinate(dungeonInfo_coord.getX() + 50, dungeonInfo_coord.getY()),
 						Color.gray, Game.BASEFONTSIZE, g2d
-						);
+    				);
+    				
+			    } else {
+			        
+	                 Renderer.renderString(
+                         "DEBUGGING",
+                         new Coordinate(dungeonInfo_coord.getX() + 50, dungeonInfo_coord.getY()),
+                         Color.gray, Game.BASEFONTSIZE, g2d
+                     );
+			        
+			    }
 
 			}
 		}

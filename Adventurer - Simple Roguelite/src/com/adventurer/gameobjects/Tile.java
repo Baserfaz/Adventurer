@@ -37,7 +37,7 @@ public class Tile extends GameObject {
 	
 	public void tick() { }
 	
-	public boolean calculateCameraView() {
+	public boolean isInCameraView() {
 		
 		// check if the tile is in the camera's view
 		Rectangle camera = Camera.instance.getCameraBounds();
@@ -48,26 +48,25 @@ public class Tile extends GameObject {
 		boolean inView = false;
 		
 		if(camera != null) {
-			if(camera.contains(x + Game.SPRITESIZE / 2, y + Game.SPRITESIZE / 2)) {
-				inView = true;
-				Show();
-			} else {
-				Hide();
-				inView = false;
-			}
+			if(camera.contains(x + Game.SPRITESIZE / 2, y + Game.SPRITESIZE / 2)) inView = true;
+			else inView = false;
 		}
 		
 		return inView;
 	}
 	
 	public void render(Graphics g) {
-		
-		// tile is outside of our view
-		//if(inView == false) return;
-		if(calculateCameraView() == false) return;
 	    
-		// Tile is selected
-		// -> override fov-rendering.
+	    // TODO: isInCameraView in render breaks LOS.
+	    // Tiles are always shown after discovering them.
+	    
+		// tile is outside of our view
+		if(isInCameraView() == false) return;
+	    
+        //g.setColor(Color.RED);
+        //g.drawRect(this.GetWorldPosition().getX() + 8, this.GetWorldPosition().getY() + 8, 1, 1);
+		
+		// Tile is selected -> override fov-rendering.
 		if(selected) {
 			if(hidden == false) {
 				Renderer.RenderSpriteWithBorder(sprite, this.GetWorldPosition(), g, Color.white);
@@ -86,7 +85,7 @@ public class Tile extends GameObject {
 			Renderer.RenderSprite(sprite, this.GetWorldPosition(), g);
 			
 		} else if(hidden == true && discovered) {
-			
+		    
 			Renderer.RenderSprite(Util.tint(sprite, true), this.GetWorldPosition(), g);
 			
 		} else {

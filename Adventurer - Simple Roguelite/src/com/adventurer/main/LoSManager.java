@@ -5,7 +5,6 @@ import java.util.ConcurrentModificationException;
 import java.util.List;
 import com.adventurer.data.Coordinate;
 import com.adventurer.data.World;
-import com.adventurer.enumerations.GameState;
 import com.adventurer.enumerations.TileType;
 import com.adventurer.gameobjects.*;
 import com.adventurer.utilities.Util;

@@ -127,7 +127,7 @@ public class Renderer {
 			g.translate(x, y);
 
 			// update camera's position
-			Camera.instance.Update(new Coordinate(-x, -y), 1273 / Game.CAMERAZOOM, 690 / Game.CAMERAZOOM);
+			Camera.instance.Update(new Coordinate(-x, -y), Game.CAMERA_WIDTH, Game.CAMERA_HEIGHT);
 
 			if(Game.DRAW_CAMERA) {
 				g.setColor(Color.red);
