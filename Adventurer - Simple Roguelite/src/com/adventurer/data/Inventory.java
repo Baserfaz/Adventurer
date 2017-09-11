@@ -29,13 +29,13 @@ public class Inventory {
 		 *  Player starting gear:
 		 *  1x dagger
 		 *  1x HP pot
-		 *  nx keys
+		 *  n. keys
 		 * 
 		 */
 
 		// populate inventory
 		for(int i = 0; i < Game.START_KEY_COUNT; i++) { this.addToInventory(ItemCreator.createKey(tile, KeyType.Normal)); }
-		this.addToInventory(ItemCreator.createWeapon(tile, ItemNames.Dagger));
+		this.addToInventory(ItemCreator.createWeapon(tile, ItemNames.Dagger, true));
 		this.addToInventory(ItemCreator.createHealthPotion(tile, 15));
 
 	}

@@ -113,7 +113,7 @@ public class Game extends Canvas implements Runnable {
 
 	// world size
 	public static final int WORLDHEIGHT = 30; 
-	public static final int WORLDWIDTH  = 30; 
+	public static final int WORLDWIDTH  = 30;
 
 	// room count
 	public static final int ROOM_COUNT                = 20;

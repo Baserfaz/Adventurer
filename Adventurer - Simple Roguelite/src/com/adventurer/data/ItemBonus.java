@@ -39,9 +39,12 @@ public class ItemBonus {
 
 	public ItemBonus(Map<DamageType, Integer> resistances, Map<DamageType, Integer> dmg) {
 
-		this.damageValues = new LinkedHashMap<DamageType, Integer>(dmg);
-		this.resistanceValues = new LinkedHashMap<DamageType, Integer>(resistances);
-
+	    if(dmg != null) this.damageValues = new LinkedHashMap<DamageType, Integer>(dmg);
+	    else this.damageValues = new LinkedHashMap<DamageType, Integer>();
+	    
+	    if(resistances != null) this.resistanceValues = new LinkedHashMap<DamageType, Integer>(resistances);
+	    else this.resistanceValues = new LinkedHashMap<DamageType, Integer>();
+	    
 		this.strBonus = 0;
 		this.dexBonus = 0;
 		this.intBonus = 0;

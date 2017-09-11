@@ -57,14 +57,8 @@ public class Tile extends GameObject {
 	
 	public void render(Graphics g) {
 	    
-	    // TODO: isInCameraView in render breaks LOS.
-	    // Tiles are always shown after discovering them.
-	    
 		// tile is outside of our view
 		if(isInCameraView() == false) return;
-	    
-        //g.setColor(Color.RED);
-        //g.drawRect(this.GetWorldPosition().getX() + 8, this.GetWorldPosition().getY() + 8, 1, 1);
 		
 		// Tile is selected -> override fov-rendering.
 		if(selected) {

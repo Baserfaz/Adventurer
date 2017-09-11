@@ -497,8 +497,10 @@ public class Handler {
 	private void drawItemInspectInfo(Item item, Coordinate inspect_coord, Graphics2D g2d) {
 
 		// vars
-		String slot = "";
-		int physical = 0, fire = 0, frost = 0, shock = 0, holy = 0, str = 0, dex = 0, intel = 0, vit = 0;
+		String slot = "-";
+		int dmg_physical = 0, dmg_fire = 0, dmg_frost = 0, dmg_shock = 0, dmg_holy = 0,
+		    res_physical = 0, res_fire = 0, res_frost = 0, res_shock = 0, res_holy = 0,
+		    str = 0, dex = 0, intel = 0, vit = 0;
 
 		// populate vars
 		if(item instanceof Armor) {
@@ -509,11 +511,11 @@ public class Handler {
 
 			slot = armor.getSlot().toString();
 
-			if(res.containsKey(DamageType.Fire)) fire = res.get(DamageType.Fire);
-			if(res.containsKey(DamageType.Frost)) frost = res.get(DamageType.Frost);
-			if(res.containsKey(DamageType.Shock)) shock = res.get(DamageType.Shock);
-			if(res.containsKey(DamageType.Holy)) holy = res.get(DamageType.Holy);
-			if(res.containsKey(DamageType.Physical)) physical = res.get(DamageType.Physical);
+			if(res.containsKey(DamageType.Fire)) res_fire = res.get(DamageType.Fire);
+			if(res.containsKey(DamageType.Frost)) res_frost = res.get(DamageType.Frost);
+			if(res.containsKey(DamageType.Shock)) res_shock = res.get(DamageType.Shock);
+			if(res.containsKey(DamageType.Holy)) res_holy = res.get(DamageType.Holy);
+			if(res.containsKey(DamageType.Physical)) res_physical = res.get(DamageType.Physical);
 
 			str = ib.getStrBonus();
 			dex = ib.getDexBonus(); 
@@ -527,30 +529,29 @@ public class Handler {
 
 			slot = weapon.getWeaponSlot().toString();
 
-			// if we have a mainhand weapon -> show it's damage,
-			// else if we have offhand weapon -> show it's resistances.
-			if(weapon.getWeaponSlot() == WeaponSlot.Mainhand) {
+			Map<DamageType, Integer> dmg = weapon.getBonuses().getDamage();
+			Map<DamageType, Integer> res = weapon.getBonuses().getResistances();
+			
+			if(dmg != null) {
+			
+    			if(dmg.containsKey(DamageType.Fire)) dmg_fire = dmg.get(DamageType.Fire);
+    			if(dmg.containsKey(DamageType.Frost)) dmg_frost = dmg.get(DamageType.Frost);
+    			if(dmg.containsKey(DamageType.Shock)) dmg_shock = dmg.get(DamageType.Shock);
+    			if(dmg.containsKey(DamageType.Holy)) dmg_holy = dmg.get(DamageType.Holy);
+    			if(dmg.containsKey(DamageType.Physical)) dmg_physical = dmg.get(DamageType.Physical);
+    			
+			}
+			
+			if(res != null) {
 
-				Map<DamageType, Integer> dmg = weapon.getBonuses().getDamage();
-
-				if(dmg.containsKey(DamageType.Fire)) fire = dmg.get(DamageType.Fire);
-				if(dmg.containsKey(DamageType.Frost)) frost = dmg.get(DamageType.Frost);
-				if(dmg.containsKey(DamageType.Shock)) shock = dmg.get(DamageType.Shock);
-				if(dmg.containsKey(DamageType.Holy)) holy = dmg.get(DamageType.Holy);
-				if(dmg.containsKey(DamageType.Physical)) physical = dmg.get(DamageType.Physical);
-
-			} else if(weapon.getWeaponSlot() == WeaponSlot.Offhand) {
-
-				Map<DamageType, Integer> dmg = weapon.getBonuses().getResistances();
-
-				if(dmg.containsKey(DamageType.Fire)) fire = dmg.get(DamageType.Fire);
-				if(dmg.containsKey(DamageType.Frost)) frost = dmg.get(DamageType.Frost);
-				if(dmg.containsKey(DamageType.Shock)) shock = dmg.get(DamageType.Shock);
-				if(dmg.containsKey(DamageType.Holy)) holy = dmg.get(DamageType.Holy);
-				if(dmg.containsKey(DamageType.Physical)) physical = dmg.get(DamageType.Physical);
+    			if(res.containsKey(DamageType.Fire)) res_fire = res.get(DamageType.Fire);
+    			if(res.containsKey(DamageType.Frost)) res_frost = res.get(DamageType.Frost);
+    			if(res.containsKey(DamageType.Shock)) res_shock = res.get(DamageType.Shock);
+    			if(res.containsKey(DamageType.Holy)) res_holy = res.get(DamageType.Holy);
+    			if(res.containsKey(DamageType.Physical)) res_physical = res.get(DamageType.Physical);
 
 			}
-
+    			
 			str = ib.getStrBonus();
 			dex = ib.getDexBonus(); 
 			intel = ib.getIntBonus();
@@ -559,20 +560,18 @@ public class Handler {
 		} else if(item instanceof Bomb) {
 
 			Bomb bomb = (Bomb) item;
-
-			slot = "-";
-
+			
 			for(Entry<DamageType, Integer> e : bomb.getDamage().entrySet()) {
 
 				DamageType key = e.getKey();
 				int val = e.getValue();
 
 				switch(key) {
-				case Fire: fire = val; break;
-				case Frost:  frost = val; break;
-				case Holy: holy = val; break;
-				case Physical: physical = val; break;
-				case Shock: shock = val; break;
+				case Fire: dmg_fire = val; break;
+				case Frost:  dmg_frost = val; break;
+				case Holy: dmg_holy = val; break;
+				case Physical: dmg_physical = val; break;
+				case Shock: dmg_shock = val; break;
 				default: break;
 				}
 			}
@@ -580,7 +579,6 @@ public class Handler {
 		} else if(item instanceof Projectile) {
 
 			Projectile proj = (Projectile) item;
-			slot = "-";
 
 			for(Entry<DamageType, Integer> e : proj.getDamage().entrySet()) {
 
@@ -588,22 +586,14 @@ public class Handler {
 				int val = e.getValue();
 
 				switch(key) {
-				case Fire: fire = val; break;
-				case Frost:  frost = val; break;
-				case Holy: holy = val; break;
-				case Physical: physical = val; break;
-				case Shock: shock = val; break;
+				case Fire: dmg_fire = val; break;
+				case Frost:  dmg_frost = val; break;
+				case Holy: dmg_holy = val; break;
+				case Physical: dmg_physical = val; break;
+				case Shock: dmg_shock = val; break;
 				default: break;
 				}
 			}
-
-		} else if(item instanceof Potion) {
-
-			slot = "-";
-
-		} else if(item instanceof Key) {
-
-			slot = "-";
 
 		}
 
@@ -624,24 +614,21 @@ public class Handler {
 
 		// build string using the item's data
 		String inspectInfo = String.format(
-				"%s\n"
-				+ "\'%s\'\n"
-				+"--------------------------------\n"
-				+ "Value: %d gp\n"
-				+ "Slot:  %s\n"
-				+ "Rarity: %s\n"
-				+ "--------------------------------\n"
-				+ "Physical: %d    |   Bonus\n"
-				+ "Fire:     %d    |   STR: %d\n"
-				+ "Frost:    %d    |   DEX: %d\n"
-				+ "Shock:    %d    |   INT: %d\n"
-				+ "Holy:     %d    |   VIT: %d\n"
-				+ "--------------------------------",
-				item.getName(), item.getDescription(), item.getValue(),
-				slot, totalRarityString, physical, fire, str, frost,
-				dex, shock, intel, holy, vit
-				);
+			"%s\n"
+			+ "\'%s\'\n"
+			+"--------------------------------\n"
+			+ "Value: %d gp\n"
+			+ "Slot:  %s\n"
+			+ "Rarity: %s\n"
+			+ "--------------------------------\n",
+			item.getName(), item.getDescription(), item.getValue(),
+			slot, totalRarityString
+		);
 
+		// add information off the item 
+		// TODO
+		
+		
 		// render item info
 		Renderer.renderString(inspectInfo, inspect_coord, Color.white, Game.BASEFONTSIZE, g2d);
 

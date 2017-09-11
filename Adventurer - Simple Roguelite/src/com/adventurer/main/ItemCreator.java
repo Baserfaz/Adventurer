@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.adventurer.data.ItemBonus;
 import com.adventurer.enumerations.ArmorSlot;
 import com.adventurer.enumerations.DamageType;
 import com.adventurer.enumerations.Direction;
@@ -20,6 +21,7 @@ import com.adventurer.gameobjects.Armor;
 import com.adventurer.gameobjects.Bomb;
 import com.adventurer.gameobjects.Chest;
 import com.adventurer.gameobjects.Gold;
+import com.adventurer.gameobjects.Item;
 import com.adventurer.gameobjects.Key;
 import com.adventurer.gameobjects.Potion;
 import com.adventurer.gameobjects.Projectile;
@@ -77,7 +79,7 @@ public class ItemCreator {
 		return new Potion(tile, spritetype, name, description, value, effects);
 	}
 
-	public static Armor createArmor(Tile tile, ItemNames itemName, ArmorSlot armorSlot) {
+	public static Armor createArmor(Tile tile, ItemNames itemName, ArmorSlot armorSlot, boolean allowItemRandomization) {
 
 		Map<String, String> iteminfo = FileReader.readXMLGameData(itemName.toString(), RootElement.armor);
 		Armor armor = null;
@@ -130,13 +132,18 @@ public class ItemCreator {
 			// TODO: rarity, prefixes + suffixes
 			ItemRarity itemRarity = ItemRarity.Generic;
 
+			// create base stats
+			ItemBonus base = new ItemBonus(defenseValues, null);
+			
 			// create new armor with the info.
-			armor = new Armor(tile, SpriteType.GenericItem, name, description, value, itemRarity, armorSlot, defenseValues);
+			armor = new Armor(tile, SpriteType.GenericItem, name, description, value, itemRarity, armorSlot, base);
 		}
-		return armor;
+		
+		if(allowItemRandomization) return (Armor) ItemCreator.addRandomBonus(armor);
+		else return armor;
 	}
 
-	public static Weapon createWeapon(Tile tile, ItemNames itemName) {
+	public static Weapon createWeapon(Tile tile, ItemNames itemName, boolean allowItemRandomization) {
 
 		Map<String, String> iteminfo = FileReader.readXMLGameData(itemName.toString(), RootElement.weapon);
 		Weapon weapon = null;
@@ -197,12 +204,32 @@ public class ItemCreator {
 			// TODO: rarity and prefixes + suffixes
 			ItemRarity itemRarity = ItemRarity.Generic;
 
+			// create base
+			ItemBonus base = new ItemBonus(null, damageValues);
+			
 			// create weapon with data.
-			weapon = new Weapon(tile, SpriteType.GenericItem, name, description, value, itemRarity, damageValues, weaponType, weaponSlot);
+			weapon = new Weapon(tile, SpriteType.GenericItem, name, description, value, itemRarity, base, weaponType, weaponSlot);
 		}
-		return weapon;
+	
+	    if(allowItemRandomization) return (Weapon) ItemCreator.addRandomBonus(weapon);
+        else return weapon;
 	}
 
+	private static Item addRandomBonus(Item item) {
+	    
+	    if(item instanceof Weapon) {
+	        
+	        
+	        
+	    } else if(item instanceof Armor) {
+	        
+	        
+	        
+	    }
+	    
+	    return item;
+	}
+	
 	public static Chest CreateChest(Tile tile, boolean locked) {
 		SpriteType st = null;
 		if(locked) st = SpriteType.LockedChest02;
