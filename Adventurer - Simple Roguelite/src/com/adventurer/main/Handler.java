@@ -596,7 +596,7 @@ public class Handler {
 			}
 
 		}
-
+		
 		Color rarityColor = null;
 
 		// decide rarity color
@@ -624,11 +624,72 @@ public class Handler {
 			item.getName(), item.getDescription(), item.getValue(),
 			slot, totalRarityString
 		);
-
-		// add information off the item 
-		// TODO
 		
+		// control vars
+		boolean addedDmg = false, addedRes = false;
 		
+		// add damage information
+		if(dmg_physical > 0) {
+		    inspectInfo += "Physical damage: " + dmg_physical + "\n";
+		    addedDmg = true;
+		}
+		
+		if(dmg_fire > 0) {
+		    inspectInfo += "Fire damage: " + dmg_fire + "\n";
+		    addedDmg = true;
+		}
+		
+		if(dmg_frost > 0) { 
+		    inspectInfo += "Frost damage: " + dmg_frost + "\n";
+		    addedDmg = true;
+		}
+		
+		if(dmg_shock > 0) { 
+		    inspectInfo += "Shock damage: " + dmg_shock + "\n";
+		    addedDmg = true;
+		}
+		
+		if(dmg_holy > 0) { 
+		    inspectInfo += "Holy damage: " + dmg_holy + "\n";
+		    addedDmg = true;
+		}
+		
+		if(addedDmg) inspectInfo += "--------------------------------\n";
+		
+		// add resistance information
+		if(res_physical > 0) { 
+		    inspectInfo += "Physical resistance: " + res_physical + "\n";
+		    addedRes = true;
+		}
+		
+        if(res_fire > 0) { 
+            inspectInfo += "Fire resistance: " + res_fire + "\n";
+            addedRes = true;
+        }
+        
+        if(res_frost > 0) { 
+            inspectInfo += "Frost resistance: " + res_frost + "\n";
+            addedRes = true;
+        }
+        
+        if(res_shock > 0) { 
+            inspectInfo += "Shock resistance: " + res_shock + "\n";
+            addedRes = true;
+        }
+        
+        if(res_holy > 0) { 
+            inspectInfo += "Holy resistance: " + res_holy + "\n";
+            addedRes = true;
+        }
+		
+        if(addedRes) inspectInfo += "--------------------------------\n";
+        
+		// add stat information
+		if(str > 0) inspectInfo += "Str: " + str + "\n";
+		if(dex > 0) inspectInfo += "Dex: " + dex + "\n";
+		if(vit > 0) inspectInfo += "Vit: " + vit + "\n";
+		if(intel > 0) inspectInfo += "Int: " + intel + "\n";
+        
 		// render item info
 		Renderer.renderString(inspectInfo, inspect_coord, Color.white, Game.BASEFONTSIZE, g2d);
 
